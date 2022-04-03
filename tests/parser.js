@@ -32,7 +32,9 @@ describe("Parser", () => {
       include_stmt -> "$[" filename "$]"
 
       # Constant symbols declaration.
-      constant_stmt -> "$c" _ constant (__ constant):* _ "$." {% ([c, ws1, cons, list, ws2, d]) => [c, cons, list, d] %}
+      constant_stmt -> "$c" _ constant (__ constant):* _ "$." {% ([c, ws1, cons, list, ws2, d]) => 
+        [c, [cons].concat(list.map(([ws, v]) => v)), d]
+      %}
 
       # A normal statement can occur in any scope.
       stmt -> block | 
@@ -45,7 +47,9 @@ describe("Parser", () => {
       block -> "$\{" stmt:* "$\}"
 
       # Variable symbols declaration.
-      variable_stmt -> "$v" _ variable (__ variable):* _ "$." {% ([v, ws1, a, list, ws2, d]) => [v, a, list, d] %}
+      variable_stmt -> "$v" _ variable (__ variable):* _ "$." {% ([v, ws1, a, list, ws2, d]) => 
+        [v, [a].concat(list.map(([ws, arg]) => arg)), d] 
+      %}
 
       # Disjoint variables. Simple disjoint statements have
       # 2 variables, i.e., "variable*" is empty for them.
@@ -76,9 +80,9 @@ describe("Parser", () => {
 
       typecode -> constant
 
-      filename -> MATH_SYMBOL 
-      constant -> MATH_SYMBOL
-      variable -> MATH_SYMBOL
+      filename -> MATH_SYMBOL {% id %}
+      constant -> MATH_SYMBOL {% id %}
+      variable -> MATH_SYMBOL {% id %}
 
       # lexicon
 
@@ -120,7 +124,7 @@ describe("Parser", () => {
   
   it("$[filename$]", () => {    
     assertThat(parse("$[filename$]"))
-      .equalsTo([[[["$[", ["filename"], "$]"]]]]);
+      .equalsTo([[[["$[", "filename", "$]"]]]]);
   });
 
   it("$( comment $)", () => {    
@@ -130,110 +134,96 @@ describe("Parser", () => {
 
   it("$v a $.", () => {    
     assertThat(parse("$v a $."))
-      .equalsTo([[[[["$v", ["a"], [], "$."]]]]]);
+      .equalsTo([[[[["$v", ["a"], "$."]]]]]);
   });
 
   it("$v ab $.", () => {    
     assertThat(parse("$v ab $."))
-      .equalsTo([[[[["$v", ["ab"], [], "$."]]]]]);
+      .equalsTo([[[[["$v", ["ab"], "$."]]]]]);
   });
 
   it("$v a b $.", () => {    
     assertThat(parse("$v a b $."))
-      .equalsTo([[[[["$v", ["a"], [[null, ["b"]]], "$."]]]]]);
+      .equalsTo([[[[["$v", ["a", "b"], "$."]]]]]);
   });
 
   it("$v a b c $.", () => {    
     assertThat(parse("$v a b c $."))
-      .equalsTo([[[[["$v", ["a"], [[null, ["b"]], [null, ["c"]]], "$."]]]]]);
+      .equalsTo([[[[["$v", ["a", "b", "c"], "$."]]]]]);
   });
 
   it("$v t r s P Q $.", () => {    
     assertThat(parse("$v t r s P Q $."))
-      .equalsTo([[[[["$v", ["t"], [
-        [null, ["r"]],
-        [null, ["s"]],
-        [null, ["P"]],
-        [null, ["Q"]],
-      ], "$."]]]]]);
+      .equalsTo([[[[["$v", ["t", "r", "s", "P", "Q",], "$."]]]]]);
   });
 
   it("$c a $.", () => {    
     assertThat(parse("$c a $."))
-      .equalsTo([[[["$c", ["a"], [], "$."]]]]);
+      .equalsTo([[[["$c", ["a"], "$."]]]]);
   });
 
   it("$c a b $.", () => {    
     assertThat(parse("$c a b $."))
-      .equalsTo([[[["$c", ["a"], [[null, ["b"]]], "$."]]]]);
+      .equalsTo([[[["$c", ["a", "b"], "$."]]]]);
   });
 
   it("$c 0 $.", () => {    
     assertThat(parse("$c 0 $."))
-      .equalsTo([[[["$c", ["0"], [], "$."]]]]);
+      .equalsTo([[[["$c", ["0"], "$."]]]]);
   });
 
   it("$c + $.", () => {    
     assertThat(parse("$c + $."))
-      .equalsTo([[[["$c", ["+"], [], "$."]]]]);
+      .equalsTo([[[["$c", ["+"], "$."]]]]);
   });
 
   it("$c = $.", () => {    
     assertThat(parse("$c = $."))
-      .equalsTo([[[["$c", ["="], [], "$."]]]]);
+      .equalsTo([[[["$c", ["="], "$."]]]]);
   });
 
   it("$c -> $.", () => {    
     assertThat(parse("$c -> $."))
-      .equalsTo([[[["$c", ["->"], [], "$."]]]]);
+      .equalsTo([[[["$c", ["->"], "$."]]]]);
   });
 
   it("$c 0 + = -> ( ) term wff |- $.", () => {    
     assertThat(parse("$c 0 + = -> ( ) term wff |- $."))
-      .equalsTo([[[["$c", ["0"], [
-        [null, ["+"]],
-        [null, ["="]],
-        [null, ["->"]],
-        [null, ["("]],
-        [null, [")"]],
-        [null, ["term"]],
-        [null, ["wff"]],
-        [null, ["|-"]],
-      ], "$."]]]]);
+      .equalsTo([[[["$c", ["0", "+", "=", "->", "(", ")", "term", "wff", "|-"], "$."]]]]);
   });
 
   it("tt $f term t $.", () => {    
     assertThat(parse("tt $f term t $."))
       .equalsTo([[[[[[
-        "tt", "$f", [["term"]], ["t"], "$."
+        "tt", "$f", ["term"], "t", "$."
       ]]]]]]);
   });
 
   it("weq $a wff t $.", () => {    
     assertThat(parse("weq $a wff t $."))
       .equalsTo([[[[[[
-        "weq", "$a", [["wff"]], [[null, "t"]], "$."
+        "weq", "$a", ["wff"], [[null, "t"]], "$."
       ]]]]]]);
   });
 
   it("weq $a wff t u $.", () => {    
     assertThat(parse("weq $a wff t u $."))
       .equalsTo([[[[[[
-        "weq", "$a", [["wff"]], [[null, "t"], [null, "u"]], "$."
+        "weq", "$a", ["wff"], [[null, "t"], [null, "u"]], "$."
       ]]]]]]);
   });
 
   it("weq $a wff t = r $.", () => {    
     assertThat(parse("weq $a wff t = r $."))
       .equalsTo([[[[[[
-        "weq", "$a", [["wff"]], [[null, "t"], [null, "="], [null, "r"]], "$."
+        "weq", "$a", ["wff"], [[null, "t"], [null, "="], [null, "r"]], "$."
       ]]]]]]);
   });
 
   it("wim $a wff ( P -> Q ) $.", () => {    
     assertThat(parse("wim $a wff ( P -> Q ) $."))
       .equalsTo([[[[[[
-        "wim", "$a", [["wff"]], [
+        "wim", "$a", ["wff"], [
           [null, "("],
           [null, "P"],
           [null, "->"],
