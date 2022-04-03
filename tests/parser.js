@@ -45,7 +45,7 @@ describe("Parser", () => {
       block -> "$\{" stmt:* "$\}"
 
       # Variable symbols declaration.
-      variable_stmt -> "$v" _ variable:+ _ "$."
+      variable_stmt -> "$v" _ variable (__ variable):* _ "$."
 
       # Disjoint variables. Simple disjoint statements have
       # 2 variables, i.e., "variable*" is empty for them.
@@ -130,7 +130,12 @@ describe("Parser", () => {
 
   it("$v a $.", () => {    
     assertThat(parse("$v a $."))
-      .equalsTo([[null, [[[["$v", null, [["a"]], null, "$."]]]], null]]);
+      .equalsTo([[null, [[[["$v", null, ["a"], [], null, "$."]]]], null]]);
+  });
+
+  it("$v ab $.", () => {    
+    assertThat(parse("$v ab $."))
+      .equalsTo([[null, [[[["$v", null, ["ab"], [], null, "$."]]]], null]]);
   });
 });
 
