@@ -24,7 +24,7 @@ describe("Parser", () => {
   }
 
   const grammar = compileGrammar(`
-      database -> _ outermost_scope_stmt:* _
+      database -> _ outermost_scope_stmt:* _ {% ([ws1, scope, ws2]) => scope %}
       outermost_scope_stmt -> include_stmt | constant_stmt | stmt
 
       # File inclusion command; process file as a database.
@@ -120,7 +120,7 @@ describe("Parser", () => {
   
   it("$[filename$]", () => {    
     assertThat(parse("$[filename$]"))
-      .equalsTo([[null, [[["$[", ["filename"], "$]"]]], null]]);
+      .equalsTo([[[["$[", ["filename"], "$]"]]]]);
   });
 
   it("$( comment $)", () => {    
@@ -130,67 +130,67 @@ describe("Parser", () => {
 
   it("$v a $.", () => {    
     assertThat(parse("$v a $."))
-      .equalsTo([[null, [[[["$v", null, ["a"], [], null, "$."]]]], null]]);
+      .equalsTo([[[[["$v", null, ["a"], [], null, "$."]]]]]);
   });
 
   it("$v ab $.", () => {    
     assertThat(parse("$v ab $."))
-      .equalsTo([[null, [[[["$v", null, ["ab"], [], null, "$."]]]], null]]);
+      .equalsTo([[[[["$v", null, ["ab"], [], null, "$."]]]]]);
   });
 
   it("$v a b $.", () => {    
     assertThat(parse("$v a b $."))
-      .equalsTo([[null, [[[["$v", null, ["a"], [[null, ["b"]]], null, "$."]]]], null]]);
+      .equalsTo([[[[["$v", null, ["a"], [[null, ["b"]]], null, "$."]]]]]);
   });
 
   it("$v a b c $.", () => {    
     assertThat(parse("$v a b c $."))
-      .equalsTo([[null, [[[["$v", null, ["a"], [[null, ["b"]], [null, ["c"]]], null, "$."]]]], null]]);
+      .equalsTo([[[[["$v", null, ["a"], [[null, ["b"]], [null, ["c"]]], null, "$."]]]]]);
   });
 
   it("$v t r s P Q $.", () => {    
     assertThat(parse("$v t r s P Q $."))
-      .equalsTo([[null, [[[["$v", null, ["t"], [
+      .equalsTo([[[[["$v", null, ["t"], [
         [null, ["r"]],
         [null, ["s"]],
         [null, ["P"]],
         [null, ["Q"]],
-      ], null, "$."]]]], null]]);
+      ], null, "$."]]]]]);
   });
 
   it("$c a $.", () => {    
     assertThat(parse("$c a $."))
-      .equalsTo([[null, [[["$c", null, ["a"], [], null, "$."]]], null]]);
+      .equalsTo([[[["$c", null, ["a"], [], null, "$."]]]]);
   });
 
   it("$c a b $.", () => {    
     assertThat(parse("$c a b $."))
-      .equalsTo([[null, [[["$c", null, ["a"], [[null, ["b"]]], null, "$."]]], null]]);
+      .equalsTo([[[["$c", null, ["a"], [[null, ["b"]]], null, "$."]]]]);
   });
 
   it("$c 0 $.", () => {    
     assertThat(parse("$c 0 $."))
-      .equalsTo([[null, [[["$c", null, ["0"], [], null, "$."]]], null]]);
+      .equalsTo([[[["$c", null, ["0"], [], null, "$."]]]]);
   });
 
   it("$c + $.", () => {    
     assertThat(parse("$c + $."))
-      .equalsTo([[null, [[["$c", null, ["+"], [], null, "$."]]], null]]);
+      .equalsTo([[[["$c", null, ["+"], [], null, "$."]]]]);
   });
 
   it("$c = $.", () => {    
     assertThat(parse("$c = $."))
-      .equalsTo([[null, [[["$c", null, ["="], [], null, "$."]]], null]]);
+      .equalsTo([[[["$c", null, ["="], [], null, "$."]]]]);
   });
 
   it("$c -> $.", () => {    
     assertThat(parse("$c -> $."))
-      .equalsTo([[null, [[["$c", null, ["->"], [], null, "$."]]], null]]);
+      .equalsTo([[[["$c", null, ["->"], [], null, "$."]]]]);
   });
 
   it("$c 0 + = -> ( ) term wff |- $.", () => {    
     assertThat(parse("$c 0 + = -> ( ) term wff |- $."))
-      .equalsTo([[null, [[["$c", null, ["0"], [
+      .equalsTo([[[["$c", null, ["0"], [
         [null, ["+"]],
         [null, ["="]],
         [null, ["->"]],
@@ -199,35 +199,48 @@ describe("Parser", () => {
         [null, ["term"]],
         [null, ["wff"]],
         [null, ["|-"]],
-      ], null, "$."]]], null]]);
+      ], null, "$."]]]]);
   });
 
   it("tt $f term t $.", () => {    
     assertThat(parse("tt $f term t $."))
-      .equalsTo([[null, [[[[[
+      .equalsTo([[[[[[
         "tt", null, "$f", null, [["term"]], null, ["t"], null, "$."
-      ]]]]], null]]);
+      ]]]]]]);
   });
 
   it("weq $a wff t $.", () => {    
     assertThat(parse("weq $a wff t $."))
-      .equalsTo([[null, [[[[[
+      .equalsTo([[[[[[
         "weq", null, "$a", null, [["wff"]], null, [[null, "t"]], null, "$."
-      ]]]]], null]]);
+      ]]]]]]);
   });
 
   it("weq $a wff t u $.", () => {    
     assertThat(parse("weq $a wff t u $."))
-      .equalsTo([[null, [[[[[
+      .equalsTo([[[[[[
         "weq", null, "$a", null, [["wff"]], null, [[null, "t"], [null, "u"]], null, "$."
-      ]]]]], null]]);
+      ]]]]]]);
   });
 
   it("weq $a wff t = r $.", () => {    
     assertThat(parse("weq $a wff t = r $."))
-      .equalsTo([[null, [[[[[
+      .equalsTo([[[[[[
         "weq", null, "$a", null, [["wff"]], null, [[null, "t"], [null, "="], [null, "r"]], null, "$."
-      ]]]]], null]]);
+      ]]]]]]);
+  });
+
+  it("wim $a wff ( P -> Q ) $.", () => {    
+    assertThat(parse("wim $a wff ( P -> Q ) $."))
+      .equalsTo([[[[[[
+        "wim", null, "$a", null, [["wff"]], null, [
+          [null, "("],
+          [null, "P"],
+          [null, "->"],
+          [null, "Q"],
+          [null, ")"],
+        ], null, "$."
+      ]]]]]]);
   });
 
 });
