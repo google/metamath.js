@@ -1,0 +1,20 @@
+{
+  "name": "metamath",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -w tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samuelgoto/metamath.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/samuelgoto/metamath/issues"
+  },
+  "homepage": "https://github.com/samuelgoto/metamath",
+  "dependencies": {
+  }
+}
