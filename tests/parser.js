@@ -45,7 +45,7 @@ describe("Parser", () => {
       block -> "$\{" stmt:* "$\}"
 
       # Variable symbols declaration.
-      variable_stmt -> "$v" _ variable (__ variable):* _ "$."
+      variable_stmt -> "$v" _ variable (__ variable):* _ "$." {% ([v, ws1, a, list, ws2, d]) => [v, a, list, d] %}
 
       # Disjoint variables. Simple disjoint statements have
       # 2 variables, i.e., "variable*" is empty for them.
@@ -130,32 +130,32 @@ describe("Parser", () => {
 
   it("$v a $.", () => {    
     assertThat(parse("$v a $."))
-      .equalsTo([[[[["$v", null, ["a"], [], null, "$."]]]]]);
+      .equalsTo([[[[["$v", ["a"], [], "$."]]]]]);
   });
 
   it("$v ab $.", () => {    
     assertThat(parse("$v ab $."))
-      .equalsTo([[[[["$v", null, ["ab"], [], null, "$."]]]]]);
+      .equalsTo([[[[["$v", ["ab"], [], "$."]]]]]);
   });
 
   it("$v a b $.", () => {    
     assertThat(parse("$v a b $."))
-      .equalsTo([[[[["$v", null, ["a"], [[null, ["b"]]], null, "$."]]]]]);
+      .equalsTo([[[[["$v", ["a"], [[null, ["b"]]], "$."]]]]]);
   });
 
   it("$v a b c $.", () => {    
     assertThat(parse("$v a b c $."))
-      .equalsTo([[[[["$v", null, ["a"], [[null, ["b"]], [null, ["c"]]], null, "$."]]]]]);
+      .equalsTo([[[[["$v", ["a"], [[null, ["b"]], [null, ["c"]]], "$."]]]]]);
   });
 
   it("$v t r s P Q $.", () => {    
     assertThat(parse("$v t r s P Q $."))
-      .equalsTo([[[[["$v", null, ["t"], [
+      .equalsTo([[[[["$v", ["t"], [
         [null, ["r"]],
         [null, ["s"]],
         [null, ["P"]],
         [null, ["Q"]],
-      ], null, "$."]]]]]);
+      ], "$."]]]]]);
   });
 
   it("$c a $.", () => {    
