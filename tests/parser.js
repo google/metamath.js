@@ -24,7 +24,9 @@ describe("Parser", () => {
   }
 
   const grammar = compileGrammar(`
-      database -> _ outermost_scope_stmt:* _ {% ([ws1, scope, ws2]) => scope %}
+      database -> _ outermost_scope_stmt (__ outermost_scope_stmt):* _ {% ([ws1, stmt, list, ws2]) => 
+        [stmt].concat(list.map(([ws, v]) => v)) 
+      %}
       outermost_scope_stmt -> include_stmt | constant_stmt | stmt
 
       # File inclusion command; process file as a database.
@@ -94,7 +96,8 @@ describe("Parser", () => {
 
       PRINTABLE_SEQUENCE -> _PRINTABLE_CHARACTER:+
 
-      MATH_SYMBOL -> _PRINTABLE_CHARACTER:+ {% ([str]) => str.join("") %}
+      # MATH_SYMBOL -> _PRINTABLE_CHARACTER:+ {% ([str]) => str.join("") %}
+      MATH_SYMBOL -> [!-#%-~]:+ {% ([str]) => str.join("") %}
 
       # ASCII non-whitespace printable characters
       _PRINTABLE_CHARACTER -> [!-~]
@@ -161,6 +164,14 @@ describe("Parser", () => {
   it("$v t r s P Q $.", () => {    
     assertThat(parse("$v t r s P Q $."))
       .equalsTo([[[[["$v", ["t", "r", "s", "P", "Q",], "$."]]]]]);
+  });
+
+  it("$v a $.", () => {    
+    assertThat(parse("$v a $. $v b $."))
+      .equalsTo([[
+        [[["$v", ["a"], "$."]]],
+        [[["$v", ["b"], "$."]]]
+      ]]);
   });
 
   it("$c a $.", () => {    
@@ -280,6 +291,16 @@ describe("Parser", () => {
       .equalsTo([[[[[
         "${", [
           [[["min", "$e", ["|-"], ["P"], "$."]]]
+        ], "$}"
+      ]]]]]);
+    });
+
+  it("${ min $e |- P $. maj $e |- ( P -> Q ) $. $}", () => {    
+    assertThat(parse("${ min $e |- P $. maj $e |- ( P -> Q ) $. $}"))
+      .equalsTo([[[[[
+        "${", [
+          [[["min", "$e", ["|-"], ["P"], "$."]]],
+          [[["maj", "$e", ["|-"], ["(", "P", "->", "Q", ")"], "$."]]],          
         ], "$}"
       ]]]]]);
     });
