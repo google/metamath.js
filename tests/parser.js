@@ -62,7 +62,7 @@ describe("Parser", () => {
       assert_stmt -> axiom_stmt | provable_stmt
 
       # Axiomatic assertion.
-      axiom_stmt -> LABEL _ "$a" _ typecode _ (__ MATH_SYMBOL):* _ "$."
+      axiom_stmt -> LABEL _ "$a" _ typecode _ (__ MATH_SYMBOL):* _ "$." {% ([l, ws1, a, ws2, t, ws3, list, ws4, d]) => [l, a, t, list, d] %}
 
       # Provable assertion.
       provable_stmt -> LABEL "$p" typecode MATH_SYMBOL:* "$=" proof "$."
@@ -212,34 +212,34 @@ describe("Parser", () => {
   it("weq $a wff t $.", () => {    
     assertThat(parse("weq $a wff t $."))
       .equalsTo([[[[[[
-        "weq", null, "$a", null, [["wff"]], null, [[null, "t"]], null, "$."
+        "weq", "$a", [["wff"]], [[null, "t"]], "$."
       ]]]]]]);
   });
 
   it("weq $a wff t u $.", () => {    
     assertThat(parse("weq $a wff t u $."))
       .equalsTo([[[[[[
-        "weq", null, "$a", null, [["wff"]], null, [[null, "t"], [null, "u"]], null, "$."
+        "weq", "$a", [["wff"]], [[null, "t"], [null, "u"]], "$."
       ]]]]]]);
   });
 
   it("weq $a wff t = r $.", () => {    
     assertThat(parse("weq $a wff t = r $."))
       .equalsTo([[[[[[
-        "weq", null, "$a", null, [["wff"]], null, [[null, "t"], [null, "="], [null, "r"]], null, "$."
+        "weq", "$a", [["wff"]], [[null, "t"], [null, "="], [null, "r"]], "$."
       ]]]]]]);
   });
 
   it("wim $a wff ( P -> Q ) $.", () => {    
     assertThat(parse("wim $a wff ( P -> Q ) $."))
       .equalsTo([[[[[[
-        "wim", null, "$a", null, [["wff"]], null, [
+        "wim", "$a", [["wff"]], [
           [null, "("],
           [null, "P"],
           [null, "->"],
           [null, "Q"],
           [null, ")"],
-        ], null, "$."
+        ], "$."
       ]]]]]]);
   });
 
