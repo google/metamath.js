@@ -32,7 +32,7 @@ describe("Parser", () => {
       include_stmt -> "$[" filename "$]"
 
       # Constant symbols declaration.
-      constant_stmt -> "$c" constant:+ "$."
+      constant_stmt -> "$c" _ constant (__ constant):* _ "$."
 
       # A normal statement can occur in any scope.
       stmt -> block | 
@@ -87,7 +87,7 @@ describe("Parser", () => {
       MATH_SYMBOL -> _PRINTABLE_CHARACTER:+ {% ([str]) => str.join("") %}
 
       # ASCII non-whitespace printable characters
-      _PRINTABLE_CHARACTER -> [A-Za-z0-9]
+      _PRINTABLE_CHARACTER -> [!-~]
 
       LABEL -> ( _LETTER_OR_DIGIT | "." | "-" | "_" ):+
 
@@ -146,6 +146,26 @@ describe("Parser", () => {
   it("$v a b c $.", () => {    
     assertThat(parse("$v a b c $."))
       .equalsTo([[null, [[[["$v", null, ["a"], [[null, ["b"]], [null, ["c"]]], null, "$."]]]], null]]);
+  });
+
+  it("$c a $.", () => {    
+    assertThat(parse("$c a $."))
+      .equalsTo([[null, [[["$c", null, ["a"], [], null, "$."]]], null]]);
+  });
+
+  it("$c a b $.", () => {    
+    assertThat(parse("$c a b $."))
+      .equalsTo([[null, [[["$c", null, ["a"], [[null, ["b"]]], null, "$."]]], null]]);
+  });
+
+  it("$c 0 $.", () => {    
+    assertThat(parse("$c 0 $."))
+      .equalsTo([[null, [[["$c", null, ["0"], [], null, "$."]]], null]]);
+  });
+
+  it("$c + $.", () => {    
+    assertThat(parse("$c + $."))
+      .equalsTo([[null, [[["$c", null, ["+"], [], null, "$."]]], null]]);
   });
 
 });
