@@ -54,7 +54,7 @@ describe("Parser", () => {
       hypothesis_stmt -> floating_stmt | essential_stmt
 
       # Floating (variable-type) hypothesis.
-      floating_stmt -> LABEL _ "$f" _ typecode _ variable _ "$."
+      floating_stmt -> LABEL _ "$f" _ typecode _ variable _ "$." {% ([l, ws1, f, ws2, t, ws3, v, ws4, d]) => [l, f, t, v, d] %}
 
       # Essential (logical) hypothesis.
       essential_stmt -> LABEL "$e" typecode MATH_SYMBOL:* "$."
@@ -205,7 +205,7 @@ describe("Parser", () => {
   it("tt $f term t $.", () => {    
     assertThat(parse("tt $f term t $."))
       .equalsTo([[[[[[
-        "tt", null, "$f", null, [["term"]], null, ["t"], null, "$."
+        "tt", "$f", [["term"]], ["t"], "$."
       ]]]]]]);
   });
 
