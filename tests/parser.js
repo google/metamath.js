@@ -148,6 +148,16 @@ describe("Parser", () => {
       .equalsTo([[null, [[[["$v", null, ["a"], [[null, ["b"]], [null, ["c"]]], null, "$."]]]], null]]);
   });
 
+  it("$v t r s P Q $.", () => {    
+    assertThat(parse("$v t r s P Q $."))
+      .equalsTo([[null, [[[["$v", null, ["t"], [
+        [null, ["r"]],
+        [null, ["s"]],
+        [null, ["P"]],
+        [null, ["Q"]],
+      ], null, "$."]]]], null]]);
+  });
+
   it("$c a $.", () => {    
     assertThat(parse("$c a $."))
       .equalsTo([[null, [[["$c", null, ["a"], [], null, "$."]]], null]]);
@@ -166,6 +176,30 @@ describe("Parser", () => {
   it("$c + $.", () => {    
     assertThat(parse("$c + $."))
       .equalsTo([[null, [[["$c", null, ["+"], [], null, "$."]]], null]]);
+  });
+
+  it("$c = $.", () => {    
+    assertThat(parse("$c = $."))
+      .equalsTo([[null, [[["$c", null, ["="], [], null, "$."]]], null]]);
+  });
+
+  it("$c -> $.", () => {    
+    assertThat(parse("$c -> $."))
+      .equalsTo([[null, [[["$c", null, ["->"], [], null, "$."]]], null]]);
+  });
+
+  it("$c 0 + = -> ( ) term wff |- $.", () => {    
+    assertThat(parse("$c 0 + = -> ( ) term wff |- $."))
+      .equalsTo([[null, [[["$c", null, ["0"], [
+        [null, ["+"]],
+        [null, ["="]],
+        [null, ["->"]],
+        [null, ["("]],
+        [null, [")"]],
+        [null, ["term"]],
+        [null, ["wff"]],
+        [null, ["|-"]],
+      ], null, "$."]]], null]]);
   });
 
 });
