@@ -23,9 +23,8 @@ describe("Parser", () => {
     return module.exports;
   }
 
-  it("$[helloworld$]", () => {    
-    const grammar = compileGrammar(`
-      database -> outermost_scope_stmt:*
+  const grammar = compileGrammar(`
+      database -> _ outermost_scope_stmt:* _
       outermost_scope_stmt -> include_stmt | constant_stmt | stmt
 
       # File inclusion command; process file as a database.
@@ -102,15 +101,31 @@ describe("Parser", () => {
       WHITESPACE -> (_WHITECHAR:+ | _COMMENT)
 
       # Comments. $( ... $) and do not nest.
-      # _COMMENT -> "$(" WHITECHAR:+ (PRINTABLE_SEQUENCE):* _WHITECHAR+ "$)" _WHITECHAR
+      _COMMENT -> "$(" _WHITECHAR:+ (PRINTABLE_SEQUENCE):* _WHITECHAR:+ "$)" _WHITECHAR
 
       # Whitespace
       _WHITECHAR -> [ \t\\n\v\f] {% id %}
 
-    `);
+      # Whitespace: _ is optional, __ is mandatory.
+      _  -> WHITESPACE:* {% function(d) {return null;} %}
+      __ -> WHITESPACE:+ {% function(d) {return null;} %}
+
+  `);
+
+  function parse(code) {
     const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
-    parser.feed("$[helloworld$]");
-    assertThat(parser.results).equalsTo([[[[["$[", ["helloworld"], "$]"]]]]]);
+    parser.feed(code);
+    return parser.results;
+  }
+  
+  it("$[filename$]", () => {    
+    assertThat(parse("$[filename$]"))
+      .equalsTo([[null, [[["$[", ["filename"], "$]"]]], null]]);
+  });
+
+  it("$( comment $)", () => {    
+    assertThat(parse("$( comment $)"))
+      .equalsTo([]);
   });
 });
 
