@@ -80,14 +80,19 @@ describe("Parser", () => {
       %}
 
       # Provable assertion.
-      provable_stmt -> LABEL "$p" typecode MATH_SYMBOL:* "$=" proof "$."
+      provable_stmt -> LABEL __ "$p" __ typecode (__ MATH_SYMBOL):* __ "$=" __ proof __ "$." {%
+        ([l, ws1, p, ws2, t, list, ws3, eq, ws4, proof, ws5, d]) => 
+        [l, p, t, list.map(([ws, v]) => v), eq, proof, d]
+      %}
 
       # A proof. Proofs may be interspersed by comments.
       # If ’?’ is in a proof it’s an "incomplete" proof.
-      proof -> uncompressed_proof | compressed_proof
+      proof -> uncompressed_proof {% id %} | compressed_proof {% id %}
 
-      uncompressed_proof -> (LABEL | "?"):+
-      compressed_proof -> "(" LABEL:* ")" COMPRESSED_PROOF_BLOCK+
+      uncompressed_proof -> (LABEL | "?") (__ (LABEL | "?")):* {% ([l, list]) => 
+        l.concat(list.map(([ws, [v]]) => v)) 
+      %}
+      compressed_proof -> "(" (__ LABEL):* _ ")" COMPRESSED_PROOF_BLOCK+
 
       typecode -> constant
 
@@ -143,7 +148,8 @@ describe("Parser", () => {
 
   it("$( comment $)", () => {    
     assertThat(parse("$( comment $)"))
-      .equalsTo([]);
+      .equalsTo([
+      ]);
   });
 
   it("$v a $.", () => {    
@@ -331,6 +337,13 @@ describe("Parser", () => {
           ["min", "$e", ["|-"], ["P"], "$."],
           ["maj", "$e", ["|-"], ["(", "P", "->", "Q", ")"], "$."],          
         ], "$}"]
+      ]]);
+    });
+
+  it("th1 $p |- t = t $= tt tze $.", () => {    
+    assertThat(parse("th1 $p |- t = t $= tt tze $."))
+      .equalsTo([[
+        ["th1", "$p", ["|-"], ["t", "=", "t"], "$=", ["tt", "tze"], "$."]
       ]]);
     });
 
