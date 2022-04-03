@@ -41,10 +41,12 @@ describe("Parser", () => {
               variable_stmt | 
               disjoint_stmt |
               hypothesis_stmt | 
-              assert_stmt
+              assert_stmt 
 
       # A block. You can have 0 statements in a block.
-      block -> "$\{" stmt:* "$\}"
+      block -> "$\{" (__ stmt):* __ "$\}" {% ([b1, list, ws, b2]) => 
+        [b1, list.map(([ws, v]) => v), b2] 
+      %}
 
       # Variable symbols declaration.
       variable_stmt -> "$v" _ variable (__ variable):* _ "$." {% ([v, ws1, a, list, ws2, d]) => 
@@ -61,7 +63,9 @@ describe("Parser", () => {
       floating_stmt -> LABEL _ "$f" _ typecode _ variable _ "$." {% ([l, ws1, f, ws2, t, ws3, v, ws4, d]) => [l, f, t, v, d] %}
 
       # Essential (logical) hypothesis.
-      essential_stmt -> LABEL "$e" typecode MATH_SYMBOL:* "$."
+      essential_stmt -> LABEL __ "$e" __ typecode _ (__ MATH_SYMBOL):* __ "$." {% ([l, ws1, e, ws2, t, ws3, list, ws4, d]) => 
+        [l, e, t, list.map(([ws, v]) => v), d] 
+      %}
 
       assert_stmt -> axiom_stmt | provable_stmt
 
@@ -104,7 +108,7 @@ describe("Parser", () => {
       # Define whitespace between tokens. The -> SKIP
       # means that when whitespace is seen, it is
       # skipped and we simply read again.
-      WHITESPACE -> (_WHITECHAR:+ | _COMMENT)
+      WHITESPACE -> (_WHITECHAR | _COMMENT)
 
       # Comments. $( ... $) and do not nest.
       _COMMENT -> "$(" _WHITECHAR:+ (PRINTABLE_SEQUENCE):* _WHITECHAR:+ "$)" _WHITECHAR
@@ -113,8 +117,8 @@ describe("Parser", () => {
       _WHITECHAR -> [ \t\\n\v\f] {% id %}
 
       # Whitespace: _ is optional, __ is mandatory.
-      _  -> WHITESPACE:* {% function(d) {return null;} %}
-      __ -> WHITESPACE:+ {% function(d) {return null;} %}
+      _  -> WHITESPACE:* {% (d) => null %}
+      __ -> WHITESPACE:+ {% (d) => null %}
 
   `);
 
@@ -228,6 +232,57 @@ describe("Parser", () => {
         "wim", "$a", ["wff"], ["(", "P", "->", "Q", ")"], "$."
       ]]]]]]);
   });
+  
+  it("a1 $a |- ( t = r -> ( t = s -> r = s ) ) $.", () => {    
+    assertThat(parse("a1 $a |- ( t = r -> ( t = s -> r = s ) ) $."))
+      .equalsTo([[[[[[
+        "a1", "$a", ["|-"], ["(", "t", "=", "r", "->", "(", "t", "=", "s", "->", "r", "=", "s", ")", ")"], "$."
+      ]]]]]]);
+  });
+
+  it("a2 $a |- ( t + 0 ) = t $.", () => {    
+    assertThat(parse("a2 $a |- ( t + 0 ) = t $."))
+      .equalsTo([[[[[[
+        "a2", "$a", ["|-"], ["(", "t", "+", "0", ")", "=", "t"], "$."
+      ]]]]]]);
+    });
+
+  it("${ $}", () => {
+    assertThat(parse("${ $}"))
+      .equalsTo([[[[[
+        "${", [], "$}"
+      ]]]]]);
+  });
+
+  it("${  $}", () => {
+    assertThat(parse("${  $}"))
+      .equalsTo([[[[[
+        "${", [], "$}"
+      ]]]]]);
+  });
+
+  it("min $e |- P $.", () => {    
+    assertThat(parse("min $e |- P $."))
+      .equalsTo([[[[[[
+        "min", "$e", ["|-"], ["P"], "$."
+      ]]]]]]);
+  });
+
+  it("maj $e |- ( P -> Q ) $.", () => {    
+    assertThat(parse("maj $e |- ( P -> Q ) $."))
+      .equalsTo([[[[[[
+        "maj", "$e", ["|-"], ["(", "P", "->", "Q", ")"], "$."
+      ]]]]]]);
+    });
+
+  it("${ min $e |- P $. $}", () => {    
+    assertThat(parse("${ min $e |- P $. $}"))
+      .equalsTo([[[[[
+        "${", [
+          [[["min", "$e", ["|-"], ["P"], "$."]]]
+        ], "$}"
+      ]]]]]);
+    });
 
 });
 
