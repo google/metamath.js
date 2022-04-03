@@ -32,7 +32,7 @@ describe("Parser", () => {
       include_stmt -> "$[" filename "$]"
 
       # Constant symbols declaration.
-      constant_stmt -> "$c" _ constant (__ constant):* _ "$."
+      constant_stmt -> "$c" _ constant (__ constant):* _ "$." {% ([c, ws1, cons, list, ws2, d]) => [c, cons, list, d] %}
 
       # A normal statement can occur in any scope.
       stmt -> block | 
@@ -160,37 +160,37 @@ describe("Parser", () => {
 
   it("$c a $.", () => {    
     assertThat(parse("$c a $."))
-      .equalsTo([[[["$c", null, ["a"], [], null, "$."]]]]);
+      .equalsTo([[[["$c", ["a"], [], "$."]]]]);
   });
 
   it("$c a b $.", () => {    
     assertThat(parse("$c a b $."))
-      .equalsTo([[[["$c", null, ["a"], [[null, ["b"]]], null, "$."]]]]);
+      .equalsTo([[[["$c", ["a"], [[null, ["b"]]], "$."]]]]);
   });
 
   it("$c 0 $.", () => {    
     assertThat(parse("$c 0 $."))
-      .equalsTo([[[["$c", null, ["0"], [], null, "$."]]]]);
+      .equalsTo([[[["$c", ["0"], [], "$."]]]]);
   });
 
   it("$c + $.", () => {    
     assertThat(parse("$c + $."))
-      .equalsTo([[[["$c", null, ["+"], [], null, "$."]]]]);
+      .equalsTo([[[["$c", ["+"], [], "$."]]]]);
   });
 
   it("$c = $.", () => {    
     assertThat(parse("$c = $."))
-      .equalsTo([[[["$c", null, ["="], [], null, "$."]]]]);
+      .equalsTo([[[["$c", ["="], [], "$."]]]]);
   });
 
   it("$c -> $.", () => {    
     assertThat(parse("$c -> $."))
-      .equalsTo([[[["$c", null, ["->"], [], null, "$."]]]]);
+      .equalsTo([[[["$c", ["->"], [], "$."]]]]);
   });
 
   it("$c 0 + = -> ( ) term wff |- $.", () => {    
     assertThat(parse("$c 0 + = -> ( ) term wff |- $."))
-      .equalsTo([[[["$c", null, ["0"], [
+      .equalsTo([[[["$c", ["0"], [
         [null, ["+"]],
         [null, ["="]],
         [null, ["->"]],
@@ -199,7 +199,7 @@ describe("Parser", () => {
         [null, ["term"]],
         [null, ["wff"]],
         [null, ["|-"]],
-      ], null, "$."]]]]);
+      ], "$."]]]]);
   });
 
   it("tt $f term t $.", () => {    
