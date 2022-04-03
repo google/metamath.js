@@ -137,6 +137,17 @@ describe("Parser", () => {
     assertThat(parse("$v ab $."))
       .equalsTo([[null, [[[["$v", null, ["ab"], [], null, "$."]]]], null]]);
   });
+
+  it("$v a b $.", () => {    
+    assertThat(parse("$v a b $."))
+      .equalsTo([[null, [[[["$v", null, ["a"], [[null, ["b"]]], null, "$."]]]], null]]);
+  });
+
+  it("$v a b c $.", () => {    
+    assertThat(parse("$v a b c $."))
+      .equalsTo([[null, [[[["$v", null, ["a"], [[null, ["b"]], [null, ["c"]]], null, "$."]]]], null]]);
+  });
+
 });
 
 
