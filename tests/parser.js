@@ -23,7 +23,7 @@ describe("Parser", () => {
     return module.exports;
   }
 
-  it("helloworld", () => {    
+  it("$[helloworld$]", () => {    
     const grammar = compileGrammar(`
       database -> outermost_scope_stmt:*
       outermost_scope_stmt -> include_stmt | constant_stmt | stmt
@@ -85,10 +85,10 @@ describe("Parser", () => {
 
       PRINTABLE_SEQUENCE -> _PRINTABLE_CHARACTER:+
 
-      MATH_SYMBOL -> (_PRINTABLE_CHARACTER):+
+      MATH_SYMBOL -> _PRINTABLE_CHARACTER:+ {% ([str]) => str.join("") %}
 
       # ASCII non-whitespace printable characters
-      # _PRINTABLE-CHARACTER -> [#x21-#x7e]
+      _PRINTABLE_CHARACTER -> [A-Za-z0-9]
 
       LABEL -> ( _LETTER_OR_DIGIT | "." | "-" | "_" ):+
 
@@ -106,8 +106,6 @@ describe("Parser", () => {
 
       # Whitespace
       _WHITECHAR -> [ \t\\n\v\f] {% id %}
-
-      filename -> "helloworld"
 
     `);
     const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
