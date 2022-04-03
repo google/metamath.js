@@ -372,7 +372,40 @@ describe("Parser", () => {
       ["we", "$a", ["wff"], [], "$."]
     ]]);
   });
-  
+
+  it("P -> Q. P. |- Q.", () => {
+    assertThat(parse(`
+      $( P, Q and R are variables $)
+      $v P Q R $.
+
+      $( "->", "(", ")", "|-" and "wff" are tokens $)
+      $c -> ( ) |- wff $.
+
+      $( P is a wff $)
+      wp $f wff P $.
+
+      $( Q is a wff $)
+      wq $f wff Q $.
+
+      $( major premise: P -> Q $)
+      maj $e |- ( P -> Q ) $.
+
+      $( minor premise: P $)
+      min $e |- P $.
+
+      $( consequent $)
+      mp $a |- Q $.
+    `)).equalsTo([[
+      ["$v", ["P", "Q", "R"], "$."],
+      ["$c", ["->", "(", ")", "|-", "wff"], "$."],
+      ["wp", "$f", ["wff"], "P", "$."],
+      ["wq", "$f", ["wff"], "Q", "$."],
+      ["maj", "$e", ["|-"], ["(", "P", "->", "Q", ")"], "$."],      
+      ["min", "$e", ["|-"], ["P"], "$."],      
+      ["mp", "$a", ["|-"], ["Q"], "$."],      
+    ]]);
+  });
+
   it("MIU", () => {    
     assertThat(parse(`
       $( miu.mm  20-Oct-2008 $)
