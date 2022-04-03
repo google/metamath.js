@@ -34,10 +34,10 @@ describe("Parser", () => {
 
       # File inclusion command; process file as a database.
       # Databases should NOT have a comment in the filename.
-      include_stmt -> "$[" filename "$]"
+      include_stmt -> "$[" __ filename __ "$]" {% ([b1, ws1, f, ws2, b2]) => [b1, f, b2] %}
 
       # Constant symbols declaration.
-      constant_stmt -> "$c" _ constant (__ constant):* _ "$." {% ([c, ws1, cons, list, ws2, d]) => 
+      constant_stmt -> "$c" __ constant (__ constant):* __ "$." {% ([c, ws1, cons, list, ws2, d]) => 
         [c, [cons].concat(list.map(([ws, v]) => v)), d]
       %}
 
@@ -54,7 +54,7 @@ describe("Parser", () => {
       %}
 
       # Variable symbols declaration.
-      variable_stmt -> "$v" _ variable (__ variable):* _ "$." {% ([v, ws1, a, list, ws2, d]) => 
+      variable_stmt -> "$v" __ variable (__ variable):* __ "$." {% ([v, ws1, a, list, ws2, d]) => 
         [v, [a].concat(list.map(([ws, arg]) => arg)), d] 
       %}
 
@@ -65,17 +65,17 @@ describe("Parser", () => {
       hypothesis_stmt -> floating_stmt {% id %} | essential_stmt {% id %}
 
       # Floating (variable-type) hypothesis.
-      floating_stmt -> LABEL _ "$f" _ typecode _ variable _ "$." {% ([l, ws1, f, ws2, t, ws3, v, ws4, d]) => [l, f, t, v, d] %}
+      floating_stmt -> LABEL __ "$f" __ typecode __ variable __ "$." {% ([l, ws1, f, ws2, t, ws3, v, ws4, d]) => [l, f, t, v, d] %}
 
       # Essential (logical) hypothesis.
-      essential_stmt -> LABEL __ "$e" __ typecode _ (__ MATH_SYMBOL):* __ "$." {% ([l, ws1, e, ws2, t, ws3, list, ws4, d]) => 
+      essential_stmt -> LABEL __ "$e" __ typecode (__ MATH_SYMBOL):* __ "$." {% ([l, ws1, e, ws2, t, list, ws4, d]) => 
         [l, e, t, list.map(([ws, v]) => v), d] 
       %}
 
       assert_stmt -> axiom_stmt {% id %} | provable_stmt {% id %}
 
       # Axiomatic assertion.
-      axiom_stmt -> LABEL _ "$a" _ typecode _ (__ MATH_SYMBOL):* _ "$." {% ([l, ws1, a, ws2, t, ws3, list, ws4, d]) => 
+      axiom_stmt -> LABEL __ "$a" __ typecode (__ MATH_SYMBOL):* __ "$." {% ([l, ws1, a, ws2, t, list, ws4, d]) => 
         [l, a, t, list.map(([ws, v]) => v), d] 
       %}
 
@@ -92,7 +92,7 @@ describe("Parser", () => {
       uncompressed_proof -> (LABEL | "?") (__ (LABEL | "?")):* {% ([l, list]) => 
         l.concat(list.map(([ws, [v]]) => v)) 
       %}
-      compressed_proof -> "(" (__ LABEL):* _ ")" COMPRESSED_PROOF_BLOCK+
+      compressed_proof -> "(" (__ LABEL):* __ ")" COMPRESSED_PROOF_BLOCK+
 
       typecode -> constant
 
@@ -116,13 +116,11 @@ describe("Parser", () => {
 
       COMPRESSED_PROOF_BLOCK -> ([A-Z] | "?"):+
 
-      # Define whitespace between tokens. The -> SKIP
-      # means that when whitespace is seen, it is
-      # skipped and we simply read again.
+      # Define whitespace between tokens.
       WHITESPACE -> (_WHITECHAR | _COMMENT)
 
       # Comments. $( ... $) and do not nest.
-      _COMMENT -> "$(" _WHITECHAR:+ (PRINTABLE_SEQUENCE):* _WHITECHAR:+ "$)" _WHITECHAR
+      _COMMENT -> "$(" (_WHITECHAR:+ [!-#%-~]:+):* _WHITECHAR:+ "$)" _WHITECHAR
 
       # Whitespace
       _WHITECHAR -> [ \t\\n\v\f] {% id %}
@@ -139,8 +137,8 @@ describe("Parser", () => {
     return parser.results;
   }
   
-  it("$[filename$]", () => {    
-    assertThat(parse("$[filename$]"))
+  it("$[ filename $]", () => {    
+    assertThat(parse("$[ filename $]"))
       .equalsTo([[
         ["$[", "filename", "$]"]
       ]]);
@@ -344,6 +342,73 @@ describe("Parser", () => {
     assertThat(parse("th1 $p |- t = t $= tt tze $."))
       .equalsTo([[
         ["th1", "$p", ["|-"], ["t", "=", "t"], "$=", ["tt", "tze"], "$."]
+      ]]);
+    });
+
+  it("$c M I U |- wff $. $( Declare constants $)", () => {
+    assertThat(parse(`
+      $c M I U |- wff $. $( Declare constants $)
+    `)).equalsTo([[
+      ["$c", ["M", "I", "U", "|-", "wff"], "$."]
+    ]]);
+  });
+  
+  it("$( $) $( $) $c a $.", () => {
+    assertThat(parse(`
+      $( $)
+      $( $)
+      $c a $.
+    `)).equalsTo([[
+      ["$c", ["a"], "$."]
+    ]]);
+  });
+  
+  it("$c a $. we $a wff $.", () => {
+    assertThat(parse(`
+      $c a $.
+      we $a wff $.
+    `)).equalsTo([[
+      ["$c", ["a"], "$."],
+      ["we", "$a", ["wff"], [], "$."]
+    ]]);
+  });
+  
+  it.skip("miu", () => {    
+    assertThat(parse(`
+      $( miu.mm  20-Oct-2008 $)
+
+      $( The MIU-system:  A simple formal system $)
+
+      $( First, we declare the constant symbols of the language.
+         Note that we need two symbols to distinguish the assertion
+         that a sequence is a wff from the assertion that it is a
+         theorem; we have arbitrarily chosen "wff" and "|-". $)
+
+       $c M I U |- wff $. $( Declare constants $)
+
+       $( Next, we declare some variables. $)
+
+       $v x y $.
+
+       $( Throughout our theory, we shall assume that these
+          variables represent wffs. $)
+
+       wx $f wff x $.
+       wy $f wff y $.
+
+       $( Define MIU-wffs.  We allow the empty sequence to be a
+          wff. $)
+
+       $( The empty sequence is a wff. $)
+
+       we $a wff $.
+    `))
+      .equalsTo([[
+        ["$c", ["M", "I", "U", "|-", "wff"], "$."],
+        ["$v", ["x", "y"], "$."],
+        ["wx", "$f", ["wff"], "x", "$."],
+        ["wy", "$f", ["wff"], "y", "$."],
+        ["we", "$a", ["wff"], [], "$."],
       ]]);
     });
 
