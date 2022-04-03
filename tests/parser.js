@@ -54,7 +54,7 @@ describe("Parser", () => {
       hypothesis_stmt -> floating_stmt | essential_stmt
 
       # Floating (variable-type) hypothesis.
-      floating_stmt -> LABEL "$f" typecode variable "$."
+      floating_stmt -> LABEL _ "$f" _ typecode _ variable _ "$."
 
       # Essential (logical) hypothesis.
       essential_stmt -> LABEL "$e" typecode MATH_SYMBOL:* "$."
@@ -62,7 +62,7 @@ describe("Parser", () => {
       assert_stmt -> axiom_stmt | provable_stmt
 
       # Axiomatic assertion.
-      axiom_stmt -> LABEL "$a" typecode MATH_SYMBOL:* "$."
+      axiom_stmt -> LABEL _ "$a" _ typecode _ (__ MATH_SYMBOL):* _ "$."
 
       # Provable assertion.
       provable_stmt -> LABEL "$p" typecode MATH_SYMBOL:* "$=" proof "$."
@@ -89,7 +89,7 @@ describe("Parser", () => {
       # ASCII non-whitespace printable characters
       _PRINTABLE_CHARACTER -> [!-~]
 
-      LABEL -> ( _LETTER_OR_DIGIT | "." | "-" | "_" ):+
+      LABEL -> ( _LETTER_OR_DIGIT | "." | "-" | "_" ):+ {% ([str]) => str.join("") %}
 
       _LETTER_OR_DIGIT -> [A-Za-z0-9]
 
@@ -200,6 +200,34 @@ describe("Parser", () => {
         [null, ["wff"]],
         [null, ["|-"]],
       ], null, "$."]]], null]]);
+  });
+
+  it("tt $f term t $.", () => {    
+    assertThat(parse("tt $f term t $."))
+      .equalsTo([[null, [[[[[
+        "tt", null, "$f", null, [["term"]], null, ["t"], null, "$."
+      ]]]]], null]]);
+  });
+
+  it("weq $a wff t $.", () => {    
+    assertThat(parse("weq $a wff t $."))
+      .equalsTo([[null, [[[[[
+        "weq", null, "$a", null, [["wff"]], null, [[null, "t"]], null, "$."
+      ]]]]], null]]);
+  });
+
+  it("weq $a wff t u $.", () => {    
+    assertThat(parse("weq $a wff t u $."))
+      .equalsTo([[null, [[[[[
+        "weq", null, "$a", null, [["wff"]], null, [[null, "t"], [null, "u"]], null, "$."
+      ]]]]], null]]);
+  });
+
+  it("weq $a wff t = r $.", () => {    
+    assertThat(parse("weq $a wff t = r $."))
+      .equalsTo([[null, [[[[[
+        "weq", null, "$a", null, [["wff"]], null, [[null, "t"], [null, "="], [null, "r"]], null, "$."
+      ]]]]], null]]);
   });
 
 });
