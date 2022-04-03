@@ -373,7 +373,7 @@ describe("Parser", () => {
     ]]);
   });
   
-  it.skip("miu", () => {    
+  it("MIU", () => {    
     assertThat(parse(`
       $( miu.mm  20-Oct-2008 $)
 
@@ -400,8 +400,62 @@ describe("Parser", () => {
           wff. $)
 
        $( The empty sequence is a wff. $)
-
        we $a wff $.
+
+       $( "M" after any wff is a wff. $)
+       wM $a wff x M $.
+
+       $( "I" after any wff is a wff. $)
+       wI $a wff x I $.
+
+       $( "U" after any wff is a wff. $)
+       wU   $a wff x U $.
+
+       $( If "x" and "y" are wffs, so is "x y".  This allows the conclusion of
+       IV to be provable as a wff before substitutions into it, for those
+       parsers requiring it.  (Added per suggestion of Mel O'Cat 4-Dec-04.) $)
+       wxy  $a wff x y $.
+
+       $( Assert the axiom. $)
+       ax   $a |- M I $.
+
+       $( Assert the rules. $)
+       $\{ 
+         Ia   $e |- x I $.
+
+         $( Given any theorem ending with "I", it remains a theorem
+            if "U" is added after it.  (We distinguish the label I_
+            from the math symbol I to conform to the 24-Jun-2006
+            Metamath spec change.) $)
+            I_    $a |- x I U $.
+       $\}
+
+       $\{
+         IIa  $e |- M x $.
+         $( Given any theorem starting with "M", it remains a theorem
+           if the part after the "M" is added again after it. $)
+         II   $a |- M x x $.
+       $\}
+
+       $\{
+         IIIa $e |- x I I I y $.
+         $( Given any theorem with "III" in the middle, it remains a
+           theorem if the "III" is replace with "U". $)
+         III  $a |- x U y $.
+       $\}
+
+       $\{
+         IVa  $e |- x U U y $.
+         $( Given any theorem with "UU" in the middle, it remains a
+           theorem if the "UU" is deleted. $)
+         IV   $a |- x y $.
+       $\}
+
+       $( Now we prove the theorem MUIIU.  You may be interested in
+          comparing this proof with that of Hofstadter (pp. 35 - 36). $)
+       theorem1  $p |- M U I I U $=
+         we wM wU wI we wI wU we wU wI wU we wM we wI wU we wM
+         wI wI wI we wI wI we wI ax II II I_ III II IV $.
     `))
       .equalsTo([[
         ["$c", ["M", "I", "U", "|-", "wff"], "$."],
@@ -409,6 +463,33 @@ describe("Parser", () => {
         ["wx", "$f", ["wff"], "x", "$."],
         ["wy", "$f", ["wff"], "y", "$."],
         ["we", "$a", ["wff"], [], "$."],
+        ["wM", "$a", ["wff"], ["x", "M"], "$."],
+        ["wI", "$a", ["wff"], ["x", "I"], "$."],        
+        ["wU", "$a", ["wff"], ["x", "U"], "$."],        
+        ["wxy", "$a", ["wff"], ["x", "y"], "$."],        
+        ["ax", "$a", ["|-"], ["M", "I"], "$."],
+        ["${", [
+          ["Ia", "$e", ["|-"], ["x", "I"], "$."],
+          ["I_", "$a", ["|-"], ["x", "I", "U"], "$."],
+        ], "$}"],
+        ["${", [
+          ["IIa", "$e", ["|-"], ["M", "x"], "$."],
+          ["II", "$a", ["|-"], ["M", "x", "x"], "$."],
+        ], "$}"],
+        ["${", [
+          ["IIIa", "$e", ["|-"], ["x", "I", "I", "I", "y"], "$."],
+          ["III", "$a", ["|-"], ["x", "U", "y"], "$."],
+        ], "$}"],
+        ["${", [
+          ["IVa", "$e", ["|-"], ["x", "U", "U", "y"], "$."],
+          ["IV", "$a", ["|-"], ["x", "y"], "$."],
+        ], "$}"],
+        ["theorem1", "$p", ["|-"], ["M", "U", "I", "I", "U"], "$=", [
+          "we", "wM", "wU", "wI", "we", "wI", "wU", "we", "wU", "wI",
+          "wU", "we", "wM", "we", "wI", "wU", "we", "wM", "wI", "wI",
+          "wI", "we", "wI", "wI", "we", "wI", "ax", "II", "II", "I_",
+          "III", "II", "IV"
+        ], "$."],
       ]]);
     });
 
