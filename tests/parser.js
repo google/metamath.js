@@ -94,7 +94,7 @@ describe("Parser", () => {
       %}
       compressed_proof -> "(" (__ LABEL):* __ ")" COMPRESSED_PROOF_BLOCK+
 
-      typecode -> constant
+      typecode -> constant {% id %}
 
       filename -> MATH_SYMBOL {% id %}
       constant -> MATH_SYMBOL {% id %}
@@ -245,49 +245,49 @@ describe("Parser", () => {
   it("tt $f term t $.", () => {    
     assertThat(parse("tt $f term t $."))
       .equalsTo([[
-        ["tt", "$f", ["term"], "t", "$."]
+        ["tt", "$f", "term", "t", "$."]
       ]]);
   });
 
   it("weq $a wff t $.", () => {    
     assertThat(parse("weq $a wff t $."))
       .equalsTo([[
-        ["weq", "$a", ["wff"], ["t"], "$."]
+        ["weq", "$a", "wff", ["t"], "$."]
       ]]);
   });
 
   it("weq $a wff t u $.", () => {    
     assertThat(parse("weq $a wff t u $."))
       .equalsTo([[
-        ["weq", "$a", ["wff"], ["t", "u"], "$."]
+        ["weq", "$a", "wff", ["t", "u"], "$."]
       ]]);
   });
 
   it("weq $a wff t = r $.", () => {    
     assertThat(parse("weq $a wff t = r $."))
       .equalsTo([[
-        ["weq", "$a", ["wff"], ["t", "=", "r"], "$."]
+        ["weq", "$a", "wff", ["t", "=", "r"], "$."]
       ]]);
   });
 
   it("wim $a wff ( P -> Q ) $.", () => {    
     assertThat(parse("wim $a wff ( P -> Q ) $."))
       .equalsTo([[
-        ["wim", "$a", ["wff"], ["(", "P", "->", "Q", ")"], "$."]
+        ["wim", "$a", "wff", ["(", "P", "->", "Q", ")"], "$."]
       ]]);
   });
   
   it("a1 $a |- ( t = r -> ( t = s -> r = s ) ) $.", () => {    
     assertThat(parse("a1 $a |- ( t = r -> ( t = s -> r = s ) ) $."))
       .equalsTo([[
-        ["a1", "$a", ["|-"], ["(", "t", "=", "r", "->", "(", "t", "=", "s", "->", "r", "=", "s", ")", ")"], "$."]
+        ["a1", "$a", "|-", ["(", "t", "=", "r", "->", "(", "t", "=", "s", "->", "r", "=", "s", ")", ")"], "$."]
       ]]);
   });
 
   it("a2 $a |- ( t + 0 ) = t $.", () => {    
     assertThat(parse("a2 $a |- ( t + 0 ) = t $."))
       .equalsTo([[
-        ["a2", "$a", ["|-"], ["(", "t", "+", "0", ")", "=", "t"], "$."]
+        ["a2", "$a", "|-", ["(", "t", "+", "0", ")", "=", "t"], "$."]
       ]]);
     });
 
@@ -308,14 +308,14 @@ describe("Parser", () => {
   it("min $e |- P $.", () => {    
     assertThat(parse("min $e |- P $."))
       .equalsTo([[
-        ["min", "$e", ["|-"], ["P"], "$."]
+        ["min", "$e", "|-", ["P"], "$."]
       ]]);
   });
 
   it("maj $e |- ( P -> Q ) $.", () => {    
     assertThat(parse("maj $e |- ( P -> Q ) $."))
       .equalsTo([[
-        ["maj", "$e", ["|-"], ["(", "P", "->", "Q", ")"], "$."]
+        ["maj", "$e", "|-", ["(", "P", "->", "Q", ")"], "$."]
       ]]);
     });
 
@@ -323,7 +323,7 @@ describe("Parser", () => {
     assertThat(parse("${ min $e |- P $. $}"))
       .equalsTo([[
         ["${", [
-          ["min", "$e", ["|-"], ["P"], "$."]
+          ["min", "$e", "|-", ["P"], "$."]
         ], "$}"]
       ]]);
     });
@@ -332,8 +332,8 @@ describe("Parser", () => {
     assertThat(parse("${ min $e |- P $. maj $e |- ( P -> Q ) $. $}"))
       .equalsTo([[
         ["${", [
-          ["min", "$e", ["|-"], ["P"], "$."],
-          ["maj", "$e", ["|-"], ["(", "P", "->", "Q", ")"], "$."],          
+          ["min", "$e", "|-", ["P"], "$."],
+          ["maj", "$e", "|-", ["(", "P", "->", "Q", ")"], "$."],          
         ], "$}"]
       ]]);
     });
@@ -341,7 +341,7 @@ describe("Parser", () => {
   it("th1 $p |- t = t $= tt tze $.", () => {    
     assertThat(parse("th1 $p |- t = t $= tt tze $."))
       .equalsTo([[
-        ["th1", "$p", ["|-"], ["t", "=", "t"], "$=", ["tt", "tze"], "$."]
+        ["th1", "$p", "|-", ["t", "=", "t"], "$=", ["tt", "tze"], "$."]
       ]]);
     });
 
@@ -369,7 +369,7 @@ describe("Parser", () => {
       we $a wff $.
     `)).equalsTo([[
       ["$c", ["a"], "$."],
-      ["we", "$a", ["wff"], [], "$."]
+      ["we", "$a", "wff", [], "$."]
     ]]);
   });
 
@@ -398,11 +398,11 @@ describe("Parser", () => {
     `)).equalsTo([[
       ["$v", ["P", "Q", "R"], "$."],
       ["$c", ["->", "(", ")", "|-", "wff"], "$."],
-      ["wp", "$f", ["wff"], "P", "$."],
-      ["wq", "$f", ["wff"], "Q", "$."],
-      ["maj", "$e", ["|-"], ["(", "P", "->", "Q", ")"], "$."],      
-      ["min", "$e", ["|-"], ["P"], "$."],      
-      ["mp", "$a", ["|-"], ["Q"], "$."],      
+      ["wp", "$f", "wff", "P", "$."],
+      ["wq", "$f", "wff", "Q", "$."],
+      ["maj", "$e", "|-", ["(", "P", "->", "Q", ")"], "$."],      
+      ["min", "$e", "|-", ["P"], "$."],      
+      ["mp", "$a", "|-", ["Q"], "$."],      
     ]]);
   });
 
@@ -493,31 +493,31 @@ describe("Parser", () => {
       .equalsTo([[
         ["$c", ["M", "I", "U", "|-", "wff"], "$."],
         ["$v", ["x", "y"], "$."],
-        ["wx", "$f", ["wff"], "x", "$."],
-        ["wy", "$f", ["wff"], "y", "$."],
-        ["we", "$a", ["wff"], [], "$."],
-        ["wM", "$a", ["wff"], ["x", "M"], "$."],
-        ["wI", "$a", ["wff"], ["x", "I"], "$."],        
-        ["wU", "$a", ["wff"], ["x", "U"], "$."],        
-        ["wxy", "$a", ["wff"], ["x", "y"], "$."],        
-        ["ax", "$a", ["|-"], ["M", "I"], "$."],
+        ["wx", "$f", "wff", "x", "$."],
+        ["wy", "$f", "wff", "y", "$."],
+        ["we", "$a", "wff", [], "$."],
+        ["wM", "$a", "wff", ["x", "M"], "$."],
+        ["wI", "$a", "wff", ["x", "I"], "$."],        
+        ["wU", "$a", "wff", ["x", "U"], "$."],        
+        ["wxy", "$a", "wff", ["x", "y"], "$."],        
+        ["ax", "$a", "|-", ["M", "I"], "$."],
         ["${", [
-          ["Ia", "$e", ["|-"], ["x", "I"], "$."],
-          ["I_", "$a", ["|-"], ["x", "I", "U"], "$."],
+          ["Ia", "$e", "|-", ["x", "I"], "$."],
+          ["I_", "$a", "|-", ["x", "I", "U"], "$."],
         ], "$}"],
         ["${", [
-          ["IIa", "$e", ["|-"], ["M", "x"], "$."],
-          ["II", "$a", ["|-"], ["M", "x", "x"], "$."],
+          ["IIa", "$e", "|-", ["M", "x"], "$."],
+          ["II", "$a", "|-", ["M", "x", "x"], "$."],
         ], "$}"],
         ["${", [
-          ["IIIa", "$e", ["|-"], ["x", "I", "I", "I", "y"], "$."],
-          ["III", "$a", ["|-"], ["x", "U", "y"], "$."],
+          ["IIIa", "$e", "|-", ["x", "I", "I", "I", "y"], "$."],
+          ["III", "$a", "|-", ["x", "U", "y"], "$."],
         ], "$}"],
         ["${", [
-          ["IVa", "$e", ["|-"], ["x", "U", "U", "y"], "$."],
-          ["IV", "$a", ["|-"], ["x", "y"], "$."],
+          ["IVa", "$e", "|-", ["x", "U", "U", "y"], "$."],
+          ["IV", "$a", "|-", ["x", "y"], "$."],
         ], "$}"],
-        ["theorem1", "$p", ["|-"], ["M", "U", "I", "I", "U"], "$=", [
+        ["theorem1", "$p", "|-", ["M", "U", "I", "I", "U"], "$=", [
           "we", "wM", "wU", "wI", "we", "wI", "wU", "we", "wU", "wI",
           "wU", "we", "wM", "we", "wI", "wU", "we", "wM", "wI", "wI",
           "wI", "we", "wI", "wI", "we", "wI", "ax", "II", "II", "I_",
@@ -525,6 +525,123 @@ describe("Parser", () => {
         ], "$."],
       ]]);
     });
+
+  it(" ( s -> ( r -> p ) )", () => {
+    assertThat(parse(`
+      $c ( ) -> wff $.
+      $v p q r s $.
+      wp $f wff p $.
+      wq $f wff q $.
+      wr $f wff r $.
+      ws $f wff s $.
+      w2 $a wff ( p -> q ) $.
+      wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
+    `)).equalsTo([[
+      ["$c", ["(", ")", "->", "wff"], "$."],
+      ["$v", ["p", "q", "r", "s"], "$."],
+      ["wp", "$f", "wff", "p", "$."],
+      ["wq", "$f", "wff", "q", "$."],
+      ["wr", "$f", "wff", "r", "$."],
+      ["ws", "$f", "wff", "s", "$."],
+      ["w2", "$a", "wff", ["(", "p", "->", "q", ")"], "$."],
+      ["wnew", "$p", "wff", ["(", "s", "->", "(", "r", "->", "p",  ")", ")"], "$=",
+       ["ws", "wr", "wp", "w2", "w2"],
+       "$."],
+    ]]);
+  });
+
+  it(" ( s -> ( r -> p ) )", () => {
+    const [code] = parse(`
+      $c ( ) -> wff $.
+      $v p q r s $.
+      wp $f wff p $.
+      wq $f wff q $.
+      wr $f wff r $.
+      ws $f wff s $.
+      w2 $a wff ( p -> q ) $.
+      wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
+    `);
+
+    const constants = [];
+    const variables = [];
+    const hypothesis = {};
+    const axioms = {};
+    const theorems = {};
+
+    const labels = {};
+    
+    for (const stmt of code) {
+      const [first, second] = stmt;
+      if (first == "$c") {
+        const [, vars] = stmt;
+        constants.push(...vars);
+      } else if (first == "$v") {
+        const [, vars] = stmt;        
+        variables.push(...vars);
+      } else if (second == "$f") {
+        const [label, f, types, variable] = stmt;
+        hypothesis[variable] = label;
+        labels[label] = f;
+      } else if (second == "$a") {
+        const [label, a, types, rule] = stmt;
+        const mandatory = rule
+              .filter((r) => variables.includes(r))
+              .map((r) => {
+                if (!hypothesis[r]) throw new Error(`Unknown variable type: ${r}`);
+                return hypothesis[r]
+              });
+        
+        axioms[label] = [types, rule, mandatory];
+        labels[label] = a;
+      } else if (second == "$p") {
+        const [label, p, types, theorem, d, proof] = stmt;
+        const mandatory = theorem
+              .filter((r) => variables.includes(r))
+              .map((r) => {
+                if (!hypothesis[r]) throw new Error(`Unknown variable type: ${r}`);
+                return hypothesis[r]
+              });
+
+
+        // console.log(proof);
+
+        const stack = [];
+        
+        for (const step of proof) {
+          // console.log(step);
+          if (labels[step] == "$f") {
+            //console.log(hypothesis[step]);
+            stack.push(step);
+          } else if (labels[step] == "$a") {
+            // console.log("hi");
+            //console.log(axioms[step]);
+          }
+        }
+        
+        theorems[label] = [types, theorem, mandatory, proof];
+      }
+    }
+
+    assertThat(constants)
+      .equalsTo(["(", ")", "->", "wff"]);
+    assertThat(variables)
+      .equalsTo(["p", "q", "r", "s"]);
+    assertThat(hypothesis)
+      .equalsTo({"p": "wp", "q": "wq", "r": "wr", "s": "ws"});
+    assertThat(axioms)
+      .equalsTo({"w2": [
+        "wff",
+        ["(", "p", "->", "q", ")"],
+        ["wp", "wq"]
+      ]});
+    assertThat(theorems)
+      .equalsTo({"wnew": [
+        "wff",
+        ["(", "s", "->", "(", "r", "->", "p", ")", ")"],
+        ["ws", "wr", "wp"],
+        ["ws", "wr", "wp", "w2", "w2"]
+      ]});
+  });
 
 });
 
