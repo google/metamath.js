@@ -526,7 +526,7 @@ describe("Parser", () => {
       ]]);
     });
 
-  it(" ( s -> ( r -> p ) )", () => {
+  it("( s -> ( r -> p ) )", () => {
     assertThat(parse(`
       $c ( ) -> wff $.
       $v p q r s $.
@@ -549,8 +549,8 @@ describe("Parser", () => {
        "$."],
     ]]);
   });
-
-  it(" ( s -> ( r -> p ) )", () => {
+  
+  it("( s -> ( r -> p ) )", () => {
     const [code] = parse(`
       $c ( ) -> wff $.
       $v p q r s $.
@@ -579,9 +579,9 @@ describe("Parser", () => {
         const [, vars] = stmt;        
         variables.push(...vars);
       } else if (second == "$f") {
-        const [label, f, types, variable] = stmt;
+        const [label, f, type, variable] = stmt;
         hypothesis[variable] = label;
-        labels[label] = f;
+        labels[label] = [f, [type, variable]];
       } else if (second == "$a") {
         const [label, a, types, rule] = stmt;
         const mandatory = rule
@@ -590,9 +590,10 @@ describe("Parser", () => {
                 if (!hypothesis[r]) throw new Error(`Unknown variable type: ${r}`);
                 return hypothesis[r]
               });
-        
+
+        mandatory.reverse();
         axioms[label] = [types, rule, mandatory];
-        labels[label] = a;
+        labels[label] = [a, stmt];
       } else if (second == "$p") {
         const [label, p, types, theorem, d, proof] = stmt;
         const mandatory = theorem
@@ -602,22 +603,46 @@ describe("Parser", () => {
                 return hypothesis[r]
               });
 
-
-        // console.log(proof);
-
         const stack = [];
         
         for (const step of proof) {
-          // console.log(step);
-          if (labels[step] == "$f") {
-            //console.log(hypothesis[step]);
-            stack.push(step);
-          } else if (labels[step] == "$a") {
-            // console.log("hi");
-            //console.log(axioms[step]);
+          const [type] = labels[step];
+          if (type == "$f") {
+            const [, [type, variable]] = labels[step];
+            stack.push([type, variable]);
+          } else if (type == "$a") {
+            const [t, head, hypothesis] = axioms[step];
+            const unify = {};
+            for (const h of hypothesis) {
+              const [, [type, name]] = labels[h];
+              if (stack.length == 0) {
+                throw new Error("Unify failed: empty stack.");
+              }
+              const [k, arg] = stack.pop();
+              if (k != type) {
+                throw new Error(`Types don't match ${k} != ${type}`);
+              }
+              unify[name] = arg;
+            }
+            const sub = head.map((arg) => unify[arg] || arg);
+            stack.push([t, sub.flat()]);
           }
         }
-        
+
+        if (stack.length != 1) {
+          throw new Error(`Proof Error: Stack is not empty`);
+        }
+
+        const result = stack[0];
+
+        if (result[0] != types) {
+          throw new Error(`Proof Error: Resulting type doesn't match ${result[0]} != ${types}`);
+        }
+
+        if (result[1].join("") !== theorem.join("")) {
+          throw new Error(`Proof Error: Resulting theorem doesn't match ${result[1].join("")} != ${theorem.join("")}`);
+        }
+
         theorems[label] = [types, theorem, mandatory, proof];
       }
     }
@@ -632,7 +657,7 @@ describe("Parser", () => {
       .equalsTo({"w2": [
         "wff",
         ["(", "p", "->", "q", ")"],
-        ["wp", "wq"]
+        ["wq", "wp"]
       ]});
     assertThat(theorems)
       .equalsTo({"wnew": [
