@@ -549,25 +549,13 @@ describe("Parser", () => {
        "$."],
     ]]);
   });
-  
-  it("( s -> ( r -> p ) )", () => {
-    const [code] = parse(`
-      $c ( ) -> wff $.
-      $v p q r s $.
-      wp $f wff p $.
-      wq $f wff q $.
-      wr $f wff r $.
-      ws $f wff s $.
-      w2 $a wff ( p -> q ) $.
-      wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
-    `);
 
+  function frame(code) {
     const constants = [];
     const variables = [];
     const hypothesis = {};
     const axioms = {};
     const theorems = {};
-
     const labels = {};
     
     for (const stmt of code) {
@@ -606,12 +594,17 @@ describe("Parser", () => {
         const stack = [];
         
         for (const step of proof) {
+          //console.log(step);
+          //console.log(labels);
+          if (!labels[step]) {
+            throw new Error(`Unknown label in proof ${step}.`);
+          }
           const [type] = labels[step];
           if (type == "$f") {
             const [, [type, variable]] = labels[step];
             stack.push([type, variable]);
-          } else if (type == "$a") {
-            const [t, head, hypothesis] = axioms[step];
+          } else if (type == "$a" || type == "$p") {
+            const [t, head, hypothesis] = type == "$a" ? axioms[step] : labels[step][1];
             const unify = {};
             for (const h of hypothesis) {
               const [, [type, name]] = labels[h];
@@ -626,10 +619,31 @@ describe("Parser", () => {
             }
             const sub = head.map((arg) => unify[arg] || arg);
             stack.push([t, sub.flat()]);
+          } else if (type == "$p") {
+            const [p, [t, hypothesis, head]] = labels[step];
+            const unify = {};
+            for (const h of hypothesis) {
+              // console.log(h);
+              const [, [type, name]] = labels[h];
+              if (stack.length == 0) {
+                throw new Error("Unify failed: empty stack.");
+              }
+              const [k, arg] = stack.pop();
+              if (k != type) {
+                throw new Error(`Types don't match ${k} != ${type}`);
+              }
+              unify[name] = arg;
+            }
+            const sub = head.map((arg) => unify[arg] || arg);
+            stack.push([t, sub.flat()]);
+          } else {
+            throw new Error(`Unknown label type ${type}.`);
           }
-        }
 
+        }
+        
         if (stack.length != 1) {
+          console.log(stack);
           throw new Error(`Proof Error: Stack is not empty`);
         }
 
@@ -644,9 +658,28 @@ describe("Parser", () => {
         }
 
         theorems[label] = [types, theorem, mandatory, proof];
+
+        labels[label] = ["$p", [types, theorem, mandatory]];
       }
     }
 
+    return [constants, variables, hypothesis, axioms, theorems];
+  }
+  
+  it("( s -> ( r -> p ) )", () => {
+    const [code] = parse(`
+      $c ( ) -> wff $.
+      $v p q r s $.
+      wp $f wff p $.
+      wq $f wff q $.
+      wr $f wff r $.
+      ws $f wff s $.
+      w2 $a wff ( p -> q ) $.
+      wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
+    `);
+
+    const [constants, variables, hypothesis, axioms, theorems] = frame(code);
+    
     assertThat(constants)
       .equalsTo(["(", ")", "->", "wff"]);
     assertThat(variables)
@@ -668,6 +701,21 @@ describe("Parser", () => {
       ]});
   });
 
+  it("p -> ( p -> q )", () => {
+    const [code] = parse(`
+      $c ( ) -> wff $.
+      $v p q r $.
+      wp $f wff p $.
+      wq $f wff q $.
+      wi $a wff ( p -> q ) $.
+      ax-1 $p wff ( p -> ( p -> q ) ) $= wp wp wq wi wi $.
+      id $p wff ( p -> ( p -> p ) ) $= wp wp wp ax-1 $.
+    `);
+
+    const result = frame(code);
+
+  });
+  
 });
 
 
