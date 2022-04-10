@@ -92,7 +92,7 @@ describe("Parser", () => {
       uncompressed_proof -> (LABEL | "?") (__ (LABEL | "?")):* {% ([l, list]) => 
         l.concat(list.map(([ws, [v]]) => v)) 
       %}
-      compressed_proof -> "(" (__ LABEL):* __ ")" COMPRESSED_PROOF_BLOCK+
+      compressed_proof -> "(" (__ LABEL):* __ ")" __ COMPRESSED_PROOF_BLOCK:+
 
       typecode -> constant {% id %}
 
@@ -131,10 +131,10 @@ describe("Parser", () => {
 
   `);
 
-  function parse(code) {
+  function parse(code, first = false) {
     const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
     parser.feed(code);
-    return parser.results;
+    return first ? parser.results[0] : parser.results;
   }
   
   it("$[ filename $]", () => {    
@@ -701,20 +701,418 @@ describe("Parser", () => {
       ]});
   });
 
-  it("p -> ( p -> q )", () => {
+  it("propositional logic", () => {
     const [code] = parse(`
-      $c ( ) -> wff $.
+      $c ( ) -> wff ~ $.
       $v p q r $.
       wp $f wff p $.
       wq $f wff q $.
+      wr $f wff r $.
       wi $a wff ( p -> q ) $.
-      ax-1 $p wff ( p -> ( p -> q ) ) $= wp wp wq wi wi $.
-      id $p wff ( p -> ( p -> p ) ) $= wp wp wp ax-1 $.
+      wn $a wff ~ p $.
+      ax-1 $a wff ( p -> ( q -> p ) ) $.
+      ax-2 $a wff ( ( p -> ( q -> r ) ) -> ( ( p -> q ) -> ( p -> r ) ) ) $.
+      ax-3 $a wff ( ( ~ p -> ~ q ) -> ( q -> p ) ) $.
     `);
 
     const result = frame(code);
 
   });
+  
+  it("modus ponens", () => {
+    const [code] = parse(`
+      $c ( ) -> wff ~ $.
+      $v p q r $.
+      wp $f wff p $.
+      wq $f wff q $.
+      wr $f wff r $.
+      wi $a wff ( p -> q ) $.
+      wn $a wff ~ p $.
+
+      ax-1 $a wff ( p -> ( q -> p ) ) $.
+      ax-2 $a wff ( ( p -> ( q -> r ) ) -> ( ( p -> q ) -> ( p -> r ) ) ) $.
+      ax-3 $a wff ( ( ~ p -> ~ q ) -> ( q -> p ) ) $.
+
+      $\{
+        min $e wff ph $.
+        maj $e wff ( ph -> ps ) $.
+        ax-mp $a wff ps $.
+      $\}
+
+      $\{
+        mp2.1 $e |- ph $.
+        mp2.2 $e |- ps $.
+        mp2.3 $e |- ( ph -> ( ps -> ch ) ) $.
+        $( A double modus ponens inference.  (Contributed by NM, 5-Apr-1994.) $)
+        mp2 $p |- ch $= ( wi ax-mp ) BCEABCGDFHH $.
+      $\}
+
+    `);
+
+    const result = frame(code);
+
+  });
+
+  it("mmverify.py", () => {
+
+    class Frame {
+      constructor() {
+        this.c = new Set();
+        this.v = new Set();
+        this.d = new Set();
+        this.f = [];
+        this.f_labels = {};
+        this.e = [];
+        this.e_labels = {};
+      }
+    }
+
+    class Stack {
+      constructor() {
+        this.stack = [];
+      }
+
+      push() {
+        this.stack.push(new Frame());
+      }
+
+      top() {
+        return this.stack[this.stack.length - 1];
+      }
+      
+      addC(tok) {
+        const frame = this.top();
+
+        if (frame.c.has(tok)) {
+          throw new Error("const already declared in scope");
+        }
+
+        if (frame.v.has(tok)) {
+          throw new Error("const already declared as a var in scope");
+        }
+
+        frame.c.add(tok);
+      }
+
+      addV(tok) {
+        const frame = this.top();
+
+        if (frame.v.has(tok)) {
+          throw new Error("var already declared in scope");
+        }
+
+        if (frame.c.has(tok)) {
+          throw new Error("var already declared as a const in scope");
+        }
+
+        frame.v.add(tok);
+      }
+
+      lookupV(tok) {
+        for (const frame of [...this.stack].reverse()) {
+          if (frame.v.has(tok)) {
+            return true;
+          }
+        }
+        return false;
+      }
+      
+      lookupC(tok) {
+        for (const frame of [...this.stack].reverse()) {
+          if (frame.c.has(tok)) {
+            return true;
+          }
+        }
+        return false;
+      }
+      
+      addF(varz, kind, label) {
+        if (!this.lookupV(varz)) {
+          throw new Error(`var in $f not defined: ${varz}.`);
+        }
+        if (!this.lookupC(kind)) {
+          throw new Error(`const in $f not defined: ${kind}.`);
+        }
+
+        const frame = this.top();
+
+        if (Object.keys(frame.f_labels).includes(varz)) {
+          throw new Error(`var ${varz} in $f already defined in scope`);
+        }
+
+        frame.f.push([varz, kind]);
+        frame.f_labels[varz] = label;
+      }
+
+      addE(stat, label) {
+        const frame = this.top();
+        frame.e.push(stat);
+        frame.e_labels[stat] = label;
+      }
+
+      addD(stat) {
+        const frame = this.top();
+        // frame.d.update(((min(x,y), max(x,y))
+        //                for x, y in itertools.product(stat, stat) if x != y))
+      }
+
+      lookupF(varz) {
+        for (const frame of [...this.stack].reverse()) {
+          if (frame.f_labels[varz]) {
+            return frame.f_labels[varz];
+          }
+        }
+        throw new Error(`Unknown $f key: ${varz}.`);
+      }
+
+      lookupE(stmt) {
+        for (const frame of [...this.stack].reverse()) {
+          if (frame.e_labels[stmt]) {
+            return frame.e_labels[stmt];
+          }
+        }        
+        throw new Error(`Unknown $e key: ${stmt}.`);
+      }
+
+      assert(stat) {
+        const frame = this.top();
+        const e = this.stack.map((frame) => frame.e).flat();
+
+        const mandatory = new Set();
+
+        for (const hyp of [e, [stat]]) {
+          for (const tok of hyp) {
+            if (this.lookupV(tok)) {
+              mandatory.add(tok);
+            }
+          }
+        }
+
+        const f = [];
+
+        for (const frame of [...this.stack].reverse()) {
+          for (const [v, k] of [...frame.f].reverse()) {
+            if (mandatory.has(v)) {
+              f.unshift([k, v]);
+              mandatory.delete(v);
+            }
+          }
+        }
+
+        return [f, e, stat];
+      }
+    }
+
+    const stack = new Stack();
+    stack.push();
+
+    assertThat(stack.lookupC("a")).equalsTo(false);
+
+    stack.addC("a");
+    try {
+      stack.addC("a");
+      throw new Error("Expected to fail before.");
+    } catch (e) {
+      assertThat(e.message)
+        .equalsTo("const already declared in scope");
+    }
+
+    assertThat(stack.lookupC("a")).equalsTo(true);
+
+    try {
+      stack.addV("a");
+      throw new Error("Expected to fail before.");
+    } catch (e) {
+      assertThat(e.message)
+        .equalsTo("var already declared as a const in scope");
+    }
+
+    assertThat(stack.lookupV("b")).equalsTo(false);
+
+    stack.addV("b");
+    try {
+      stack.addV("b");
+      throw new Error("Expected to fail before.");
+    } catch (e) {
+      assertThat(e.message)
+        .equalsTo("var already declared in scope");
+    }
+
+    assertThat(stack.lookupV("b")).equalsTo(true);
+    
+    try {
+      stack.addC("b");
+      throw new Error("Expected to fail before.");
+    } catch (e) {
+      assertThat(e.message)
+        .equalsTo("const already declared as a var in scope");
+    }
+
+    stack.addF("b", "a", "foo");
+
+    assertThat(stack.top().f).equalsTo([["b", "a"]]);
+    assertThat(stack.top().f_labels).equalsTo({"b": "foo"});
+
+    try {
+      stack.addF("c", "a", "foo");
+      throw new Error("Expected to fail before.");
+    } catch (e) {
+      assertThat(e.message)
+        .equalsTo(`var in $f not defined: c.`);
+    }
+
+    try {
+      stack.addF("b", "c", "foo");
+      throw new Error("Expected to fail before.");
+    } catch (e) {
+      assertThat(e.message)
+        .equalsTo(`const in $f not defined: c.`);
+    }
+
+    try {
+      stack.addF("b", "a", "foo");
+      throw new Error("Expected to fail before.");
+    } catch (e) {
+      assertThat(e.message)
+        .equalsTo(`var b in $f already defined in scope`);
+    }
+
+    assertThat(stack.lookupF("b")).equalsTo("foo");
+    
+    try {
+      stack.lookupF("bar");
+      throw new Error("Expected to fail before.");
+    } catch (e) {
+      assertThat(e.message)
+        .equalsTo(`Unknown $f key: bar.`);
+    }
+
+    stack.addE("foo", "bar");
+    assertThat(stack.lookupE("foo")).equalsTo("bar");
+
+    try {
+      stack.lookupE("hello");
+      throw new Error("Expected to fail before.");
+    } catch (e) {
+      assertThat(e.message)
+        .equalsTo(`Unknown $e key: hello.`);
+    }
+
+    assertThat(stack.assert("bar"))
+      .equalsTo([
+        [],
+        ["foo"],
+        "bar"
+      ]);
+
+
+    class MM {
+      constructor() {
+        this.frames = new Stack();
+        this.labels = {};
+      }
+
+      read(block) {
+        this.frames.push();
+        for (const stmt of block) {
+          const [first, second] = stmt;
+          // console.log(stmt);
+          if (first == "$c") {
+            const [, vars] = stmt;
+            for (const varz of vars) {
+              this.frames.addC(varz);
+            }
+          } else if (first == "$v") {
+            const [, vars] = stmt;
+            for (const varz of vars) {
+              this.frames.addV(varz);
+            }
+          } else if (first == "${") {
+            throw new Error("scope");
+          } else if (second == "$f") {
+            const [label, f, type, variable] = stmt;
+            this.frames.addF(variable, type, label);
+            this.labels[label] = [f, [type, variable]];
+          } else if (second == "$d") {
+            throw new Error(`Unsupported statement type $d.`);
+          } else if (second == "$a") {
+            const [label, a, type, rule] = stmt;
+            const axiom = this.frames.assert(rule);
+            this.labels[label] = [a, axiom];
+          } else if (second == "$e") {
+            const [label, e, type, rule] = stmt;
+            this.frames.addE(stmt, label);
+            this.labels[label] = [e, rule];
+          } else if (second == "$p") {
+            const [label, p, types, theorem, d, proof] = stmt;
+            this.verify(label, theorem, proof);
+            this.labels[label] = [p, this.frames.assert(theorem)];
+          } else {
+            throw new Error(`Unknown statement type`);
+          }
+        }
+        
+        return this;
+      }
+
+      verify(label, theorem, proof) {
+        // TODO: verify.
+      }
+    }
+
+    assertThat(new MM().read(parse(`
+      $c a $.
+    `, true)).frames.top().c)
+      .equalsTo(new Set(["a"]));
+
+    assertThat(new MM().read(parse(`
+      $v b $.
+    `, true)).frames.top().v)
+      .equalsTo(new Set(["b"]));
+
+    assertThat(new MM().read(parse(`
+        $c a $.
+        $v b $.
+    `, true)).frames.top().c)
+      .equalsTo(new Set(["a"]));
+
+    assertThat(new MM().read(parse(`
+        $c a $.
+        $v b $.
+    `, true)).frames.top().v)
+      .equalsTo(new Set(["b"]));
+
+    //assertThat(new MM().read(parse(`
+    //    wi $a wff ( p -> q ) $.
+    //`, true)).labels["wi"])
+    //  .equalsTo(true);
+
+    //assertThat(new MM().read(parse(`
+    //  min $e wff ph $.
+    //  maj $e wff ( ph -> ps ) $.
+    //  ax-mp $a wff ps $.
+    //`, true)).frames.top().e)
+    //  .equalsTo(new Set(["b"]));
+
+    //assertThat(new MM().read(parse(`
+    //  wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
+    //`, true)).frames.top().e)
+    //  .equalsTo(new Set(["b"]));
+
+    
+    //new MM().read(parse(`
+    //  $\{
+    //    min $e wff ph $.
+    //    maj $e wff ( ph -> ps ) $.
+    //    ax-mp $a wff ps $.
+    //  $\}
+    //`));
+
+
+  });
+
+
+
   
 });
 
