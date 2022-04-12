@@ -858,11 +858,12 @@ describe("Parser", () => {
         .equalsTo(`Unknown $e key: hello.`);
     }
 
-    assertThat(stack.assert("bar"))
+    assertThat(stack.assert("", "bar"))
       .equalsTo([
+        [],
         [["a", "b"]],
         ["foo"],
-        "bar"
+        ["", "bar"]
       ]);
 
     //assertThat(new MM().read(parse(`
@@ -935,9 +936,10 @@ describe("Parser", () => {
       w2 $a wff ( p -> q ) $.
     `, true)).labels["w2"])
       .equalsTo(["$a", [
+        [],
         [["wff", "p"], ["wff", "q"]],
         [],
-        ["(", "p", "->", "q", ")"]
+        ["wff", ["(", "p", "->", "q", ")"]]
       ]]);
   });
   
@@ -1060,7 +1062,7 @@ describe("Parser", () => {
       throw new Error(`Unknown $e key: ${stmt}.`);
     }
 
-    assert(stat) {
+    assert(type, stat) {
       const frame = this.top();
       const e = this.stack.map((frame) => frame.e).flat();
 
@@ -1074,6 +1076,9 @@ describe("Parser", () => {
         }
       }
 
+      // TODO: deal with distinct variables.
+      const dvs = [];
+      
       const f = [];
 
       for (const frame of [...this.stack].reverse()) {
@@ -1085,7 +1090,7 @@ describe("Parser", () => {
         }
       }
 
-      return [f, e, stat];
+      return [dvs, f, e, [type, stat]];
     }
   }
 
@@ -1121,7 +1126,7 @@ describe("Parser", () => {
           throw new Error(`Unsupported statement type $d.`);
         } else if (second == "$a") {
           const [label, a, type, rule] = stmt;
-          const axiom = this.frames.assert(rule);
+          const axiom = this.frames.assert(type, rule);
           // console.log(axiom);
           // throw new Error("hi");
           this.labels[label] = [a, axiom];
@@ -1130,9 +1135,9 @@ describe("Parser", () => {
           this.frames.addE(stmt, label);
           this.labels[label] = [e, rule];
         } else if (second == "$p") {
-          const [label, p, types, theorem, d, proof] = stmt;
+          const [label, p, type, theorem, d, proof] = stmt;
           this.verify(label, theorem, proof);
-          this.labels[label] = [p, this.frames.assert(theorem)];
+          this.labels[label] = [p, this.frames.assert(type, theorem)];
         } else {
           throw new Error(`Unknown statement type`);
         }
@@ -1142,25 +1147,43 @@ describe("Parser", () => {
     }
     
     verify(label, theorem, proof) {
-      // TODO: verify.
-      // console.log(proof);
       const stack = [];
       for (const step of proof) {
         const [type, data] = this.labels[step];
-        // console.log(type);
         if (type == "$e" || type == "$f") {
           stack.push(data);
         } else if (type == "$a" || type == "$p") {
           const [dist, mandatory, hyp, result] = data;
-          // console.log(hyp);
-          // throw new Error(step);
+          const subs = {};
+          for (const [k, v] of [...mandatory].reverse()) {
+            const top = stack.pop();
+            if (top[0] != k) {
+              throw new Error(`Argument types don't match ${top[0]} != ${k}`);
+            }
+            subs[v] = top[1];
+          }
+
+          // TODO: go through the logical hypothesis.
+
+          const el = result[1]
+                .map((tok) => subs[tok] ? subs[tok] : tok);
+
+          stack.push([result[0], el.flat()]);
         }
       }
-      //throw new Error("verify");
+
+      if (stack.length != 1) {
+        throw new Error(`Stack has more than one entry left`);
+      }
+
+      const [type, last] = stack.pop();
+      if (last.join("") != theorem.join("")) {
+        throw new Error(`Assertion proved doesn't match: ${last.join("")} != ${theorem.join("")}`);
+      }
     }
   }
 
-  it.skip("", () => {
+  it("wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.", () => {
     const mm = new MM().read(parse(`
       $c ( ) -> wff $.
       $v p q r s $.
@@ -1172,6 +1195,14 @@ describe("Parser", () => {
       wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
     `, true));
 
+    assertThat(mm.labels["w2"])
+      .equalsTo(["$a", [
+        [],
+        [["wff", "p"], ["wff", "q"]],
+        [],
+        ["wff", ["(", "p", "->", "q", ")"]]
+      ]]);
+    
     assertThat(mm.frames.top().v)
       .equalsTo(new Set(["p", "q", "r", "s"]));
 
