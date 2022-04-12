@@ -305,6 +305,15 @@ describe("Parser", () => {
       ]]);
   });
 
+  it("${ $v a $. $}", () => {
+    assertThat(parse("${ $v a $. $}"))
+      .equalsTo([[
+        ["${", [
+          ["$v", ["a"], "$."]
+        ], "$}"]
+      ]]);
+  });
+
   it("min $e |- P $.", () => {    
     assertThat(parse("min $e |- P $."))
       .equalsTo([[
@@ -754,155 +763,6 @@ describe("Parser", () => {
   });
 
   it("mmverify.py", () => {
-
-    class Frame {
-      constructor() {
-        this.c = new Set();
-        this.v = new Set();
-        this.d = new Set();
-        this.f = [];
-        this.f_labels = {};
-        this.e = [];
-        this.e_labels = {};
-      }
-    }
-
-    class Stack {
-      constructor() {
-        this.stack = [];
-      }
-
-      push() {
-        this.stack.push(new Frame());
-      }
-
-      top() {
-        return this.stack[this.stack.length - 1];
-      }
-      
-      addC(tok) {
-        const frame = this.top();
-
-        if (frame.c.has(tok)) {
-          throw new Error("const already declared in scope");
-        }
-
-        if (frame.v.has(tok)) {
-          throw new Error("const already declared as a var in scope");
-        }
-
-        frame.c.add(tok);
-      }
-
-      addV(tok) {
-        const frame = this.top();
-
-        if (frame.v.has(tok)) {
-          throw new Error("var already declared in scope");
-        }
-
-        if (frame.c.has(tok)) {
-          throw new Error("var already declared as a const in scope");
-        }
-
-        frame.v.add(tok);
-      }
-
-      lookupV(tok) {
-        for (const frame of [...this.stack].reverse()) {
-          if (frame.v.has(tok)) {
-            return true;
-          }
-        }
-        return false;
-      }
-      
-      lookupC(tok) {
-        for (const frame of [...this.stack].reverse()) {
-          if (frame.c.has(tok)) {
-            return true;
-          }
-        }
-        return false;
-      }
-      
-      addF(varz, kind, label) {
-        if (!this.lookupV(varz)) {
-          throw new Error(`var in $f not defined: ${varz}.`);
-        }
-        if (!this.lookupC(kind)) {
-          throw new Error(`const in $f not defined: ${kind}.`);
-        }
-
-        const frame = this.top();
-
-        if (Object.keys(frame.f_labels).includes(varz)) {
-          throw new Error(`var ${varz} in $f already defined in scope`);
-        }
-
-        frame.f.push([varz, kind]);
-        frame.f_labels[varz] = label;
-      }
-
-      addE(stat, label) {
-        const frame = this.top();
-        frame.e.push(stat);
-        frame.e_labels[stat] = label;
-      }
-
-      addD(stat) {
-        const frame = this.top();
-        // frame.d.update(((min(x,y), max(x,y))
-        //                for x, y in itertools.product(stat, stat) if x != y))
-      }
-
-      lookupF(varz) {
-        for (const frame of [...this.stack].reverse()) {
-          if (frame.f_labels[varz]) {
-            return frame.f_labels[varz];
-          }
-        }
-        throw new Error(`Unknown $f key: ${varz}.`);
-      }
-
-      lookupE(stmt) {
-        for (const frame of [...this.stack].reverse()) {
-          if (frame.e_labels[stmt]) {
-            return frame.e_labels[stmt];
-          }
-        }        
-        throw new Error(`Unknown $e key: ${stmt}.`);
-      }
-
-      assert(stat) {
-        const frame = this.top();
-        const e = this.stack.map((frame) => frame.e).flat();
-
-        const mandatory = new Set();
-
-        for (const hyp of [e, [stat]]) {
-          for (const tok of hyp) {
-            if (this.lookupV(tok)) {
-              mandatory.add(tok);
-            }
-          }
-        }
-
-        const f = [];
-
-        for (const frame of [...this.stack].reverse()) {
-          for (const [v, k] of [...frame.f].reverse()) {
-            if (mandatory.has(v)) {
-              f.unshift([k, v]);
-              mandatory.delete(v);
-            }
-          }
-        }
-
-        return [f, e, stat];
-      }
-    }
-
     const stack = new Stack();
     stack.push();
 
@@ -1000,87 +860,10 @@ describe("Parser", () => {
 
     assertThat(stack.assert("bar"))
       .equalsTo([
-        [],
+        [["a", "b"]],
         ["foo"],
         "bar"
       ]);
-
-
-    class MM {
-      constructor() {
-        this.frames = new Stack();
-        this.labels = {};
-      }
-
-      read(block) {
-        this.frames.push();
-        for (const stmt of block) {
-          const [first, second] = stmt;
-          // console.log(stmt);
-          if (first == "$c") {
-            const [, vars] = stmt;
-            for (const varz of vars) {
-              this.frames.addC(varz);
-            }
-          } else if (first == "$v") {
-            const [, vars] = stmt;
-            for (const varz of vars) {
-              this.frames.addV(varz);
-            }
-          } else if (first == "${") {
-            throw new Error("scope");
-          } else if (second == "$f") {
-            const [label, f, type, variable] = stmt;
-            this.frames.addF(variable, type, label);
-            this.labels[label] = [f, [type, variable]];
-          } else if (second == "$d") {
-            throw new Error(`Unsupported statement type $d.`);
-          } else if (second == "$a") {
-            const [label, a, type, rule] = stmt;
-            const axiom = this.frames.assert(rule);
-            this.labels[label] = [a, axiom];
-          } else if (second == "$e") {
-            const [label, e, type, rule] = stmt;
-            this.frames.addE(stmt, label);
-            this.labels[label] = [e, rule];
-          } else if (second == "$p") {
-            const [label, p, types, theorem, d, proof] = stmt;
-            this.verify(label, theorem, proof);
-            this.labels[label] = [p, this.frames.assert(theorem)];
-          } else {
-            throw new Error(`Unknown statement type`);
-          }
-        }
-        
-        return this;
-      }
-
-      verify(label, theorem, proof) {
-        // TODO: verify.
-      }
-    }
-
-    assertThat(new MM().read(parse(`
-      $c a $.
-    `, true)).frames.top().c)
-      .equalsTo(new Set(["a"]));
-
-    assertThat(new MM().read(parse(`
-      $v b $.
-    `, true)).frames.top().v)
-      .equalsTo(new Set(["b"]));
-
-    assertThat(new MM().read(parse(`
-        $c a $.
-        $v b $.
-    `, true)).frames.top().c)
-      .equalsTo(new Set(["a"]));
-
-    assertThat(new MM().read(parse(`
-        $c a $.
-        $v b $.
-    `, true)).frames.top().v)
-      .equalsTo(new Set(["b"]));
 
     //assertThat(new MM().read(parse(`
     //    wi $a wff ( p -> q ) $.
@@ -1099,19 +882,301 @@ describe("Parser", () => {
     //`, true)).frames.top().e)
     //  .equalsTo(new Set(["b"]));
 
-    
-    //new MM().read(parse(`
-    //  $\{
-    //    min $e wff ph $.
-    //    maj $e wff ( ph -> ps ) $.
-    //    ax-mp $a wff ps $.
-    //  $\}
-    //`));
-
 
   });
 
+  it("$c a $.", () => {
+    assertThat(new MM().read(parse(`
+      $c a $.
+    `, true)).frames.top().c)
+      .equalsTo(new Set(["a"]));
+  });
+  
+  it("$v b $.", () => {
+    assertThat(new MM().read(parse(`
+      $v b $.
+    `, true)).frames.top().v)
+      .equalsTo(new Set(["b"]));
+  });
+  
+  it("$c a $. $v b $.", () => {
+    assertThat(new MM().read(parse(`
+        $c a $.
+        $v b $.
+    `, true)).frames.top().c)
+      .equalsTo(new Set(["a"]));
+  });
+  
+  it("$c a $. $v b $.", () => {
+    assertThat(new MM().read(parse(`
+        $c a $.
+        $v b $.
+    `, true)).frames.top().v)
+      .equalsTo(new Set(["b"]));
+  });
+  
+  it("${ $v a b c $. $}", () => {
+    assertThat(new MM().read(parse(`
+      $\{
+        $v a b c $.
+      $\}
+    `, true)).frames.top().v)
+      .equalsTo(new Set(["a", "b", "c"]));
+  });
+  
+  it("w2 $a wff ( p -> q ) $.", () => {
+    assertThat(new MM().read(parse(`
+      $c ( ) -> wff $.
+      $v p q r s $.
+      wp $f wff p $.
+      wq $f wff q $.
+      wr $f wff r $.
+      ws $f wff s $.
+      w2 $a wff ( p -> q ) $.
+    `, true)).labels["w2"])
+      .equalsTo(["$a", [
+        [["wff", "p"], ["wff", "q"]],
+        [],
+        ["(", "p", "->", "q", ")"]
+      ]]);
+  });
+  
+  class Frame {
+    constructor() {
+      this.c = new Set();
+      this.v = new Set();
+      this.d = new Set();
+      this.f = [];
+      this.f_labels = {};
+      this.e = [];
+      this.e_labels = {};
+    }
+  }
+  
+  class Stack {
+    constructor() {
+      this.stack = [];
+    }
+    
+    push() {
+      this.stack.push(new Frame());
+    }
+    
+    top() {
+      return this.stack[this.stack.length - 1];
+    }
+    
+    addC(tok) {
+      const frame = this.top();
+      
+      if (frame.c.has(tok)) {
+        throw new Error("const already declared in scope");
+      }
+      
+      if (frame.v.has(tok)) {
+        throw new Error("const already declared as a var in scope");
+      }
+      
+      frame.c.add(tok);
+    }
 
+    addV(tok) {
+      const frame = this.top();
+      
+      if (frame.v.has(tok)) {
+        throw new Error("var already declared in scope");
+      }
+      
+      if (frame.c.has(tok)) {
+        throw new Error("var already declared as a const in scope");
+      }
+
+      frame.v.add(tok);
+    }
+
+    lookupV(tok) {
+      for (const frame of [...this.stack].reverse()) {
+        if (frame.v.has(tok)) {
+          return true;
+        }
+      }
+      return false;
+    }
+    
+    lookupC(tok) {
+      for (const frame of [...this.stack].reverse()) {
+        if (frame.c.has(tok)) {
+          return true;
+        }
+      }
+      return false;
+    }
+      
+    addF(varz, kind, label) {
+      if (!this.lookupV(varz)) {
+        throw new Error(`var in $f not defined: ${varz}.`);
+      }
+      if (!this.lookupC(kind)) {
+        throw new Error(`const in $f not defined: ${kind}.`);
+      }
+      
+      const frame = this.top();
+      
+      if (Object.keys(frame.f_labels).includes(varz)) {
+        throw new Error(`var ${varz} in $f already defined in scope`);
+      }
+
+      frame.f.push([varz, kind]);
+      frame.f_labels[varz] = label;
+    }
+    
+    addE(stat, label) {
+      const frame = this.top();
+      frame.e.push(stat);
+      frame.e_labels[stat] = label;
+    }
+
+    addD(stat) {
+      const frame = this.top();
+      // frame.d.update(((min(x,y), max(x,y))
+      //                for x, y in itertools.product(stat, stat) if x != y))
+    }
+
+    lookupF(varz) {
+      for (const frame of [...this.stack].reverse()) {
+        if (frame.f_labels[varz]) {
+          return frame.f_labels[varz];
+        }
+      }
+      throw new Error(`Unknown $f key: ${varz}.`);
+    }
+
+    lookupE(stmt) {
+      for (const frame of [...this.stack].reverse()) {
+        if (frame.e_labels[stmt]) {
+          return frame.e_labels[stmt];
+        }
+      }        
+      throw new Error(`Unknown $e key: ${stmt}.`);
+    }
+
+    assert(stat) {
+      const frame = this.top();
+      const e = this.stack.map((frame) => frame.e).flat();
+
+      const mandatory = new Set();
+      
+      for (const hyp of [e, ...stat]) {
+        for (const tok of hyp) {
+          if (this.lookupV(tok)) {
+            mandatory.add(tok);
+          }
+        }
+      }
+
+      const f = [];
+
+      for (const frame of [...this.stack].reverse()) {
+        for (const [v, k] of [...frame.f].reverse()) {
+          if (mandatory.has(v)) {
+            f.unshift([k, v]);
+            mandatory.delete(v);
+          }
+        }
+      }
+
+      return [f, e, stat];
+    }
+  }
+
+  class MM {
+    constructor() {
+      this.frames = new Stack();
+      this.labels = {};
+    }
+
+    read(block) {
+      this.frames.push();
+      for (const stmt of block) {
+        const [first, second] = stmt;
+        // console.log(stmt);
+        if (first == "$c") {
+          const [, vars] = stmt;
+          for (const varz of vars) {
+            this.frames.addC(varz);
+          }
+        } else if (first == "$v") {
+          const [, vars] = stmt;
+          for (const varz of vars) {
+            this.frames.addV(varz);
+          }
+        } else if (first == "${") {
+          const [p, inner, q] = stmt;
+          this.read(inner);
+        } else if (second == "$f") {
+          const [label, f, type, variable] = stmt;
+          this.frames.addF(variable, type, label);
+          this.labels[label] = [f, [type, variable]];
+        } else if (second == "$d") {
+          throw new Error(`Unsupported statement type $d.`);
+        } else if (second == "$a") {
+          const [label, a, type, rule] = stmt;
+          const axiom = this.frames.assert(rule);
+          // console.log(axiom);
+          // throw new Error("hi");
+          this.labels[label] = [a, axiom];
+        } else if (second == "$e") {
+          const [label, e, type, rule] = stmt;
+          this.frames.addE(stmt, label);
+          this.labels[label] = [e, rule];
+        } else if (second == "$p") {
+          const [label, p, types, theorem, d, proof] = stmt;
+          this.verify(label, theorem, proof);
+          this.labels[label] = [p, this.frames.assert(theorem)];
+        } else {
+          throw new Error(`Unknown statement type`);
+        }
+      }
+      
+      return this;
+    }
+    
+    verify(label, theorem, proof) {
+      // TODO: verify.
+      // console.log(proof);
+      const stack = [];
+      for (const step of proof) {
+        const [type, data] = this.labels[step];
+        // console.log(type);
+        if (type == "$e" || type == "$f") {
+          stack.push(data);
+        } else if (type == "$a" || type == "$p") {
+          const [dist, mandatory, hyp, result] = data;
+          // console.log(hyp);
+          // throw new Error(step);
+        }
+      }
+      //throw new Error("verify");
+    }
+  }
+
+  it.skip("", () => {
+    const mm = new MM().read(parse(`
+      $c ( ) -> wff $.
+      $v p q r s $.
+      wp $f wff p $.
+      wq $f wff q $.
+      wr $f wff r $.
+      ws $f wff s $.
+      w2 $a wff ( p -> q ) $.
+      wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
+    `, true));
+
+    assertThat(mm.frames.top().v)
+      .equalsTo(new Set(["p", "q", "r", "s"]));
+
+  });
+  
 
   
 });
