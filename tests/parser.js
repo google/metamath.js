@@ -1436,7 +1436,7 @@ describe("Parser", () => {
     const mm = new MM().read(code);
   });
 
-  it.only("Propositional Calculus", () => {
+  it("Propositional Calculus", () => {
       const [code] = parse(`
         $( Declare the primitive constant symbols for propositional calculus. $)
         $c ( $.  $( Left parenthesis $)
