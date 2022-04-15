@@ -862,8 +862,8 @@ describe("Parser", () => {
         .equalsTo(`Unknown $f key: bar.`);
     }
 
-    stack.addE("bar", "foo");
-    assertThat(stack.lookupE("foo")).equalsTo("bar");
+    stack.addE(["bar"], "|-", "foo");
+    assertThat(stack.lookupE([["bar"], "|-"])).equalsTo("foo");
 
     try {
       stack.lookupE("hello");
@@ -877,7 +877,7 @@ describe("Parser", () => {
       .equalsTo([
         [],
         [["a", "b"]],
-        ["bar"],
+        [[["bar"], "|-"]],
         ["foo", "bar"]
       ]);
 
@@ -1056,16 +1056,15 @@ describe("Parser", () => {
       frame.f_labels[varz] = label;
     }
     
-    addE(stat, label) {
+    addE(rule, kind, label) {
       const frame = this.top();
-      frame.e.push(stat);
-      frame.e_labels[label] = stat;
+      frame.e.push([rule, kind]);
+      const tag = [rule, kind].flat().join("");
+      frame.e_labels[tag] = label;
     }
 
     addD(stat) {
       const frame = this.top();
-      // frame.d.update(((min(x,y), max(x,y))
-      //                for x, y in itertools.product(stat, stat) if x != y))
     }
 
     lookupF(varz) {
@@ -1077,24 +1076,25 @@ describe("Parser", () => {
       throw new Error(`Unknown $f key: ${varz}.`);
     }
 
-    lookupE(label) {
+    lookupE(rule, kind) {
+      const tag = [rule, kind].flat().join("");
       for (const frame of [...this.stack].reverse()) {
-        if (frame.e_labels[label]) {
-          return frame.e_labels[label];
+        if (frame.e_labels[tag]) {
+          return frame.e_labels[tag];
         }
       }        
-      throw new Error(`Unknown $e key: ${label}.`);
+      throw new Error(`Unknown $e key: ${tag}.`);
     }
 
-    assert(type, stat) {
+    assert(type, rule) {
       const frame = this.top();
-      const e = this.stack.map((frame) => frame.e).flat();
-
-      // console.log(e);
+      const e = this.stack
+            .map((frame) => frame.e)
+            .flat();
 
       const mandatory = new Set();
-
-      for (const hyp of [...e, ...stat]) {
+      
+      for (const [hyp] of [...e, [rule, type]]) {
         // console.log(hyp);
         for (const tok of hyp) {
           if (this.lookupV(tok)) {
@@ -1117,7 +1117,7 @@ describe("Parser", () => {
         }
       }
 
-      return [dvs, f, e, [type, stat]];
+      return [dvs, f, e, [type, rule]];
     }
   }
 
@@ -1134,6 +1134,8 @@ describe("Parser", () => {
     assertThat(stack.lookupV("a"));
     // Variable a is of type A.
     stack.addF("a", "A", "let1");
+    assertThat(stack.lookupF("a"))
+      .equalsTo("let1");
 
     // Enter a new frame.
     stack.push();
@@ -1141,14 +1143,16 @@ describe("Parser", () => {
     stack.addF("c", "A", "let2");
     // There is another variable, "a", which was declared earlier,
     // and it must be false.
-    stack.addE(["~", "a"], "hypothesis");
+    stack.addE(["~", "a"], "|-", "hypothesis");
+    assertThat(stack.lookupE(["~", "a"], "|-"))
+      .equalsTo("hypothesis");
     // If the hypothesis match, "b" implies "c".
     const [, mand, hyps] = stack.assert("A", ["b", "->", "c"]);
     assertThat(mand).equalsTo([
       ["A", "a"],
       ["A", "c"],
     ]);
-    assertThat(hyps).equalsTo([["~", "a"]]);
+    assertThat(hyps).equalsTo([[["~", "a"], "|-"]]);
     stack.pop();
 
     stack.pop();
@@ -1164,7 +1168,6 @@ describe("Parser", () => {
       this.frames.push();
       for (const stmt of block) {
         const [first, second] = stmt;
-        // console.log(stmt);
         if (first == "$c") {
           const [, vars] = stmt;
           for (const varz of vars) {
@@ -1190,7 +1193,7 @@ describe("Parser", () => {
           this.labels[label] = [a, axiom];
         } else if (second == "$e") {
           const [label, e, type, rule] = stmt;
-          this.frames.addE(stmt, label);
+          this.frames.addE(rule, type, label);
           this.labels[label] = [e, rule];
         } else if (second == "$p") {
           const [label, p, type, theorem, d, proof] = stmt;
@@ -1202,7 +1205,6 @@ describe("Parser", () => {
       }
       
       return this.frames.pop();
-      // return this;
     }
 
     decompress(type, theorem, proof) {
@@ -1211,14 +1213,14 @@ describe("Parser", () => {
       const labels = [];
 
       const args = f
-            .map(([k, v]) => k)
-            .filter((label) => this.frames.lookupF(label));
+            .map(([k, v]) => v)
+            .map((v) => this.frames.lookupF(v));
+     
       const hyps = e
-            .map(([label]) => label)
-            .filter((label) => this.frames.lookupE(label));
+            .map(([rule, type]) => this.frames.lookupE(rule, type));
       labels.push(...args);
       labels.push(...hyps);
-      
+
       const m = labels.length;
 
       const [l, local, r, compressed] = proof;
@@ -1229,7 +1231,6 @@ describe("Parser", () => {
       let current = 0;
 
       for (let ch of compressed) {
-        console.log(ch);
         if (ch >= 'A' && ch <= 'T') {
           // Shift the current integer left by 20 bits.
           let result = current * 20;
@@ -1253,31 +1254,25 @@ describe("Parser", () => {
 
       const result = [];
       for (const integer of integers) {
-        // console.log(integer);
         if (integer > 0 && integer <= m) {
-          // console.log(labels[integer - 1]);
           result.push(labels[integer - 1]);
-          /// throw new Error("Accessing mandatory");
         } else if (integer > m && integer <= (m + n)) {
-          // console.log(integer);
           const i = integer - m;
-          // console.log(i);
-          // console.log(local[i - 1]);
           result.push(local[i - 1]);
-          // throw new Error("accessing local one");
         } else {
-          console.log(m + n);
           throw new Error(`Invalid integer number "${integer}" in compressed proof.`);
         }
       }
 
-      throw new Error("hi");
+      return result;
     }
     
     verify(label, type, theorem, proof) {
       if (proof[0] == "(") {
         proof = this.decompress(type, theorem, proof);
       }
+
+      // console.log(proof);
       
       const stack = [];
       for (const step of proof) {
