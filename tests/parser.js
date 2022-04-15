@@ -1204,8 +1204,8 @@ describe("Parser", () => {
           this.labels[label] = [e, [type, rule]];
         } else if (second == "$p") {
           const [label, p, type, theorem, d, proof] = stmt;
-          this.verify(label, type, theorem, proof);
-          this.labels[label] = [p, this.frames.assert(type, theorem)];
+          const result = this.verify(label, type, theorem, proof);
+          this.labels[label] = [p, this.frames.assert(type, theorem), result];
         } else {
           throw new Error(`Unknown statement type`);
         }
@@ -1369,9 +1369,12 @@ describe("Parser", () => {
       }
 
       const [, last] = stack.pop();
+
       if (last.join("") != theorem.join("")) {
         throw new Error(`Assertion proved doesn't match: ${last.join("")} != ${theorem.join("")}`);
       }
+
+      return proof;
     }
   }
 
@@ -1667,7 +1670,30 @@ describe("Parser", () => {
 
     `);
 
-    const mm = new MM().read(code);
+    const mm = new MM();
+    mm.read(code);
+
+    return;
+    
+    // console.log();
+    const syntax = ["wff", "|-"];
+    const name = "ax-mp";
+    const [, [diff, args, conds, [t, rule]]] = mm.labels[name];
+    // console.log(rule);
+    const varz = args.map(([k, v]) => k + " " + v).join(", ");
+    const such = conds.length == 0 ? "" : " | " + conds.map(([rule, type]) => type).join(", ");
+    
+    console.log(`axiom ${name}`);
+    for (const [rule, type] of conds) {
+      console.log(` if: ${type} ${rule.join(" ")}`);
+    }
+    
+    console.log(` assert ${t} ${rule.join(" ")};`);
+    //console.log(`${t} ${name}({${varz}${such}}) {`);
+    //console.log(` return ${rule.join(" ")};`);
+    //console.log(`}`);
+    //console.log(JSON.stringify(a));
+    
   });
 
 
