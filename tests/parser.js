@@ -92,7 +92,11 @@ describe("Parser", () => {
       uncompressed_proof -> (LABEL | "?") (__ (LABEL | "?")):* {% ([l, list]) => 
         l.concat(list.map(([ws, [v]]) => v)) 
       %}
-      compressed_proof -> "(" (__ LABEL):* __ ")" __ COMPRESSED_PROOF_BLOCK:+
+      compressed_proof -> "(" (__ LABEL):* __ ")" __ COMPRESSED_PROOF_BLOCK
+      {% 
+        ([p1, labels, ws1, p2, ws2, proof]) => 
+         [p1, labels.map(([ws, l]) => l), p2, proof] 
+      %}
 
       typecode -> constant {% id %}
 
@@ -114,7 +118,7 @@ describe("Parser", () => {
 
       _LETTER_OR_DIGIT -> [A-Za-z0-9]
 
-      COMPRESSED_PROOF_BLOCK -> ([A-Z] | "?"):+
+      COMPRESSED_PROOF_BLOCK -> ([A-Z] | "?"):+ {% ([a]) => a.join("") %}
 
       # Define whitespace between tokens.
       WHITESPACE -> (_WHITECHAR | _COMMENT)
@@ -379,6 +383,14 @@ describe("Parser", () => {
     `)).equalsTo([[
       ["$c", ["a"], "$."],
       ["we", "$a", "wff", [], "$."]
+    ]]);
+  });
+
+  it("mp2 $p |- ch $= ( wi ax-mp ) BCEABCGDFHH $.", () => {
+    assertThat(parse(`
+      mp2 $p |- ch $= ( wi ax-mp ) BCEABCGDFHH $.
+    `)).equalsTo([[
+      ["mp2", "$p", "|-", ["ch"], "$=", ["(", ["wi", "ax-mp"], ")", "BCEABCGDFHH"], "$."]
     ]]);
   });
 
@@ -728,40 +740,6 @@ describe("Parser", () => {
 
   });
   
-  it("modus ponens", () => {
-    const [code] = parse(`
-      $c ( ) -> wff ~ $.
-      $v p q r $.
-      wp $f wff p $.
-      wq $f wff q $.
-      wr $f wff r $.
-      wi $a wff ( p -> q ) $.
-      wn $a wff ~ p $.
-
-      ax-1 $a wff ( p -> ( q -> p ) ) $.
-      ax-2 $a wff ( ( p -> ( q -> r ) ) -> ( ( p -> q ) -> ( p -> r ) ) ) $.
-      ax-3 $a wff ( ( ~ p -> ~ q ) -> ( q -> p ) ) $.
-
-      $\{
-        min $e wff ph $.
-        maj $e wff ( ph -> ps ) $.
-        ax-mp $a wff ps $.
-      $\}
-
-      $\{
-        mp2.1 $e |- ph $.
-        mp2.2 $e |- ps $.
-        mp2.3 $e |- ( ph -> ( ps -> ch ) ) $.
-        $( A double modus ponens inference.  (Contributed by NM, 5-Apr-1994.) $)
-        mp2 $p |- ch $= ( wi ax-mp ) BCEABCGDFHH $.
-      $\}
-
-    `);
-
-    const result = frame(code);
-
-  });
-
   it("mmverify.py", () => {
     const stack = new Stack();
     stack.push();
@@ -889,14 +867,14 @@ describe("Parser", () => {
   it("$c a $.", () => {
     assertThat(new MM().read(parse(`
       $c a $.
-    `, true)).frames.top().c)
+    `, true)).c)
       .equalsTo(new Set(["a"]));
   });
   
   it("$v b $.", () => {
     assertThat(new MM().read(parse(`
       $v b $.
-    `, true)).frames.top().v)
+    `, true)).v)
       .equalsTo(new Set(["b"]));
   });
   
@@ -904,7 +882,7 @@ describe("Parser", () => {
     assertThat(new MM().read(parse(`
         $c a $.
         $v b $.
-    `, true)).frames.top().c)
+    `, true)).c)
       .equalsTo(new Set(["a"]));
   });
   
@@ -912,7 +890,7 @@ describe("Parser", () => {
     assertThat(new MM().read(parse(`
         $c a $.
         $v b $.
-    `, true)).frames.top().v)
+    `, true)).v)
       .equalsTo(new Set(["b"]));
   });
   
@@ -921,12 +899,14 @@ describe("Parser", () => {
       $\{
         $v a b c $.
       $\}
-    `, true)).frames.top().v)
-      .equalsTo(new Set(["a", "b", "c"]));
+    `, true)).v)
+      .equalsTo(new Set([]));
+    // The top frame has no variables.
   });
   
   it("w2 $a wff ( p -> q ) $.", () => {
-    assertThat(new MM().read(parse(`
+    const mm = new MM();
+    mm.read(parse(`
       $c ( ) -> wff $.
       $v p q r s $.
       wp $f wff p $.
@@ -934,7 +914,8 @@ describe("Parser", () => {
       wr $f wff r $.
       ws $f wff s $.
       w2 $a wff ( p -> q ) $.
-    `, true)).labels["w2"])
+    `, true));
+    assertThat(mm.labels["w2"])
       .equalsTo(["$a", [
         [],
         [["wff", "p"], ["wff", "q"]],
@@ -963,7 +944,11 @@ describe("Parser", () => {
     push() {
       this.stack.push(new Frame());
     }
-    
+
+    pop() {
+      return this.stack.pop();
+    }
+
     top() {
       return this.stack[this.stack.length - 1];
     }
@@ -1066,6 +1051,8 @@ describe("Parser", () => {
       const frame = this.top();
       const e = this.stack.map((frame) => frame.e).flat();
 
+      // console.log(e);
+
       const mandatory = new Set();
       
       for (const hyp of [e, ...stat]) {
@@ -1127,8 +1114,6 @@ describe("Parser", () => {
         } else if (second == "$a") {
           const [label, a, type, rule] = stmt;
           const axiom = this.frames.assert(type, rule);
-          // console.log(axiom);
-          // throw new Error("hi");
           this.labels[label] = [a, axiom];
         } else if (second == "$e") {
           const [label, e, type, rule] = stmt;
@@ -1136,23 +1121,48 @@ describe("Parser", () => {
           this.labels[label] = [e, rule];
         } else if (second == "$p") {
           const [label, p, type, theorem, d, proof] = stmt;
-          this.verify(label, theorem, proof);
+          this.verify(label, type, theorem, proof);
           this.labels[label] = [p, this.frames.assert(type, theorem)];
         } else {
           throw new Error(`Unknown statement type`);
         }
       }
       
-      return this;
+      return this.frames.pop();
+      // return this;
+    }
+
+    decompress(type, theorem, proof) {
+      //console.log(type);
+      //console.log(theorem);
+      //console.log(proof);
+      const [d, f, e] = this.frames.assert(type, theorem);
+
+      throw new Error("hi");
+
+      // logical hypothesis.
+      console.log(e.map(([label]) => label));
+      
+      // mandatory
+      //console.log(f.length);
+
+      const args = f.map(([k, v]) => this.frames.lookupF(v));
+      //const expects = e.map((s) => this.frames.lookupE(s));
+      
+      throw new Error("hi");
     }
     
-    verify(label, theorem, proof) {
+    verify(label, type, theorem, proof) {
+      if (proof[0] == "(") {
+        proof = this.decompress(type, theorem, proof);
+      }
+      
       const stack = [];
       for (const step of proof) {
-        const [type, data] = this.labels[step];
-        if (type == "$e" || type == "$f") {
+        const [kind, data] = this.labels[step];
+        if (kind == "$e" || kind == "$f") {
           stack.push(data);
-        } else if (type == "$a" || type == "$p") {
+        } else if (kind == "$a" || kind == "$p") {
           const [dist, mandatory, hyp, result] = data;
           const subs = {};
           for (const [k, v] of [...mandatory].reverse()) {
@@ -1176,7 +1186,7 @@ describe("Parser", () => {
         throw new Error(`Stack has more than one entry left`);
       }
 
-      const [type, last] = stack.pop();
+      const [, last] = stack.pop();
       if (last.join("") != theorem.join("")) {
         throw new Error(`Assertion proved doesn't match: ${last.join("")} != ${theorem.join("")}`);
       }
@@ -1184,7 +1194,8 @@ describe("Parser", () => {
   }
 
   it("wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.", () => {
-    const mm = new MM().read(parse(`
+    const mm = new MM();
+    const top = mm.read(parse(`
       $c ( ) -> wff $.
       $v p q r s $.
       wp $f wff p $.
@@ -1194,7 +1205,7 @@ describe("Parser", () => {
       w2 $a wff ( p -> q ) $.
       wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
     `, true));
-
+    
     assertThat(mm.labels["w2"])
       .equalsTo(["$a", [
         [],
@@ -1203,11 +1214,49 @@ describe("Parser", () => {
         ["wff", ["(", "p", "->", "q", ")"]]
       ]]);
     
-    assertThat(mm.frames.top().v)
+    assertThat(top.v)
       .equalsTo(new Set(["p", "q", "r", "s"]));
 
   });
+
+  it.skip("decompress", () => {
+    const proof = [ '(', [ 'wi', 'ax-mp' ], ')', 'BCEABCGDFHH' ];
+    
+  });
   
+  it.skip("modus ponens", () => {
+    const [code] = parse(`
+      $c ( ) -> wff ~ $.
+      $v p q r $.
+      wp $f wff p $.
+      wq $f wff q $.
+      wr $f wff r $.
+      wi $a wff ( p -> q ) $.
+      wn $a wff ~ p $.
+
+      ax-1 $a wff ( p -> ( q -> p ) ) $.
+      ax-2 $a wff ( ( p -> ( q -> r ) ) -> ( ( p -> q ) -> ( p -> r ) ) ) $.
+      ax-3 $a wff ( ( ~ p -> ~ q ) -> ( q -> p ) ) $.
+
+      $\{
+        min $e wff ph $.
+        maj $e wff ( ph -> ps ) $.
+        ax-mp $a wff ps $.
+      $\}
+
+      $\{
+        mp2.1 $e |- ph $.
+        mp2.2 $e |- ps $.
+        mp2.3 $e |- ( ph -> ( ps -> ch ) ) $.
+        $( A double modus ponens inference.  (Contributed by NM, 5-Apr-1994.) $)
+        mp2 $p |- ch $= ( wi ax-mp ) BCEABCGDFHH $.
+      $\}
+
+    `);
+
+    const mm = new MM().read(code);
+  });
+
 
   
 });
