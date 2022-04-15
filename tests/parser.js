@@ -106,7 +106,7 @@ describe("Parser", () => {
 
       # lexicon
 
-      PRINTABLE_SEQUENCE -> _PRINTABLE_CHARACTER:+
+      PRINTABLE_SEQUENCE -> _PRINTABLE_CHARACTER:+ {% ([str]) => str.join("") %}
 
       # MATH_SYMBOL -> _PRINTABLE_CHARACTER:+ {% ([str]) => str.join("") %}
       MATH_SYMBOL -> [!-#%-~]:+ {% ([str]) => str.join("") %}
@@ -124,7 +124,18 @@ describe("Parser", () => {
       WHITESPACE -> (_WHITECHAR | _COMMENT)
 
       # Comments. $( ... $) and do not nest.
-      _COMMENT -> "$(" (_WHITECHAR:+ [!-#%-~]:+):* _WHITECHAR:+ "$)" _WHITECHAR
+      # TODO(goto): the BNF doesn't accept "$" in comments, but set.mm seems to use them.
+      _COMMENT -> "$(" (_WHITECHAR:+ PRINTABLE_SEQUENCE):* _WHITECHAR:+ "$)" _WHITECHAR {%
+        ([l, comment], loc, reject) => {
+          for (let [, word] of comment) {
+            // Reject PRINTABLE_SEQUENCEs that have "$)" in them.
+            if (word == "$)") {
+              return reject;
+            }
+          }
+          return null;
+        }
+      %}
 
       # Whitespace
       _WHITECHAR -> [ \t\\n\v\f] {% id %}
@@ -152,6 +163,22 @@ describe("Parser", () => {
     assertThat(parse("$( comment $)"))
       .equalsTo([
       ]);
+  });
+
+  it("$( comment $f $)", () => {    
+    assertThat(parse("$( comment $f $)"))
+      .equalsTo([
+      ]);
+  });
+
+  it("$( $) $( $) $c a $.", () => {
+    assertThat(parse(`
+      $( ab cd $)
+      $( ef gh $)
+      $c a $.
+    `)).equalsTo([[
+      ["$c", ["a"], "$."]
+    ]]);
   });
 
   it("$v a $.", () => {    
@@ -363,6 +390,16 @@ describe("Parser", () => {
       $c M I U |- wff $. $( Declare constants $)
     `)).equalsTo([[
       ["$c", ["M", "I", "U", "|-", "wff"], "$."]
+    ]]);
+  });
+  
+  it("$( $) $( $) $c a $.", () => {
+    assertThat(parse(`
+      $( a $)
+      $( b $)
+      $c a $.
+    `)).equalsTo([[
+      ["$c", ["a"], "$."]
     ]]);
   });
   
@@ -825,7 +862,7 @@ describe("Parser", () => {
         .equalsTo(`Unknown $f key: bar.`);
     }
 
-    stack.addE("foo", "bar");
+    stack.addE("bar", "foo");
     assertThat(stack.lookupE("foo")).equalsTo("bar");
 
     try {
@@ -836,12 +873,12 @@ describe("Parser", () => {
         .equalsTo(`Unknown $e key: hello.`);
     }
 
-    assertThat(stack.assert("", "bar"))
+    assertThat(stack.assert("foo", "bar"))
       .equalsTo([
         [],
         [["a", "b"]],
-        ["foo"],
-        ["", "bar"]
+        ["bar"],
+        ["foo", "bar"]
       ]);
 
     //assertThat(new MM().read(parse(`
@@ -1020,7 +1057,7 @@ describe("Parser", () => {
     addE(stat, label) {
       const frame = this.top();
       frame.e.push(stat);
-      frame.e_labels[stat] = label;
+      frame.e_labels[label] = stat;
     }
 
     addD(stat) {
@@ -1038,13 +1075,13 @@ describe("Parser", () => {
       throw new Error(`Unknown $f key: ${varz}.`);
     }
 
-    lookupE(stmt) {
+    lookupE(label) {
       for (const frame of [...this.stack].reverse()) {
-        if (frame.e_labels[stmt]) {
-          return frame.e_labels[stmt];
+        if (frame.e_labels[label]) {
+          return frame.e_labels[label];
         }
       }        
-      throw new Error(`Unknown $e key: ${stmt}.`);
+      throw new Error(`Unknown $e key: ${label}.`);
     }
 
     assert(type, stat) {
@@ -1133,22 +1170,71 @@ describe("Parser", () => {
     }
 
     decompress(type, theorem, proof) {
-      //console.log(type);
-      //console.log(theorem);
-      //console.log(proof);
       const [d, f, e] = this.frames.assert(type, theorem);
 
-      throw new Error("hi");
+      const labels = [];
 
-      // logical hypothesis.
-      console.log(e.map(([label]) => label));
+      const args = f
+            .map(([k, v]) => k)
+            .filter((label) => this.frames.lookupF(label));
+      const hyps = e
+            .map(([label]) => label)
+            .filter((label) => this.frames.lookupE(label));
+      labels.push(...args);
+      labels.push(...hyps);
       
-      // mandatory
-      //console.log(f.length);
+      const m = labels.length;
 
-      const args = f.map(([k, v]) => this.frames.lookupF(v));
-      //const expects = e.map((s) => this.frames.lookupE(s));
-      
+      const [l, local, r, compressed] = proof;
+
+      const n = local.length;
+
+      let integers = [];
+      let current = 0;
+
+      for (let ch of compressed) {
+        console.log(ch);
+        if (ch >= 'A' && ch <= 'T') {
+          // Shift the current integer left by 20 bits.
+          let result = current * 20;
+          // Add the next 20 bits as the least significant bits.
+          result += ch.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
+          integers.push(result);
+          // Reset the current integer.
+          current = 0;
+          // throw new Error(ch);
+        } else if (ch >= 'U' && ch < 'Y') {
+          // Shift the current integer left by 5 bits.
+          current = current * 5;
+          // Add the next 5 bits as the last significant bits.
+          current += ch.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
+        } else if (ch == 'Z') {
+          throw new Error("marker");
+        } else {
+          throw new Error(`Unexpected character "${ch}" in compressed proof`);
+        }
+      }
+
+      const result = [];
+      for (const integer of integers) {
+        // console.log(integer);
+        if (integer > 0 && integer <= m) {
+          // console.log(labels[integer - 1]);
+          result.push(labels[integer - 1]);
+          /// throw new Error("Accessing mandatory");
+        } else if (integer > m && integer <= (m + n)) {
+          // console.log(integer);
+          const i = integer - m;
+          // console.log(i);
+          // console.log(local[i - 1]);
+          result.push(local[i - 1]);
+          // throw new Error("accessing local one");
+        } else {
+          console.log(m + n);
+          throw new Error(`Invalid integer number "${integer}" in compressed proof.`);
+        }
+      }
+
       throw new Error("hi");
     }
     
@@ -1252,6 +1338,67 @@ describe("Parser", () => {
         mp2 $p |- ch $= ( wi ax-mp ) BCEABCGDFHH $.
       $\}
 
+    `);
+
+    const mm = new MM().read(code);
+  });
+
+  it("propositional logic", () => {
+      const [code] = parse(`
+        $( Declare the primitive constant symbols for propositional calculus. $)
+        $c ( $.  $( Left parenthesis $)
+        $c ) $.  $( Right parenthesis $)
+        $c -> $. $( Right arrow (read:  "implies") $)
+        $c -. $. $( Right handle (read:  "not") $)
+        $c wff $. $( Well-formed formula symbol (read:  "the following symbol
+                     sequence is a wff") $)
+        $c |- $. $( Turnstile (read:  "the following symbol sequence is provable" or
+                    'a proof exists for") $)
+      
+        $( wff variable sequence:  ph ps ch th ta et ze si rh mu la ka $)
+        $( Introduce some variable names we will use to represent well-formed
+           formulas (wff's). $)
+        $v ph $.  $( Greek phi $)
+        $v ps $.  $( Greek psi $)
+        $v ch $.  $( Greek chi $)
+        $v th $.  $( Greek theta $)
+        $v ta $.  $( Greek tau $)
+        $v et $.  $( Greek eta $)
+        $v ze $.  $( Greek zeta $)
+        $v si $.  $( Greek sigma $)
+        $v rh $.  $( Greek rho $)
+        $v mu $.  $( Greek mu $)
+        $v la $.  $( Greek lambda $)
+        $v ka $.  $( Greek kappa $)
+      
+        $( Specify some variables that we will use to represent wff's.
+           The fact that a variable represents a wff is relevant only to a theorem
+           referring to that variable, so we may use $f hypotheses.  The symbol
+           "wff" specifies that the variable that follows it represents a wff. $)
+        $( Let variable "ph" be a wff. $)
+        wph $f wff ph $.
+        $( Let variable "ps" be a wff. $)
+        wps $f wff ps $.
+        $( Let variable "ch" be a wff. $)
+        wch $f wff ch $.
+        $( Let variable "th" be a wff. $)
+        wth $f wff th $.
+        $( Let variable "ta" be a wff. $)
+        wta $f wff ta $.
+        $( Let variable "et" be a wff. $)
+        wet $f wff et $.
+        $( Let variable "ze" be a wff. $)
+        wze $f wff ze $.
+        $( Let variable "si" be a wff. $)
+        wsi $f wff si $.
+        $( Let variable "rh" be a wff. $)
+        wrh $f wff rh $.
+        $( Let variable "mu" be a wff. $)
+        wmu $f wff mu $.
+        $( Let variable "la" be a wff. $)
+        wla $f wff la $.
+        $( Let variable "ka" be a wff. $)
+        wka $f wff ka $.
     `);
 
     const mm = new MM().read(code);
