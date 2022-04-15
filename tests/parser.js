@@ -1108,8 +1108,10 @@ describe("Parser", () => {
       
       const f = [];
 
+      // console.log(mandatory);
       for (const frame of [...this.stack].reverse()) {
         for (const [v, k] of [...frame.f].reverse()) {
+          // console.log(`${v} ${k}`);
           if (mandatory.has(v)) {
             f.unshift([k, v]);
             mandatory.delete(v);
@@ -1190,11 +1192,16 @@ describe("Parser", () => {
         } else if (second == "$a") {
           const [label, a, type, rule] = stmt;
           const axiom = this.frames.assert(type, rule);
+          ///if (label == "ax-mp") {
+          // console.log(stmt);
+          //console.log(axiom);          
+          //throw new Error("hi");
+          //}
           this.labels[label] = [a, axiom];
         } else if (second == "$e") {
           const [label, e, type, rule] = stmt;
           this.frames.addE(rule, type, label);
-          this.labels[label] = [e, rule];
+          this.labels[label] = [e, [type, rule]];
         } else if (second == "$p") {
           const [label, p, type, theorem, d, proof] = stmt;
           this.verify(label, type, theorem, proof);
@@ -1276,26 +1283,81 @@ describe("Parser", () => {
       
       const stack = [];
       for (const step of proof) {
-        const [kind, data] = this.labels[step];
-        if (kind == "$e" || kind == "$f") {
-          stack.push(data);
-        } else if (kind == "$a" || kind == "$p") {
+        const [op, data] = this.labels[step];
+        if (op == "$e" || op == "$f") {
+          const [type, varz] = data;
+          //console.log(`push ${op} ${step}: ${data.flat().join(" ")}`);
+          //console.log(data);
+          //throw new Error("hi");
+          stack.push([type, [varz]]);
+        } else if (op == "$a" || op == "$p") {
           const [dist, mandatory, hyp, result] = data;
           const subs = {};
-          for (const [k, v] of [...mandatory].reverse()) {
-            const top = stack.pop();
+          //console.log(`call ${op} ${step}: ${mandatory.length} args and ${hyp.length} logical`);
+          //console.log(`Stack:`);
+          //for (let entry of [...stack].reverse()) {
+          //  console.log(`- [${entry.flat().join(" ")}]`);
+          //}
+
+          const npop = mandatory.length + hyp.length;
+          const base = stack.length - npop;
+          let sp = base;
+          //console.log(`base (${base}) = top (${stack.length}) - (${npop})`);
+          //console.log(stack[sp]);
+          
+          for (const [k, v] of mandatory) {
+            const top = stack[sp];
+            // console.log(`- poping [${top.flat().join(" ")}]`);
             if (top[0] != k) {
-              throw new Error(`Argument types don't match ${top[0]} != ${k}`);
+              throw new Error(`Argument types don't match. Expected ${k} but got ${top[0]}.`);
             }
             subs[v] = top[1];
+            sp++;
           }
 
+          // console.log(hyp);
+
           // TODO: go through the logical hypothesis.
+          //console.log(subs);
+          //console.log(hyp);
+          for (const [h, type] of hyp) {
+            const top = stack[sp];
+            //console.log(`- poping [${top.flat().join(" ")}]`);
+            if (top[0] != type) {
+              throw new Error(`Argument types don't match. Expected ${type} but got ${top[0]}.`);
+            }
+            
+            const sub = h
+                  .map((tok) => subs[tok] ? subs[tok] : tok);
+            // console.log(top[1]);
+            if (top[1].flat().join("") != sub.flat().join("")) {
+              //console.log(top[1]);
+              //console.log(sub);
+              throw new Error(`Argument values don't match. Expected ${sub} but got ${top[1]}.`);
+            }
+            sp++;
+            // throw new Error("Need to go through the logical hypothesis");
+          }
+
+          stack.splice(base, npop);
+          // console.log(sp);
 
           const el = result[1]
                 .map((tok) => subs[tok] ? subs[tok] : tok);
 
+          // console.log(el);
+          //console.log(`... and pushing ${result[0]} ${el.flat().join(" ")}`);
+          
           stack.push([result[0], el.flat()]);
+
+          //console.log(`Stack:`);
+          //for (let entry of [...stack].reverse()) {
+          //  console.log(`- [${entry.flat().join(" ")}]`);
+          //}
+
+          // throw new Error("hi");
+
+
         }
       }
 
@@ -1374,7 +1436,7 @@ describe("Parser", () => {
     const mm = new MM().read(code);
   });
 
-  it.skip("Propositional Calculus", () => {
+  it("Propositional Calculus", () => {
       const [code] = parse(`
         $( Declare the primitive constant symbols for propositional calculus. $)
         $c ( $.  $( Left parenthesis $)
