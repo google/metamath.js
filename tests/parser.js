@@ -1436,7 +1436,7 @@ describe("Parser", () => {
     const mm = new MM().read(code);
   });
 
-  it("Propositional Calculus", () => {
+  it.only("Propositional Calculus", () => {
       const [code] = parse(`
         $( Declare the primitive constant symbols for propositional calculus. $)
         $c ( $.  $( Left parenthesis $)
@@ -1579,6 +1579,44 @@ describe("Parser", () => {
           $( A double modus ponens inference.  (Contributed by NM, 5-Apr-1994.) $)
           mp2 $p |- ch $=
             ( wi ax-mp ) BCEABCGDFHH $.
+        $\}
+
+        $\{
+          mp2b.1 $e |- ph $.
+          mp2b.2 $e |- ( ph -> ps ) $.
+          mp2b.3 $e |- ( ps -> ch ) $.
+          $( A double modus ponens inference.  (Contributed by Mario Carneiro,
+             24-Jan-2013.) $)
+          mp2b $p |- ch $=
+            ( ax-mp ) BCABDEGFG $.
+        $\}
+
+        $\{
+          a1i.1 $e |- ph $.
+          $( Inference introducing an antecedent.  Inference associated with ~ ax-1 .
+             Its associated inference is ~ a1ii .  See ~ conventions for a definition
+             of "associated inference".  (Contributed by NM, 29-Dec-1992.) $)
+          a1i $p |- ( ps -> ph ) $=
+            ( wi ax-1 ax-mp ) ABADCABEF $.
+        $\}
+
+
+        $\{
+          2a1i.1 $e |- ph $.
+          $( Inference introducing two antecedents.  Two applications of ~ a1i .
+             Inference associated with ~ 2a1 .  (Contributed by Jeff Hankins,
+             4-Aug-2009.) $)
+          2a1i $p |- ( ps -> ( ch -> ph ) ) $=
+           ( wi a1i ) CAEBACDFF $.
+        $\}
+
+        $\{
+          mp1i.1 $e |- ph $.
+          mp1i.2 $e |- ( ph -> ps ) $.
+          $( Inference detaching an antecedent and introducing a new one.
+             (Contributed by Stefan O'Rear, 29-Jan-2015.) $)
+          mp1i $p |- ( ch -> ps ) $=
+            ( ax-mp a1i ) BCABDEFG $.
         $\}
 
     `);
