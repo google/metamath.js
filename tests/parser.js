@@ -1283,6 +1283,9 @@ describe("Parser", () => {
       
       const stack = [];
       for (const step of proof) {
+        if (!this.labels[step]) {
+          throw new Error(`Unknown theorem "${step}" in the proof for "${label}".`);
+        }
         const [op, data] = this.labels[step];
         if (op == "$e" || op == "$f") {
           const [type, varz] = data;
@@ -1600,7 +1603,6 @@ describe("Parser", () => {
             ( wi ax-1 ax-mp ) ABADCABEF $.
         $\}
 
-
         $\{
           2a1i.1 $e |- ph $.
           $( Inference introducing two antecedents.  Two applications of ~ a1i .
@@ -1618,6 +1620,50 @@ describe("Parser", () => {
           mp1i $p |- ( ch -> ps ) $=
             ( ax-mp a1i ) BCABDEFG $.
         $\}
+
+       $( Alias for ~ ax-3 to be used instead of it for labeling consistency.  Its
+          associated inference is ~ con4i and its associated deduction is ~ con4d .
+          (Contributed by BJ, 24-Dec-2020.) $)
+       con4 $p |- ( ( -. ph -> -. ps ) -> ( ps -> ph ) ) $=
+           ( ax-3 ) ABC $.
+
+       $\{
+          con4i.1 $e |- ( -. ph -> -. ps ) $.
+        $( Inference associated with ~ con4 .  Its associated inference is ~ mt4 .
+
+           Remark: this can also be proved using ~ notnot followed by ~ nsyl2 ,
+           giving a shorter proof but depending on more axioms (namely, ~ ax-1 and
+           ~ ax-2 ).  (Contributed by NM, 29-Dec-1992.) $)
+        con4i $p |- ( ps -> ph ) $=
+          ( wn wi con4 ax-mp ) ADBDEBAECABFG $.
+       $\}
+
+       $\{
+          mt4.1 $e |- ph $.
+          mt4.2 $e |- ( -. ps -> -. ph ) $.
+          $( The rule of modus tollens.  Inference associated with ~ con4i .
+             (Contributed by Wolf Lammen, 12-May-2013.) $)
+          mt4 $p |- ps $=
+            ( con4i ax-mp ) ABCBADEF $.
+       $\}
+
+       $\{
+          pm2.21i.1 $e |- -. ph $.
+          $( A contradiction implies anything.  Inference associated with ~ pm2.21 .
+             Its associated inference is ~ pm2.24ii .  (Contributed by NM,
+             16-Sep-1993.) $)
+          pm2.21i $p |- ( ph -> ps ) $=
+            ( wn a1i con4i ) BAADBDCEF $.
+       $\}
+
+       $\{
+          pm2.24ii.1 $e |- ph $.
+          pm2.24ii.2 $e |- -. ph $.
+          $( A contradiction implies anything.  Inference associated with ~ pm2.21i
+             and ~ pm2.24i .  (Contributed by NM, 27-Feb-2008.) $)
+          pm2.24ii $p |- ps $=
+            ( pm2.21i ax-mp ) ABCABDEF $.
+       $\}
 
     `);
 
