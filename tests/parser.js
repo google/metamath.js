@@ -833,7 +833,7 @@ describe("Parser", () => {
       throw new Error("Expected to fail before.");
     } catch (e) {
       assertThat(e.message)
-        .equalsTo(`var in $f not defined: c.`);
+        .equalsTo(`var "c" in $f not defined.`);
     }
 
     try {
@@ -979,7 +979,9 @@ describe("Parser", () => {
     }
     
     push() {
-      this.stack.push(new Frame());
+      const top = new Frame();
+      this.stack.push(top);
+      return top;
     }
 
     pop() {
@@ -1038,7 +1040,7 @@ describe("Parser", () => {
       
     addF(varz, kind, label) {
       if (!this.lookupV(varz)) {
-        throw new Error(`var in $f not defined: ${varz}.`);
+        throw new Error(`var "${varz}" in $f not defined.`);
       }
       if (!this.lookupC(kind)) {
         throw new Error(`const in $f not defined: ${kind}.`);
@@ -1091,8 +1093,9 @@ describe("Parser", () => {
       // console.log(e);
 
       const mandatory = new Set();
-      
-      for (const hyp of [e, ...stat]) {
+
+      for (const hyp of [...e, ...stat]) {
+        // console.log(hyp);
         for (const tok of hyp) {
           if (this.lookupV(tok)) {
             mandatory.add(tok);
@@ -1118,6 +1121,39 @@ describe("Parser", () => {
     }
   }
 
+  it("assert()", () => {
+    const stack = new Stack();
+    stack.push();
+    stack.addC("A");
+    stack.addC("~");
+    assertThat(stack.top().c).equalsTo(new Set(["A", "~"]));
+    stack.addV("a");
+    stack.addV("b");
+    stack.addV("c");
+    assertThat(stack.top().v).equalsTo(new Set(["a", "b", "c"]));
+    assertThat(stack.lookupV("a"));
+    // Variable a is of type A.
+    stack.addF("a", "A", "let1");
+
+    // Enter a new frame.
+    stack.push();
+    // There is a variable "d" of type A.
+    stack.addF("c", "A", "let2");
+    // There is another variable, "a", which was declared earlier,
+    // and it must be false.
+    stack.addE(["~", "a"], "hypothesis");
+    // If the hypothesis match, "b" implies "c".
+    const [, mand, hyps] = stack.assert("A", ["b", "->", "c"]);
+    assertThat(mand).equalsTo([
+      ["A", "a"],
+      ["A", "c"],
+    ]);
+    assertThat(hyps).equalsTo([["~", "a"]]);
+    stack.pop();
+
+    stack.pop();
+  });
+  
   class MM {
     constructor() {
       this.frames = new Stack();
@@ -1343,7 +1379,7 @@ describe("Parser", () => {
     const mm = new MM().read(code);
   });
 
-  it("propositional logic", () => {
+  it.skip("Propositional Calculus", () => {
       const [code] = parse(`
         $( Declare the primitive constant symbols for propositional calculus. $)
         $c ( $.  $( Left parenthesis $)
@@ -1399,6 +1435,95 @@ describe("Parser", () => {
         wla $f wff la $.
         $( Let variable "ka" be a wff. $)
         wka $f wff ka $.
+
+
+        $(
+        #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+        The Syntax Propositional calculus
+        #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+        $)
+
+        wn $a wff -. ph $.
+
+        wi $a wff ( ph -> ps ) $.
+
+        $(
+        =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        The Axioms of Propositional Calculus
+        =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        $)
+
+        $\{
+          $( Minor premise for modus ponens. $)
+          min $e |- ph $.
+          $( Major premise for modus ponens. $)
+          maj $e |- ( ph -> ps ) $.
+          $( Rule of Modus Ponens.  The postulated inference rule of propositional
+             calculus.  See e.g.  Rule 1 of [Hamilton] p. 73.  The rule says, "if
+             'ph' is true, and 'ph' implies 'ps' , then 'ps' must also be
+             true."  This rule is sometimes called "detachment," since it detaches
+             the minor premise from the major premise.  "Modus ponens" is short for
+             "modus ponendo ponens," a Latin phrase that means "the mode that by
+             affirming affirms" - remark in [Sanford] p. 39.  This rule is similar to
+             the rule of modus tollens ~ mto .
+
+             Note:  In some web page displays such as the Statement List, the
+             symbols " '&' " and " '=>' " informally indicate the relationship
+             between the hypotheses and the assertion (conclusion), abbreviating the
+             English words "and" and "implies."  They are not part of the formal
+             language.  (Contributed by NM, 30-Sep-1992.) $)
+          ax-mp $a |- ps $.
+       $\}
+
+       $( Axiom _Simp_.  Axiom A1 of [Margaris] p. 49.  One of the 3 axioms of
+          propositional calculus.  The 3 axioms are also given as Definition 2.1 of
+          [Hamilton] p. 28.  This axiom is called _Simp_ or "the principle of
+          simplification" in _Principia Mathematica_ (Theorem *2.02 of
+          [WhiteheadRussell] p. 100) because "it enables us to pass from the joint
+          assertion of 'ph' and 'ps' to the assertion of 'ph' simply."  It is
+          Proposition 1 of [Frege1879] p. 26, its first axiom.  (Contributed by NM,
+          30-Sep-1992.) $)
+        ax-1 $a |- ( ph -> ( ps -> ph ) ) $.
+
+
+        $( Axiom _Frege_.  Axiom A2 of [Margaris] p. 49.  One of the 3 axioms of
+           propositional calculus.  It "distributes" an antecedent over two
+           consequents.  This axiom was part of Frege's original system and is known
+           as _Frege_ in the literature; see Proposition 2 of [Frege1879] p. 26.  It
+           is also proved as Theorem *2.77 of [WhiteheadRussell] p. 108.  The other
+           direction of this axiom also turns out to be true, as demonstrated by
+           ~ pm5.41 .  (Contributed by NM, 30-Sep-1992.) $)
+        ax-2 $a |- ( ( ph -> ( ps -> ch ) ) -> ( ( ph -> ps ) -> ( ph -> ch ) ) ) $.
+
+
+        $( Axiom _Transp_.  Axiom A3 of [Margaris] p. 49.  One of the 3 axioms of
+           propositional calculus.  It swaps or "transposes" the order of the
+           consequents when negation is removed.  An informal example is that the
+           statement "if there are no clouds in the sky, it is not raining" implies
+           the statement "if it is raining, there are clouds in the sky."  This axiom
+           is called _Transp_ or "the principle of transposition" in _Principia
+           Mathematica_ (Theorem *2.17 of [WhiteheadRussell] p. 103).  We will also
+           use the term "contraposition" for this principle, although the reader is
+           advised that in the field of philosophical logic, "contraposition" has a
+           different technical meaning.  (Contributed by NM, 30-Sep-1992.)  Use its
+           alias ~ con4 instead.  (New usage is discouraged.) $)
+        ax-3 $a |- ( ( -. ph -> -. ps ) -> ( ps -> ph ) ) $.
+
+        $(
+        =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Logical implication
+        =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        $)
+
+        $\{
+          mp2.1 $e |- ph $.
+          mp2.2 $e |- ps $.
+          mp2.3 $e |- ( ph -> ( ps -> ch ) ) $.
+          $( A double modus ponens inference.  (Contributed by NM, 5-Apr-1994.) $)
+          mp2 $p |- ch $=
+            ( wi ax-mp ) BCEABCGDFHH $.
+        $\}
+
     `);
 
     const mm = new MM().read(code);
