@@ -256,7 +256,7 @@ describe("Verifier", () => {
     
   });
   
-  it.skip("modus ponens", () => {
+  it("modus ponens", () => {
     const [code] = parse(`
       $c ( ) -> wff ~ $.
       $v p q r $.
@@ -271,17 +271,16 @@ describe("Verifier", () => {
       ax-3 $a wff ( ( ~ p -> ~ q ) -> ( q -> p ) ) $.
 
       $\{
-        min $e wff ph $.
-        maj $e wff ( ph -> ps ) $.
-        ax-mp $a wff ps $.
+        min $e |- p $.
+        maj $e |- ( p -> q ) $.
+        ax-mp $a |- q $.
       $\}
 
       $\{
-        mp2.1 $e |- ph $.
-        mp2.2 $e |- ps $.
-        mp2.3 $e |- ( ph -> ( ps -> ch ) ) $.
-        $( A double modus ponens inference.  (Contributed by NM, 5-Apr-1994.) $)
-        mp2 $p |- ch $= ( wi ax-mp ) BCEABCGDFHH $.
+        mp2.1 $e |- p $.
+        mp2.2 $e |- q $.
+        mp2.3 $e |- ( p -> ( q -> r ) ) $.
+        mp2 $p |- r $= wq wr mp2.2 wp wq wr wi mp2.1 mp2.3 ax-mp ax-mp $.
       $\}
 
     `);
@@ -520,6 +519,8 @@ describe("Verifier", () => {
     const mm = new MM();
     mm.read(code);
 
+    // console.log(mm.labels["mp2"]);
+
     return;
     
     // console.log();
@@ -540,6 +541,7 @@ describe("Verifier", () => {
     //console.log(` return ${rule.join(" ")};`);
     //console.log(`}`);
     //console.log(JSON.stringify(a));
+
     
   });
 

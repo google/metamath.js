@@ -307,12 +307,15 @@ class MM {
         let sp = base;
         //console.log(`base (${base}) = top (${stack.length}) - (${npop})`);
         //console.log(stack[sp]);
+        if (sp < 0) {
+          throw new Error(`Empty stack ${sp}.`);
+        }
         
         for (const [k, v] of mandatory) {
           const top = stack[sp];
           // console.log(`- poping [${top.flat().join(" ")}]`);
           if (top[0] != k) {
-            throw new Error(`Argument types don't match. Expected ${k} but got ${top[0]}.`);
+            throw new Error(`Step ${step}: argument types don't match. Expected ${k} but got ${top[0]}.`);
           }
           subs[v] = top[1];
           sp++;
@@ -327,7 +330,7 @@ class MM {
           const top = stack[sp];
           //console.log(`- poping [${top.flat().join(" ")}]`);
           if (top[0] != type) {
-            throw new Error(`Argument types don't match. Expected ${type} but got ${top[0]}.`);
+            throw new Error(`Step ${step}: argument types don't match. Expected ${type} but got ${top[0]}.`);
           }
           
           const sub = h
@@ -336,7 +339,7 @@ class MM {
           if (top[1].flat().join("") != sub.flat().join("")) {
             //console.log(top[1]);
             //console.log(sub);
-            throw new Error(`Argument values don't match. Expected ${sub} but got ${top[1]}.`);
+            throw new Error(`Step ${step}: argument values don't match. Expected ${sub} but got ${top[1]}.`);
           }
           sp++;
           // throw new Error("Need to go through the logical hypothesis");
