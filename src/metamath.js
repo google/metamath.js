@@ -305,7 +305,7 @@ class MM {
         for (const [k, v] of mandatory) {
           const top = stack[sp];
           if (top[0] != k) {
-            throw new Error(`Step ${step}: argument types don't match. Expected ${k} but got ${top[0]}.`);
+            throw new Error(`Step ${step}: argument type of ${v} doesn't match with the top of the stack. Expected ${k} but got ${top[0]}.`);
           }
           subs[v] = top[1];
           sp++;
@@ -314,13 +314,13 @@ class MM {
         for (const [h, type] of hyp) {
           const top = stack[sp];
           if (top[0] != type) {
-            throw new Error(`Step ${step}: argument types don't match. Expected ${type} but got ${top[0]}.`);
+            throw new Error(`Step ${step}: argument type of ${v} doesn't match with the topf of the stack. Expected ${type} but got ${top[0]}.`);
           }
           
           const sub = h
                 .map((tok) => subs[tok] ? subs[tok] : tok);
           if (top[1].flat().join("") != sub.flat().join("")) {
-            throw new Error(`Step ${step}: argument values don't match. Expected ${sub} but got ${top[1]}.`);
+            throw new Error(`Step ${step}: argument value for substitution ${JSON.stringify(subs)} of the hypothesis ${h.join(" ")} doesn't match with the top of the stack. Expected ${sub.flat().join(" ")} but got ${top[1].join(" ")}.`);
           }
           sp++;
         }
