@@ -559,7 +559,7 @@ describe("Verifier", () => {
     mm.read(code);
   });
   
-  it.only("Hofstadter's PQ", () => {
+  it("Hofstadter's PQ", () => {
     const [code] = parse(`
       $c wff |- p q - $.
       $v x y z $.
@@ -614,9 +614,6 @@ describe("Verifier", () => {
         t5             $( |- - p - - q - - -, i.e. 1 + 2 = 3 $)
         ax1            $( |- - p - - - q - - - -, i.e. 1 + 3 = 4 $)
         $.
-
-      
-
     `);
 
     const mm = new MM();
