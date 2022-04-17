@@ -291,7 +291,7 @@ class MM {
       if (op == "$e" || op == "$f") {
         const [type, varz] = data;
         stack.push([type, [varz]]);
-        steps.push([step, stack[stack.length - 1]], []);
+        steps.push([step, stack[stack.length - 1], []]);
       } else if (op == "$a" || op == "$p") {
         const [dist, mandatory, hyp, result] = data;
         const subs = {};
@@ -331,7 +331,7 @@ class MM {
               .map((tok) => subs[tok] ? subs[tok] : tok);
 
         stack.push([result[0], el.flat()]);
-        steps.push([step, stack[stack.length - 1]], [base, npop]);
+        steps.push([step, stack[stack.length - 1], [base, npop]]);
       }
     }
 

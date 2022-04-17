@@ -288,7 +288,7 @@ describe("Verifier", () => {
     const mm = new MM();
     mm.read(code);
 
-    // console.log(mm.labels["mp2"][2]);
+    //console.log(mm.labels["mp2"][2]);
     
   });
 
