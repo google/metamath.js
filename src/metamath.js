@@ -207,7 +207,7 @@ class MM {
         const result = this.verify(label, type, theorem, proof);
         this.labels[label] = [p, this.frames.assert(type, theorem), result];
       } else {
-        throw new Error(`Unknown statement type`);
+        throw new Error(`Unknown statement type: ${stmt}.`);
       }
     }
     

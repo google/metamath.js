@@ -545,7 +545,16 @@ describe("Verifier", () => {
     
   });
 
-
+  it("Hofstadter's MIU", () => {
+    const source = require("fs").readFileSync("tests/miu.mm", {
+      encoding: "utf8",
+      flag: "r"
+    });
+    const [code] = parse(source);
+    const mm = new MM();
+    mm.read(code);
+  });
+  
   
 });
 
