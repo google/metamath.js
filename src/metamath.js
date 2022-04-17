@@ -279,9 +279,10 @@ class MM {
       proof = this.decompress(type, theorem, proof);
     }
 
-    // console.log(proof);
-      
     const stack = [];
+
+    const steps = [];
+    
     for (const step of proof) {
       if (!this.labels[step]) {
         throw new Error(`Unknown theorem "${step}" in the proof for "${label}".`);
@@ -289,31 +290,20 @@ class MM {
       const [op, data] = this.labels[step];
       if (op == "$e" || op == "$f") {
         const [type, varz] = data;
-        //console.log(`push ${op} ${step}: ${data.flat().join(" ")}`);
-        //console.log(data);
-        //throw new Error("hi");
         stack.push([type, [varz]]);
+        steps.push([step, stack[stack.length - 1]], []);
       } else if (op == "$a" || op == "$p") {
         const [dist, mandatory, hyp, result] = data;
         const subs = {};
-        //console.log(`call ${op} ${step}: ${mandatory.length} args and ${hyp.length} logical`);
-        //console.log(`Stack:`);
-        //for (let entry of [...stack].reverse()) {
-        //  console.log(`- [${entry.flat().join(" ")}]`);
-        //}
-
         const npop = mandatory.length + hyp.length;
         const base = stack.length - npop;
         let sp = base;
-        //console.log(`base (${base}) = top (${stack.length}) - (${npop})`);
-        //console.log(stack[sp]);
         if (sp < 0) {
           throw new Error(`Empty stack ${sp}.`);
         }
         
         for (const [k, v] of mandatory) {
           const top = stack[sp];
-          // console.log(`- poping [${top.flat().join(" ")}]`);
           if (top[0] != k) {
             throw new Error(`Step ${step}: argument types don't match. Expected ${k} but got ${top[0]}.`);
           }
@@ -321,49 +311,27 @@ class MM {
           sp++;
         }
         
-        // console.log(hyp);
-        
-        // TODO: go through the logical hypothesis.
-        //console.log(subs);
-        //console.log(hyp);
         for (const [h, type] of hyp) {
           const top = stack[sp];
-          //console.log(`- poping [${top.flat().join(" ")}]`);
           if (top[0] != type) {
             throw new Error(`Step ${step}: argument types don't match. Expected ${type} but got ${top[0]}.`);
           }
           
           const sub = h
                 .map((tok) => subs[tok] ? subs[tok] : tok);
-          // console.log(top[1]);
           if (top[1].flat().join("") != sub.flat().join("")) {
-            //console.log(top[1]);
-            //console.log(sub);
             throw new Error(`Step ${step}: argument values don't match. Expected ${sub} but got ${top[1]}.`);
           }
           sp++;
-          // throw new Error("Need to go through the logical hypothesis");
         }
 
         stack.splice(base, npop);
-        // console.log(sp);
         
         const el = result[1]
               .map((tok) => subs[tok] ? subs[tok] : tok);
 
-        // console.log(el);
-        //console.log(`... and pushing ${result[0]} ${el.flat().join(" ")}`);
-        
         stack.push([result[0], el.flat()]);
-
-        //console.log(`Stack:`);
-        //for (let entry of [...stack].reverse()) {
-        //  console.log(`- [${entry.flat().join(" ")}]`);
-        //}
-
-        // throw new Error("hi");
-
-
+        steps.push([step, stack[stack.length - 1]], [base, npop]);
       }
     }
 
@@ -376,8 +344,8 @@ class MM {
     if (last.join("") != theorem.join("")) {
       throw new Error(`Assertion proved doesn't match: ${last.join("")} != ${theorem.join("")}`);
     }
-    
-    return proof;
+
+    return steps;
   }
 }
 

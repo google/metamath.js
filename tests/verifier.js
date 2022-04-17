@@ -285,7 +285,11 @@ describe("Verifier", () => {
 
     `);
 
-    const mm = new MM().read(code);
+    const mm = new MM();
+    mm.read(code);
+
+    // console.log(mm.labels["mp2"][2]);
+    
   });
 
   it("Propositional Calculus", () => {
