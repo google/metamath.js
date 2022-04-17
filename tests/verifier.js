@@ -559,7 +559,7 @@ describe("Verifier", () => {
     mm.read(code);
   });
   
-  it.only("Hofstadter's PQ", () => {
+  it("Hofstadter's PQ", () => {
     const [code] = parse(`
       $c wff |- p q - $.
       $v x y z $.
