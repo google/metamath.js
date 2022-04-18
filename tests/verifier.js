@@ -622,7 +622,7 @@ describe("Verifier", () => {
 
   it("Hofstadter's TQ", () => {
     const [code] = parse(`
-      $c wff |- p q - $.
+      $c wff |- p q - C $.
       $v x y z $.
       wx $f wff x $.
       wy $f wff y $.
@@ -674,13 +674,31 @@ describe("Verifier", () => {
       $.
 
       $( since 2 * 2 = 4 then 2 * 3 = 6 $)
-      t5 $p |- - - t - - - q - - - - - - $= 
+      t6 $p |- - - t - - - q - - - - - - $= 
         w0 w1          $( x = - -, i.e. 2 $)
         w0 w1          $( y = - -, i.e. 2 $)
         w0 w1 w1 w1    $( z = - - - -, i.e. 4 $)
         t5             $( |- - t - - q - - - -, i.e. 2 * 2 = 4 $)
         ax1            $( |- - - t - - - q - - - - - -, i.e. 2 * 3 = 6 $)
       $.
+      
+      $( If Z is a product of two numbers (greater than one), Z is composite $)
+      $( if (x + 1) * (y + 1) = z then C z $)
+      $\{
+        ax2.1 $e |- x - t y - q z $.
+        ax2 $a |- C z $.
+      $\}
+
+      $( Since (1 + 1) * (1 + 1) = 4 then 4 is a product of two numbers 
+         greater than 1, and hence, composite  $)
+      t7 $p |- C - - - - $=
+        w0             $( x = -, i.e. 1 $)
+        w0             $( y = -, i.e. 1 $)
+        w0 w1 w1 w1    $( z = - - - - -, i.e. 4 $)
+        t5             $( |- - t - - q - - - -, i.e. 2 * 2 = 4 $)
+        ax2            $( |- C - - - -, i.e. 4 is composite $)
+      $.
+
     `);
 
     const mm = new MM();
