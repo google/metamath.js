@@ -341,8 +341,8 @@ class MM {
     
     const [, last] = stack.pop();
     
-    if (last.join("") != theorem.join("")) {
-      throw new Error(`Assertion proved doesn't match: ${last.join("")} != ${theorem.join("")}`);
+    if (last.join(" ") != theorem.join(" ")) {
+      throw new Error(`Assertion proved doesn't match: expected ${theorem.join("")} but got ${last.join("")}`);
     }
 
     return steps;

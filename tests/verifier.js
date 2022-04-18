@@ -620,6 +620,65 @@ describe("Verifier", () => {
     mm.read(code);
   });
 
+  it("Hofstadter's TQ", () => {
+    const [code] = parse(`
+      $c wff |- p q - $.
+      $v x y z $.
+      wx $f wff x $.
+      wy $f wff y $.
+      wz $f wff z $.
+
+      $( 1 is a wff $)
+      w0 $a wff - $.          
+
+      $( n is a wff $)
+      w1 $a wff x - $.
+
+      $( 2 is a wff $)
+      t0 $p wff - - $= w0 w1 $.
+
+      $( 3 is a wff $)
+      t1 $p wff - - - $= w0 w1 w1 $.
+
+      $( x * 1 = x $)
+      ax0 $a |- x t - q x $.
+
+      $( 1 * 1 = 1 $)
+      t2 $p |- - t - q - $= w0 ax0 $.
+
+      $( 2 * 1 = 2 $)
+      t3 $p |- - - t - q - - $= t0 ax0 $.
+
+      $( if x * y = z then x * (y + 1) = (z + x) $)
+      $\{
+        ax1.1 $e |- x t y q z $.
+        ax1 $a |- x t y - q z x $.
+      $\}
+
+      $( since 1 * 1 = 1 then 1 * 2 = 2 $)
+      t4 $p |- - t - - q - - $= 
+        w0             $( x = -, i.e. 1 $)
+        w0             $( y = -, i.e. 1 $)
+        w0             $( z = -, i.e. 1 $)
+        w0 ax0         $( |- - t - q - -, i.e. 1 * 1 = 1 $)
+        ax1            $( |- - t - - q - - , i.e. 1 * 2 = 2 $)
+      $.
+
+      $( since 2 * 1 = 2 then 2 * 2 = 4 $)
+
+      $( since 2 * 2 = 4 then 2 * 3 = 6 $)
+      t6 $p |- - t - - q - - $= 
+        w0             $( x = -, i.e. 1 $)
+        w0             $( y = -, i.e. 1 $)
+        w0             $( z = -, i.e. 1 $)
+        w0 ax0         $( |- - t - q - -, i.e. 1 * 1 = 1 $)
+        ax1            $( |- - t - - q - - , i.e. 1 * 2 = 2 $)
+      $.
+    `);
+
+    const mm = new MM();
+    mm.read(code);
+  });
 
   
 });
