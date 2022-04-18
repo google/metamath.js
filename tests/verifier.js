@@ -620,7 +620,7 @@ describe("Verifier", () => {
     mm.read(code);
   });
 
-  it("Hofstadter's TQ", () => {
+  it.only("Hofstadter's TQ", () => {
     const [code] = parse(`
       $c wff |- p q - $.
       $v x y z $.
@@ -665,15 +665,15 @@ describe("Verifier", () => {
       $.
 
       $( since 2 * 1 = 2 then 2 * 2 = 4 $)
+      t5 $p |- - - t - - q - - - - $= 
+        w0 w1          $( x = - -, i.e. 2 $)
+        w0             $( y = -, i.e. 1 $)
+        w0 w1          $( z = - -, i.e. 2 $)
+        t3             $( |- - t - q - -, i.e. 2 * 1 = 2 $)
+        ax1            $( |- - t - - q - - - -, i.e. 2 * 2 = 4 $)
+      $.
 
       $( since 2 * 2 = 4 then 2 * 3 = 6 $)
-      t6 $p |- - t - - q - - $= 
-        w0             $( x = -, i.e. 1 $)
-        w0             $( y = -, i.e. 1 $)
-        w0             $( z = -, i.e. 1 $)
-        w0 ax0         $( |- - t - q - -, i.e. 1 * 1 = 1 $)
-        ax1            $( |- - t - - q - - , i.e. 1 * 2 = 2 $)
-      $.
     `);
 
     const mm = new MM();

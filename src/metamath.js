@@ -339,7 +339,11 @@ class MM {
       throw new Error(`Stack has more than one entry left`);
     }
     
-    const [, last] = stack.pop();
+    const [kind, last] = stack.pop();
+
+    if (type != kind) {
+      throw new Error(`Assertion proved doesn't match: expected ${type} but got ${kind}`);
+    }
     
     if (last.join(" ") != theorem.join(" ")) {
       throw new Error(`Assertion proved doesn't match: expected ${theorem.join("")} but got ${last.join("")}`);
