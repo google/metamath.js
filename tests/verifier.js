@@ -622,7 +622,7 @@ describe("Verifier", () => {
 
   it("Hofstadter's TQ", () => {
     const [code] = parse(`
-      $c wff |- p q - C $.
+      $c wff |- p q - C DND $.
       $v x y z $.
       wx $f wff x $.
       wy $f wff y $.
@@ -699,8 +699,94 @@ describe("Verifier", () => {
         ax2            $( |- C - - - -, i.e. 4 is composite $)
       $.
 
+      $( Since (1 + 1) * (2 + 1) = 6 then 6 is a product of two numbers 
+         greater than 1, and hence, composite  $)
+      t7 $p |- C - - - - - - $=
+        w0                   $( x = -, i.e. 1 $)
+        w0 w1                $( y = - -, i.e. 2 $)
+        w0 w1 w1 w1 w1 w1    $( z = - - - - - - -, i.e. 6 $)
+        t6                   $( |- - t - - q - - - -, i.e. 2 * 3 = 6 $)
+        ax2                  $( |- C - - - - - -, i.e. 6 is composite $)
+      $.
+
+      $( Every number does not divide a smaller number $)
+      $( x y DND x $)
+      ax3 $a |- x y DND x $.
+
+      $( 5 does not divide 2 $)
+      t8 $p |- - - - - - DND - - $=
+        w0 w1          $( x = - -, i.e. 2 $)
+        w0 w1 w1       $( y = - - -, i.e. 3 $)
+        ax3            $( |- - - - - - DND - -, i.e. "5 does not divide 2" is a wff $)
+      $.
+
+      $( if x DND y then x DND x y $)
+      $\{
+        ax4.1 $e |- x DND y  $.
+        ax4 $a |- x DND x y $.
+      $\}
+
+      $( Since 5 DND 2, then 5 DND 7 $)
+      t9 $p |- - - - - - DND - - - - - - - $=
+        w0 w1 w1 w1 w1           $( x = - - - - -, i.e. 5 $)
+        w0 w1                    $( y = - -, i.e. 2 $)
+        t8                       $( |- - - - - - DND - -, i.e. 5 does not divide 2 $)
+        ax4                      $( |- - - - - - DND - - - - - - -, i.e. 5 does not divide 7 $)
+      $.
+
+      $( Since 5 DND 7, then 5 DND 12 $)
+      t10 $p |- - - - - - DND - - - - - - - - - - - - $=
+        w0 w1 w1 w1 w1           $( x = - - - - -, i.e. 5 $)
+        w0 w1 w1 w1 w1 w1 w1     $( y = - - - - - - -, i.e. 7 $)
+        t9                       $( |- - - - - - DND - - - - - - -, i.e. 5 does not divide 7 $)
+        ax4                      $( |- - - - - - DND - - - - - - - - - - - -, i.e. 5 does not divide 12 $)
+      $.
+
+      $( if - - DND z then z DF - - $)
+      $( DF = "divisor free up to n" $)
+      $\{
+        ax5.1 $e |- - - DND z  $.
+        ax5 $a |- z DF - - $.
+      $\}
+
+      $( if z DF x and x - DND z then z DF x - $)
+      $\{
+        ax6.1 $e |- z DF x  $.
+        ax6.2 $e |- x - DND z  $.
+        ax6 $a |- z DF x - $.
+      $\}
+
+      $( if z - DF z then P z -  $)
+      $\{
+        ax7.1 $e |- z - DF z  $.
+        ax7 $a |- P z - $.
+      $\}
+
+      ax8 $a |- P - - $.
+
+      $( 2 does not divide 1 $)
+      $( Since 2 does not divide 1, 2 does not divide 3 $)
+      $( Since 2 does not divide 3 then 3 is dividor free up to 2 $)
+      $( Since 3 is divisor free up to 2, then 3 is prime $)
+      t11 $p |- P - - - $=
+        w0 w1          $( z = - -, i.e. 2 $)
+          w0 w1 w1       $( z = - - -, i.e. 3 $)
+            w0 w1          $( x = - -, i.e. 2 $)
+            w0             $( y = -, i.e. 1 $)
+              w0             $( x = -, i.e. 1 $)
+              w0             $( y = -, i.e. 1 $)
+              ax3            $( |- - - DND -, i.e. 2 does not divide 1 $)
+            ax4            $( |- - - DND - - -, i.e. 2 does not divide 3 $)
+          ax5            $( |- - - - DF - - $)
+        ax7            $( |- P - - - $)
+      $.
     `);
 
+`
+
+
+`;
+    
     const mm = new MM();
     mm.read(code);
   });

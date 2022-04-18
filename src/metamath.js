@@ -314,7 +314,7 @@ class MM {
         for (const [h, type] of hyp) {
           const top = stack[sp];
           if (top[0] != type) {
-            throw new Error(`Step ${step}: argument type of ${v} doesn't match with the topf of the stack. Expected ${type} but got ${top[0]}.`);
+            throw new Error(`Step ${step}: argument type doesn't match with the topf of the stack. Expected ${type} but got ${top[0]}.`);
           }
           
           const sub = h
