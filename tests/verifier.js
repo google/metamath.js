@@ -288,6 +288,14 @@ describe("Verifier", () => {
     const mm = new MM();
     mm.read(code);
 
+    assertThat(mm.labels["$c"]).equalsTo([
+      ["$c", ["(", ")", "->", "wff", "~"], "$."]
+    ]);
+
+    assertThat(mm.labels["$v"]).equalsTo([
+      ["$v", ["p", "q", "r"], "$."]
+    ]);
+
     assertThat(mm.labels["mp2"][2]).equalsTo([
       ["wq", ["wff", ["q"]], []],
       ["wr", ["wff", ["r"]], []],

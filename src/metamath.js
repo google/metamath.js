@@ -181,11 +181,15 @@ class MM {
         for (const varz of vars) {
           this.frames.addC(varz);
         }
+        this.labels["$c"] ||= [];
+        this.labels["$c"].push(stmt);
       } else if (first == "$v") {
         const [, vars] = stmt;
         for (const varz of vars) {
           this.frames.addV(varz);
         }
+        this.labels["$v"] ||= [];
+        this.labels["$v"].push(stmt);
       } else if (first == "${") {
         const [p, inner, q] = stmt;
         this.read(inner);
