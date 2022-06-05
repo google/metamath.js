@@ -282,7 +282,8 @@ class MM {
     const stack = [];
 
     const steps = [];
-    
+
+    let index = 0;
     for (const step of proof) {
       if (!this.labels[step]) {
         throw new Error(`Unknown theorem "${step}" in the proof for "${label}".`);
@@ -290,13 +291,15 @@ class MM {
       const [op, data] = this.labels[step];
       if (op == "$e" || op == "$f") {
         const [type, varz] = data;
-        stack.push([type, [varz]]);
-        steps.push([step, stack[stack.length - 1], []]);
+        stack.push([index, type, [varz]]);
+        const t = stack[stack.length - 1];
+        steps.push([step, [t[1], t[2]], []]);
       } else if (op == "$a" || op == "$p") {
         const [dist, mandatory, hyp, result] = data;
         const subs = {};
         const npop = mandatory.length + hyp.length;
         const base = stack.length - npop;
+        const args = [];
         let sp = base;
         if (sp < 0) {
           throw new Error(`Empty stack ${sp}.`);
@@ -304,24 +307,26 @@ class MM {
         
         for (const [k, v] of mandatory) {
           const top = stack[sp];
-          if (top[0] != k) {
+          if (top[1] != k) {
             throw new Error(`Step ${step}: argument type of ${v} doesn't match with the top of the stack. Expected ${k} but got ${top[0]}.`);
           }
-          subs[v] = top[1];
+          subs[v] = top[2];
+          args.push(top[0]);
           sp++;
         }
         
         for (const [h, type] of hyp) {
           const top = stack[sp];
-          if (top[0] != type) {
+          if (top[1] != type) {
             throw new Error(`Step ${step}: argument type doesn't match with the topf of the stack. Expected ${type} but got ${top[0]}.`);
           }
           
           const sub = h
                 .map((tok) => subs[tok] ? subs[tok] : tok);
-          if (top[1].flat().join("") != sub.flat().join("")) {
+          if (top[2].flat().join("") != sub.flat().join("")) {
             throw new Error(`Step ${step}: argument value for substitution ${JSON.stringify(subs)} of the hypothesis ${h.join(" ")} doesn't match with the top of the stack. Expected ${sub.flat().join(" ")} but got ${top[1].join(" ")}.`);
           }
+          args.push(top[0]);
           sp++;
         }
 
@@ -330,16 +335,19 @@ class MM {
         const el = result[1]
               .map((tok) => subs[tok] ? subs[tok] : tok);
 
-        stack.push([result[0], el.flat()]);
-        steps.push([step, stack[stack.length - 1], [base, npop]]);
+        stack.push([index, result[0], el.flat()]);
+        const t = stack[stack.length - 1];
+        steps.push([step, [t[1], t[2]], args]);
       }
+
+      index++;
     }
 
     if (stack.length != 1) {
       throw new Error(`Stack has more than one entry left`);
     }
     
-    const [kind, last] = stack.pop();
+    const [, kind, last] = stack.pop();
 
     if (type != kind) {
       throw new Error(`Assertion proved doesn't match: expected ${type} but got ${kind}`);
