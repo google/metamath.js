@@ -88,6 +88,8 @@ class Stack {
     if (Object.keys(frame.f_labels).includes(varz)) {
       throw new Error(`var ${varz} in $f already defined in scope`);
     }
+
+    // console.log(label);
     
     frame.f.push([varz, kind]);
     frame.f_labels[varz] = label;
@@ -130,11 +132,14 @@ class Stack {
           .flat();
     
     const mandatory = new Set();
+
+    // console.log(e);
     
     for (const [hyp] of [...e, [rule, type]]) {
       // console.log(hyp);
       for (const tok of hyp) {
         if (this.lookupV(tok)) {
+          // console.log(tok);
           mandatory.add(tok);
         }
       }
@@ -147,10 +152,11 @@ class Stack {
 
     // console.log(mandatory);
     for (const frame of [...this.stack].reverse()) {
-      for (const [v, k] of [...frame.f].reverse()) {
+      for (const [v, k, label] of [...frame.f].reverse()) {
         // console.log(`${v} ${k}`);
         if (mandatory.has(v)) {
           f.unshift([k, v]);
+          // console.log(label);
           mandatory.delete(v);
         }
       }
