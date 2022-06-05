@@ -104,7 +104,7 @@ describe("Verifier", () => {
       .equalsTo([
         [],
         [["a", "b"]],
-        [[["bar"], "|-"]],
+        [[["bar"], "|-", "foo"]],
         ["foo", "bar"]
       ]);
 
@@ -219,7 +219,7 @@ describe("Verifier", () => {
       ["A", "a"],
       ["A", "c"],
     ]);
-    assertThat(hyps).equalsTo([[["~", "a"], "|-"]]);
+    assertThat(hyps).equalsTo([[["~", "a"], "|-", "hypothesis"]]);
     stack.pop();
 
     stack.pop();
@@ -294,6 +294,12 @@ describe("Verifier", () => {
 
     assertThat(mm.labels["$v"]).equalsTo([
       ["$v", ["p", "q", "r"], "$."]
+    ]);
+
+    assertThat(mm.labels["mp2"][1][2]).equalsTo([
+      [["p"], "|-", "mp2.1"],
+      [["q"], "|-", "mp2.2"],
+      [["(", "p", "->", "(", "q", "->", "r", ")", ")"], "|-", "mp2.3"],
     ]);
 
     assertThat(mm.labels["mp2"][2]).equalsTo([

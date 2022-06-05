@@ -97,7 +97,7 @@ class Stack {
     
   addE(rule, kind, label) {
     const frame = this.top();
-    frame.e.push([rule, kind]);
+    frame.e.push([rule, kind, label]);
     const tag = [rule, kind].flat().join("");
     frame.e_labels[tag] = label;
   }
