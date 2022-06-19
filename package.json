@@ -17,6 +17,7 @@
   "homepage": "https://github.com/samuelgoto/metamath",
   "dependencies": {
     "mocha": "^9.2.2",
+    "moo": "^0.5.1",
     "nearley": "^2.20.1"
   }
 }

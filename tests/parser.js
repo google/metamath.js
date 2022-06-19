@@ -2,6 +2,8 @@ const Assert = require("assert");
 
 const {parse} = require("../src/parser.js");
 
+const moo = require("moo");
+
 describe("Parser", () => { 
   it("$[ filename $]", () => {    
     assertThat(parse("$[ filename $]"))
@@ -457,7 +459,76 @@ describe("Parser", () => {
        ["ws", "wr", "wp", "w2", "w2"],
        "$."],
     ]]);
-  }); 
+  });
+
+  it("$( comment $)", () => {
+    for (let i = 0; i < 1; i++) {
+      assertThat(parse("$( comment $)"))
+        .equalsTo([
+        ]);
+    }
+  });
+
+  const lexicon = {
+    lcomment: "$(",
+    rcomment: "$)",
+    lfile: "$[",
+    rfile: "$]",
+    ws:     /[ \t]+/,
+    word: /[!-~]+/,
+    letter_or_digit: /[A-Za-z0-9]/
+  };
+
+  it("$(  $)", () => {
+    assertThat(tokenize("$(  $)")).equalsTo([
+      "lcomment", "ws", "rcomment"
+    ]);
+  });
+
+  it("$( comment $)", () => {
+    assertThat(tokenize("$( comment $)")).equalsTo([
+      "lcomment", "ws", "word", "ws", "rcomment"
+    ]);
+  });
+
+  it("$( comment second $)", () => {
+    assertThat(tokenize("$( comment second $)")).equalsTo([
+      "lcomment", "ws", "word", "ws", "word", "ws", "rcomment"
+    ]);
+  });
+
+  it("$( 123 $)", () => {
+    assertThat(tokenize("$( 123 $)")).equalsTo([
+      "lcomment", "ws", "word", "ws", "rcomment"
+    ]);
+  });
+
+  it("$( $( $) $)", () => {
+    assertThat(tokenize("$( $( $) $)")).equalsTo([
+      "lcomment", "ws", "lcomment", "ws", "rcomment", "ws", "rcomment"
+    ]);
+  });
+
+  it("$[ filename $]", () => {
+    assertThat(tokenize("$[ filename $]")).equalsTo([
+      "lfile", "ws", "word", "ws", "rfile"
+    ]);
+  });
+
+  function tokenize(code) {
+    const lexer = moo.compile(lexicon);
+    lexer.reset(code);
+    const result = [];
+    do {
+      const next = lexer.next();
+      if (!next) {
+        return result;
+      }
+      result.push(next.type);
+    } while (true);
+    return result;
+  }
+
 });
 
 
