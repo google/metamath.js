@@ -121,13 +121,23 @@ const grammar = compileGrammar(`
       # Define whitespace between tokens.
       WHITESPACE -> (_WHITECHAR | _COMMENT)
 
+      PRINTABLE_SEQUENCE_WITHOUT_CLOSE_COMMENTS -> PRINTABLE_SEQUENCE {%
+        ([str], loc, reject) => {
+          // console.log(str);
+          return str != "$(" ? str : reject;
+        }
+      %}
+
       # Comments. $( ... $) and do not nest.
       # TODO(goto): the BNF doesn't accept "$" in comments, but set.mm seems to use them.
-      _COMMENT -> "$(" (_WHITECHAR:+ PRINTABLE_SEQUENCE):* _WHITECHAR:+ "$)" _WHITECHAR {%
+      _COMMENT -> "$(" (_WHITECHAR:+ PRINTABLE_SEQUENCE_WITHOUT_CLOSE_COMMENTS):* _WHITECHAR:+ "$)" _WHITECHAR {%
         ([l, comment], loc, reject) => {
           for (let [, word] of comment) {
             // Reject PRINTABLE_SEQUENCEs that have "$)" in them.
             if (word == "$)") {
+              //console.log(comment);
+              //console.log(word);
+              throw new Error("hi");
               return reject;
             }
           }

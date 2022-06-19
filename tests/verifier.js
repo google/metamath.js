@@ -319,7 +319,7 @@ describe("Verifier", () => {
   });
 
   it("Propositional Calculus", () => {
-      const [code] = parse(`
+    const source = `
         $( Declare the primitive constant symbols for propositional calculus. $)
         $c ( $.  $( Left parenthesis $)
         $c ) $.  $( Right parenthesis $)
@@ -544,8 +544,16 @@ describe("Verifier", () => {
             ( pm2.21i ax-mp ) ABCABDEF $.
        $\}
 
-    `);
+    `;
 
+    const [code] = parse(source);
+
+    //for (let i = 0; i < 3; i++) {
+    //  const [code] = parse(source);
+    //  const foo = new MM();
+    //  foo.read(code);
+    //}
+    
     const mm = new MM();
     mm.read(code);
 
