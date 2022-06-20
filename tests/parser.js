@@ -1,6 +1,6 @@
 const Assert = require("assert");
 
-const {parse} = require("../src/parser.js");
+const {parse, lexicon} = require("../src/parser.js");
 
 const moo = require("moo");
 
@@ -22,6 +22,28 @@ describe("Parser", () => {
     assertThat(parse("$( comment $f $)"))
       .equalsTo([
       ]);
+  });
+
+  it("$( a $)", () => {    
+    assertThat(parse(`
+      $(  first $)
+      $c a $.
+      $(  second $)
+      $c b $.
+    `))
+      .equalsTo([[
+        ["$c", ["a"], "$."],
+        ["$c", ["b"], "$."],
+      ]]);
+  });
+
+  it("$c a $.", () => {
+    assertThat(parse(`
+      $( hello $)
+      $c a $.
+    `)).equalsTo([[
+      ["$c", ["a"], "$."]
+    ]]);
   });
 
   it("$( $) $( $) $c a $.", () => {
@@ -232,7 +254,7 @@ describe("Parser", () => {
     });
 
   it("th1 $p |- t = t $= tt tze $.", () => {    
-    assertThat(parse("th1 $p |- t = t $= tt tze $."))
+    assertThat(parse("th1 $p |- t = t $= tt $( hi $) tze $."))
       .equalsTo([[
         ["th1", "$p", "|-", ["t", "=", "t"], "$=", ["tt", "tze"], "$."]
       ]]);
@@ -258,8 +280,8 @@ describe("Parser", () => {
   
   it("$( $) $( $) $c a $.", () => {
     assertThat(parse(`
-      $( $)
-      $( $)
+      $(  $)
+      $(  $)
       $c a $.
     `)).equalsTo([[
       ["$c", ["a"], "$."]
@@ -317,6 +339,14 @@ describe("Parser", () => {
     ]]);
   });
 
+  it("$( a b $)", () => {    
+    assertThat(parse(`
+      $( a
+         b
+      $)
+   `));
+  });
+  
   it("MIU", () => {    
     assertThat(parse(`
       $( miu.mm  20-Oct-2008 $)
@@ -469,28 +499,17 @@ describe("Parser", () => {
     }
   });
 
-  const lexicon = {
-    comment: {match: /\$\([ \t\n]+.*[ \t\n]+\$\)/, lineBreaks: true},
-    lfile: "$[",
-    rfile: "$]",
-    v: "$v",
-    c: "$c",
-    f: "$f",
-    a: "$a",
-    e: "$e",
-    p: "$p",
-    proof: "$=",
-    dot: "$.",
-    lscope: "${",
-    rscope: "$}",
-    ws: {match: /[ \t\n]+/, lineBreaks: true},
-    word: /[!-~]+/,
-    letter_or_digit: /[A-Za-z0-9]/
-  };
-
   it("$(  $)", () => {
     assertThat(tokenize("$(  $)"))
       .equalsTo(["comment"]);
+  });
+
+  it("$(  $)", () => {
+    assertThat(tokenize(`
+      $( a
+         b $)
+    `))
+      .equalsTo(["ws", "comment", "ws"]);
   });
 
   it("$( comment $)", () => {
@@ -527,7 +546,8 @@ describe("Parser", () => {
       ]);
   });
 
-  it("$( $( $) $)", () => {
+  it.skip("$( $( $) $)", () => {
+    // Nested comments are disallowed.
     assertThat(tokenize("$( $( $) $)"))
       .equalsTo([
         "comment"
@@ -544,18 +564,18 @@ describe("Parser", () => {
   it("$[ filename $]", () => {
     assertThat(tokenize("$[ filename $]"))
       .equalsTo([
-        "lfile", "ws", "word", "ws", "rfile"
+        "lfile", "ws", "sequence", "ws", "rfile"
       ]);
   });
 
   it("$v a $.", () => {    
     assertThat(tokenize("$v a $."))
-      .equalsTo(["v", "ws", "word", "ws", "dot"]);
+      .equalsTo(["v", "ws", "sequence", "ws", "dot"]);
   });
 
   it("$v a b $.", () => {    
     assertThat(tokenize("$v a b $."))
-      .equalsTo(["v", "ws", "word", "ws", "word", "ws", "dot"]);
+      .equalsTo(["v", "ws", "sequence", "ws", "sequence", "ws", "dot"]);
   });
 
   it("$( $v $)", () => {
@@ -567,27 +587,27 @@ describe("Parser", () => {
 
   it("$c a $.", () => {    
     assertThat(tokenize("$c a $."))
-      .equalsTo(["c", "ws", "word", "ws", "dot"]);
+      .equalsTo(["c", "ws", "sequence", "ws", "dot"]);
   });
 
   it("$c = $.", () => {    
     assertThat(tokenize("$c = $."))
-      .equalsTo(["c", "ws", "word", "ws", "dot"]);
+      .equalsTo(["c", "ws", "sequence", "ws", "dot"]);
   });
 
   it("$c -> $.", () => {    
     assertThat(tokenize("$c -> $."))
-      .equalsTo(["c", "ws", "word", "ws", "dot"]);
+      .equalsTo(["c", "ws", "sequence", "ws", "dot"]);
   });
 
   it("tt $f term t $.", () => {    
     assertThat(tokenize("tt $f term t $."))
-      .equalsTo(["word", "ws", "f", "ws", "word", "ws", "word", "ws", "dot"]);
+      .equalsTo(["sequence", "ws", "f", "ws", "sequence", "ws", "sequence", "ws", "dot"]);
   });
 
   it("weq $a wff t $.", () => {    
     assertThat(tokenize("weq $a wff t $."))
-      .equalsTo(["word", "ws", "a", "ws", "word", "ws", "word", "ws", "dot"]);
+      .equalsTo(["sequence", "ws", "a", "ws", "sequence", "ws", "sequence", "ws", "dot"]);
   });
 
   it("${ $}", () => {    
@@ -597,17 +617,33 @@ describe("Parser", () => {
 
   it("min $e |- P $.", () => {    
     assertThat(tokenize("min $e |- P $."))
-      .equalsTo(["word", "ws", "e", "ws", "word", "ws", "word", "ws", "dot"]);
+      .equalsTo(["sequence", "ws", "e", "ws", "sequence", "ws", "sequence", "ws", "dot"]);
   });
 
   it("wnew $p wff s $= wr $.", () => {    
-    assertThat(tokenize("wnew $p wff s $= wr $."))
-      .equalsTo(["word", "ws", "p", "ws", "word", "ws", "word", "ws", "proof", "ws","word", "ws", "dot"]);
+    assertThat(tokenize("wnew $p wff s $= wr $( hi $) foo $."))
+      .equalsTo([
+        "sequence",
+        "ws",
+        "p",
+        "ws",
+        "sequence",
+        "ws",
+        "sequence",
+        "ws",
+        "proof",
+        "ws",
+        "sequence",
+        "ws",
+        "comment",
+        "ws",
+        "sequence",
+        "ws",
+        "dot"
+      ]);
   });
 
-      
 
-  
   function tokenize(code) {
     const lexer = moo.compile(lexicon);
     lexer.reset(code);

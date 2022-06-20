@@ -2,6 +2,29 @@ const nearley = require("nearley");
 const compile = require("nearley/lib/compile");
 const generate = require("nearley/lib/generate");
 const nearleyGrammar = require("nearley/lib/nearley-language-bootstrapped");
+const moo = require("moo");
+
+const lexicon = {
+  comment: {match: /\$\([\s]+(?:(?!\$\))[\s\S])*[\s]+\$\)/, lineBreaks: true},
+  lfile: "$[",
+  rfile: "$]",
+  v: "$v",
+  c: "$c",
+  f: "$f",
+  a: "$a",
+  e: "$e",
+  p: "$p",
+  proof: "$=",
+  dot: "$.",
+  lscope: "${",
+  rscope: "$}",
+  ws: {match: /[\s]+/, lineBreaks: true},
+  sequence: /[!-#%-~]+/,
+  // letter_or_digit: /[A-Za-z0-9]/,
+  // symbol: /[!-#%-~]+/,
+};
+
+const lexer = moo.compile(lexicon);
 
 function compileGrammar(sourceCode) {
   // Parse the grammar source into an AST
@@ -22,6 +45,8 @@ function compileGrammar(sourceCode) {
 }
 
 const grammar = compileGrammar(`
+      @lexer lexer
+
       database -> _ outermost_scope_stmt (__ outermost_scope_stmt):* _ {% ([ws1, stmt, list, ws2]) => 
         [stmt].concat(list.map(([ws, v]) => v)) 
       %}
@@ -32,11 +57,11 @@ const grammar = compileGrammar(`
 
       # File inclusion command; process file as a database.
       # Databases should NOT have a comment in the filename.
-      include_stmt -> "$[" __ filename __ "$]" {% ([b1, ws1, f, ws2, b2]) => [b1, f, b2] %}
+      include_stmt -> "$[" __ filename __ "$]" {% ([b1, ws1, f, ws2, b2]) => [b1.text, f.text, b2.text] %}
 
       # Constant symbols declaration.
       constant_stmt -> "$c" __ constant (__ constant):* __ "$." {% ([c, ws1, cons, list, ws2, d]) => 
-        [c, [cons].concat(list.map(([ws, v]) => v)), d]
+        [c.text, [cons.text].concat(list.map(([ws, v]) => v.text)), d.text]
       %}
 
       # A normal statement can occur in any scope.
@@ -48,12 +73,12 @@ const grammar = compileGrammar(`
 
       # A block. You can have 0 statements in a block.
       block -> "$\{" (__ stmt):* __ "$\}" {% ([b1, list, ws, b2]) => 
-        [b1, list.map(([ws, v]) => v), b2] 
+        [b1.text, list.map(([ws, v]) => v), b2.text] 
       %}
 
       # Variable symbols declaration.
       variable_stmt -> "$v" __ variable (__ variable):* __ "$." {% ([v, ws1, a, list, ws2, d]) => 
-        [v, [a].concat(list.map(([ws, arg]) => arg)), d] 
+        [v.text, [a.text].concat(list.map(([ws, arg]) => arg.text)), d.text] 
       %}
 
       # Disjoint variables. Simple disjoint statements have
@@ -63,24 +88,24 @@ const grammar = compileGrammar(`
       hypothesis_stmt -> floating_stmt {% id %} | essential_stmt {% id %}
 
       # Floating (variable-type) hypothesis.
-      floating_stmt -> LABEL __ "$f" __ typecode __ variable __ "$." {% ([l, ws1, f, ws2, t, ws3, v, ws4, d]) => [l, f, t, v, d] %}
+      floating_stmt -> LABEL __ "$f" __ typecode __ variable __ "$." {% ([l, ws1, f, ws2, t, ws3, v, ws4, d]) => [l, f.text, t.text, v.text, d.text] %}
 
       # Essential (logical) hypothesis.
       essential_stmt -> LABEL __ "$e" __ typecode (__ MATH_SYMBOL):* __ "$." {% ([l, ws1, e, ws2, t, list, ws4, d]) => 
-        [l, e, t, list.map(([ws, v]) => v), d] 
+        [l, e.text, t.text, list.map(([ws, v]) => v.text), d.text] 
       %}
 
       assert_stmt -> axiom_stmt {% id %} | provable_stmt {% id %}
 
       # Axiomatic assertion.
       axiom_stmt -> LABEL __ "$a" __ typecode (__ MATH_SYMBOL):* __ "$." {% ([l, ws1, a, ws2, t, list, ws4, d]) => 
-        [l, a, t, list.map(([ws, v]) => v), d] 
+        [l, a.text, t.text, list.map(([ws, v]) => v.text), d.text] 
       %}
 
       # Provable assertion.
       provable_stmt -> LABEL __ "$p" __ typecode (__ MATH_SYMBOL):* __ "$=" __ proof __ "$." {%
         ([l, ws1, p, ws2, t, list, ws3, eq, ws4, proof, ws5, d]) => 
-        [l, p, t, list.map(([ws, v]) => v), eq, proof, d]
+        [l, p.text, t.text, list.map(([ws, v]) => v.text), eq.text, proof, d.text]
       %}
 
       # A proof. Proofs may be interspersed by comments.
@@ -90,63 +115,30 @@ const grammar = compileGrammar(`
       uncompressed_proof -> (LABEL | "?") (__ (LABEL | "?")):* {% ([l, list]) => 
         l.concat(list.map(([ws, [v]]) => v)) 
       %}
+
       compressed_proof -> "(" (__ LABEL):* __ ")" __ COMPRESSED_PROOF_BLOCK
       {% 
         ([p1, labels, ws1, p2, ws2, proof]) => 
-         [p1, labels.map(([ws, l]) => l), p2, proof] 
+         [p1.text, labels.map(([ws, l]) => l), p2.text, proof] 
       %}
 
       typecode -> constant {% id %}
-
       filename -> MATH_SYMBOL {% id %}
       constant -> MATH_SYMBOL {% id %}
       variable -> MATH_SYMBOL {% id %}
 
+      MATH_SYMBOL -> %sequence {% id %}
+
       # lexicon
-
-      PRINTABLE_SEQUENCE -> _PRINTABLE_CHARACTER:+ {% ([str]) => str.join("") %}
-
-      # MATH_SYMBOL -> _PRINTABLE_CHARACTER:+ {% ([str]) => str.join("") %}
-      MATH_SYMBOL -> [!-#%-~]:+ {% ([str]) => str.join("") %}
-
-      # ASCII non-whitespace printable characters
-      _PRINTABLE_CHARACTER -> [!-~]
 
       LABEL -> ( _LETTER_OR_DIGIT | "." | "-" | "_" ):+ {% ([str]) => str.join("") %}
 
-      _LETTER_OR_DIGIT -> [A-Za-z0-9]
+      _LETTER_OR_DIGIT -> %sequence {% ([a], loc, r) => { return a.text.match(/[A-Za-z0-9]/) ? a : r } %}
 
       COMPRESSED_PROOF_BLOCK -> ([A-Z] | "?"):+ {% ([a]) => a.join("") %}
 
       # Define whitespace between tokens.
-      WHITESPACE -> (_WHITECHAR | _COMMENT)
-
-      PRINTABLE_SEQUENCE_WITHOUT_CLOSE_COMMENTS -> PRINTABLE_SEQUENCE {%
-        ([str], loc, reject) => {
-          // console.log(str);
-          return str != "$(" ? str : reject;
-        }
-      %}
-
-      # Comments. $( ... $) and do not nest.
-      # TODO(goto): the BNF doesn't accept "$" in comments, but set.mm seems to use them.
-      _COMMENT -> "$(" (_WHITECHAR:+ PRINTABLE_SEQUENCE_WITHOUT_CLOSE_COMMENTS):* _WHITECHAR:+ "$)" _WHITECHAR {%
-        ([l, comment], loc, reject) => {
-          for (let [, word] of comment) {
-            // Reject PRINTABLE_SEQUENCEs that have "$)" in them.
-            if (word == "$)") {
-              //console.log(comment);
-              //console.log(word);
-              throw new Error("hi");
-              return reject;
-            }
-          }
-          return null;
-        }
-      %}
-
-      # Whitespace
-      _WHITECHAR -> [ \t\\n\v\f] {% id %}
+      WHITESPACE -> (%ws | %comment)
 
       # Whitespace: _ is optional, __ is mandatory.
       _  -> WHITESPACE:* {% (d) => null %}
@@ -161,4 +153,5 @@ function parse(code, first = false) {
 
 module.exports = {
   parse: parse,
+  lexicon: lexicon,
 };
