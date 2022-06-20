@@ -548,10 +548,10 @@ describe("Verifier", () => {
 
     const [code] = parse(source);
 
-    //for (let i = 0; i < 3; i++) {
+    //for (let i = 0; i < 3000; i++) {
     //  const [code] = parse(source);
-    //  const foo = new MM();
-    //  foo.read(code);
+      //const foo = new MM();
+      //foo.read(code);
     //}
     
     const mm = new MM();
