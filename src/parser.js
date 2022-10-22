@@ -5,10 +5,12 @@ const nearleyGrammar = require("nearley/lib/nearley-language-bootstrapped");
 const moo = require("moo");
 
 const lexicon = {
-  comment: {match: /\$\([\s]+(?:(?!\$\))[\s\S])*[\s]+\$\)/, lineBreaks: true},
+  // comment: {match: /\$\([\s]+(?:(?!\$\))[\s\S])*[\s]+\$\)/, lineBreaks: true},
+  comment: {match: /\$\([\s]+(?:(?!\$\))[\s\S])*\$\)/, lineBreaks: true},
   lfile: "$[",
   rfile: "$]",
   v: "$v",
+  d: "$d",
   c: "$c",
   f: "$f",
   a: "$a",

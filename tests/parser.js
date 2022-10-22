@@ -643,13 +643,26 @@ describe("Parser", () => {
       ]);
   });
 
-  it.skip("set.mm", async () => {
-    console.log("hi");
+  it("$( hi $)", async () => {
+    assertThat(tokenize("$( hi $)"))
+      .equalsTo(['comment']);
+  });
+  
+  it("$( $)", async () => {
+    assertThat(tokenize("$( $)"))
+      .equalsTo(['comment']);
+  });
+  
+  it("$d a b .", async () => {
+    assertThat(tokenize("$d a b ."))
+      .equalsTo(['d', 'ws', 'sequence', 'ws', 'sequence', 'ws', 'sequence']);
+  });
+  
+  it("set.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/set.mm");
-    console.log(file);
-    console.log(tokenize(file.toString()));
-    // Invalid Syntax: $d x ph $.
+    assertThat(tokenize(file.toString()).length)
+      .equalsTo(8470554);
   });
   
 
