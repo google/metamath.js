@@ -1,8 +1,9 @@
 const Assert = require("assert");
 
-const {parse, lexicon} = require("../src/parser.js");
+const {parse, grammar, lexicon} = require("../src/parser.js");
 
 const moo = require("moo");
+const nearley = require("nearley");
 
 describe("Parser", () => { 
   it("$[ filename $]", () => {    
@@ -699,12 +700,36 @@ describe("Parser", () => {
   it.skip("Parse set.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/set.mm");
-    parse(file.toString());
+
+    const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
+
+    // const lines = file.toString().split("\n");
+    const code = file.toString();
+
+    // const tokens = tokenize(file.toString());
+    
+    const lexer = moo.compile(lexicon);
+    lexer.reset(code);
+    // return;
+    // const result = [];
+    do {
+      const next = lexer.next();
+      if (!next) {
+        return result;
+      }
+      // result.push(next.type);
+      console.log(next.line);
+      parser.feed(next.value);
+      //break;
+    } while (true);
+
+    // parser.feed(code);
+    
+    // parse(file.toString());
     // Runs OOO
     //assertThat(parse(file.toString()).length)
     //  .equalsTo(8470554);
   });
-
 
   function tokenize(code) {
     const lexer = moo.compile(lexicon);

@@ -159,4 +159,5 @@ function parse(code, first = false) {
 module.exports = {
   parse: parse,
   lexicon: lexicon,
+  grammar: grammar,
 };
