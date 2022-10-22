@@ -346,7 +346,7 @@ describe("Parser", () => {
       $)
    `));
   });
-  
+
   it("MIU", () => {    
     assertThat(parse(`
       $( miu.mm  20-Oct-2008 $)
@@ -643,6 +643,15 @@ describe("Parser", () => {
       ]);
   });
 
+  it.skip("set.mm", async () => {
+    console.log("hi");
+    const fs = require("fs/promises");
+    const file = await fs.readFile("tests/set.mm");
+    console.log(file);
+    console.log(tokenize(file.toString()));
+    // Invalid Syntax: $d x ph $.
+  });
+  
 
   function tokenize(code) {
     const lexer = moo.compile(lexicon);
