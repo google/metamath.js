@@ -5,7 +5,6 @@ const nearleyGrammar = require("nearley/lib/nearley-language-bootstrapped");
 const moo = require("moo");
 
 const lexicon = {
-  // comment: {match: /\$\([\s]+(?:(?!\$\))[\s\S])*[\s]+\$\)/, lineBreaks: true},
   comment: {match: /\$\([\s]+(?:(?!\$\))[\s\S])*\$\)/, lineBreaks: true},
   lfile: "$[",
   rfile: "$]",
@@ -18,8 +17,11 @@ const lexicon = {
   p: "$p",
   proof: "$=",
   dot: "$.",
+  question: "?",
   lscope: "${",
   rscope: "$}",
+  //lparen: "(",
+  //rparen: ")",
   ws: {match: /[\s]+/, lineBreaks: true},
   sequence: /[!-#%-~]+/,
   // letter_or_digit: /[A-Za-z0-9]/,
@@ -49,8 +51,18 @@ function compileGrammar(sourceCode) {
 const grammar = compileGrammar(`
       @lexer lexer
 
-      database -> _ outermost_scope_stmt (__ outermost_scope_stmt):* _ {% ([ws1, stmt, list, ws2]) => 
-        [stmt].concat(list.map(([ws, v]) => v)) 
+      #database -> _ outermost_scope_stmt (__ outermost_scope_stmt):* _ {% ([ws1, stmt, list, ws2]) =>
+      #  [stmt].concat(list.map(([ws, v]) => v)) 
+      #%}
+
+      database -> _ __aline_plus _ {% ([ws, lines]) => lines %}
+
+      __aline_plus -> outermost_scope_stmt {% ([line]) => [line] %} |
+                      __aline_plus __ outermost_scope_stmt {% ([prior, ws, next]) => {
+           //console.log(prior);
+           //console.log(next);
+           return [...prior, next];
+         }
       %}
 
       outermost_scope_stmt -> include_stmt {% id %} | 
@@ -59,10 +71,10 @@ const grammar = compileGrammar(`
 
       # File inclusion command; process file as a database.
       # Databases should NOT have a comment in the filename.
-      include_stmt -> "$[" __ filename __ "$]" {% ([b1, ws1, f, ws2, b2]) => [b1.text, f.text, b2.text] %}
+      include_stmt -> %lfile  __ filename __ %rfile {% ([b1, ws1, f, ws2, b2]) => [b1.text, f.text, b2.text] %}
 
       # Constant symbols declaration.
-      constant_stmt -> "$c" __ constant (__ constant):* __ "$." {% ([c, ws1, cons, list, ws2, d]) => 
+      constant_stmt -> %c __ constant (__ constant):* __ %dot {% ([c, ws1, cons, list, ws2, d]) => 
         [c.text, [cons.text].concat(list.map(([ws, v]) => v.text)), d.text]
       %}
 
@@ -74,41 +86,40 @@ const grammar = compileGrammar(`
               assert_stmt {% id %}
 
       # A block. You can have 0 statements in a block.
-      block -> "$\{" (__ stmt):* __ "$\}" {% ([b1, list, ws, b2]) => 
+      block -> %lscope (__ stmt):* __ %rscope {% ([b1, list, ws, b2]) => 
         [b1.text, list.map(([ws, v]) => v), b2.text] 
       %}
 
       # Variable symbols declaration.
-      variable_stmt -> "$v" __ variable (__ variable):* __ "$." {% ([v, ws1, a, list, ws2, d]) => 
+      variable_stmt -> %v __ variable (__ variable):* __ %dot {% ([v, ws1, a, list, ws2, d]) => 
         [v.text, [a.text].concat(list.map(([ws, arg]) => arg.text)), d.text] 
       %}
 
       # Disjoint variables. Simple disjoint statements have
       # 2 variables, i.e., "variable*" is empty for them.
-      disjoint_stmt -> "$d" __ variable (__ variable):* __ "$." {% ([v, ws1, a, list, ws2, d]) =>
+      disjoint_stmt -> %d __ variable (__ variable):* __ %dot {% ([v, ws1, a, list, ws2, d]) =>
         [v.text, [a.text].concat(list.map(([ws, arg]) => arg.text)), d.text]
       %}
-      # disjoint_stmt -> "$d" variable variable variable:* "$."
 
       hypothesis_stmt -> floating_stmt {% id %} | essential_stmt {% id %}
 
       # Floating (variable-type) hypothesis.
-      floating_stmt -> LABEL __ "$f" __ typecode __ variable __ "$." {% ([l, ws1, f, ws2, t, ws3, v, ws4, d]) => [l, f.text, t.text, v.text, d.text] %}
+      floating_stmt -> LABEL __ %f __ typecode __ variable __ %dot {% ([l, ws1, f, ws2, t, ws3, v, ws4, d]) => [l, f.text, t.text, v.text, d.text] %}
 
       # Essential (logical) hypothesis.
-      essential_stmt -> LABEL __ "$e" __ typecode (__ MATH_SYMBOL):* __ "$." {% ([l, ws1, e, ws2, t, list, ws4, d]) => 
+      essential_stmt -> LABEL __ %e __ typecode (__ MATH_SYMBOL):* __ %dot {% ([l, ws1, e, ws2, t, list, ws4, d]) => 
         [l, e.text, t.text, list.map(([ws, v]) => v.text), d.text] 
       %}
 
       assert_stmt -> axiom_stmt {% id %} | provable_stmt {% id %}
 
       # Axiomatic assertion.
-      axiom_stmt -> LABEL __ "$a" __ typecode (__ MATH_SYMBOL):* __ "$." {% ([l, ws1, a, ws2, t, list, ws4, d]) => 
+      axiom_stmt -> LABEL __ %a __ typecode (__ MATH_SYMBOL):* __ %dot {% ([l, ws1, a, ws2, t, list, ws4, d]) => 
         [l, a.text, t.text, list.map(([ws, v]) => v.text), d.text] 
       %}
 
       # Provable assertion.
-      provable_stmt -> LABEL __ "$p" __ typecode (__ MATH_SYMBOL):* __ "$=" __ proof __ "$." {%
+      provable_stmt -> LABEL __ %p __ typecode (__ MATH_SYMBOL):* __ %proof __ proof __ %dot {%
         ([l, ws1, p, ws2, t, list, ws3, eq, ws4, proof, ws5, d]) => 
         [l, p.text, t.text, list.map(([ws, v]) => v.text), eq.text, proof, d.text]
       %}
@@ -117,11 +128,11 @@ const grammar = compileGrammar(`
       # If ’?’ is in a proof it’s an "incomplete" proof.
       proof -> uncompressed_proof {% id %} | compressed_proof {% id %}
 
-      uncompressed_proof -> (LABEL | "?") (__ (LABEL | "?")):* {% ([l, list]) => 
+      uncompressed_proof -> (LABEL | %question) (__ (LABEL | %question)):* {% ([l, list]) => 
         l.concat(list.map(([ws, [v]]) => v)) 
       %}
 
-      compressed_proof -> "(" (__ LABEL):* __ ")" __ COMPRESSED_PROOF_BLOCK
+      compressed_proof -> "("  (__ LABEL):* __ ")" __ COMPRESSED_PROOF_BLOCK
       {% 
         ([p1, labels, ws1, p2, ws2, proof]) => 
          [p1.text, labels.map(([ws, l]) => l), p2.text, proof] 

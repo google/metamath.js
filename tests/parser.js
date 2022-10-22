@@ -118,6 +118,15 @@ describe("Parser", () => {
       ]]);
   });
 
+  it("$v a $. $v b $. $v c $.", () => {    
+    assertThat(parse("$v a $. $v b $. $v c $."))
+      .equalsTo([[
+        ["$v", ["a"], "$."],
+        ["$v", ["b"], "$."],
+        ["$v", ["c"], "$."]
+      ]]);
+  });
+
   it("$c a $.", () => {    
     assertThat(parse("$c a $."))
       .equalsTo([[
@@ -715,7 +724,8 @@ describe("Parser", () => {
     do {
       const next = lexer.next();
       if (!next) {
-        return result;
+        // return result;
+        break;
       }
       // result.push(next.type);
       console.log(next.line);
@@ -729,7 +739,7 @@ describe("Parser", () => {
     // Runs OOO
     //assertThat(parse(file.toString()).length)
     //  .equalsTo(8470554);
-  });
+  }).timeout(100000);
 
   function tokenize(code) {
     const lexer = moo.compile(lexicon);
