@@ -46,6 +46,24 @@ describe("Parser", () => {
     ]]);
   });
 
+  it("$v a $.", () => {
+    assertThat(parse(`
+      $( hello $)
+      $v a $.
+    `)).equalsTo([[
+      ["$v", ["a"], "$."]
+    ]]);
+  });
+
+  it("$d a $.", () => {
+    assertThat(parse(`
+      $( hello $)
+      $d a $.
+    `)).equalsTo([[
+      ["$d", ["a"], "$."]
+    ]]);
+  });
+
   it("$( $) $( $) $c a $.", () => {
     assertThat(parse(`
       $( ab cd $)
@@ -658,13 +676,35 @@ describe("Parser", () => {
       .equalsTo(['d', 'ws', 'sequence', 'ws', 'sequence', 'ws', 'sequence']);
   });
   
-  it("set.mm", async () => {
+  it("Tokenize set.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/set.mm");
     assertThat(tokenize(file.toString()).length)
       .equalsTo(8470554);
   });
+
+  it("Compressed Proofs", async () => {
+    const statement = `
+     $( Relate the biconditional connective to primitive connectives.  See
+        dfbi1ALT for an unusual version proved directly from axioms.
+        (Contributed by NM, 29-Dec-1992.) $)
+
+     dfbi1 $p |- ( ( ph <-> ps ) <-> -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) ) $=
+     ( wb wi wn df-bi simplim ax-mp impbi impi impbii ) ABCZABDZBADZEDEZLODZOLDE 
+     ZDEPABFPQGHMNLABIJK $.
+    `;
+    assertThat(parse(statement).length).equalsTo(1);
+  });
   
+  it.skip("Parse set.mm", async () => {
+    const fs = require("fs/promises");
+    const file = await fs.readFile("tests/set.mm");
+    parse(file.toString());
+    // Runs OOO
+    //assertThat(parse(file.toString()).length)
+    //  .equalsTo(8470554);
+  });
+
 
   function tokenize(code) {
     const lexer = moo.compile(lexicon);

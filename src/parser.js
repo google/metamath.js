@@ -85,7 +85,10 @@ const grammar = compileGrammar(`
 
       # Disjoint variables. Simple disjoint statements have
       # 2 variables, i.e., "variable*" is empty for them.
-      disjoint_stmt -> "$d" variable variable variable:* "$."
+      disjoint_stmt -> "$d" __ variable (__ variable):* __ "$." {% ([v, ws1, a, list, ws2, d]) =>
+        [v.text, [a.text].concat(list.map(([ws, arg]) => arg.text)), d.text]
+      %}
+      # disjoint_stmt -> "$d" variable variable variable:* "$."
 
       hypothesis_stmt -> floating_stmt {% id %} | essential_stmt {% id %}
 
@@ -137,7 +140,7 @@ const grammar = compileGrammar(`
 
       _LETTER_OR_DIGIT -> %sequence {% ([a], loc, r) => { return a.text.match(/[A-Za-z0-9]/) ? a : r } %}
 
-      COMPRESSED_PROOF_BLOCK -> ([A-Z] | "?"):+ {% ([a]) => a.join("") %}
+      COMPRESSED_PROOF_BLOCK -> ([A-Z] | "?" | %ws):+ {% ([a]) => a.join("") %}
 
       # Define whitespace between tokens.
       WHITESPACE -> (%ws | %comment)
