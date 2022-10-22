@@ -30,7 +30,7 @@ const lexicon = {
 
 const lexer = moo.compile(lexicon);
 
-function compileGrammar(sourceCode) {
+function compileGrammar(handler = false, sourceCode) {
   // Parse the grammar source into an AST
   const grammarParser = new nearley.Parser(nearleyGrammar);
   grammarParser.feed(sourceCode);
@@ -43,12 +43,15 @@ function compileGrammar(sourceCode) {
       
   // Pretend this is a CommonJS environment to catch exports from the grammar.
   const module = { exports: {} };
+
   eval(grammarJs);
 
   return module.exports;
 }
 
-const grammar = compileGrammar(`
+//const handler = true;
+
+const grammar = (handler) => compileGrammar(handler, `
       @lexer lexer
 
       #database -> _ outermost_scope_stmt (__ outermost_scope_stmt):* _ {% ([ws1, stmt, list, ws2]) =>
@@ -57,10 +60,13 @@ const grammar = compileGrammar(`
 
       database -> _ __aline_plus _ {% ([ws, lines]) => lines %}
 
-      __aline_plus -> outermost_scope_stmt {% ([line]) => [line] %} |
+      __aline_plus -> outermost_scope_stmt {% ([line]) => handler ? null : [line] %} |
                       __aline_plus __ outermost_scope_stmt {% ([prior, ws, next]) => {
            //console.log(prior);
            //console.log(next);
+           if (handler) {
+             return null;
+           }
            return [...prior, next];
          }
       %}
@@ -161,8 +167,8 @@ const grammar = compileGrammar(`
       __ -> WHITESPACE:+ {% (d) => null %}
 `);
 
-function parse(code, first = false) {
-  const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
+function parse(code, first = false, handler = false) {
+  const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar(handler)));
   parser.feed(code);
   return first ? parser.results[0] : parser.results;
 }

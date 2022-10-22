@@ -710,7 +710,7 @@ describe("Parser", () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/set.mm");
 
-    const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
+    const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar(true)));
 
     // const lines = file.toString().split("\n");
     const code = file.toString();
@@ -728,7 +728,7 @@ describe("Parser", () => {
         break;
       }
       // result.push(next.type);
-      console.log(next.line);
+      //console.log(next.line);
       parser.feed(next.value);
       //break;
     } while (true);
