@@ -271,6 +271,10 @@ class MM {
     return this.frames.pop();
   }
 
+  // Algorithms from:
+  // https://us.metamath.org/downloads/metamath.pdf
+  // https://mm.ivank.net/js/MM.js
+  // https://github.com/david-a-wheeler/mmverify.py/blob/master/mmverify.py
   decompress(type, theorem, proof) {
     const [d, f, e] = this.frames.assert(type, theorem);
 
@@ -284,6 +288,9 @@ class MM {
           .map(([rule, type]) => this.frames.lookupE(rule, type));
     labels.push(...args);
     labels.push(...hyps);
+
+    //console.log(args);
+    //console.log(hyps);
     
     const m = labels.length;
 
@@ -297,9 +304,10 @@ class MM {
     for (let ch of compressed) {
       if (ch >= 'A' && ch <= 'T') {
         // Shift the current integer left by 20 bits.
-        let result = current * 20;
+        // let result = ;
         // Add the next 20 bits as the least significant bits.
-        result += ch.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
+        //result += ch.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
+        const result = current * 20 + ch.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
         integers.push(result);
         // Reset the current integer.
         current = 0;
@@ -308,25 +316,70 @@ class MM {
         // Shift the current integer left by 5 bits.
         current = current * 5;
         // Add the next 5 bits as the last significant bits.
-        current += ch.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
+        current += ch.charCodeAt(0) - 'U'.charCodeAt(0) + 1;
       } else if (ch == 'Z') {
-        throw new Error(`Unsupported operation: marker while proving ${proof}.`);
+        integers.push(-1);
+        // current = 0;
+        // throw new Error(`Unsupported operation: marker while proving ${proof}.`);
       } else {
         throw new Error(`Unexpected character "${ch}" in compressed proof`);
       }
     }
 
+    //console.log(`compressed: ${compressed}.`);
+    //console.log(`integers: ${integers}`);
     const result = [];
+    const saved = [];
+    let total_saved = 0;
     for (const integer of integers) {
-      if (integer > 0 && integer <= m) {
+      if (integer == -1) {
+        const last = result[result.length - 1];
+        const [type, [dvs, f, e]] = this.labels[last];
+        // pushes the last step
+        saved.push(result.slice(result.length - 1 - (f.length + e.length), result.length));
+        // saved.push(last);
+        // console.log(result);
+        // saved.push([...result]);
+        total_saved++;
+        // throw new Error("Marker!");
+      } else if (integer > 0 && integer <= m) {
+        // throw new Error("hi");
         result.push(labels[integer - 1]);
       } else if (integer > m && integer <= (m + n)) {
         const i = integer - m;
         result.push(local[i - 1]);
+      } else if (integer > (m + n) && integer <= (m + n + total_saved)) {
+        //const stmt = saved[integer - m];
+        //console.log(proof);
+        // console.log(`integer=${integer} m=${m} n=${n} saved=${saved.length}`);
+        // console.log(`${integer - m}`);
+        // console.log(labels[integer - m]);
+        //console.log(`labels=${labels} local=${local}`);
+        //console.log(`integer=${integer} m=${m} n=${n} saved=${saved.length} total=${total_saved}`);
+        //console.log(integer);
+        //console.log(stmt);
+        //console.log(`saved: ${saved[integer - (m + n) - 1]}`);
+        // Interestinly, David treats this step repetition as an axiom
+        // because it has already been proven, so there is no point in
+        // re-doing it:
+        // https://github.com/david-a-wheeler/mmverify.py/blob/master/mmverify.py
+        // Where as Ivan, unrolls the entire dependency tree and reproves it:
+        // https://mm.ivank.net/js/MM.js
+        // const step = saved[integer - (m + n) - 1];
+        //console.log(this.labels[step]);
+        // const [type, [dvs, f, e]] = this.labels[step];
+        //console.log(f);
+        // console.log(e);
+        //throw new Error(`hi`);
+        result.push(...saved[integer - (m + n) - 1]);
+        // throw new Error(`Reference!`);
       } else {
+        console.log(`integer=${integer} m=${m} n=${n} saved=${saved.length}`);
         throw new Error(`Invalid integer number "${integer}" in compressed proof.`);
       }
     }
+
+    // console.log(result);
     
     return result;
   }
@@ -356,6 +409,7 @@ class MM {
         const subs = {};
         const npop = mandatory.length + hyp.length;
         const base = stack.length - npop;
+        // console.log(`Stack: base=${base}, npop=${npop}, length=${stack.length}`);
         const args = [];
         let sp = base;
         if (sp < 0) {
@@ -365,7 +419,12 @@ class MM {
         for (const [k, v] of mandatory) {
           const top = stack[sp];
           if (top[1] != k) {
-            throw new Error(`Step ${step}: argument type of ${v} doesn't match with the top of the stack. Expected ${k} but got ${top[0]}.`);
+            console.log(`Stack at ${sp} because ${mandatory.length} args + ${hyp.length} hypothesis:`);
+            for (let [index, type, string] of stack.reverse()) {
+              console.log(`  ${type} ${string.join("")}`);
+            }
+            console.log(mandatory);
+            throw new Error(`Step ${step} of ${label}: argument type of ${v} doesn't match with the top of the stack. Expected ${k} but got ${top[1]}.`);
           }
           subs[v] = top[2];
           args.push(top[0]);
