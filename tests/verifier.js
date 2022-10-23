@@ -1,6 +1,6 @@
 const Assert = require("assert");
 
-const {parse} = require("../src/parser.js");
+const {parse, grammar, lexicon} = require("../src/parser.js");
 const {Frame, Stack, MM} = require("../src/metamath.js");
 
 describe("Verifier", () => { 
@@ -129,48 +129,48 @@ describe("Verifier", () => {
   });
 
   it("$c a $.", () => {
-    assertThat(new MM().read(parse(`
+    assertThat(new MM().read(...parse(`
       $c a $.
-    `, true)).c)
+    `)).c)
       .equalsTo(new Set(["a"]));
   });
-  
+
   it("$v b $.", () => {
-    assertThat(new MM().read(parse(`
+    assertThat(new MM().read(...parse(`
       $v b $.
-    `, true)).v)
+    `)).v)
       .equalsTo(new Set(["b"]));
   });
   
   it("$c a $. $v b $.", () => {
-    assertThat(new MM().read(parse(`
+    assertThat(new MM().read(...parse(`
         $c a $.
         $v b $.
-    `, true)).c)
+    `)).c)
       .equalsTo(new Set(["a"]));
   });
   
   it("$c a $. $v b $.", () => {
-    assertThat(new MM().read(parse(`
+    assertThat(new MM().read(...parse(`
         $c a $.
         $v b $.
-    `, true)).v)
+    `)).v)
       .equalsTo(new Set(["b"]));
   });
   
   it("${ $v a b c $. $}", () => {
-    assertThat(new MM().read(parse(`
+    assertThat(new MM().read(...parse(`
       $\{
         $v a b c $.
       $\}
-    `, true)).v)
+    `)).v)
       .equalsTo(new Set([]));
     // The top frame has no variables.
   });
   
   it("w2 $a wff ( p -> q ) $.", () => {
     const mm = new MM();
-    mm.read(parse(`
+    mm.read(...parse(`
       $c ( ) -> wff $.
       $v p q r s $.
       wp $f wff p $.
@@ -178,7 +178,7 @@ describe("Verifier", () => {
       wr $f wff r $.
       ws $f wff s $.
       w2 $a wff ( p -> q ) $.
-    `, true));
+    `));
     assertThat(mm.labels["w2"])
       .equalsTo(["$a", [
         [],
@@ -227,7 +227,7 @@ describe("Verifier", () => {
   
   it("wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.", () => {
     const mm = new MM();
-    const top = mm.read(parse(`
+    const top = mm.read(...parse(`
       $c ( ) -> wff $.
       $v p q r s $.
       wp $f wff p $.
@@ -236,7 +236,7 @@ describe("Verifier", () => {
       ws $f wff s $.
       w2 $a wff ( p -> q ) $.
       wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
-    `, true));
+    `));
     
     assertThat(mm.labels["w2"])
       .equalsTo(["$a", [
@@ -592,6 +592,37 @@ describe("Verifier", () => {
     const mm = new MM();
     mm.read(code);
   });
+
+  it("Hofstadter's MIU: Streaming", () => {
+    const source = require("fs").readFileSync("tests/miu.mm", {
+      encoding: "utf8",
+      flag: "r"
+    });
+    const mm = new MM();
+    mm.frames.push();
+    const [code] = parse(source, mm);
+    const frame = mm.frames.pop();
+    assertThat(frame.c)
+      .equalsTo(new Set(['M', 'I', 'U', '|-', 'wff']));
+    assertThat(frame.v)
+      .equalsTo(new Set(['x', 'y']));
+    assertThat(frame.f)
+      .equalsTo([[ 'x', 'wff' ], [ 'y', 'wff' ]]);
+  });
+
+  it("$c a $. $c b $.", () => {
+    const mm = new MM();
+    mm.frames.push();
+    mm.feed(...parse(`
+      $c a $.
+    `));
+    mm.feed(...parse(`
+      $c b $.
+    `));
+    const frame = mm.frames.pop();
+    assertThat(frame.c)
+      .equalsTo(new Set(["a", "b"]));
+  });
   
   it("Hofstadter's PQ", () => {
     const [code] = parse(`
@@ -816,17 +847,44 @@ describe("Verifier", () => {
       $.
     `);
 
-`
-
-
-`;
+    `
+    `;
     
     const mm = new MM();
     mm.read(code);
   });
-
   
-});
+  });
+
+
+  it.skip("Verify set.mm", async () => {
+    const fs = require("fs/promises");
+    const nearley = require("nearley");
+    const file = await fs.readFile("tests/set.mm");
+    const moo = require("moo");
+
+    const mm = new MM();
+    mm.frames.push();
+    
+    const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar(mm)));
+
+    const code = file.toString();
+    const lexer = moo.compile(lexicon);
+    lexer.reset(code);
+    do {
+      const next = lexer.next();
+      if (!next) {
+        break;
+      }
+      parser.feed(next.value);
+    } while (true);
+
+    const frame = mm.frames.pop();
+    
+    console.log(frame);
+    
+  }).timeout(100000);
+
 
 
 function assertThat(x) {

@@ -171,10 +171,9 @@ class MM {
     this.frames = new Stack();
     this.labels = {};
   }
-  
-  read(block) {
-    this.frames.push();
-    for (const stmt of block) {
+
+  feed(statements) {
+    for (const stmt of statements) {
       const [first, second] = stmt;
       if (first == "$c") {
         const [, vars] = stmt;
@@ -220,7 +219,11 @@ class MM {
         throw new Error(`Unknown statement type: ${stmt}.`);
       }
     }
-    
+  }
+  
+  read(statements) {
+    this.frames.push();
+    this.feed(statements);
     return this.frames.pop();
   }
 
@@ -263,7 +266,7 @@ class MM {
         // Add the next 5 bits as the last significant bits.
         current += ch.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
       } else if (ch == 'Z') {
-        throw new Error("marker");
+        throw new Error(`Unsupported operation: marker while proving ${proof}.`);
       } else {
         throw new Error(`Unexpected character "${ch}" in compressed proof`);
       }

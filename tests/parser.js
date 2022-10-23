@@ -712,33 +712,18 @@ describe("Parser", () => {
 
     const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar(true)));
 
-    // const lines = file.toString().split("\n");
     const code = file.toString();
 
-    // const tokens = tokenize(file.toString());
-    
     const lexer = moo.compile(lexicon);
     lexer.reset(code);
-    // return;
-    // const result = [];
     do {
       const next = lexer.next();
       if (!next) {
-        // return result;
         break;
       }
-      // result.push(next.type);
-      //console.log(next.line);
       parser.feed(next.value);
-      //break;
     } while (true);
 
-    // parser.feed(code);
-    
-    // parse(file.toString());
-    // Runs OOO
-    //assertThat(parse(file.toString()).length)
-    //  .equalsTo(8470554);
   }).timeout(100000);
 
   function tokenize(code) {

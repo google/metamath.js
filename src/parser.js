@@ -60,16 +60,24 @@ const grammar = (handler) => compileGrammar(handler, `
 
       database -> _ __aline_plus _ {% ([ws, lines]) => lines %}
 
-      __aline_plus -> outermost_scope_stmt {% ([line]) => handler ? null : [line] %} |
-                      __aline_plus __ outermost_scope_stmt {% ([prior, ws, next]) => {
-           //console.log(prior);
-           //console.log(next);
-           if (handler) {
-             return null;
-           }
-           return [...prior, next];
-         }
-      %}
+      __aline_plus -> outermost_scope_stmt {%
+            ([line]) => {
+              if (handler) {
+                handler.feed([line]);
+                return null;
+              }
+              return [line];
+            }
+           %} |
+           __aline_plus __ outermost_scope_stmt {%
+             ([prior, ws, next]) => {
+               if (handler) {
+                 handler.feed([next]);
+                 return null;
+               }
+               return [...prior, next];
+             }
+          %}
 
       outermost_scope_stmt -> include_stmt {% id %} | 
                               constant_stmt {% id %} | 
@@ -167,10 +175,10 @@ const grammar = (handler) => compileGrammar(handler, `
       __ -> WHITESPACE:+ {% (d) => null %}
 `);
 
-function parse(code, first = false, handler = false) {
+function parse(code, handler = false) {
   const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar(handler)));
   parser.feed(code);
-  return first ? parser.results[0] : parser.results;
+  return parser.results;
 }
 
 module.exports = {
