@@ -107,30 +107,35 @@ class Stack {
     if (vars.length < 2) {
       throw new Error(`Invalid disjoinet statement: neet at least two variables.`);
     }
-    for (const variable of vars) {
-      let found = false;
+
+    const declared = (variable) => {
       for (const frame of [...this.stack].reverse()) {
         if (frame.v.has(variable)) {
-          found = true;
-          break;
+          return true;
         }
       }
-      if (!found) {
+      return false;
+    }
+    
+    for (const variable of vars) {
+      if (!declared(variable)) {
         throw new Error(`Disjoint statement of undeclared variable ${variable}.`);
       }
     }
 
+    const contains = (pair) => {
+      for (const prior of frame.d) {
+        if (prior[0] == pair[0] && prior[1] == pair[1]) {
+          return true;
+        }
+      }
+      return false;
+    }
+    
     for (let i = 0; i < vars.length; i++) {
       for (let j = i + 1; j < vars.length; j++) {
         const pair = [vars[i], vars[j]];
-        let found = false;
-        for (const prior of frame.d) {
-          if (prior[0] == pair[0] && prior[1] == pair[1]) {
-            found = true;
-            continue;
-          }
-        }
-        if (!found) {
+        if (!contains(pair)) {
           frame.d.add(pair);
         }
       }
@@ -164,30 +169,33 @@ class Stack {
     
     const mandatory = new Set();
 
-    // console.log(e);
-    
     for (const [hyp] of [...e, [rule, type]]) {
-      // console.log(hyp);
       for (const tok of hyp) {
         if (this.lookupV(tok)) {
-          // console.log(tok);
           mandatory.add(tok);
         }
       }
     }
 
-    // TODO: deal with distinct variables.
     const dvs = [];
+    for (const {d} of [...this.stack].reverse()) {
+      for (const pair of d) {
+        const [x, y] = pair;
+        // If any of the disjoined variables declarations
+        // refer to the mandatory variables, add that
+        // condition to the assertion.
+        if (mandatory.has(x) && mandatory.has(y)) {
+          dvs.push(pair);
+        }
+      }
+    }
       
     const f = [];
 
-    // console.log(mandatory);
     for (const frame of [...this.stack].reverse()) {
       for (const [v, k, label] of [...frame.f].reverse()) {
-        // console.log(`${v} ${k}`);
         if (mandatory.has(v)) {
           f.unshift([k, v]);
-          // console.log(label);
           mandatory.delete(v);
         }
       }

@@ -222,6 +222,14 @@ describe("Verifier", () => {
       `)).d).equalsTo(new Set([["w", "x"], ["w", "y"], ["w", "z"], ["x", "y"], ["x", "z"], ["y", "z"]]));
   });
   
+  it("$v x y A B $. $d x y A $. $d x y B $.", () => {
+    assertThat(new MM().read(...parse(`
+        $v x y A B $.
+        $d x y A $.
+        $d x y B $.
+      `)).d).equalsTo(new Set([["x", "y"], ["x", "A"], ["y", "A"], ["x", "B"], ["y", "B"]]));
+  });
+  
   it("w2 $a wff ( p -> q ) $.", () => {
     const mm = new MM();
     mm.read(...parse(`
@@ -238,6 +246,25 @@ describe("Verifier", () => {
         [],
         [["wff", "p"], ["wff", "q"]],
         [],
+        ["wff", ["(", "p", "->", "q", ")"]]
+      ]]);
+  }); 
+
+  it("w2 $a wff ( p -> q ) $.", () => {
+    const mm = new MM();
+    mm.read(...parse(`
+      $c ( ) -> wff $.
+      $v p q $.
+      wp $f wff p $.
+      wq $f wff q $.
+      $d p q $.
+      w2 $a wff ( p -> q ) $.
+    `));
+    assertThat(mm.labels["w2"])
+      .equalsTo(["$a", [
+        [["p", "q"]], // disjoint variables conditions
+        [["wff", "p"], ["wff", "q"]], // type hypothesis
+        [], // logical hypothesis
         ["wff", ["(", "p", "->", "q", ")"]]
       ]]);
   }); 
