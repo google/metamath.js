@@ -928,15 +928,22 @@ describe("Verifier", () => {
       $.
     `);
 
-    `
-    `;
-    
     const mm = new MM();
     mm.read(code);
   });
-  
-  });
+    
+  it.skip("ax-5", () => {
+    const [code] = parse(`
+      $v x ph $.
+      $\{
+        $d x ph $.
+        ax-5 $a |- ( ph -> A. x ph ) $.
+      $\}
+    `);
 
+    const mm = new MM();
+    mm.read(code);
+  });
 
   it.skip("Verify set.mm", async () => {
     const fs = require("fs/promises");
@@ -971,12 +978,11 @@ describe("Verifier", () => {
     
   }).timeout(100000);
 
-
-
-function assertThat(x) {
-  return {
-    equalsTo(y) {
-      Assert.deepEqual(x, y);
+  function assertThat(x) {
+    return {
+      equalsTo(y) {
+        Assert.deepEqual(x, y);
+      }
     }
   }
-}
+});

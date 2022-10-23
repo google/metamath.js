@@ -352,7 +352,7 @@ class MM {
         const t = stack[stack.length - 1];
         steps.push([step, [t[1], t[2]], []]);
       } else if (op == "$a" || op == "$p") {
-        const [dist, mandatory, hyp, result] = data;
+        const [dvs, mandatory, hyp, result] = data;
         const subs = {};
         const npop = mandatory.length + hyp.length;
         const base = stack.length - npop;
@@ -387,6 +387,20 @@ class MM {
           sp++;
         }
 
+        // Page 133: Verifying Disjoint Variable Restrictions
+        // https://us.metamath.org/downloads/metamath.pdf
+        // Each substitution made in a proof must be checked to verify that any disjoint
+        // variable restrictions are satisfied, as follows.
+        // If two variables replaced by a substitution exist in a mandatory $d
+        // statement of the assertion referenced, the two expressions resulting from the
+        // substitution must satisfy the following conditions. First, the two expressions
+        // must have no variables in common. Second, each possible pair of variables,
+        // one from each expression, must exist in an active $d statement of the $p
+        // statement containing the proof.
+        for (const [x, y] of dvs) {
+          throw new Error(`Unsupported disjoint variable restriction`);
+        }
+        
         stack.splice(base, npop);
         
         const el = result[1]
