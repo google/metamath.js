@@ -122,7 +122,17 @@ class Stack {
 
     for (let i = 0; i < vars.length; i++) {
       for (let j = i + 1; j < vars.length; j++) {
-        frame.d.add([vars[i], vars[j]]);
+        const pair = [vars[i], vars[j]];
+        let found = false;
+        for (const prior of frame.d) {
+          if (prior[0] == pair[0] && prior[1] == pair[1]) {
+            found = true;
+            continue;
+          }
+        }
+        if (!found) {
+          frame.d.add(pair);
+        }
       }
     }
   }

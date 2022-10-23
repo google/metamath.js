@@ -205,7 +205,16 @@ describe("Verifier", () => {
         $d a b $.
       `)).d).equalsTo(new Set([["a", "b"]]));
   });
-  
+
+  it("$v a b $. $d a b $. $d a b $.", () => {
+    assertThat(new MM().read(...parse(`
+        $v a b $.
+        $d a b $.
+        $( duplicate statement $)
+        $d a b $.
+      `)).d).equalsTo(new Set([["a", "b"]]));
+  });
+
   it("$v w x y z $. $d w x y z $.", () => {
     assertThat(new MM().read(...parse(`
         $v w x y z $.
