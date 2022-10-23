@@ -865,9 +865,13 @@ describe("Verifier", () => {
 
     const mm = new MM();
     mm.frames.push();
-    
+
     const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar(mm)));
 
+    // TODO(goto): throws an exception at:
+    //   - markers not supported in compressed proofs
+    //   - $d statements not supported
+    
     const code = file.toString();
     const lexer = moo.compile(lexicon);
     lexer.reset(code);
@@ -876,6 +880,7 @@ describe("Verifier", () => {
       if (!next) {
         break;
       }
+      console.log(`Line: ${next.line}`);
       parser.feed(next.value);
     } while (true);
 
