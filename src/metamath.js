@@ -213,8 +213,15 @@ class MM {
         this.labels[label] = [e, [type, rule]];
       } else if (second == "$p") {
         const [label, p, type, theorem, d, proof] = stmt;
+        //try {
         const result = this.verify(label, type, theorem, proof);
         this.labels[label] = [p, this.frames.assert(type, theorem), result];
+        //} catch (e) {
+        //  console.log(e);
+        //  throw e;
+        //}
+      } else if (first == "$d") {
+        throw new Error(`Unsupported statement type: $d.`);
       } else {
         throw new Error(`Unknown statement type: ${stmt}.`);
       }
