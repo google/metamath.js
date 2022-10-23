@@ -102,8 +102,29 @@ class Stack {
     frame.e_labels[tag] = label;
   }
 
-  addD(stat) {
+  addD([d, vars]) {
     const frame = this.top();
+    if (vars.length < 2) {
+      throw new Error(`Invalid disjoinet statement: neet at least two variables.`);
+    }
+    for (const variable of vars) {
+      let found = false;
+      for (const frame of [...this.stack].reverse()) {
+        if (frame.v.has(variable)) {
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        throw new Error(`Disjoint statement of undeclared variable ${variable}.`);
+      }
+    }
+
+    for (let i = 0; i < vars.length; i++) {
+      for (let j = i + 1; j < vars.length; j++) {
+        frame.d.add([vars[i], vars[j]]);
+      }
+    }
   }
 
   lookupF(varz) {
@@ -196,8 +217,8 @@ class MM {
         const [label, f, type, variable] = stmt;
         this.frames.addF(variable, type, label);
         this.labels[label] = [f, [type, variable]];
-      } else if (second == "$d") {
-        throw new Error(`Unsupported statement type $d.`);
+      } else if (first == "$d") {
+        this.frames.addD(stmt);
       } else if (second == "$a") {
         const [label, a, type, rule] = stmt;
         const axiom = this.frames.assert(type, rule);
@@ -220,8 +241,6 @@ class MM {
         //  console.log(e);
         //  throw e;
         //}
-      } else if (first == "$d") {
-        throw new Error(`Unsupported statement type: $d.`);
       } else {
         throw new Error(`Unknown statement type: ${stmt}.`);
       }

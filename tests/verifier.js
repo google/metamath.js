@@ -168,6 +168,51 @@ describe("Verifier", () => {
     // The top frame has no variables.
   });
   
+  it("$d a b $.", () => {
+    try {
+      new MM().read(...parse(`
+        $( This should fail because a needs to be declared $)
+        $d a b $.
+      `));
+      throw new Error("Not supposed to reach this");
+    } catch (e) {
+      assertThat(e.message)
+        .equalsTo("Disjoint statement of undeclared variable a.");
+      return;
+    }
+    throw new Error("Expected exception to be thrown.");
+  });
+  
+  it("$v a $. $d a $.", () => {
+    try {
+      new MM().read(...parse(`
+        $( This should fail because you need at least two variables to be disjoint $)
+        $v a $.
+        $d a $.
+      `));
+      throw new Error("Not supposed to reach this");
+    } catch (e) {
+      assertThat(e.message)
+        .equalsTo("Invalid disjoinet statement: neet at least two variables.");
+      return;
+    }
+    throw new Error("Expected exception to be thrown.");
+  });
+  
+  it("$v a b $. $d a b $.", () => {
+    assertThat(new MM().read(...parse(`
+        $v a b $.
+        $d a b $.
+      `)).d).equalsTo(new Set([["a", "b"]]));
+  });
+  
+  it("$v w x y z $. $d w x y z $.", () => {
+    assertThat(new MM().read(...parse(`
+        $v w x y z $.
+        $d w x y z $.
+      `)).d).equalsTo(new Set([["w", "x"], ["w", "y"], ["w", "z"], ["x", "y"], ["x", "z"], ["y", "z"]]));
+  });
+  
   it("w2 $a wff ( p -> q ) $.", () => {
     const mm = new MM();
     mm.read(...parse(`
