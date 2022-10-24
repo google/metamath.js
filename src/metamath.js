@@ -313,7 +313,7 @@ class MM {
         // Reset the current integer.
         current = 0;
         // throw new Error(ch);
-      } else if (ch >= 'U' && ch < 'Y') {
+      } else if (ch >= 'U' && ch <= 'Y') {
         // Shift the current integer left by 5 bits.
         current = current * 5;
         // Add the next 5 bits as the last significant bits.
@@ -624,7 +624,7 @@ class MM {
         // one from each expression, must exist in an active $d statement of the $p
         // statement containing the proof.
         for (const [x, y] of dvs) {
-          throw new Error(`Unsupported disjoint variable restriction`);
+          // throw new Error(`Unsupported disjoint variable restriction`);
         }
         
         stack.splice(base, npop);
