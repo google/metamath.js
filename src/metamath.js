@@ -206,9 +206,10 @@ class Stack {
 }
 
 class MM {
-  constructor() {
+  constructor(debug = false) {
     this.frames = new Stack();
     this.labels = {};
+    this.debug = debug;
   }
 
   feed(statements) {
@@ -240,11 +241,6 @@ class MM {
       } else if (second == "$a") {
         const [label, a, type, rule] = stmt;
         const axiom = this.frames.assert(type, rule);
-        ///if (label == "ax-mp") {
-        // console.log(stmt);
-        //console.log(axiom);          
-        //throw new Error("hi");
-        //}
         this.labels[label] = [a, axiom];
       } else if (second == "$e") {
         const [label, e, type, rule] = stmt;
@@ -252,13 +248,18 @@ class MM {
         this.labels[label] = [e, [type, rule]];
       } else if (second == "$p") {
         const [label, p, type, theorem, d, proof] = stmt;
-        //try {
-        const result = this.verify(label, type, theorem, proof);
-        this.labels[label] = [p, this.frames.assert(type, theorem), result];
-        //} catch (e) {
-        //  console.log(e);
-        //  throw e;
-        //}
+        try {
+          const result = this.verify(label, type, theorem, proof);
+          // If we are debugging, we save the result of the proof.
+          // We don't save it by default because we would run OOO
+          // proving large databases like set.mm.
+          this.labels[label] = [p, this.frames.assert(type, theorem), this.debug ? result : {}];
+        } catch (e) {
+          // TODO(goto): deal with array splicing limits.
+          if (e.message != "proof too long") {
+            throw e;
+          }
+        }
       } else {
         throw new Error(`Unknown statement type: ${stmt}.`);
       }
@@ -289,9 +290,6 @@ class MM {
     labels.push(...args);
     labels.push(...hyps);
 
-    //console.log(args);
-    //console.log(hyps);
-    
     const m = labels.length;
 
     const [l, local, r, compressed] = proof;
@@ -305,14 +303,11 @@ class MM {
     for (let ch of compressed.replace(/\s/g, "")) {
       if (ch >= 'A' && ch <= 'T') {
         // Shift the current integer left by 20 bits.
-        // let result = ;
         // Add the next 20 bits as the least significant bits.
-        //result += ch.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
         const result = current * 20 + ch.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
         integers.push(result);
         // Reset the current integer.
         current = 0;
-        // throw new Error(ch);
       } else if (ch >= 'U' && ch <= 'Y') {
         // Shift the current integer left by 5 bits.
         current = current * 5;
@@ -320,18 +315,10 @@ class MM {
         current += ch.charCodeAt(0) - 'U'.charCodeAt(0) + 1;
       } else if (ch == 'Z') {
         integers.push(-1);
-        // current = 0;
-        // throw new Error(`Unsupported operation: marker while proving ${proof}.`);
       } else {
         throw new Error(`Unexpected character "${ch}" in compressed proof`);
       }
     }
-
-    //console.log(`compressed: ${compressed}.`);
-    //console.log(`integers: ${integers}`);
-    const result = [];
-    const saved = [];
-    let total_saved = 0;
 
     const steps = integers.map((integer) => {
       if (integer == -1) {
@@ -343,7 +330,6 @@ class MM {
         const i = integer - m;
         return local[i - 1];
       } else {
-        // console.log(`${integer} ${m} ${n}`);
         return integer - (m + n + 1);
       }
     });
@@ -359,23 +345,17 @@ class MM {
       const [type, [dvs, f = [], e = []]] = statements[steps[i]];
       let result = 0;
       if (type == "$f" || type == "$e") {
-        // console.log(`Statement ${steps[i]}@${i}: Simple declaration.`);
         return 1;
       } else if (type == "$a" || type == "$p") {
         for (let j = 0; j < (f.length + e.length); j++) {
-          // console.log(`Statement ${steps[i]}@${i}: Recursing on child ${j + 1} of ${f.length + e.length} at ${i - 1 - result}. Result? ${result}.`);
           const offset = tree(i - 1 - result);
           result += offset;
         }
-        // result += f.length + e.length;
       }
-      // console.log(`Size of ${i} is ${result + 1}.`);
       return result + 1;
     }
 
     const markers = [];
-
-    //console.log(steps);
 
     let i = 0;
     while (i < steps.length) {
@@ -383,171 +363,25 @@ class MM {
       if (typeof steps[i] == "string") {
         i++;
       } else if (number == -1) {
-        // push the subtree to the marker
+        // push the subtree to the markers
         const size = tree(i - 1);
-        //console.log(size);
         const subtree = steps.slice(i - size, i);
         markers.push(subtree);
         // delete the marker
         steps.splice(i, 1);
-        //console.log(markers);
-        //console.log(steps);
-        //console.log(i);
-        //throw new Error("marker!");
       } else {
-        //console.log(steps);
-        //console.log(number);
-        //console.log(markers[number]);
+        // replace the number with the marked subtree
+        // https://stackoverflow.com/questions/44959025/rangeerror-maximum-call-stack-size-exceeded-caused-by-array-splice-apply
+        if (markers[number].length > 65536) {
+          // console.log(markers[number]);
+          // console.log(compressed);
+          throw new Error("proof too long");
+        }
         steps.splice(i, 1, ...markers[number]);
-        //console.log(steps);
-        //throw new Error("hi");
       }
     }
 
     return steps;
-
-    const clean = steps.filter((integer, i) => {
-      if (integer == -1) {
-        // const base = tree(i - 1);
-        markers.push(i - markers.length - 1);
-        return false;
-      }
-      return true;
-    });
-
-    console.log(markers);
-    console.log(clean);
-
-    throw new Error("hi");
-
-    // console.log(tree(4));
-
-    // console.log(`Proving ${theorem.join('')} with ${compressed}.`);
-    console.log(markers);
-
-    const all = clean;
-    let next = 0;
-    while (next < all.length) {
-      if (typeof all[next] != "number") {
-        next++;
-        continue;
-      }
-      //console.log(all);
-      //console.log(next);
-      //console.log(markers[all[next]]);
-      const top = markers[all[next]];
-      const size = tree(top);
-      const subtree = clean.slice(top - size + 1, top + 1);
-      // console.log(subtree);
-      // remove the marker and insert the subtree
-      if (all[next] == 2) {
-        // console.log(all);
-        throw new Error("hi");
-      }
-      all.splice(next, 1, ...subtree);
-      // next++;
-      // next++;
-      // console.log(all);
-      // throw new Error("hello");
-      //console.log("hi");
-      //next++;
-    }
-
-    console.log(all);
-    
-    return all;
-
-    // throw new Error("hi");
-    
-    const full = markers.map((top) => {
-      // const top = ;
-      const size = tree(top);
-      // const base = tree();
-      // console.log(`Size of ${top} is ${size}.`);
-      return clean.slice(top - size + 1, top + 1);
-    });
-
-    // console.log(full);
-    // throw new Error("hi");
-    
-
-    // throw new Error("hi");
-    
-    const expanded = clean.map((step) => {
-      if (typeof step != "number") {
-        return step;
-      }
-
-      return full[step];
-      
-      const top = markers[step];
-      const base = tree(top - 1);
-      // const base = tree();
-      // console.log(`${base} ${top}`);
-      return clean.slice(top - base - 1, top);
-    });
-
-    // console.log(expanded);
-    //console.log(clean);
-    //console.log(expanded);
-    
-    return expanded.flat();
-    //console.log(clean);
-    throw new Error("hi");
-    // console.log(steps);
-    
-    for (const integer of integers) {
-      if (integer == -1) {
-        const last = result[result.length - 1];
-        const [type, [dvs, f, e]] = this.labels[last];
-        // pushes the last step
-        // the last step composed of the entire subtree.
-        saved.push(result.slice(result.length - 1 - (f.length + e.length), result.length));
-        // saved.push(last);
-        // console.log(result);
-        // saved.push([...result]);
-        total_saved++;
-        // throw new Error("Marker!");
-      } else if (integer > 0 && integer <= m) {
-        // throw new Error("hi");
-        result.push(labels[integer - 1]);
-      } else if (integer > m && integer <= (m + n)) {
-        const i = integer - m;
-        result.push(local[i - 1]);
-      } else if (integer > (m + n) && integer <= (m + n + total_saved)) {
-        //const stmt = saved[integer - m];
-        //console.log(proof);
-        // console.log(`integer=${integer} m=${m} n=${n} saved=${saved.length}`);
-        // console.log(`${integer - m}`);
-        // console.log(labels[integer - m]);
-        //console.log(`labels=${labels} local=${local}`);
-        //console.log(`integer=${integer} m=${m} n=${n} saved=${saved.length} total=${total_saved}`);
-        //console.log(integer);
-        //console.log(stmt);
-        //console.log(`saved: ${saved[integer - (m + n) - 1]}`);
-        // Interestinly, David treats this step repetition as an axiom
-        // because it has already been proven, so there is no point in
-        // re-doing it:
-        // https://github.com/david-a-wheeler/mmverify.py/blob/master/mmverify.py
-        // Where as Ivan, unrolls the entire dependency tree and reproves it:
-        // https://mm.ivank.net/js/MM.js
-        // const step = saved[integer - (m + n) - 1];
-        //console.log(this.labels[step]);
-        // const [type, [dvs, f, e]] = this.labels[step];
-        //console.log(f);
-        // console.log(e);
-        //throw new Error(`hi`);
-        result.push(...saved[integer - (m + n) - 1]);
-        // throw new Error(`Reference!`);
-      } else {
-        console.log(`integer=${integer} m=${m} n=${n} saved=${saved.length}`);
-        throw new Error(`Invalid integer number "${integer}" in compressed proof.`);
-      }
-    }
-
-    // console.log(result);
-    
-    return result;
   }
     
   verify(label, type, theorem, proof) {
@@ -650,7 +484,9 @@ class MM {
       throw new Error(`Assertion proved doesn't match: expected ${type} but got ${kind}`);
     }
     
-    if (last.join(" ") != theorem.join(" ")) {
+    if (last.flat().join(" ") != theorem.flat().join(" ")) {
+      console.log(last);
+      console.log(theorem);
       throw new Error(`Assertion proved doesn't match: expected ${theorem.join("")} but got ${last.join("")}`);
     }
 

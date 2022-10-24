@@ -366,7 +366,7 @@ describe("Verifier", () => {
 
     `);
 
-    const mm = new MM();
+    const mm = new MM(true);
     mm.read(code);
 
     assertThat(mm.labels["$c"]).equalsTo([
@@ -1114,9 +1114,9 @@ describe("Verifier", () => {
 
     const frame = mm.frames.pop();
     
-    console.log(frame);
+    // console.log(frame);
     
-  }).timeout(100000);
+  }).timeout(1000000);
 
   function assertThat(x) {
     return {
