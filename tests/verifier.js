@@ -945,7 +945,7 @@ describe("Verifier", () => {
     mm.read(code);
   });
   
-  it("Decompresses id's proof", () => {
+  it("id's proof", () => {
     const [code] = parse(`
       $c wff |- ( ) -> $.
       $v ph ps ch $.
@@ -1008,7 +1008,7 @@ describe("Verifier", () => {
     mm.read(code);
   });
 
-  it.skip("Decompresses idALT's proof", () => {
+  it("idALT's proof", () => {
     const [code] = parse(`
       $c wff |- ( ) -> $.
       $v ph ps ch $.
@@ -1033,8 +1033,52 @@ describe("Verifier", () => {
         ax-mp $a |- ps $.
       $\}
 
+      $( [wph, wi, ax-1, ax-2, ax-mp] $)
+      $( [wph, wph, wph, wi, *, wi, *, wph, wph, ax-1, wph, ...] $)
       idALT $p |- ( ph -> ph ) $=
         ( wi ax-1 ax-2 ax-mp ) AAABZBZFAACAFABBGFBAFCAFADEE $.
+    `);
+
+    const mm = new MM();
+    mm.read(code);
+  });
+
+  it("peirceroll", () => {
+    const [code] = parse(`
+      $c wff |- ( ) -> $.
+      $v ph ps ch th $.
+
+      $( Let variable ph be a wff. $)
+      wph $f wff ph $.
+
+      $( Let variable ps be a wff. $)
+      wps $f wff ps $.
+
+      $( Let variable ch be a wff. $)
+      wch $f wff ch $.
+
+      $( Let variable th be a wff. $)
+      wth $f wff th $.
+
+      wi $a wff ( ph -> ps ) $.
+
+      $( Makes imim1 an axiom to avoid proving it in this test $)
+      imim1 $a |- ( ( ph -> ps ) -> ( ( ps -> ch ) -> ( ph -> ch ) ) ) $.
+
+      $( Makes imim2 an axiom to avoid proving it in this test $)
+      imim2 $a |- ( ( ph -> ps ) -> ( ( ch -> ph ) -> ( ch -> ps ) ) ) $.
+
+
+      $( Makes sul5 an axiom to avoid proving it in this test $)
+      $\{
+        syl5.1 $e |- ( ph -> ps ) $.
+        syl5.2 $e |- ( ch -> ( ps -> th ) ) $.
+        syl5 $a |- ( ch -> ( ph -> th ) ) $.
+      $\}
+
+      peirceroll $p |- ( ( ( ( ph -> ps ) -> ph ) -> ph )
+                       -> ( ( ( ph -> ps ) -> ch ) -> ( ( ch -> ph ) -> ph ) ) ) $=
+        ( wi imim1 imim2 syl5 ) ABDZCDCADZHADZDJADIADHCAEJAIFG $.
     `);
 
     const mm = new MM();

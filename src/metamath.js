@@ -301,7 +301,8 @@ class MM {
     let integers = [];
     let current = 0;
 
-    for (let ch of compressed) {
+    // removes whitespaces from the compressed proof
+    for (let ch of compressed.replace(/\s/g, "")) {
       if (ch >= 'A' && ch <= 'T') {
         // Shift the current integer left by 20 bits.
         // let result = ;
@@ -331,11 +332,176 @@ class MM {
     const result = [];
     const saved = [];
     let total_saved = 0;
+
+    const steps = integers.map((integer) => {
+      if (integer == -1) {
+        return -1;
+        return integer;
+      } else if (integer > 0 && integer <= m) {
+        return labels[integer - 1];
+      } else if (integer > m && integer <= (m + n)) {
+        const i = integer - m;
+        return local[i - 1];
+      } else {
+        // console.log(`${integer} ${m} ${n}`);
+        return integer - (m + n + 1);
+      }
+    });
+
+    const statements = this.labels;
+    
+    function tree(i) {
+      if (!statements[steps[i]]) {
+        console.log(steps);
+        console.log(`Invalid entry ${steps[i]}.`);
+        throw new Error("");
+      }
+      const [type, [dvs, f = [], e = []]] = statements[steps[i]];
+      let result = 0;
+      if (type == "$f" || type == "$e") {
+        // console.log(`Statement ${steps[i]}@${i}: Simple declaration.`);
+        return 1;
+      } else if (type == "$a" || type == "$p") {
+        for (let j = 0; j < (f.length + e.length); j++) {
+          // console.log(`Statement ${steps[i]}@${i}: Recursing on child ${j + 1} of ${f.length + e.length} at ${i - 1 - result}. Result? ${result}.`);
+          const offset = tree(i - 1 - result);
+          result += offset;
+        }
+        // result += f.length + e.length;
+      }
+      // console.log(`Size of ${i} is ${result + 1}.`);
+      return result + 1;
+    }
+
+    const markers = [];
+
+    //console.log(steps);
+
+    let i = 0;
+    while (i < steps.length) {
+      const number = steps[i];
+      if (typeof steps[i] == "string") {
+        i++;
+      } else if (number == -1) {
+        // push the subtree to the marker
+        const size = tree(i - 1);
+        //console.log(size);
+        const subtree = steps.slice(i - size, i);
+        markers.push(subtree);
+        // delete the marker
+        steps.splice(i, 1);
+        //console.log(markers);
+        //console.log(steps);
+        //console.log(i);
+        //throw new Error("marker!");
+      } else {
+        //console.log(steps);
+        //console.log(number);
+        //console.log(markers[number]);
+        steps.splice(i, 1, ...markers[number]);
+        //console.log(steps);
+        //throw new Error("hi");
+      }
+    }
+
+    return steps;
+
+    const clean = steps.filter((integer, i) => {
+      if (integer == -1) {
+        // const base = tree(i - 1);
+        markers.push(i - markers.length - 1);
+        return false;
+      }
+      return true;
+    });
+
+    console.log(markers);
+    console.log(clean);
+
+    throw new Error("hi");
+
+    // console.log(tree(4));
+
+    // console.log(`Proving ${theorem.join('')} with ${compressed}.`);
+    console.log(markers);
+
+    const all = clean;
+    let next = 0;
+    while (next < all.length) {
+      if (typeof all[next] != "number") {
+        next++;
+        continue;
+      }
+      //console.log(all);
+      //console.log(next);
+      //console.log(markers[all[next]]);
+      const top = markers[all[next]];
+      const size = tree(top);
+      const subtree = clean.slice(top - size + 1, top + 1);
+      // console.log(subtree);
+      // remove the marker and insert the subtree
+      if (all[next] == 2) {
+        // console.log(all);
+        throw new Error("hi");
+      }
+      all.splice(next, 1, ...subtree);
+      // next++;
+      // next++;
+      // console.log(all);
+      // throw new Error("hello");
+      //console.log("hi");
+      //next++;
+    }
+
+    console.log(all);
+    
+    return all;
+
+    // throw new Error("hi");
+    
+    const full = markers.map((top) => {
+      // const top = ;
+      const size = tree(top);
+      // const base = tree();
+      // console.log(`Size of ${top} is ${size}.`);
+      return clean.slice(top - size + 1, top + 1);
+    });
+
+    // console.log(full);
+    // throw new Error("hi");
+    
+
+    // throw new Error("hi");
+    
+    const expanded = clean.map((step) => {
+      if (typeof step != "number") {
+        return step;
+      }
+
+      return full[step];
+      
+      const top = markers[step];
+      const base = tree(top - 1);
+      // const base = tree();
+      // console.log(`${base} ${top}`);
+      return clean.slice(top - base - 1, top);
+    });
+
+    // console.log(expanded);
+    //console.log(clean);
+    //console.log(expanded);
+    
+    return expanded.flat();
+    //console.log(clean);
+    throw new Error("hi");
+    // console.log(steps);
+    
     for (const integer of integers) {
       if (integer == -1) {
         const last = result[result.length - 1];
         const [type, [dvs, f, e]] = this.labels[last];
         // pushes the last step
+        // the last step composed of the entire subtree.
         saved.push(result.slice(result.length - 1 - (f.length + e.length), result.length));
         // saved.push(last);
         // console.log(result);
@@ -440,7 +606,8 @@ class MM {
           const sub = h
                 .map((tok) => subs[tok] ? subs[tok] : tok);
           if (top[2].flat().join("") != sub.flat().join("")) {
-            throw new Error(`Step ${step}: argument value for substitution ${JSON.stringify(subs)} of the hypothesis ${h.join(" ")} doesn't match with the top of the stack. Expected ${sub.flat().join(" ")} but got ${top[1].join(" ")}.`);
+            // argument value for substitution ${JSON.stringify(subs)} of the hypothesis ${h.join(" ")} doesn't match with the top of the stack. 
+            throw new Error(`Step ${step}: Expected ${sub.flat().join("")} but got ${top[2].join("")}.`);
           }
           args.push(top[0]);
           sp++;
