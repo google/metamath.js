@@ -248,18 +248,18 @@ class MM {
         this.labels[label] = [e, [type, rule]];
       } else if (second == "$p") {
         const [label, p, type, theorem, d, proof] = stmt;
-        try {
+        //try {
           const result = this.verify(label, type, theorem, proof);
           // If we are debugging, we save the result of the proof.
           // We don't save it by default because we would run OOO
           // proving large databases like set.mm.
           this.labels[label] = [p, this.frames.assert(type, theorem), this.debug ? result : {}];
-        } catch (e) {
+        //} catch (e) {
           // TODO(goto): deal with array splicing limits.
-          if (e.message != "proof too long") {
-            throw e;
-          }
-        }
+        //  if (e.message != "proof too long") {
+        //    throw e;
+        //  }
+        //}
       } else {
         throw new Error(`Unknown statement type: ${stmt}.`);
       }
@@ -458,7 +458,7 @@ class MM {
         // one from each expression, must exist in an active $d statement of the $p
         // statement containing the proof.
         for (const [x, y] of dvs) {
-          // throw new Error(`Unsupported disjoint variable restriction`);
+          throw new Error(`Unsupported disjoint variable restriction`);
         }
         
         stack.splice(base, npop);
