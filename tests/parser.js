@@ -710,20 +710,17 @@ describe("Parser", () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/set.mm");
 
-    const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar(true)));
+    const handler = {
+      feed(a) {
+        // console.log(a);
+      }
+    };
+    
+    const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar(handler)));
 
     const code = file.toString();
 
-    const lexer = moo.compile(lexicon);
-    lexer.reset(code);
-    do {
-      const next = lexer.next();
-      if (!next) {
-        break;
-      }
-      parser.feed(next.value);
-    } while (true);
-
+    parser.feed(code);
   }).timeout(100000);
 
   function tokenize(code) {

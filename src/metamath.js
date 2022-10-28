@@ -249,13 +249,15 @@ class MM {
       } else if (second == "$p") {
         const [label, p, type, theorem, d, proof] = stmt;
         //try {
-          const result = this.verify(label, type, theorem, proof);
-          // If we are debugging, we save the result of the proof.
-          // We don't save it by default because we would run OOO
-          // proving large databases like set.mm.
-          this.labels[label] = [p, this.frames.assert(type, theorem), this.debug ? result : {}];
+        const verification = this.verify(label, type, theorem, proof);
+        const result = this.debug ? verification : {};
+        // const result = {};
+        // If we are debugging, we save the result of the proof.
+        // We don't save it by default because we would run OOO
+        // proving large databases like set.mm.
+        this.labels[label] = [p, this.frames.assert(type, theorem), result];
         //} catch (e) {
-          // TODO(goto): deal with array splicing limits.
+        // TODO(goto): deal with array splicing limits.
         //  if (e.message != "proof too long") {
         //    throw e;
         //  }
