@@ -1145,6 +1145,36 @@ describe("Verifier", () => {
       ]);
   });
 
+  it("Verify ql.mm", async () => {
+    const fs = require("fs/promises");
+    const nearley = require("nearley");
+    const file = await fs.readFile("tests/ql.mm");
+    const moo = require("moo");
+    const mm = new MM(true);
+    mm.frames.push();
+    const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar(mm)));
+    const code = file.toString();
+    parser.feed(code);
+    const frame = mm.frames.pop();
+
+    [p, [dvs, args, , theorem], proof] = mm.labels["id"];
+    assertThat(args).equalsTo([["term", "a"]]);
+    assertThat(theorem).equalsTo(["|-", ["a", "=", "a"]]);
+    const summary = proof
+          .filter(([label, [type]]) => type == "|-")
+          .map(
+            ([label, [type, step]]) => `${label}: ${type} ${step.join(' ')}`
+          );
+    assertThat(summary)
+      .equalsTo([
+        "ax-a1: |- a = a ' '",
+        "ax-a1: |- a = a ' '",
+        "ax-r1: |- a ' ' = a",
+        "ax-r2: |- a = a",
+      ]);
+  });
+
+
   function assertThat(x) {
     return {
       equalsTo(y) {
