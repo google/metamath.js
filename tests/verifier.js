@@ -1114,9 +1114,36 @@ describe("Verifier", () => {
 
     const frame = mm.frames.pop();
     
-    // console.log(frame);
-    
   }).timeout(1000000);
+
+  it("Verify demo0.mm", async () => {
+    const fs = require("fs/promises");
+    const nearley = require("nearley");
+    const file = await fs.readFile("tests/demo0.mm");
+    const moo = require("moo");
+    const mm = new MM(true);
+    mm.frames.push();
+    const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar(mm)));
+    const code = file.toString();
+    parser.feed(code);
+    const frame = mm.frames.pop();
+    [p, [dvs, args, , theorem], proof] = mm.labels["th1"];
+    assertThat(args).equalsTo([["term", "t"]]);
+    assertThat(theorem).equalsTo(["|-", ["t", "=", "t"]]);
+    const summary = proof
+          .filter(([label, [type]]) => type == "|-")
+          .map(
+            ([label, [type, step]]) => `${label}: ${type} ${step.join(' ')}`
+          );
+    assertThat(summary)
+      .equalsTo([
+        "a2: |- ( t + 0 ) = t",
+        "a2: |- ( t + 0 ) = t",
+        "a1: |- ( ( t + 0 ) = t -> ( ( t + 0 ) = t -> t = t ) )",
+        "mp: |- ( ( t + 0 ) = t -> t = t )",
+        "mp: |- t = t",
+      ]);
+  });
 
   function assertThat(x) {
     return {
