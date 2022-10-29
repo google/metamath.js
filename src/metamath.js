@@ -105,7 +105,7 @@ class Stack {
   addD([d, vars]) {
     const frame = this.top();
     if (vars.length < 2) {
-      throw new Error(`Invalid disjoinet statement: neet at least two variables.`);
+      throw new Error(`Invalid disjoint statement: need at least two variables.`);
     }
 
     const declared = (variable) => {
@@ -134,7 +134,9 @@ class Stack {
     
     for (let i = 0; i < vars.length; i++) {
       for (let j = i + 1; j < vars.length; j++) {
-        const pair = [vars[i], vars[j]];
+        const a = vars[i];
+        const b = vars[j];
+        const pair = a < b ? [a, b] : [b, a];
         if (!contains(pair)) {
           frame.d.add(pair);
         }
@@ -148,7 +150,7 @@ class Stack {
         return frame.f_labels[varz];
       }
     }
-    throw new Error(`Unknown $f key: ${varz}.`);
+    throw new Error(`Undeclared type of "${varz}".`);
   }
 
   lookupE(rule, kind) {
@@ -158,7 +160,31 @@ class Stack {
         return frame.e_labels[tag];
       }
     }        
-    throw new Error(`Unknown $e key: ${tag}.`);
+    throw new Error(`Undeclared logical requirement "${tag}".`);
+  }
+
+  lookupD(a, b) {
+    
+    for (const frame of [...this.stack].reverse()) {
+      // console.log();
+      const pair = a < b ? [a, b] : [b, a];
+      //console.log(frame.d);
+      // console.log(pair);
+      //console.log(frame.d.has(pair));
+      
+      for (let [x, y] of frame.d) {
+        // console.log(x);
+        if (x == pair[0] && y == pair[1]) {
+          // console.log("hi");
+          return true;
+        }
+      }
+      // console.log(varz);
+      //if (frame.d.has(varz)) {
+      //  return frame.d.get(varz);
+      //}
+    }
+    throw new Error(`Undeclared disjoint variable "${a}" and "${b}".`);
   }
 
   assert(type, rule) {
@@ -171,8 +197,11 @@ class Stack {
 
     for (const [hyp] of [...e, [rule, type]]) {
       for (const tok of hyp) {
-        if (this.lookupV(tok)) {
+        // console.log(hyp);
+        if (this.lookupV(tok) && this.lookupF(tok)) {
           mandatory.add(tok);
+        } else if (!this.lookupC(tok)) {
+          throw new Error(`Undeclared token: "${tok}" is neither a constant nor a variable.`);
         }
       }
     }
@@ -247,21 +276,26 @@ class MM {
         this.frames.addE(rule, type, label);
         this.labels[label] = [e, [type, rule]];
       } else if (second == "$p") {
-        const [label, p, type, theorem, d, proof] = stmt;
         //try {
-        const verification = this.verify(label, type, theorem, proof);
-        const result = this.debug ? verification : {};
         // const result = {};
         // If we are debugging, we save the result of the proof.
         // We don't save it by default because we would run OOO
         // proving large databases like set.mm.
+        const [label, p, type, theorem, d, proof] = stmt;
+
+        let result = {};
+        try {
+          const verification = this.verify(label, type, theorem, proof);
+          result = this.debug ? verification : {};
+        } catch (e) {
+          // TODO(goto): deal with array splicing limits.
+          if (e.message == "proof too long") {
+            console.log(`Skipping ${label} because the proof is too long.`);
+          } else {
+            throw e;
+          }
+        }
         this.labels[label] = [p, this.frames.assert(type, theorem), result];
-        //} catch (e) {
-        // TODO(goto): deal with array splicing limits.
-        //  if (e.message != "proof too long") {
-        //    throw e;
-        //  }
-        //}
       } else {
         throw new Error(`Unknown statement type: ${stmt}.`);
       }
@@ -281,12 +315,15 @@ class MM {
   decompress(type, theorem, proof) {
     const [d, f, e] = this.frames.assert(type, theorem);
 
+    //console.log(theorem);
+    //console.log(f);
+    
     const labels = [];
 
     const args = f
           .map(([k, v]) => v)
           .map((v) => this.frames.lookupF(v));
-    
+
     const hyps = e
           .map(([rule, type]) => this.frames.lookupE(rule, type));
     labels.push(...args);
@@ -322,6 +359,8 @@ class MM {
       }
     }
 
+    // console.log(integers);
+    
     const steps = integers.map((integer) => {
       if (integer == -1) {
         return -1;
@@ -332,6 +371,7 @@ class MM {
         const i = integer - m;
         return local[i - 1];
       } else {
+        // A marker.
         return integer - (m + n + 1);
       }
     });
@@ -340,9 +380,7 @@ class MM {
     
     function tree(i) {
       if (!statements[steps[i]]) {
-        console.log(steps);
-        console.log(`Invalid entry ${steps[i]}.`);
-        throw new Error("");
+        throw new Error(`Can't find entry ${steps[i]}.`);
       }
       const [type, [dvs, f = [], e = []]] = statements[steps[i]];
       let result = 0;
@@ -371,6 +409,8 @@ class MM {
         markers.push(subtree);
         // delete the marker
         steps.splice(i, 1);
+      } else if (!markers[number]) {
+        throw new Error(`Marker #${number} not found while unrolling ${proof.join('')}.`);
       } else {
         // replace the number with the marked subtree
         // https://stackoverflow.com/questions/44959025/rangeerror-maximum-call-stack-size-exceeded-caused-by-array-splice-apply
@@ -455,12 +495,24 @@ class MM {
         // variable restrictions are satisfied, as follows.
         // If two variables replaced by a substitution exist in a mandatory $d
         // statement of the assertion referenced, the two expressions resulting from the
-        // substitution must satisfy the following conditions. First, the two expressions
-        // must have no variables in common. Second, each possible pair of variables,
-        // one from each expression, must exist in an active $d statement of the $p
-        // statement containing the proof.
+        // substitution must satisfy the following conditions. 
         for (const [x, y] of dvs) {
-          throw new Error(`Unsupported disjoint variable restriction`);
+          const a = subs[x].filter((v) => this.frames.lookupV(v));
+          const b = subs[y].filter((v) => this.frames.lookupV(v));
+          for (let el1 of a) {
+            for (let el2 of b) {
+              // First, the two expressions must have no variables in common.
+              if (el1 == el2) {
+                throw new Error(`${x} (${a}) and ${y} (${b}) are disjoined variables, and they share ${el}. `);
+              }
+
+              // Second, each possible pair of variables, one from each expression, must exist in
+              // an active $d statement of the $p statement containing the proof.
+              if (!this.frames.lookupD(el1, el2)) {
+                throw new Error(`${el1} of ${x} (${a}) and ${el2} of ${y} (${b}) aren't declared as disjoint.`);
+              }
+            }
+          }
         }
         
         stack.splice(base, npop);

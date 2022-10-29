@@ -86,8 +86,11 @@ describe("Verifier", () => {
       throw new Error("Expected to fail before.");
     } catch (e) {
       assertThat(e.message)
-        .equalsTo(`Unknown $f key: bar.`);
+        .equalsTo(`Undeclared type of "bar".`);
     }
+
+    stack.addV("bar");
+    stack.addF("bar", "a", "bar");
 
     stack.addE(["bar"], "|-", "foo");
     assertThat(stack.lookupE([["bar"], "|-"])).equalsTo("foo");
@@ -97,15 +100,15 @@ describe("Verifier", () => {
       throw new Error("Expected to fail before.");
     } catch (e) {
       assertThat(e.message)
-        .equalsTo(`Unknown $e key: hello.`);
+        .equalsTo(`Undeclared logical requirement "hello".`);
     }
 
-    assertThat(stack.assert("foo", "bar"))
+    assertThat(stack.assert("foo", ["bar"]))
       .equalsTo([
         [],
-        [["a", "b"]],
+        [["a", "bar"]],
         [[["bar"], "|-", "foo"]],
-        ["foo", "bar"]
+        ["foo", ["bar"]]
       ]);
 
     //assertThat(new MM().read(parse(`
@@ -193,7 +196,7 @@ describe("Verifier", () => {
       throw new Error("Not supposed to reach this");
     } catch (e) {
       assertThat(e.message)
-        .equalsTo("Invalid disjoinet statement: neet at least two variables.");
+        .equalsTo("Invalid disjoint statement: need at least two variables.");
       return;
     }
     throw new Error("Expected exception to be thrown.");
@@ -227,7 +230,7 @@ describe("Verifier", () => {
         $v x y A B $.
         $d x y A $.
         $d x y B $.
-      `)).d).equalsTo(new Set([["x", "y"], ["x", "A"], ["y", "A"], ["x", "B"], ["y", "B"]]));
+      `)).d).equalsTo(new Set([["x", "y"], ["A", "x"], ["A", "y"], ["B", "x"], ["B", "y"]]));
   });
   
   it("w2 $a wff ( p -> q ) $.", () => {
@@ -274,7 +277,8 @@ describe("Verifier", () => {
     stack.push();
     stack.addC("A");
     stack.addC("~");
-    assertThat(stack.top().c).equalsTo(new Set(["A", "~"]));
+    stack.addC("->");
+    assertThat(stack.top().c).equalsTo(new Set(["A", "~", "->"]));
     stack.addV("a");
     stack.addV("b");
     stack.addV("c");
@@ -282,6 +286,7 @@ describe("Verifier", () => {
     assertThat(stack.lookupV("a"));
     // Variable a is of type A.
     stack.addF("a", "A", "let1");
+    stack.addF("b", "A", "let3");
     assertThat(stack.lookupF("a"))
       .equalsTo("let1");
 
@@ -298,6 +303,7 @@ describe("Verifier", () => {
     const [, mand, hyps] = stack.assert("A", ["b", "->", "c"]);
     assertThat(mand).equalsTo([
       ["A", "a"],
+      ["A", "b"],
       ["A", "c"],
     ]);
     assertThat(hyps).equalsTo([[["~", "a"], "|-", "hypothesis"]]);
@@ -768,7 +774,7 @@ describe("Verifier", () => {
 
   it("Hofstadter's TQ", () => {
     const [code] = parse(`
-      $c wff |- p q - C DND $.
+      $c wff |- t p q - C DND DF P $.
       $v x y z $.
       wx $f wff x $.
       wy $f wff y $.
@@ -1108,7 +1114,7 @@ describe("Verifier", () => {
       if (!next) {
         break;
       }
-      console.log(`Line: ${next.line}`);
+      //console.log(`Line: ${next.line}`);
       parser.feed(next.value);
     } while (true);
 
@@ -1149,6 +1155,260 @@ describe("Verifier", () => {
     const fs = require("fs/promises");
     const nearley = require("nearley");
     const file = await fs.readFile("tests/ql.mm");
+    const moo = require("moo");
+    const mm = new MM(true);
+    mm.frames.push();
+    const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar(mm)));
+    const code = file.toString();
+    parser.feed(code);
+    const frame = mm.frames.pop();
+
+    [p, [dvs, args, , theorem], proof] = mm.labels["id"];
+    assertThat(args).equalsTo([["term", "a"]]);
+    assertThat(theorem).equalsTo(["|-", ["a", "=", "a"]]);
+    const summary = proof
+          .filter(([label, [type]]) => type == "|-")
+          .map(
+            ([label, [type, step]]) => `${label}: ${type} ${step.join(' ')}`
+          );
+    assertThat(summary)
+      .equalsTo([
+        "ax-a1: |- a = a ' '",
+        "ax-a1: |- a = a ' '",
+        "ax-r1: |- a ' ' = a",
+        "ax-r2: |- a = a",
+      ]);
+  });
+
+  it("trud", () => {
+    const [code] = parse(`
+      $( Declare the primitive constant symbols for lambda calculus. $)
+      $c var $.   $( Typecode for variables (syntax) $)
+      $c type $.  $( Typecode for types (syntax) $)
+      $c term $.  $( Typecode for terms (syntax) $)
+      $c |- $.    $( Typecode for theorems (logical) $)
+      $c : $.     $( Typehood indicator $)
+      $c . $.     $( Separator $)
+      $c |= $.    $( Context separator $)
+      $c bool $.     $( Boolean type $)
+      $c ind $.   $( 'Individual' type $)
+      $c -> $.    $( Function type $)
+      $c ( $.     $( Open parenthesis $)
+      $c ) $.     $( Close parenthesis $)
+      $c , $.     $( Context comma $)
+      $c \\ $.     $( Lambda expression $)
+      $c = $.     $( Equality term $)
+      $c T. $.    $( Truth term $)
+      $c [ $.     $( Infix operator $)
+      $c ] $.     $( Infix operator $)
+
+      $v x y z f g p q $.  $( Bound variables $)
+      $v A B C F R S T $.  $( Term variables $)
+
+      $( Let variable A be a term. $)
+      ta $f term A $.
+      $( Let variable R be a term. $)
+      tr $f term R $.
+      $( Let variable S be a term. $)
+      ts $f term S $.
+      $( Let variable T be a term. $)
+      tt $f term T $.
+
+      $( Truth term. $)
+      kt $a term T. $.
+
+      $\{
+        ax-syl.1 $e |- R |= S $.
+        ax-syl.2 $e |- S |= T $.
+        $( Syllogism inference. $)
+        ax-syl $a |- R |= T $.
+
+        $( Syllogism inference. $)
+        syl $p |- R |= T $=
+          ( ax-syl ) ABCDEF $.
+          $( [8-Oct-2014] $)
+      $\}
+
+      $\{
+        ax-trud.1 $e |- R : bool $.
+        $( Deduction form of ~ tru . $)
+        ax-trud $a |- R |= T. $.
+
+        $( Deduction form of ~ tru . $)
+        trud $p |- R |= T. $=
+          ( ax-trud ) ABC $.
+          $( [7-Oct-2014] $)
+
+        ax-a1i.2 $e |- T. |= A $.
+
+        $( Change an empty context into any context. $)
+        a1i $p |- R |= A $=
+          ( kt ax-trud syl ) BEABCFDG $.
+          $( [7-Oct-2014] $)
+
+      $\}
+    `);
+    const mm = new MM();
+    mm.read(code);
+  });
+  
+  it.skip("ax-leq", () => {
+    const [code] = parse(`
+      $( Declare the primitive constant symbols for lambda calculus. $)
+      $c var $.   $( Typecode for variables (syntax) $)
+      $c type $.  $( Typecode for types (syntax) $)
+      $c term $.  $( Typecode for terms (syntax) $)
+      $c |- $.    $( Typecode for theorems (logical) $)
+      $c : $.     $( Typehood indicator $)
+      $c . $.     $( Separator $)
+      $c |= $.    $( Context separator $)
+      $c bool $.     $( Boolean type $)
+      $c ind $.   $( 'Individual' type $)
+      $c -> $.    $( Function type $)
+      $c ( $.     $( Open parenthesis $)
+      $c ) $.     $( Close parenthesis $)
+      $c , $.     $( Context comma $)
+      $c \\ $.     $( Lambda expression $)
+      $c = $.     $( Equality term $)
+      $c T. $.    $( Truth term $)
+      $c [ $.     $( Infix operator $)
+      $c ] $.     $( Infix operator $)
+
+      $v x y z f g p q $.  $( Bound variables $)
+      $v A B C F R S T $.  $( Term variables $)
+
+      $v al $.  $( Greek alpha $)
+      $v be $.  $( Greek beta $)
+      $v ga $.  $( Greek gamma $)
+      $v de $.  $( Greek delta $)
+
+  $( Let variable al be a type. $)
+  hal $f type al $.
+  $( Let variable be be a type. $)
+  hbe $f type be $.
+  $( Let variable ga be a type. $)
+  hga $f type ga $.
+  $( Let variable de be a type. $)
+  hde $f type de $.
+
+  $( Let variable x be a var. $)
+  vx $f var x $.
+  $( Let variable y be a var. $)
+  vy $f var y $.
+  $( Let variable z be a var. $)
+  vz $f var z $.
+  $( Let variable f be a var. $)
+  vf $f var f $.
+  $( Let variable g be a var. $)
+  vg $f var g $.
+  $( Let variable p be a var. $)
+  vp $f var p $.
+  $( Let variable q be a var. $)
+  vq $f var q $.
+
+  $( Let variable A be a term. $)
+  ta $f term A $.
+  $( Let variable B be a term. $)
+  tb $f term B $.
+  $( Let variable C be a term. $)
+  tc $f term C $.
+  $( Let variable F be a term. $)
+  tf $f term F $.
+  $( Let variable R be a term. $)
+  tr $f term R $.
+  $( Let variable S be a term. $)
+  ts $f term S $.
+  $( Let variable T be a term. $)
+  tt $f term T $.
+
+
+
+  $( A combination (function application). $)
+  kc $a term ( F T ) $.
+  $( A lambda abstraction. $)
+  kl $a term \ x : al . T $.
+  $( The equality term. $)
+  ke $a term = $.
+  $( Truth term. $)
+  kt $a term T. $.
+  $( Infix operator. $)
+  kbr $a term [ A F B ] $.
+  $( Context operator. $)
+  kct $a term ( A , B ) $.
+
+
+      $\{
+        ax-syl.1 $e |- R |= S $.
+        ax-syl.2 $e |- S |= T $.
+        $( Syllogism inference. $)
+        ax-syl $a |- R |= T $.
+
+        $( Syllogism inference. $)
+        syl $p |- R |= T $=
+          ( ax-syl ) ABCDEF $.
+          $( [8-Oct-2014] $)
+      $\}
+
+  $\{
+    ax-trud.1 $e |- R : bool $.
+    $( Deduction form of ~ tru . $)
+    ax-trud $a |- R |= T. $.
+
+    $( Deduction form of ~ tru . $)
+    trud $p |- R |= T. $=
+      ( ax-trud ) ABC $.
+      $( [7-Oct-2014] $)
+
+    ax-a1i.2 $e |- T. |= A $.
+    $( Change an empty context into any context. $)
+    a1i $p |- R |= A $=
+      ( kt ax-trud syl ) BEABCFDG $.
+      $( [7-Oct-2014] $)
+  $\}
+
+      $\{
+        dfov1.1 $e |- F : ( al -> ( be -> bool ) ) $.
+        dfov1.2 $e |- A : al $.
+        dfov1.3 $e |- B : be $.
+        $\{
+         dfov1.4 $e |- R |= [ A F B ] $.
+          $( Forward direction of ~ df-ov . $)
+          dfov1 $p |- R |= ( ( F A ) B ) $=
+            ( kbr kc ke ax-cb1 hb df-ov a1i ax-eqmp ) CDEKZECLDLZFJMSLTLFSFJNABOCDE
+            GHIPQR $.
+            $( [8-Oct-2014] $)
+        $\}
+
+        dfov2.4 $e |- R |= ( ( F A ) B ) $.
+        $( Reverse direction of ~ df-ov . $)
+        dfov2 $p |- R |= [ A F B ] $=
+          ( kc kbr hb wov ke ax-cb1 df-ov a1i mpbirx ) ECKDKZCDELZFABMCDEGHINJOUAKT
+          KFTFJPABMCDEGHIQRS $.
+          $( [8-Oct-2014] $)
+      $\}
+
+      $\{
+        $d x R $.
+        leq.1 $e |- A : be $.
+        leq.2 $e |- R |= [ A = B ] $.
+        $( Equality theorem for lambda abstraction. $)
+        leq $p |- R |= [ \ x : al . A = \ x : al . B ] $=
+          ( ht kl ke weq wl eqtypi dfov1 ax-leq dfov2 ) ABIZRACDJACEJKFRLABCDGMABCE
+          BDEFGHNZMABCDEFGSBBDEKFBLGSHOPQ $.
+          $( [8-Oct-2014] $)
+      $\}
+
+    `);
+
+    const mm = new MM();
+    mm.read(code);
+
+  });
+  
+  it.skip("Verify hol.mm", async () => {
+    const fs = require("fs/promises");
+    const nearley = require("nearley");
+    const file = await fs.readFile("tests/hol.mm");
     const moo = require("moo");
     const mm = new MM(true);
     mm.frames.push();
