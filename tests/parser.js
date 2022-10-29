@@ -47,6 +47,15 @@ describe("Parser", () => {
     ]]);
   });
 
+  it("$c ? $.", () => {
+    assertThat(parse(`
+      $( hello $)
+      $c ? $.
+    `)).equalsTo([[
+      ["$c", ["?"], "$."]
+    ]]);
+  });
+
   it("$v a $.", () => {
     assertThat(parse(`
       $( hello $)

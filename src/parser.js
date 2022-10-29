@@ -17,13 +17,13 @@ const lexicon = {
   p: "$p",
   proof: "$=",
   dot: "$.",
-  question: "?",
+  // question: "?",
   lscope: "${",
   rscope: "$}",
   //lparen: "(",
   //rparen: ")",
   ws: {match: /[\s]+/, lineBreaks: true},
-  sequence: /[!-#%-~]+/,
+  sequence: /[!-#%-~\?]+/,
   // letter_or_digit: /[A-Za-z0-9]/,
   // symbol: /[!-#%-~]+/,
 };
@@ -142,7 +142,7 @@ const grammar = (handler) => compileGrammar(handler, `
       # If ’?’ is in a proof it’s an "incomplete" proof.
       proof -> uncompressed_proof {% id %} | compressed_proof {% id %}
 
-      uncompressed_proof -> (LABEL | %question) (__ (LABEL | %question)):* {% ([l, list]) => 
+      uncompressed_proof -> (LABEL | "?") (__ (LABEL | "?")):* {% ([l, list]) => 
         l.concat(list.map(([ws, [v]]) => v)) 
       %}
 
