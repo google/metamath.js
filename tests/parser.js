@@ -1140,6 +1140,18 @@ describe("Descent", () => {
     assertThat(parse(file.toString())).equalsTo(true);
   });
 
+  it("set.mm", async () => {
+    const fs = require("fs/promises");
+    const file = await fs.readFile("tests/set.mm");
+    assertThat(parse(file.toString())).equalsTo(true);
+  });
+
+  it("ql.mm", async () => {
+    const fs = require("fs/promises");
+    const file = await fs.readFile("tests/ql.mm");
+    assertThat(parse(file.toString())).equalsTo(true);
+  });
+
 });
 
 function assertThat(x) {
