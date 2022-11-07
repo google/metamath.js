@@ -813,6 +813,15 @@ describe("Descent", () => {
       } while (this.accepts("sequence"));
       this.eat("dot");
     }
+    d() {
+      this.eat("d");
+      this.space();
+      do {
+        this.eat("sequence");
+        this.space();
+      } while (this.accepts("sequence"));
+      this.eat("dot");
+    }
     space(optional = false) {
       do {
         if (this.accepts("ws")) {
@@ -861,10 +870,10 @@ describe("Descent", () => {
     compressed() {
       this.eat("sequence"); // (
       this.space();
-      do {
+      while (!this.value() == ")") {
         this.eat("sequence");
         this.space();
-      } while (!this.value() == ")");
+      };
       this.eat("sequence"); // )
       this.space();
       do {
@@ -900,7 +909,7 @@ describe("Descent", () => {
       this.eat("dot");      
     }
     label() {
-      this.eat("sequence");
+      const label = this.eat("sequence");
       this.space();
       if (this.accepts("f")) {
         this.f();
@@ -909,6 +918,7 @@ describe("Descent", () => {
       } else if (this.accepts("a")) {
         this.a();
       } else if (this.accepts("p")) {
+        // console.log(label);
         this.p();
       } else {
         this.error();
@@ -938,6 +948,8 @@ describe("Descent", () => {
         this.v();
       } else if (this.accepts("c")) {
         this.c();
+      } else if (this.accepts("d")) {
+        this.d();
       } else if (this.accepts("sequence")) {
         this.label();
       } else if (this.accepts("lscope")) {
@@ -1073,7 +1085,7 @@ describe("Descent", () => {
     `)).equalsTo(true);
   });
 
-  it("Compressed Proofs", () => {
+  it("dfbi1", () => {
     const statement = `
      $( Relate the biconditional connective to primitive connectives.  See
         dfbi1ALT for an unusual version proved directly from axioms.
@@ -1086,12 +1098,48 @@ describe("Descent", () => {
     assertThat(parse(statement)).equalsTo(true);
   });
 
+  it("? in compressed proofs", () => {
+    const statement = `
+     dfbi1 $p |- a $= ( wb ) AB?CD $.
+    `;
+    assertThat(parse(statement)).equalsTo(true);
+  });
+
   it("miu.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/miu.mm");
     assertThat(parse(file.toString())).equalsTo(true);
   });
-  
+
+  it("demo0.mm", async () => {
+    const fs = require("fs/promises");
+    const file = await fs.readFile("tests/demo0.mm");
+    assertThat(parse(file.toString())).equalsTo(true);
+  });
+
+  it("idi", () => {
+    const statement = `
+  $\{
+    idi.1 $e |- R |= A $.
+    $( The identity inference. $)
+    idi $p |- R |= A $=
+      (  ) C $.
+      $( [9-Oct-2014] $)
+  $\}
+    `;
+    assertThat(parse(statement)).equalsTo(true);
+  });
+
+  it("$d x R $.", () => {
+    assertThat(parse("$d x R $.")).equalsTo(true);
+  });
+
+  it("hol.mm", async () => {
+    const fs = require("fs/promises");
+    const file = await fs.readFile("tests/hol.mm");
+    assertThat(parse(file.toString())).equalsTo(true);
+  });
+
 });
 
 function assertThat(x) {
