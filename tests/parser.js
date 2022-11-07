@@ -849,10 +849,10 @@ describe("Descent", () => {
       this.space();
       this.eat("sequence");
       this.space();
-      do {
+      while (this.accepts("sequence")) {
         this.eat("sequence");
         this.space();
-      } while (this.accepts("sequence"));
+      };
       this.eat("dot");      
     }
     value() {
@@ -1025,6 +1025,10 @@ describe("Descent", () => {
     assertThat(parse("wp $f wff p $.")).equalsTo(true);
   });
 
+  it("we $a wff $.", () => {
+    assertThat(parse("$( The empty sequence is a wff. $) we $a wff $.")).equalsTo(true);
+  });
+  
   it("wn $a wff ~ p $.", () => {
     assertThat(parse("wn $a wff ~ p $.")).equalsTo(true);
   });
@@ -1082,6 +1086,12 @@ describe("Descent", () => {
     assertThat(parse(statement)).equalsTo(true);
   });
 
+  it("miu.mm", async () => {
+    const fs = require("fs/promises");
+    const file = await fs.readFile("tests/miu.mm");
+    assertThat(parse(file.toString())).equalsTo(true);
+  });
+  
 });
 
 function assertThat(x) {
