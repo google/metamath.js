@@ -855,6 +855,38 @@ describe("Descent", () => {
       } while (this.accepts("sequence"));
       this.eat("dot");      
     }
+    value() {
+      return this.head.value.value;
+    }
+    compressed() {
+      this.eat("sequence"); // (
+      this.space();
+      do {
+        this.eat("sequence");
+        this.space();
+      } while (!this.value() == ")");
+      this.eat("sequence"); // )
+      this.space();
+      do {
+        this.eat("sequence");
+        this.space();
+      } while (this.accepts("sequence"));
+    }
+    uncompressed() {
+      do {
+        this.eat("sequence");
+        this.space();
+      } while (this.accepts("sequence"));
+    }
+    proof() {
+      this.eat("proof");
+      this.space();
+      if (this.value() == "(") {
+        this.compressed();
+      } else {
+        this.uncompressed();
+      }
+    }
     p() {
       this.eat("p");
       this.space();
@@ -864,12 +896,7 @@ describe("Descent", () => {
         this.eat("sequence");
         this.space();
       } while (this.accepts("sequence"));
-      this.eat("proof");
-      this.space();
-      do {
-        this.eat("sequence");
-        this.space();
-      } while (this.accepts("sequence"));
+      this.proof();
       this.eat("dot");      
     }
     label() {
@@ -899,6 +926,13 @@ describe("Descent", () => {
       }
       this.eat("rscope");
     }
+    file() {
+      this.eat("lfile");
+      this.space();
+      this.eat("sequence");
+      this.space();
+      this.eat("rfile");
+    }
     statement() {
       if (this.accepts("v")) {
         this.v();
@@ -908,6 +942,8 @@ describe("Descent", () => {
         this.label();
       } else if (this.accepts("lscope")) {
         this.block();
+      } else if (this.accepts("lfile")) {
+        this.file();
       } else {
         this.error();
       }
@@ -934,6 +970,10 @@ describe("Descent", () => {
 
   it(" ", () => {
     assertThat(parse(" ")).equalsTo(true);
+  });
+
+  it("$[ filename $]", () => {
+    assertThat(parse("$[ filename $]")).equalsTo(true);
   });
 
   it("$(  $)", () => {
@@ -1027,6 +1067,19 @@ describe("Descent", () => {
           wq wr mp2.2 wp wq wr wi mp2.1 mp2.3 ax-mp ax-mp $.
     $\} 
     `)).equalsTo(true);
+  });
+
+  it("Compressed Proofs", () => {
+    const statement = `
+     $( Relate the biconditional connective to primitive connectives.  See
+        dfbi1ALT for an unusual version proved directly from axioms.
+        (Contributed by NM, 29-Dec-1992.) $)
+
+     dfbi1 $p |- ( ( ph <-> ps ) <-> -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) ) $=
+     ( wb wi wn df-bi simplim ax-mp impbi impi impbii ) ABCZABDZBADZEDEZLODZOLDE 
+     ZDEPABFPQGHMNLABIJK $.
+    `;
+    assertThat(parse(statement)).equalsTo(true);
   });
 
 });
