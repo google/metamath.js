@@ -1,4 +1,4 @@
-const {lexicon} = require("../src/parser.js");
+const {lexicon} = require("../src/lexer.js");
 const moo = require("moo");
 
 function *tokens(code) {

@@ -1,7 +1,6 @@
 const Assert = require("assert");
-
-const {parse, grammar, lexicon} = require("../src/parser.js");
-
+const {parse, grammar} = require("../src/parser.js");
+const {lexicon} = require("../src/lexer.js");
 const moo = require("moo");
 const nearley = require("nearley");
 

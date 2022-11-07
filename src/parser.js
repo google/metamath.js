@@ -2,33 +2,8 @@ const nearley = require("nearley");
 const compile = require("nearley/lib/compile");
 const generate = require("nearley/lib/generate");
 const nearleyGrammar = require("nearley/lib/nearley-language-bootstrapped");
-const moo = require("moo");
 
-const lexicon = {
-  comment: {match: /\$\([\s]+(?:(?!\$\))[\s\S])*\$\)/, lineBreaks: true},
-  lfile: "$[",
-  rfile: "$]",
-  v: "$v",
-  d: "$d",
-  c: "$c",
-  f: "$f",
-  a: "$a",
-  e: "$e",
-  p: "$p",
-  proof: "$=",
-  dot: "$.",
-  // question: "?",
-  lscope: "${",
-  rscope: "$}",
-  //lparen: "(",
-  //rparen: ")",
-  ws: {match: /[\s]+/, lineBreaks: true},
-  sequence: /[!-#%-~\?]+/,
-  // letter_or_digit: /[A-Za-z0-9]/,
-  // symbol: /[!-#%-~]+/,
-};
-
-const lexer = moo.compile(lexicon);
+const {lexer} = require("./lexer.js");
 
 function compileGrammar(handler = false, sourceCode) {
   // Parse the grammar source into an AST
@@ -183,6 +158,5 @@ function parse(code, handler = false) {
 
 module.exports = {
   parse: parse,
-  lexicon: lexicon,
   grammar: grammar,
 };
