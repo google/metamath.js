@@ -137,21 +137,21 @@ class Parser {
     return this.head.value.value;
   }
   compressed() {
-    this.eat("sequence"); // (
+    const p1 = this.eat("sequence"); // (
     this.space();
     const local = [];
     while (this.value() != ")") {
       local.push(this.eat("sequence"));
       this.space();
     };
-    this.eat("sequence"); // )
+    const p2 = this.eat("sequence"); // )
     this.space();
     const integers = [];
     do {
       integers.push(this.eat("sequence"));
       this.space();
     } while (this.accepts("sequence"));
-    return [local, integers];
+    return [p1, local, p2, integers.join("")];
   }
   uncompressed() {
     const proof = [];

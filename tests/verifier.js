@@ -1285,7 +1285,7 @@ describe("Verifier", () => {
   });
 });
 
-describe.only("Verifier", () => {
+describe("Verifier", () => {
   const {parse} = require("../src/descent.js");
   it("$c a b $.", () => {
     const c = [];
@@ -1377,7 +1377,7 @@ describe.only("Verifier", () => {
       "|-",
       ["R", "|=", "A"],
       "$=",
-      [["kt", "ax-trud", "syl"], ["BEABCFDG"]]
+      ["(", ["kt", "ax-trud", "syl"], ")", "BEABCFDG"]
     ]]);
   });
 
@@ -1399,7 +1399,7 @@ describe.only("Verifier", () => {
   });
 
   it("wnew", () => {
-    const program = `
+    const mm = process(`
       $c ( ) -> wff $.
       $v p q r s $.
       wp $f wff p $.
@@ -1408,21 +1408,99 @@ describe.only("Verifier", () => {
       ws $f wff s $.
       w2 $a wff ( p -> q ) $.
       wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
-    `;
+    `);
 
+    const [, , proof] = mm.labels["wnew"];
+    assertThat(proof != undefined).equalsTo(true);
+  });
+
+  function process(program) {
     const mm = new MM(true);
     mm.push();
     
     parse(program, {
       feed(statement) {
-        mm.feed([statement]);
+        if (statement == "push") {
+          mm.push();
+        } else if (statement == "pop") {
+          mm.pop();
+        } else {
+          mm.feed([statement]);
+        }
       }
     });
 
-    const frame = mm.pop();
+    return mm;
+  }
+  
+  it("mp2", () => {
+    const mm = process(`
+      $c ( ) -> wff ~ $.
+      $v p q r $.
+      wp $f wff p $.
+      wq $f wff q $.
+      wr $f wff r $.
+      wi $a wff ( p -> q ) $.
+      wn $a wff ~ p $.
 
-    assertThat(frame.v).equalsTo(new Set(["p", "q", "r", "s"]));
-    const [, , proof] = mm.labels["wnew"];
+      ax-1 $a wff ( p -> ( q -> p ) ) $.
+      ax-2 $a wff ( ( p -> ( q -> r ) ) -> ( ( p -> q ) -> ( p -> r ) ) ) $.
+      ax-3 $a wff ( ( ~ p -> ~ q ) -> ( q -> p ) ) $.
+
+      $\{
+        min $e |- p $.
+        maj $e |- ( p -> q ) $.
+        ax-mp $a |- q $.
+      $\}
+
+      $\{
+        mp2.1 $e |- p $.
+        mp2.2 $e |- q $.
+        mp2.3 $e |- ( p -> ( q -> r ) ) $.
+        mp2 $p |- r $= wq wr mp2.2 wp wq wr wi mp2.1 mp2.3 ax-mp ax-mp $.
+      $\}
+     `);
+
+    const [, , proof] = mm.labels["mp2"];
+    assertThat(proof != undefined).equalsTo(true);
+  });
+
+  it("id", () => {
+    const mm = process(`
+      $c wff |- ( ) -> $.
+      $v ph ps ch $.
+
+      $( Let variable ph be a wff. $)
+      wph $f wff ph $.
+
+      $( Let variable ps be a wff. $)
+      wps $f wff ps $.
+
+      $( Let variable ch be a wff. $)
+      wch $f wff ch $.
+
+      wi $a wff ( ph -> ps ) $.
+
+      ax-1 $a |- ( ph -> ( ps -> ph ) ) $.
+
+      $\{
+        mpd.1 $e |- ( ph -> ps ) $.
+        mpd.2 $e |- ( ph -> ( ps -> ch ) ) $.
+        $(
+          makes this an axiom as opposed to a theorem, so that we
+          can skip bringing in the proof recursively.
+          mpd $p |- ( ph -> ch ) $=
+            ( wi a2i ax-mp ) ABFACFDABCEGH $.
+        $)
+        mpd $a |- ( ph -> ch ) $.
+      $\}
+
+      id $p |- ( ph -> ph ) $=
+        ( wi ax-1 mpd ) AAABZAAACAECD $.
+
+     `);
+
+    const [, , proof] = mm.labels["id"];
     assertThat(proof != undefined).equalsTo(true);
   });
   
