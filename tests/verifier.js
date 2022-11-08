@@ -1415,7 +1415,7 @@ describe("Verifier", () => {
   });
 
   function process(program) {
-    const mm = new MM(true);
+    const mm = new MM();
     mm.push();
     
     parse(program, {
@@ -1511,6 +1511,32 @@ describe("Verifier", () => {
     const [, , proof] = mm.labels["theorem1"];
     assertThat(proof != undefined).equalsTo(true);
   });
+
+  it("hol.mm", async () => {
+    const fs = require("fs/promises");
+    const file = await fs.readFile("tests/hol.mm");
+    const mm = process(file.toString());
+    const [, , proof] = mm.labels["axpow"];
+    assertThat(proof != undefined).equalsTo(true);
+  });
+
+  it("ql.mm", async () => {
+    const fs = require("fs/promises");
+    const file = await fs.readFile("tests/ql.mm");
+    const mm = process(file.toString());
+    const [, , proof] = mm.labels["testmod3"];
+    assertThat(proof != undefined).equalsTo(true);
+  });
+
+  it.skip("set.mm", async () => {
+    const fs = require("fs/promises");
+    const file = await fs.readFile("tests/set.mm");
+    const mm = process(file.toString());
+    // console.log(mm.labels);
+    // return;
+    const [, , proof] = mm.labels["young2d"];
+    assertThat(proof != undefined).equalsTo(true);
+  }).timeout(1000000);
 
   
 });
