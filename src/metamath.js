@@ -284,6 +284,8 @@ class MM {
         this.frames.addE(rule, type, label);
         this.labels[label] = [e, [type, rule]];
       } else if (second == "$p") {
+
+        
         //try {
         // const result = {};
         // If we are debugging, we save the result of the proof.
@@ -293,8 +295,9 @@ class MM {
 
         let result = {};
         try {
-          const verification = this.verify(label, type, theorem, proof);
-          result = this.debug ? verification : {};
+          if (!this.debug || this.debug == label) {
+            result = this.verify(label, type, theorem, proof);
+          }
         } catch (e) {
           // TODO(goto): deal with array splicing limits.
           if (e.message == "proof too long") {

@@ -372,7 +372,7 @@ describe("Verifier", () => {
 
     `);
 
-    const mm = new MM(true);
+    const mm = new MM("mp2");
     mm.read(code);
 
     assertThat(mm.labels["$c"]).equalsTo([
@@ -1127,7 +1127,7 @@ describe("Verifier", () => {
     const nearley = require("nearley");
     const file = await fs.readFile("tests/demo0.mm");
     const moo = require("moo");
-    const mm = new MM(true);
+    const mm = new MM("th1");
     mm.frames.push();
     const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar(mm)));
     const code = file.toString();
@@ -1156,7 +1156,7 @@ describe("Verifier", () => {
     const nearley = require("nearley");
     const file = await fs.readFile("tests/ql.mm");
     const moo = require("moo");
-    const mm = new MM(true);
+    const mm = new MM("id");
     mm.frames.push();
     const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar(mm)));
     const code = file.toString();
@@ -1257,7 +1257,7 @@ describe("Verifier", () => {
     const nearley = require("nearley");
     const file = await fs.readFile("tests/hol.mm");
     const moo = require("moo");
-    const mm = new MM(true);
+    const mm = new MM("wal");
     mm.frames.push();
     const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar(mm)));
     const code = file.toString();
@@ -1399,7 +1399,7 @@ describe("Verifier", () => {
   });
 
   it("wnew", () => {
-    const mm = process(`
+    const proof = process("wnew", `
       $c ( ) -> wff $.
       $v p q r s $.
       wp $f wff p $.
@@ -1410,12 +1410,11 @@ describe("Verifier", () => {
       wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
     `);
 
-    const [, , proof] = mm.labels["wnew"];
     assertThat(proof != undefined).equalsTo(true);
   });
 
-  function process(program) {
-    const mm = new MM();
+  function process(label, program) {
+    const mm = new MM(theorem);
     mm.push();
     
     parse(program, {
@@ -1430,11 +1429,12 @@ describe("Verifier", () => {
       }
     });
 
-    return mm;
+    const [, , proof] = mm.labels[label];
+    return proof;
   }
   
   it("mp2", () => {
-    const mm = process(`
+    const proof = process("mp2", `
       $c ( ) -> wff ~ $.
       $v p q r $.
       wp $f wff p $.
@@ -1461,12 +1461,11 @@ describe("Verifier", () => {
       $\}
      `);
 
-    const [, , proof] = mm.labels["mp2"];
     assertThat(proof != undefined).equalsTo(true);
   });
 
   it("id", () => {
-    const mm = process(`
+    const proof = process("id", `
       $c wff |- ( ) -> $.
       $v ph ps ch $.
 
@@ -1500,41 +1499,34 @@ describe("Verifier", () => {
 
      `);
 
-    const [, , proof] = mm.labels["id"];
     assertThat(proof != undefined).equalsTo(true);
   });
 
   it("miu.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/miu.mm");
-    const mm = process(file.toString());
-    const [, , proof] = mm.labels["theorem1"];
+    const proof = process("theorem1", file.toString());
     assertThat(proof != undefined).equalsTo(true);
   });
 
   it("hol.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/hol.mm");
-    const mm = process(file.toString());
-    const [, , proof] = mm.labels["axpow"];
+    const proof = process("axpow", file.toString());
     assertThat(proof != undefined).equalsTo(true);
   });
 
   it("ql.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/ql.mm");
-    const mm = process(file.toString());
-    const [, , proof] = mm.labels["testmod3"];
+    const proof = process("testmod3", file.toString());
     assertThat(proof != undefined).equalsTo(true);
   });
 
-  it.skip("set.mm", async () => {
+  it("set.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/set.mm");
-    const mm = process(file.toString());
-    // console.log(mm.labels);
-    // return;
-    const [, , proof] = mm.labels["young2d"];
+    const proof = process("young2d", file.toString());
     assertThat(proof != undefined).equalsTo(true);
   }).timeout(1000000);
 
