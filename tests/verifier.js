@@ -1503,6 +1503,15 @@ describe("Verifier", () => {
     const [, , proof] = mm.labels["id"];
     assertThat(proof != undefined).equalsTo(true);
   });
+
+  it("miu.mm", async () => {
+    const fs = require("fs/promises");
+    const file = await fs.readFile("tests/miu.mm");
+    const mm = process(file.toString());
+    const [, , proof] = mm.labels["theorem1"];
+    assertThat(proof != undefined).equalsTo(true);
+  });
+
   
 });
 
