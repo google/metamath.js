@@ -241,6 +241,14 @@ class MM {
     this.debug = debug;
   }
 
+  push() {
+    this.frames.push();
+  }
+
+  pop() {
+    return this.frames.pop();
+  }
+  
   feed(statements) {
     for (const stmt of statements) {
       const [first, second] = stmt;

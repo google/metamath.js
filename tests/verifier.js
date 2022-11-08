@@ -1283,13 +1283,155 @@ describe("Verifier", () => {
         "eqtypri: |- ! : ( ( al -> bool ) -> bool )",
       ]);
   });
+});
 
-
-  function assertThat(x) {
-    return {
-      equalsTo(y) {
-        Assert.deepEqual(x, y);
+describe.only("Verifier", () => {
+  const {parse} = require("../src/descent.js");
+  it("$c a b $.", () => {
+    const c = [];
+    parse(`$c a b $.`, {
+      feed(e) {
+        c.push(e);
       }
+    });
+    assertThat(c).equalsTo([["$c", ["a", "b"]]]);
+  });
+
+  it("$v a $.", () => {
+    const v = [];
+    parse(`$v a $.`, {
+      feed(e) {
+        v.push(e);
+      }
+    });
+    assertThat(v).equalsTo([["$v", ["a"]]]);
+  });
+
+  it("$d a b $.", () => {
+    const d = [];
+    parse(`$d a b $.`, {
+      feed(e) {
+        d.push(e);
+      }
+    });
+    assertThat(d).equalsTo([["$d", ["a", "b"]]]);
+  });
+
+  it("wp $f wff p $.", () => {
+    const f = [];
+    parse(`wp $f wff p $.`, {
+      feed(e) {
+        f.push(e);
+      }
+    });
+    assertThat(f).equalsTo([["wp", "$f", "wff", "p"]]);
+  });
+
+  it("min $e wff ph $.", () => {
+    const e = [];
+    parse(`min $e wff ph $.`, {
+      feed(statement) {
+        e.push(statement);
+      }
+    });
+    assertThat(e).equalsTo([["min", "$e", "wff", ["ph"]]]);
+  });
+
+  it("w2 $a wff ( p -> q ) $.", () => {
+    const a = [];
+    parse(`w2 $a wff ( p -> q ) $.`, {
+      feed(statement) {
+        a.push(statement);
+      }
+    });
+    assertThat(a).equalsTo([["w2", "$a", "wff", ["(", "p", "->", "q", ")"]]]);
+  });
+
+  it("wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.", () => {
+    const p = [];
+    parse(`wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.`, {
+      feed(statement) {
+        p.push(statement);
+      }
+    });
+    assertThat(p).equalsTo([[
+      "wnew",
+      "$p",
+      "wff",
+      ["(", "s", "->", "(", "r", "->", "p", ")", ")"],
+      "$=",
+      ["ws", "wr", "wp", "w2", "w2"]
+    ]]);
+  });
+
+  it("a1i $p |- R |= A $= ( kt ax-trud syl ) BEABCFDG $.", () => {
+    const p = [];
+    parse(`a1i $p |- R |= A $= ( kt ax-trud syl ) BEABCFDG $.`, {
+      feed(statement) {
+        p.push(statement);
+      }
+    });
+    assertThat(p).equalsTo([[
+      "a1i",
+      "$p",
+      "|-",
+      ["R", "|=", "A"],
+      "$=",
+      [["kt", "ax-trud", "syl"], ["BEABCFDG"]]
+    ]]);
+  });
+
+  it("${ $v a b c $. $}", () => {
+    const frames = [];
+    let v;
+    parse("${ $v a b c $. $}", {
+      feed(statement) {
+        if (statement == "push") {
+          frames.push([]);
+        } else if (statement == "pop") {
+          v = frames.pop();
+        } else {
+          frames[frames.length - 1].push(statement);
+        }
+      }
+    });
+    assertThat(v).equalsTo([["$v", ["a", "b", "c"]]]);
+  });
+
+  it("wnew", () => {
+    const program = `
+      $c ( ) -> wff $.
+      $v p q r s $.
+      wp $f wff p $.
+      wq $f wff q $.
+      wr $f wff r $.
+      ws $f wff s $.
+      w2 $a wff ( p -> q ) $.
+      wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
+    `;
+
+    const mm = new MM(true);
+    mm.push();
+    
+    parse(program, {
+      feed(statement) {
+        mm.feed([statement]);
+      }
+    });
+
+    const frame = mm.pop();
+
+    assertThat(frame.v).equalsTo(new Set(["p", "q", "r", "s"]));
+    const [, , proof] = mm.labels["wnew"];
+    assertThat(proof != undefined).equalsTo(true);
+  });
+  
+});
+
+function assertThat(x) {
+  return {
+    equalsTo(y) {
+      Assert.deepEqual(x, y);
     }
   }
-});
+}

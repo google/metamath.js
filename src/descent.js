@@ -14,7 +14,8 @@ function *tokens(code) {
 }
 
 class Parser {
-  constructor() {
+  constructor(handler) {
+    this.handler = handler;
   }
   parse(tokens) {
     this.it = tokens;
@@ -48,31 +49,42 @@ class Parser {
     this.eat("comment");
   }
   v() {
-    this.eat("v");
+    const v = this.eat("v");
     this.space();
+    const symbols = [];
     do {
-      this.eat("sequence");
+      symbols.push(this.eat("sequence"));
       this.space();
     } while (this.accepts("sequence"));
     this.eat("dot");
+    this.dispatch([v, symbols]);
   }
   c() {
-    this.eat("c");
+    const c = this.eat("c");
     this.space();
+    const symbols = [];
     do {
-      this.eat("sequence");
+      symbols.push(this.eat("sequence"));
       this.space();
     } while (this.accepts("sequence"));
-    this.eat("dot");
+    const dot = this.eat("dot");
+    this.dispatch([c, symbols]);
+  }
+  dispatch(e) {
+    if (this.handler) {
+      this.handler.feed(e);
+    }
   }
   d() {
-    this.eat("d");
+    const d = this.eat("d");
     this.space();
+    const symbols = [];
     do {
-      this.eat("sequence");
+      symbols.push(this.eat("sequence"));
       this.space();
     } while (this.accepts("sequence"));
     this.eat("dot");
+    this.dispatch([d, symbols]);
   }
   space(optional = false) {
     do {
@@ -85,36 +97,41 @@ class Parser {
       }
     } while (this.accepts("ws") || this.accepts("comment"));
   }
-  f() {
-    this.eat("f");
+  f(label) {
+    const f = this.eat("f");
     this.space();
-    this.eat("sequence");
+    const type = this.eat("sequence");
     this.space();
-    this.eat("sequence");
+    const varz = this.eat("sequence");
     this.space();
     this.eat("dot");
+    this.dispatch([label, f, type, varz]);
   }
-  e() {
-    this.eat("e");
+  e(label) {
+    const e = this.eat("e");
     this.space();
-    this.eat("sequence");
+    const varz = this.eat("sequence");
     this.space();
+    const sequence = [];
     do {
-      this.eat("sequence");
+      sequence.push(this.eat("sequence"));
       this.space();
     } while (this.accepts("sequence"));
     this.eat("dot");
+    this.dispatch([label, e, varz, sequence]);
   }
-  a() {
-    this.eat("a");
+  a(label) {
+    const a = this.eat("a");
     this.space();
-    this.eat("sequence");
+    const type = this.eat("sequence");
     this.space();
+    const sequence = [];
     while (this.accepts("sequence")) {
-      this.eat("sequence");
+      sequence.push(this.eat("sequence"));
       this.space();
     };
-    this.eat("dot");      
+    this.eat("dot");
+    this.dispatch([label, a, type, sequence]);
   }
   value() {
     return this.head.value.value;
@@ -122,56 +139,62 @@ class Parser {
   compressed() {
     this.eat("sequence"); // (
     this.space();
-    while (!this.value() == ")") {
-      this.eat("sequence");
+    const local = [];
+    while (this.value() != ")") {
+      local.push(this.eat("sequence"));
       this.space();
     };
     this.eat("sequence"); // )
     this.space();
+    const integers = [];
     do {
-      this.eat("sequence");
+      integers.push(this.eat("sequence"));
       this.space();
     } while (this.accepts("sequence"));
+    return [local, integers];
   }
   uncompressed() {
+    const proof = [];
     do {
-      this.eat("sequence");
+      proof.push(this.eat("sequence"));
       this.space();
     } while (this.accepts("sequence"));
+    return proof;
   }
   proof() {
-    this.eat("proof");
+    const proof = this.eat("proof");
     this.space();
     if (this.value() == "(") {
-      this.compressed();
+      return [proof, this.compressed()];
     } else {
-      this.uncompressed();
+      return [proof, this.uncompressed()];
     }
   }
-  p() {
-    this.eat("p");
+  p(label) {
+    const p = this.eat("p");
     this.space();
-    this.eat("sequence");
+    const type = this.eat("sequence");
     this.space();
+    const sequence = [];
     do {
-      this.eat("sequence");
+      sequence.push(this.eat("sequence"));
       this.space();
     } while (this.accepts("sequence"));
-    this.proof();
-    this.eat("dot");      
+    const [proof, steps] = this.proof();
+    this.eat("dot");
+    this.dispatch([label, p, type, sequence, proof, steps]);
   }
   label() {
     const label = this.eat("sequence");
     this.space();
     if (this.accepts("f")) {
-      this.f();
+      this.f(label);
     } else if (this.accepts("e")) {
-      this.e();
+      this.e(label);
     } else if (this.accepts("a")) {
-      this.a();
+      this.a(label);
     } else if (this.accepts("p")) {
-      // console.log(label);
-      this.p();
+      this.p(label);
     } else {
       this.error();
     }
@@ -181,12 +204,14 @@ class Parser {
   }
   block() {
     this.eat("lscope");
+    this.dispatch("push");
     this.space();
     while (!this.accepts("rscope")) {
       this.statement();
       this.space(true);
     }
     this.eat("rscope");
+    this.dispatch("pop");
   }
   file() {
     this.eat("lfile");
@@ -222,8 +247,8 @@ class Parser {
   }
 }
 
-function parse(code) {
-  const parser = new Parser();
+function parse(code, handler) {
+  const parser = new Parser(handler);
   const stream = tokens(code);
   return parser.parse(stream);
 }
