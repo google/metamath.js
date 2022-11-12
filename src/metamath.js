@@ -306,7 +306,7 @@ class MM {
             throw e;
           }
         }
-        this.labels[label] = [p, this.frames.assert(type, theorem), result];
+        this.labels[label] = [p, this.frames.assert(type, theorem), result, proof, theorem];
       } else {
         throw new Error(`Unknown statement type: ${stmt}.`);
       }

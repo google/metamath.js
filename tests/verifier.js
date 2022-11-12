@@ -1414,7 +1414,7 @@ describe("Verifier", () => {
   });
 
   function process(label, program) {
-    const mm = new MM(theorem);
+    const mm = new MM(label);
     mm.push();
     
     parse(program, {
@@ -1530,7 +1530,90 @@ describe("Verifier", () => {
     assertThat(proof != undefined).equalsTo(true);
   }).timeout(1000000);
 
+  function build(program) {
+    let root = [];
+    let node = root;
+    let parent = root;
+    parse(program, {
+      feed(statement) {
+        if (statement == "push") {
+          const block = [];
+          node.push(block);
+          parent = node;
+          node = block;
+        } else if (statement == "pop") {
+          node = parent;
+        } else {
+          node.push(statement);
+        }
+      }
+    });
+
+    return root;
+  }
   
+  it("$v a $. $c b $. ${ $v c $. $}", async () => {
+    const tree = build("$v a $. $c b $. ${ $v c $. $} $c d $.");
+    
+    assertThat(tree).equalsTo([
+      ["$v", ["a"]],
+      ["$c", ["b"]],
+      [
+        ["$v", ["c"]],
+      ],
+      ["$c", ["d"]],
+    ]);
+  });
+
+  it("miu.mm", async () => {
+    const fs = require("fs/promises");
+    const program = await fs.readFile("tests/miu.mm");
+    
+    const label = "theorem1";
+    
+    const mm = new MM(label);
+    mm.push();
+    
+    parse(program.toString(), {
+      feed(statement) {
+        if (statement == "push") {
+          mm.push();
+        } else if (statement == "pop") {
+          mm.pop();
+        } else {
+          mm.feed([statement]);
+        }
+      }
+    });
+
+    mm.pop();
+
+    const [p, [f, e, d, t], proof, , theorem] = mm.labels[label];
+
+    // console.log(f);
+    // console.log(e);
+    // console.log(d);
+    // console.log(t);
+    // console.log(proof);
+    // console.log(result);
+
+    const head = `theorem ${theorem.join(" ")} ${label}(${f.join(", ")}${e.length == 0 ? "" : " | " + e.join(", ")})`;
+    const body = proof.map(([step, [type, sequence], args], i) => `  ${i}. ${step}(${args.join(", ")}): ${type} ${sequence.join(" ")};`);
+
+    return;
+    console.log(`
+${head} {
+${body.join("\n")}
+}
+`);
+
+    // console.log(proof);
+    // console.log(mm.labels[label]);
+    // console.log(theorem);
+    
+    // const [, , proof] = mm.labels[label];
+    // return proof;
+  });
 });
 
 function assertThat(x) {
