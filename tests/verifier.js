@@ -711,228 +711,23 @@ describe("Verifier", () => {
       .equalsTo(new Set(["a", "b"]));
   });
   
-  it("Hofstadter's PQ", () => {
-    const [code] = parse(`
-      $c wff |- p q - $.
-      $v x y z $.
-      wx $f wff x $.
-      wy $f wff y $.
-      wz $f wff z $.
+  it("Hofstadter's PQ", async () => {
+    const fs = require("fs/promises");
+    const nearley = require("nearley");
+    const file = await fs.readFile("tests/pq.mm");
 
-      $( 1 is a wff $)
-      w0 $a wff - $.          
-
-      $( n is a wff $)
-      w1 $a wff x - $.
-
-      $( 2 is a wff $)
-      t0 $p wff - - $= w0 w1 $.
-
-      $( 3 is a wff $)
-      t1 $p wff - - - $= w0 w1 w1 $.
-
-      $( x + - = x - $)
-      ax0 $a |- x p - q x - $.
-
-      $( 1 + 1 = 2 $)
-      t2 $p |- - p - q - - $= w0 ax0 $.
-
-      $( 2 + 1 = 3 $)
-      t3 $p |- - - p - q - - - $= w0 w1 ax0 $.
-
-      $( 3 + 1 = 4 $)
-      t4 $p |- - - - p - q - - - - $= w0 w1 w1 ax0 $.
-
-      $( if x + y = z then x + y + 1 = z + 1 $)
-      $\{
-        ax1.1 $e |- x p y q z $.
-        ax1 $a |- x p y - q z - $.
-      $\}
-
-      $( 1 + 2 = 3 $)
-      t5 $p |- - p - - q - - - $= 
-        w0             $( x = -, i.e. 1 $)
-        w0             $( y = -, i.e. 1 $)
-        w0 w1          $( z = - -, i.e. 2 $)
-        w0 ax0         $( |- - p - q - -, i.e. 1 + 1 = 2 $)
-        ax1            $( |- - p - - q - - - , i.e. 1 + 2 = 3 $)
-        $.
-
-      $( 1 + 3 = 4 $)
-      t6 $p |- - p - - - q - - - - $= 
-        w0             $( x = -, i.e. 1 $)
-        w0 w1          $( y = - -, i.e. 2 $)
-        w0 w1 w1       $( z = - - -, i.e. 3 $)
-        t5             $( |- - p - - q - - -, i.e. 1 + 2 = 3 $)
-        ax1            $( |- - p - - - q - - - -, i.e. 1 + 3 = 4 $)
-        $.
-    `);
+    const [code] = parse(file.toString());
 
     const mm = new MM();
     mm.read(code);
   });
 
-  it("Hofstadter's TQ", () => {
-    const [code] = parse(`
-      $c wff |- t p q - C DND DF P $.
-      $v x y z $.
-      wx $f wff x $.
-      wy $f wff y $.
-      wz $f wff z $.
+  it("Hofstadter's TQ", async () => {
+    const fs = require("fs/promises");
+    const nearley = require("nearley");
+    const file = await fs.readFile("tests/tq.mm");
 
-      $( 1 is a wff $)
-      w0 $a wff - $.          
-
-      $( n is a wff $)
-      w1 $a wff x - $.
-
-      $( 2 is a wff $)
-      t0 $p wff - - $= w0 w1 $.
-
-      $( 3 is a wff $)
-      t1 $p wff - - - $= w0 w1 w1 $.
-
-      $( x * 1 = x $)
-      ax0 $a |- x t - q x $.
-
-      $( 1 * 1 = 1 $)
-      t2 $p |- - t - q - $= w0 ax0 $.
-
-      $( 2 * 1 = 2 $)
-      t3 $p |- - - t - q - - $= t0 ax0 $.
-
-      $( if x * y = z then x * (y + 1) = (z + x) $)
-      $\{
-        ax1.1 $e |- x t y q z $.
-        ax1 $a |- x t y - q z x $.
-      $\}
-
-      $( since 1 * 1 = 1 then 1 * 2 = 2 $)
-      t4 $p |- - t - - q - - $= 
-        w0             $( x = -, i.e. 1 $)
-        w0             $( y = -, i.e. 1 $)
-        w0             $( z = -, i.e. 1 $)
-        w0 ax0         $( |- - t - q - -, i.e. 1 * 1 = 1 $)
-        ax1            $( |- - t - - q - - , i.e. 1 * 2 = 2 $)
-      $.
-
-      $( since 2 * 1 = 2 then 2 * 2 = 4 $)
-      t5 $p |- - - t - - q - - - - $= 
-        w0 w1          $( x = - -, i.e. 2 $)
-        w0             $( y = -, i.e. 1 $)
-        w0 w1          $( z = - -, i.e. 2 $)
-        t3             $( |- - t - q - -, i.e. 2 * 1 = 2 $)
-        ax1            $( |- - t - - q - - - -, i.e. 2 * 2 = 4 $)
-      $.
-
-      $( since 2 * 2 = 4 then 2 * 3 = 6 $)
-      t6 $p |- - - t - - - q - - - - - - $= 
-        w0 w1          $( x = - -, i.e. 2 $)
-        w0 w1          $( y = - -, i.e. 2 $)
-        w0 w1 w1 w1    $( z = - - - -, i.e. 4 $)
-        t5             $( |- - t - - q - - - -, i.e. 2 * 2 = 4 $)
-        ax1            $( |- - - t - - - q - - - - - -, i.e. 2 * 3 = 6 $)
-      $.
-      
-      $( If Z is a product of two numbers (greater than one), Z is composite $)
-      $( if (x + 1) * (y + 1) = z then C z $)
-      $\{
-        ax2.1 $e |- x - t y - q z $.
-        ax2 $a |- C z $.
-      $\}
-
-      $( Since (1 + 1) * (1 + 1) = 4 then 4 is a product of two numbers 
-         greater than 1, and hence, composite  $)
-      t7 $p |- C - - - - $=
-        w0             $( x = -, i.e. 1 $)
-        w0             $( y = -, i.e. 1 $)
-        w0 w1 w1 w1    $( z = - - - - -, i.e. 4 $)
-        t5             $( |- - t - - q - - - -, i.e. 2 * 2 = 4 $)
-        ax2            $( |- C - - - -, i.e. 4 is composite $)
-      $.
-
-      $( Since (1 + 1) * (2 + 1) = 6 then 6 is a product of two numbers 
-         greater than 1, and hence, composite  $)
-      t7 $p |- C - - - - - - $=
-        w0                   $( x = -, i.e. 1 $)
-        w0 w1                $( y = - -, i.e. 2 $)
-        w0 w1 w1 w1 w1 w1    $( z = - - - - - - -, i.e. 6 $)
-        t6                   $( |- - t - - q - - - -, i.e. 2 * 3 = 6 $)
-        ax2                  $( |- C - - - - - -, i.e. 6 is composite $)
-      $.
-
-      $( Every number does not divide a smaller number $)
-      $( x y DND x $)
-      ax3 $a |- x y DND x $.
-
-      $( 5 does not divide 2 $)
-      t8 $p |- - - - - - DND - - $=
-        w0 w1          $( x = - -, i.e. 2 $)
-        w0 w1 w1       $( y = - - -, i.e. 3 $)
-        ax3            $( |- - - - - - DND - -, i.e. "5 does not divide 2" is a wff $)
-      $.
-
-      $( if x DND y then x DND x y $)
-      $\{
-        ax4.1 $e |- x DND y  $.
-        ax4 $a |- x DND x y $.
-      $\}
-
-      $( Since 5 DND 2, then 5 DND 7 $)
-      t9 $p |- - - - - - DND - - - - - - - $=
-        w0 w1 w1 w1 w1           $( x = - - - - -, i.e. 5 $)
-        w0 w1                    $( y = - -, i.e. 2 $)
-        t8                       $( |- - - - - - DND - -, i.e. 5 does not divide 2 $)
-        ax4                      $( |- - - - - - DND - - - - - - -, i.e. 5 does not divide 7 $)
-      $.
-
-      $( Since 5 DND 7, then 5 DND 12 $)
-      t10 $p |- - - - - - DND - - - - - - - - - - - - $=
-        w0 w1 w1 w1 w1           $( x = - - - - -, i.e. 5 $)
-        w0 w1 w1 w1 w1 w1 w1     $( y = - - - - - - -, i.e. 7 $)
-        t9                       $( |- - - - - - DND - - - - - - -, i.e. 5 does not divide 7 $)
-        ax4                      $( |- - - - - - DND - - - - - - - - - - - -, i.e. 5 does not divide 12 $)
-      $.
-
-      $( if - - DND z then z DF - - $)
-      $( DF = "divisor free up to n" $)
-      $\{
-        ax5.1 $e |- - - DND z  $.
-        ax5 $a |- z DF - - $.
-      $\}
-
-      $( if z DF x and x - DND z then z DF x - $)
-      $\{
-        ax6.1 $e |- z DF x  $.
-        ax6.2 $e |- x - DND z  $.
-        ax6 $a |- z DF x - $.
-      $\}
-
-      $( if z - DF z then P z -  $)
-      $\{
-        ax7.1 $e |- z - DF z  $.
-        ax7 $a |- P z - $.
-      $\}
-
-      ax8 $a |- P - - $.
-
-      $( 2 does not divide 1 $)
-      $( Since 2 does not divide 1, 2 does not divide 3 $)
-      $( Since 2 does not divide 3 then 3 is dividor free up to 2 $)
-      $( Since 3 is divisor free up to 2, then 3 is prime $)
-      t11 $p |- P - - - $=
-        w0 w1          $( z = - -, i.e. 2 $)
-          w0 w1 w1       $( z = - - -, i.e. 3 $)
-            w0 w1          $( x = - -, i.e. 2 $)
-            w0             $( y = -, i.e. 1 $)
-              w0             $( x = -, i.e. 1 $)
-              w0             $( y = -, i.e. 1 $)
-              ax3            $( |- - - DND -, i.e. 2 does not divide 1 $)
-            ax4            $( |- - - DND - - -, i.e. 2 does not divide 3 $)
-          ax5            $( |- - - - DF - - $)
-        ax7            $( |- P - - - $)
-      $.
-    `);
+    const [code] = parse(file.toString());
 
     const mm = new MM();
     mm.read(code);
@@ -1565,12 +1360,55 @@ describe("Verifier", () => {
     ]);
   });
 
-  it("miu.mm", async () => {
+});
+
+
+describe("transpiler", () => {
+  const {parse} = require("../src/descent.js");
+  const moo = require("moo");
+
+  it("lexer", () => {
+    const lexicon = {
+      theorem: "theorem",
+      comment: {match: /\/\*\*[\s]+(?:(?!\$\))[\s\S])*\*\//, lineBreaks: true},
+      lblock: "{",
+      rblock: "}",
+      lparen: "(",
+      rparen: ")",
+      ws: {match: /[\s]+/, lineBreaks: true},
+      label: /[\\.A-Za-z0-9_-]+/,
+      sequence: /[!-#%-~\?]+/,
+      // letter_or_digit: /[A-Za-z0-9]/,                                                                                   
+      // symbol: /[!-#%-~]+/,
+    };
+
+    const lexer = moo.compile(lexicon);
+
+    lexer.reset("theorem foo_-bar1.2(wff a) { /** hello */ }");
+    assertThat(lexer.next().type).equalsTo("theorem");
+    assertThat(lexer.next().type).equalsTo("ws");
+    assertThat(lexer.next().type).equalsTo("label");
+    assertThat(lexer.next().type).equalsTo("lparen");
+    assertThat(lexer.next().type).equalsTo("label");
+    assertThat(lexer.next().type).equalsTo("ws");
+    assertThat(lexer.next().type).equalsTo("label");
+    assertThat(lexer.next().type).equalsTo("rparen"); 
+    assertThat(lexer.next().type).equalsTo("ws");
+    assertThat(lexer.next().type).equalsTo("lblock");
+    assertThat(lexer.next().type).equalsTo("ws");
+    assertThat(lexer.next().type).equalsTo("comment");
+    assertThat(lexer.next().type).equalsTo("ws");
+    assertThat(lexer.next().type).equalsTo("rblock");
+  });
+  
+  it.skip("miu.mm", async () => {
     const fs = require("fs/promises");
-    const program = await fs.readFile("tests/miu.mm");
+    const program = await fs.readFile("tests/tq.mm");
     
-    const label = "theorem1";
-    
+    // const label = "axpow";
+    // const label = "axext";
+    // const label = "theorem1";
+    const label = "t11";
     const mm = new MM(label);
     mm.push();
     
@@ -1588,32 +1426,74 @@ describe("Verifier", () => {
 
     mm.pop();
 
-    const [p, [f, e, d, t], proof, , theorem] = mm.labels[label];
+    const [p, [d, f, e, [type, theorem]], proof] = mm.labels[label];
 
-    // console.log(f);
+    let args = "(";
+
+    args += f.map(([type, name]) => `${type} ${name}`).join(", ");
+
+    args += ")";
+    
+    // const conds = e.length == 0 ? "" : " | " + e.map(([seq, type, label]) => `${label}: ${type} ${seq.join(" ")}`).join(", ");
+
+    let conds = "";
+
+    if (e.length > 0) {
+    // conds += "|";
+      args += " if (\n";
+    }
+
     // console.log(e);
-    // console.log(d);
-    // console.log(t);
-    // console.log(proof);
-    // console.log(result);
+    let hypothesis = [];
+    for (let [seq, type, label] of e) {
+      hypothesis.push(`  ${label}: ${type} "${seq.join(" ")}"`);
+    }
 
-    const head = `theorem ${theorem.join(" ")} ${label}(${f.join(", ")}${e.length == 0 ? "" : " | " + e.join(", ")})`;
-    const body = proof.map(([step, [type, sequence], args], i) => `  ${i}. ${step}(${args.join(", ")}): ${type} ${sequence.join(" ")};`);
+    if (e.length >0 ) {
+      args += hypothesis.join("\n");
+      args += ")";
+    }
+    
+    let diff = [];
+    if (d.length > 0) {
+      args += " and (";
+      // args += "  [";
+    }
+    for (let [x, y] of d) {
+      diff.push(`${x} != ${y}`);
+    }
 
-    return;
+    if (d.length > 0) {
+      args += "" + diff.join(", ") + ")";
+    }
+    
+    
+    const body = proof.map(([step, [type, sequence], args], i) => `  ${i}. ${step}(${args.join(", ")}): ${type} "${sequence.join(" ")}"`).join("\n");
+
+    // return;
+//${body.join("\n")}
     console.log(`
-${head} {
-${body.join("\n")}
+theorem ${label}${args} :
+  ${type} "${theorem.join(" ")}" {
+${body}
 }
 `);
+
+    // console.log(t);
+    
+    // console.log(d);
 
     // console.log(proof);
     // console.log(mm.labels[label]);
     // console.log(theorem);
+
+    // console.log(f);
+    // console.log(e);
     
     // const [, , proof] = mm.labels[label];
     // return proof;
   });
+
 });
 
 function assertThat(x) {
