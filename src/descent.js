@@ -1,4 +1,5 @@
 const {lexicon} = require("../src/lexer.js");
+const {MM} = require("../src/metamath.js");
 const moo = require("moo");
 
 function *tokens(code) {
@@ -253,6 +254,28 @@ function parse(code, handler) {
   return parser.parse(stream);
 }
 
+function process(program, label) {
+  const mm = new MM(label);
+  mm.push();
+    
+  parse(program, {
+    feed(statement) {
+      if (statement == "push") {
+        mm.push();
+      } else if (statement == "pop") {
+        mm.pop();
+      } else {
+        mm.feed([statement]);
+      }
+    }
+  });
+
+  //const [, , proof] = mm.labels[label];
+  //return proof;
+  return mm;
+}
+
 module.exports = {
   parse: parse,
+  process: process,
 };

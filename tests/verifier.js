@@ -1081,7 +1081,7 @@ describe("Verifier", () => {
 });
 
 describe("Verifier", () => {
-  const {parse} = require("../src/descent.js");
+  const {parse, process} = require("../src/descent.js");
   it("$c a b $.", () => {
     const c = [];
     parse(`$c a b $.`, {
@@ -1194,7 +1194,7 @@ describe("Verifier", () => {
   });
 
   it("wnew", () => {
-    const proof = process("wnew", `
+    const mm = process(`
       $c ( ) -> wff $.
       $v p q r s $.
       wp $f wff p $.
@@ -1205,31 +1205,12 @@ describe("Verifier", () => {
       wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
     `);
 
+    const [, , proof] = mm.labels["wnew"];
     assertThat(proof != undefined).equalsTo(true);
   });
 
-  function process(label, program) {
-    const mm = new MM(label);
-    mm.push();
-    
-    parse(program, {
-      feed(statement) {
-        if (statement == "push") {
-          mm.push();
-        } else if (statement == "pop") {
-          mm.pop();
-        } else {
-          mm.feed([statement]);
-        }
-      }
-    });
-
-    const [, , proof] = mm.labels[label];
-    return proof;
-  }
-  
   it("mp2", () => {
-    const proof = process("mp2", `
+    const mm = process(`
       $c ( ) -> wff ~ $.
       $v p q r $.
       wp $f wff p $.
@@ -1256,11 +1237,12 @@ describe("Verifier", () => {
       $\}
      `);
 
+    const [, , proof] = mm.labels["mp2"];
     assertThat(proof != undefined).equalsTo(true);
   });
 
   it("id", () => {
-    const proof = process("id", `
+    const mm = process(`
       $c wff |- ( ) -> $.
       $v ph ps ch $.
 
@@ -1294,34 +1276,39 @@ describe("Verifier", () => {
 
      `);
 
+    const [, , proof] = mm.labels["id"];
     assertThat(proof != undefined).equalsTo(true);
   });
 
   it("miu.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/miu.mm");
-    const proof = process("theorem1", file.toString());
+    const mm = process(file.toString());
+    const [, , proof] = mm.labels["theorem1"];
     assertThat(proof != undefined).equalsTo(true);
   });
 
   it("hol.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/hol.mm");
-    const proof = process("axpow", file.toString());
+    const mm = process(file.toString());
+    const [, , proof] = mm.labels["axpow"];
     assertThat(proof != undefined).equalsTo(true);
   });
 
   it("ql.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/ql.mm");
-    const proof = process("testmod3", file.toString());
+    const mm = process(file.toString(), "testmod3");
+    const [, , proof] = mm.labels["testmod3"];
     assertThat(proof != undefined).equalsTo(true);
   });
 
   it("set.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/set.mm");
-    const proof = process("young2d", file.toString());
+    const mm = process(file.toString(), "young2d");
+    const [, , proof] = mm.labels["young2d"];
     assertThat(proof != undefined).equalsTo(true);
   }).timeout(1000000);
 
