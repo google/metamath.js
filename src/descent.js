@@ -254,8 +254,8 @@ function parse(code, handler) {
   return parser.parse(stream);
 }
 
-function process(program, label) {
-  const mm = new MM(label);
+function process(program) {
+  const mm = new MM();
   mm.push();
     
   parse(program, {
