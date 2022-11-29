@@ -284,8 +284,6 @@ class MM {
         this.frames.addE(rule, type, label);
         this.labels[label] = [e, [type, rule]];
       } else if (second == "$p") {
-
-        
         //try {
         // const result = {};
         // If we are debugging, we save the result of the proof.
@@ -295,8 +293,28 @@ class MM {
 
         let result = {};
         try {
-          if (!this.debug || this.debug == label) {
-            result = this.verify(label, type, theorem, proof);
+          if (proof[0] != "(") {
+            result = (generate = true) => {
+              return this.verify(label, type, theorem, proof, generate);
+            }
+          } else {
+            const [d, f, e] = this.frames.assert(type, theorem);
+            const labels = [];
+            const args = f
+                  .map(([k, v]) => v)
+                  .map((v) => this.frames.lookupF(v));
+            const hyps = e
+                  .map(([rule, type]) => this.frames.lookupE(rule, type));
+            labels.push(...args);
+            labels.push(...hyps);
+            result = (generate = true) => {
+              let p = this.decompress(proof, labels);
+              return this.verify(label, type, theorem, p, generate);
+            }
+          }
+          
+          if (!this.verify) {
+            result(false);
           }
         } catch (e) {
           // TODO(goto): deal with array splicing limits.
@@ -324,23 +342,8 @@ class MM {
   // https://us.metamath.org/downloads/metamath.pdf
   // https://mm.ivank.net/js/MM.js
   // https://github.com/david-a-wheeler/mmverify.py/blob/master/mmverify.py
-  decompress(type, theorem, proof) {
-    const [d, f, e] = this.frames.assert(type, theorem);
 
-    //console.log(theorem);
-    //console.log(f);
-    
-    const labels = [];
-
-    const args = f
-          .map(([k, v]) => v)
-          .map((v) => this.frames.lookupF(v));
-
-    const hyps = e
-          .map(([rule, type]) => this.frames.lookupE(rule, type));
-    labels.push(...args);
-    labels.push(...hyps);
-
+  decompress(proof, labels) {
     const m = labels.length;
 
     const [l, local, r, compressed] = proof;
@@ -437,12 +440,8 @@ class MM {
 
     return steps;
   }
-    
-  verify(label, type, theorem, proof) {
-    if (proof[0] == "(") {
-      proof = this.decompress(type, theorem, proof);
-    }
 
+  verify(label, type, theorem, proof, generate) {
     const stack = [];
 
     const steps = [];
@@ -507,21 +506,24 @@ class MM {
         // variable restrictions are satisfied, as follows.
         // If two variables replaced by a substitution exist in a mandatory $d
         // statement of the assertion referenced, the two expressions resulting from the
-        // substitution must satisfy the following conditions. 
-        for (const [x, y] of dvs) {
-          const a = subs[x].filter((v) => this.frames.lookupV(v));
-          const b = subs[y].filter((v) => this.frames.lookupV(v));
-          for (let el1 of a) {
-            for (let el2 of b) {
-              // First, the two expressions must have no variables in common.
-              if (el1 == el2) {
-                throw new Error(`${x} (${a}) and ${y} (${b}) are disjoined variables, and they share ${el}. `);
-              }
-
-              // Second, each possible pair of variables, one from each expression, must exist in
-              // an active $d statement of the $p statement containing the proof.
-              if (!this.frames.lookupD(el1, el2)) {
-                throw new Error(`${el1} of ${x} (${a}) and ${el2} of ${y} (${b}) aren't declared as disjoint.`);
+        // substitution must satisfy the following conditions.
+        if (!generate) {
+          // If we are in debug mode, skip this.
+          for (const [x, y] of dvs) {
+            const a = subs[x].filter((v) => this.frames.lookupV(v));
+            const b = subs[y].filter((v) => this.frames.lookupV(v));
+            for (let el1 of a) {
+              for (let el2 of b) {
+                // First, the two expressions must have no variables in common.
+                if (el1 == el2) {
+                  throw new Error(`${x} (${a}) and ${y} (${b}) are disjoined variables, and they share ${el}. `);
+                }
+                
+                // Second, each possible pair of variables, one from each expression, must exist in
+                // an active $d statement of the $p statement containing the proof.
+                if (!this.frames.lookupD(el1, el2)) {
+                  throw new Error(`${el1} of ${x} (${a}) and ${el2} of ${y} (${b}) aren't declared as disjoint.`);
+                }
               }
             }
           }
@@ -557,6 +559,22 @@ class MM {
     }
 
     return steps;
+  }
+
+  verifyAll() {
+    const theorems = Object.entries(this.labels)
+          .filter(([key, [type]]) => type == "$p")
+          .map(([key, [type, header, proof]]) => [key, proof]);
+
+    for (let [name, proof] of theorems) {
+      try {
+        proof();
+      } catch (e) {
+        throw new Error(`Failed verifying ${name}`);
+      }
+    }
+
+    return theorems.length;
   }
 }
 

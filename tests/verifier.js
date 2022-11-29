@@ -389,7 +389,7 @@ describe("Verifier", () => {
       [["(", "p", "->", "(", "q", "->", "r", ")", ")"], "|-", "mp2.3"],
     ]);
 
-    assertThat(mm.labels["mp2"][2]).equalsTo([
+    assertThat(mm.labels["mp2"][2]()).equalsTo([
       ["wq", ["wff", ["q"]], []],
       ["wr", ["wff", ["r"]], []],
       ["mp2.2", ["|-", [["q"]]], []],
@@ -922,7 +922,7 @@ describe("Verifier", () => {
     const nearley = require("nearley");
     const file = await fs.readFile("tests/demo0.mm");
     const moo = require("moo");
-    const mm = new MM("th1");
+    const mm = new MM();
     mm.frames.push();
     const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar(mm)));
     const code = file.toString();
@@ -931,7 +931,7 @@ describe("Verifier", () => {
     [p, [dvs, args, , theorem], proof] = mm.labels["th1"];
     assertThat(args).equalsTo([["term", "t"]]);
     assertThat(theorem).equalsTo(["|-", ["t", "=", "t"]]);
-    const summary = proof
+    const summary = proof()
           .filter(([label, [type]]) => type == "|-")
           .map(
             ([label, [type, step]]) => `${label}: ${type} ${step.join(' ')}`
@@ -951,7 +951,7 @@ describe("Verifier", () => {
     const nearley = require("nearley");
     const file = await fs.readFile("tests/ql.mm");
     const moo = require("moo");
-    const mm = new MM("id");
+    const mm = new MM();
     mm.frames.push();
     const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar(mm)));
     const code = file.toString();
@@ -961,7 +961,7 @@ describe("Verifier", () => {
     [p, [dvs, args, , theorem], proof] = mm.labels["id"];
     assertThat(args).equalsTo([["term", "a"]]);
     assertThat(theorem).equalsTo(["|-", ["a", "=", "a"]]);
-    const summary = proof
+    const summary = proof()
           .filter(([label, [type]]) => type == "|-")
           .map(
             ([label, [type, step]]) => `${label}: ${type} ${step.join(' ')}`
@@ -1052,7 +1052,7 @@ describe("Verifier", () => {
     const nearley = require("nearley");
     const file = await fs.readFile("tests/hol.mm");
     const moo = require("moo");
-    const mm = new MM("wal");
+    const mm = new MM();
     mm.frames.push();
     const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar(mm)));
     const code = file.toString();
@@ -1062,7 +1062,7 @@ describe("Verifier", () => {
     [p, [dvs, args, , theorem], proof] = mm.labels["wal"];
     assertThat(args).equalsTo([["type", "al"]]);
     assertThat(theorem.flat().join(" ")).equalsTo("|- ! : ( ( al -> bool ) -> bool )");
-    const summary = proof
+    const summary = proof()
           .filter(([label, [type]]) => type == "|-")
           .map(
             ([label, [type, step]]) => `${label}: ${type} ${step.join(' ')}`
@@ -1206,7 +1206,13 @@ describe("Verifier", () => {
     `);
 
     const [, , proof] = mm.labels["wnew"];
-    assertThat(proof != undefined).equalsTo(true);
+    assertThat(proof().map(([step, [type, str]]) => `${step}: ${type} ${str.join(" ")}`)).equalsTo([
+      'ws: wff s',
+      'wr: wff r',
+      'wp: wff p',
+      'w2: wff ( r -> p )',
+      'w2: wff ( s -> ( r -> p ) )'
+    ]);
   });
 
   it("mp2", () => {
@@ -1238,7 +1244,7 @@ describe("Verifier", () => {
      `);
 
     const [, , proof] = mm.labels["mp2"];
-    assertThat(proof != undefined).equalsTo(true);
+    assertThat(proof() != undefined).equalsTo(true);
   });
 
   it("id", () => {
@@ -1277,31 +1283,28 @@ describe("Verifier", () => {
      `);
 
     const [, , proof] = mm.labels["id"];
-    assertThat(proof != undefined).equalsTo(true);
+    assertThat(proof() != undefined).equalsTo(true);
   });
 
   it("miu.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/miu.mm");
     const mm = process(file.toString());
-    const [, , proof] = mm.labels["theorem1"];
-    assertThat(proof != undefined).equalsTo(true);
+    assertThat(mm.verifyAll()).equalsTo(1);
   });
 
   it("hol.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/hol.mm");
     const mm = process(file.toString());
-    const [, , proof] = mm.labels["axpow"];
-    assertThat(proof != undefined).equalsTo(true);
+    assertThat(mm.verifyAll()).equalsTo(138);
   });
 
   it("ql.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/ql.mm");
-    const mm = process(file.toString(), "testmod3");
-    const [, , proof] = mm.labels["testmod3"];
-    assertThat(proof != undefined).equalsTo(true);
+    const mm = process(file.toString());
+    assertThat(mm.verifyAll()).equalsTo(1138);
   });
 
   it("set.mm", async () => {
@@ -1309,7 +1312,8 @@ describe("Verifier", () => {
     const file = await fs.readFile("tests/set.mm");
     const mm = process(file.toString(), "young2d");
     const [, , proof] = mm.labels["young2d"];
-    assertThat(proof != undefined).equalsTo(true);
+    assertThat(proof() != undefined).equalsTo(true);
+    // assertThat(mm.verifyAll()).equalsTo(1138);
   }).timeout(1000000);
 
   function build(program) {
