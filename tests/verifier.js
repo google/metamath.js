@@ -1193,7 +1193,32 @@ describe("Verifier", () => {
     assertThat(v).equalsTo([["$v", ["a", "b", "c"]]]);
   });
 
-  it("wnew", () => {
+  class StringReader {
+    constructor(value) {
+      this.value = value;
+      this.i = 0;
+    }
+    async read() {
+      if (this.i == this.value.length) {
+        return {done: true};
+      }
+      let value = this.value[this.i];
+      this.i++;
+      return {done: false, value: value};
+    }
+  }
+
+  it("StringReader", async () => {
+    let reader = new StringReader("hello");
+    assertThat(await reader.read()).equalsTo({done: false, value: 'h'});
+    assertThat(await reader.read()).equalsTo({done: false, value: 'e'});
+    assertThat(await reader.read()).equalsTo({done: false, value: 'l'});
+    assertThat(await reader.read()).equalsTo({done: false, value: 'l'});
+    assertThat(await reader.read()).equalsTo({done: false, value: 'o'});
+    assertThat(await reader.read()).equalsTo({done: true});
+  });
+  
+  it("wnew", async () => {
     const mm = process(`
       $c ( ) -> wff $.
       $v p q r s $.

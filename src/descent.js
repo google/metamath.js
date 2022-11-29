@@ -257,7 +257,7 @@ function parse(code, handler) {
 function process(program) {
   const mm = new MM();
   mm.push();
-    
+  
   parse(program, {
     feed(statement) {
       if (statement == "push") {
