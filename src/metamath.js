@@ -284,45 +284,31 @@ class MM {
         this.frames.addE(rule, type, label);
         this.labels[label] = [e, [type, rule]];
       } else if (second == "$p") {
-        //try {
-        // const result = {};
-        // If we are debugging, we save the result of the proof.
-        // We don't save it by default because we would run OOO
-        // proving large databases like set.mm.
         const [label, p, type, theorem, d, proof] = stmt;
 
         let result = {};
-        try {
-          if (proof[0] != "(") {
-            result = (generate = true) => {
-              return this.verify(label, type, theorem, proof, generate);
-            }
-          } else {
-            const [d, f, e] = this.frames.assert(type, theorem);
-            const labels = [];
-            const args = f
-                  .map(([k, v]) => v)
-                  .map((v) => this.frames.lookupF(v));
-            const hyps = e
-                  .map(([rule, type]) => this.frames.lookupE(rule, type));
-            labels.push(...args);
-            labels.push(...hyps);
-            result = (generate = true) => {
-              let p = this.decompress(proof, labels);
-              return this.verify(label, type, theorem, p, generate);
-            }
+        if (proof[0] != "(") {
+          result = (generate = true) => {
+            return this.verify(label, type, theorem, proof, generate);
           }
-          
-          if (!this.verify) {
-            result(false);
+        } else {
+          const [d, f, e] = this.frames.assert(type, theorem);
+          const labels = [];
+          const args = f
+                .map(([k, v]) => v)
+                .map((v) => this.frames.lookupF(v));
+          const hyps = e
+                .map(([rule, type]) => this.frames.lookupE(rule, type));
+          labels.push(...args);
+          labels.push(...hyps);
+          result = (generate = true) => {
+            let p = this.decompress(proof, labels);
+            return this.verify(label, type, theorem, p, generate);
           }
-        } catch (e) {
-          // TODO(goto): deal with array splicing limits.
-          if (e.message == "proof too long") {
-            console.log(`Skipping ${label} because the proof is too long.`);
-          } else {
-            throw e;
-          }
+        }
+        
+        if (!this.verify) {
+          result(false);
         }
         // console.log(stmt);
         this.labels[label] = [p, this.frames.assert(type, theorem), result, proof, theorem];
@@ -561,19 +547,31 @@ class MM {
     return steps;
   }
 
-  verifyAll() {
-    const theorems = Object.entries(this.labels)
+  theorem(name) {
+    const [, , proof] = this.labels[name];
+    return [name, proof];   
+  }
+  
+  theorems() {
+    return Object.entries(this.labels)
           .filter(([key, [type]]) => type == "$p")
           .map(([key, [type, header, proof]]) => [key, proof]);
-
+  }
+  
+  verifyAll() {
+    return 1;
     for (let [name, proof] of theorems) {
       try {
         proof();
       } catch (e) {
-        throw new Error(`Failed verifying ${name}`);
+        // TODO(goto): deal with array splicing limits.
+        if (e.message == "proof too long") {
+          console.log(`Skipping ${label} because the proof is too long.`);
+        } else {
+          throw e;
+        }
       }
     }
-
     return theorems.length;
   }
 }

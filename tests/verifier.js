@@ -1205,7 +1205,7 @@ describe("Verifier", () => {
       wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
     `);
 
-    const [, , proof] = mm.labels["wnew"];
+    const [, proof] = mm.theorem("wnew");
     assertThat(proof().map(([step, [type, str]]) => `${step}: ${type} ${str.join(" ")}`)).equalsTo([
       'ws: wff s',
       'wr: wff r',
@@ -1282,7 +1282,7 @@ describe("Verifier", () => {
 
      `);
 
-    const [, , proof] = mm.labels["id"];
+    const [, proof] = mm.theorem("id");
     assertThat(proof() != undefined).equalsTo(true);
   });
 
@@ -1290,30 +1290,48 @@ describe("Verifier", () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/miu.mm");
     const mm = process(file.toString());
-    assertThat(mm.verifyAll()).equalsTo(1);
+    assertThat(mm.theorems().map(([name, proof]) => proof()).length).equalsTo(1);
   });
 
   it("hol.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/hol.mm");
     const mm = process(file.toString());
-    assertThat(mm.verifyAll()).equalsTo(138);
+    assertThat(mm.theorems().map(([name, proof]) => proof()).length).equalsTo(138);
   });
 
   it("ql.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/ql.mm");
     const mm = process(file.toString());
-    assertThat(mm.verifyAll()).equalsTo(1138);
+    assertThat(mm.theorems().map(([name, proof]) => proof()).length).equalsTo(1138);
   });
 
   it("set.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/set.mm");
     const mm = process(file.toString(), "young2d");
-    const [, , proof] = mm.labels["young2d"];
+    const [, proof] = mm.theorem("young2d");
     assertThat(proof() != undefined).equalsTo(true);
-    // assertThat(mm.verifyAll()).equalsTo(1138);
+    assertThat(mm.theorems().length).equalsTo(40142);
+
+    return;
+
+    // The following passes, but takes ~1 min, so we
+    // only run it every now and then.
+    
+    for (let [name, proof] of mm.theorems()) {
+      try {
+        proof();
+      } catch (e) {
+        // TODO(goto): deal with array splicing limits.                                                                         
+        if (e.message == "proof too long") {
+          console.log(`Skipping ${name} because the proof is too long.`);
+	      } else {
+          throw e;
+	      }
+      }
+    }    
   }).timeout(1000000);
 
   function build(program) {
