@@ -686,7 +686,7 @@ describe("Verifier", () => {
     
   });
 
-  it("Hofstadter's MIU", () => {
+  it.skip("Hofstadter's MIU", () => {
     const source = require("fs").readFileSync("tests/miu.mm", {
       encoding: "utf8",
       flag: "r"
@@ -696,7 +696,7 @@ describe("Verifier", () => {
     mm.read(code);
   });
 
-  it("Hofstadter's MIU: Streaming", () => {
+  it.skip("Hofstadter's MIU: Streaming", () => {
     const source = require("fs").readFileSync("tests/miu.mm", {
       encoding: "utf8",
       flag: "r"
@@ -1327,7 +1327,7 @@ describe("Verifier", () => {
     assertThat(proof() != undefined).equalsTo(true);
   });
 
-  it("miu.mm", async () => {
+  it.skip("miu.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/miu.mm");
     const mm = process(file.toString());

@@ -894,7 +894,7 @@ describe("Descent", () => {
     assertThat(parse(statement)).equalsTo(true);
   });
 
-  it("miu.mm", async () => {
+  it.skip("miu.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/miu.mm");
     assertThat(parse(file.toString())).equalsTo(true);
