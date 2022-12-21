@@ -933,7 +933,7 @@ describe("Verifier", () => {
     
   }).timeout(1000000);
 
-  it("Verify demo0.mm", async () => {
+  it.skip("Verify demo0.mm", async () => {
     const fs = require("fs/promises");
     const nearley = require("nearley");
     const file = await fs.readFile("tests/demo0.mm");
@@ -962,7 +962,7 @@ describe("Verifier", () => {
       ]);
   });
 
-  it("Verify ql.mm", async () => {
+  it.skip("Verify ql.mm", async () => {
     const fs = require("fs/promises");
     const nearley = require("nearley");
     const file = await fs.readFile("tests/ql.mm");
@@ -1063,7 +1063,7 @@ describe("Verifier", () => {
     mm.read(code);
   });
     
-  it("Verify hol.mm", async () => {
+  it.skip("Verify hol.mm", async () => {
     const fs = require("fs/promises");
     const nearley = require("nearley");
     const file = await fs.readFile("tests/hol.mm");
@@ -1334,21 +1334,21 @@ describe("Verifier", () => {
     assertThat(mm.theorems().map(([name, proof]) => proof()).length).equalsTo(1);
   });
 
-  it("hol.mm", async () => {
+  it.skip("hol.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/hol.mm");
     const mm = process(file.toString());
     assertThat(mm.theorems().map(([name, proof]) => proof()).length).equalsTo(138);
   });
 
-  it("ql.mm", async () => {
+  it.skip("ql.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/ql.mm");
     const mm = process(file.toString());
     assertThat(mm.theorems().map(([name, proof]) => proof()).length).equalsTo(1138);
   });
 
-  it("set.mm", async () => {
+  it.skip("set.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/set.mm");
     const mm = process(file.toString(), "young2d");

@@ -710,7 +710,7 @@ describe("Parser", () => {
       .equalsTo(['d', 'ws', 'sequence', 'ws', 'sequence', 'ws', 'sequence']);
   });
   
-  it("Tokenize set.mm", async () => {
+  it.skip("Tokenize set.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/set.mm");
     assertThat(tokenize(file.toString()).length)
@@ -900,7 +900,7 @@ describe("Descent", () => {
     assertThat(parse(file.toString())).equalsTo(true);
   });
 
-  it("demo0.mm", async () => {
+  it.skip("demo0.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/demo0.mm");
     assertThat(parse(file.toString())).equalsTo(true);
@@ -923,19 +923,19 @@ describe("Descent", () => {
     assertThat(parse("$d x R $.")).equalsTo(true);
   });
 
-  it("hol.mm", async () => {
+  it.skip("hol.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/hol.mm");
     assertThat(parse(file.toString())).equalsTo(true);
   });
 
-  it("set.mm", async () => {
+  it.skip("set.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/set.mm");
     assertThat(parse(file.toString())).equalsTo(true);
   });
 
-  it("ql.mm", async () => {
+  it.skip("ql.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/ql.mm");
     assertThat(parse(file.toString())).equalsTo(true);
