@@ -1,3 +1,4 @@
+> This is not an officially supported Google product
 
 metamath.js is a [Metamath](https://metamath.org) verifier written in javascript which can be run in browsers.
 
@@ -18,3 +19,4 @@ cd metamath-js
 npm install
 npm test
 ```
+
