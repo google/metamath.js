@@ -559,18 +559,20 @@ class MM {
   }
   
   verifyAll() {
-    return 1;
+    // return 1;
+    // console.log(this);
+    const theorems = this.theorems();
     for (let [name, proof] of theorems) {
-      try {
-        proof();
-      } catch (e) {
+      //try {
+      proof();
+      //} catch (e) {
         // TODO(goto): deal with array splicing limits.
-        if (e.message == "proof too long") {
-          console.log(`Skipping ${label} because the proof is too long.`);
-        } else {
-          throw e;
-        }
-      }
+      //  if (e.message == "proof too long") {
+      //    console.log(`Skipping ${label} because the proof is too long.`);
+      //  } else {
+      //    throw e;
+      // }
+      //}
     }
     return theorems.length;
   }

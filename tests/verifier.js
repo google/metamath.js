@@ -1530,6 +1530,20 @@ ${body}
 
 });
 
+describe("Scratch", () => {
+  it("Tarki's S2", () => {
+    const source = require("fs").readFileSync("tests/tarski.mm", {
+      encoding: "utf8",
+      flag: "r"
+    });
+    const [code] = parse(source);
+    const mm = new MM();
+    mm.read(code);
+    assertThat(mm.verifyAll())
+      .equalsTo(5);
+  });
+});
+
 function assertThat(x) {
   return {
     equalsTo(y) {
