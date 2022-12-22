@@ -1,5 +1,77 @@
-$( declare logic constants $)
-$c wff |- -> ( ) && || E. A. $.
+$( propositional logic $)
+
+$( propositional logic syntax $)
+$c wff $.
+
+$( propositional logic symbols $)
+$c ~ |- -> ( ) && || $.
+
+$v p q r $.
+
+wp $f wff p $.
+wq $f wff q $.
+wr $f wff r $.
+
+$( if x is a wff so is ~ x $)
+${
+  $v x $.
+  wx $f wff x $.
+  wnot $a wff ~ x $.
+$}
+
+$( ~ p is a wff $)
+$( x y = z w is a wff $)
+wnotp $p wff ~ p $= wp wnot $.
+
+$( if x and y are wffs so is ( x -> y ) $)
+${
+  $v x y $.
+  wx $f wff x $.
+  wy $f wff y $.
+  wi $a wff ( x -> y ) $.
+$}
+
+$( modus ponens $)
+${
+  $v x y $.
+  wx $f wff x $.
+  wy $f wff y $.
+  min $e |- x $.
+  maj $e |- ( x -> y ) $.
+  mp $a |- y $.
+$}
+
+$( simplification $)
+${
+  $v x y $.
+  wx $f wff x $.
+  wy $f wff y $.
+  ax-1 $a |- ( x -> ( y -> x ) ) $.
+$}
+
+$( frege: distribution $)
+${
+  $v x y z $.
+  wx $f wff x $.
+  wy $f wff y $.
+  wy $f wff z $.
+  ax-2 $a |- ( ( x -> ( y -> z ) ) -> ( ( x -> y ) -> ( x -> z ) ) ) $.
+$}
+
+$(
+  tranposition
+  If there are not clouds in the sky, is not raining.
+  If it is raining, there are clouds in the sky.
+$)
+${
+  $v x y $.
+  wx $f wff x $.
+  wy $f wff y $.
+  ax-3 $a |- ( ( ~ x -> ~ y ) -> ( y -> x )) $.
+$}
+
+$( declare first order logic symbols $)
+$c E. A. $.
 
 $( declare geometry constants $)
 $c Point B = $.

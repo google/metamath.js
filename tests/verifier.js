@@ -1531,7 +1531,7 @@ ${body}
 });
 
 describe("Scratch", () => {
-  it("Tarki's S2", () => {
+  it.only("Tarki's S2", () => {
     const source = require("fs").readFileSync("tests/tarski.mm", {
       encoding: "utf8",
       flag: "r"
@@ -1539,8 +1539,12 @@ describe("Scratch", () => {
     const [code] = parse(source);
     const mm = new MM();
     mm.read(code);
+
+    assertThat(mm.labels["wnotp"][2]() != undefined)
+      .equalsTo(true);
+    
     assertThat(mm.verifyAll())
-      .equalsTo(5);
+      .equalsTo(6);
   });
 });
 
