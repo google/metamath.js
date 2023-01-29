@@ -1495,8 +1495,8 @@ var ${[...frame.c].join(" ")};
     ${assumptions}
 `;
         }
-        const code = `
-include "common.mm";
+        const code =
+`include "common.mm";
 
 axiom ${label}${args} : ${type} ${axiom.join(" ")} {
 }
@@ -1558,8 +1558,8 @@ axiom ${label}${args} : ${type} ${axiom.join(" ")} {
         
         // return;
         //${body.join("\n")}
-        const code = `
-include "common.mm";
+        const code =
+`include "common.mm";
 ${header}
 theorem ${label}${args} : ${type} ${theorem.join(" ")} {
   proof
