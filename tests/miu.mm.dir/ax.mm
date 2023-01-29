@@ -1,5 +1,5 @@
 lexicon "lexicon.mm";
 
-axiom ax() : |- M I {
+axiom ax() : |- 'M I' {
 
 }

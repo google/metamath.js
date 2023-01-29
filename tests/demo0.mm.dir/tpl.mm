@@ -1,5 +1,5 @@
 lexicon "lexicon.mm";
 
-axiom tpl(term t, term r) : term ( t + r ) {
+axiom tpl(term t, term r) : term '( t + r )' {
 
 }

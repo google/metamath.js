@@ -1,5 +1,5 @@
 lexicon "lexicon.mm";
 
-axiom tze() : term 0 {
+axiom tze() : term '0' {
 
 }
