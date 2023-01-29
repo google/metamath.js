@@ -1573,7 +1573,7 @@ ${body}
     await transpile("tests/tq.mm");
   });
 
-  it.only("pq.mm", async () => {
+  it("pq.mm", async () => {
     await transpile("tests/pq.mm");
   });
 
