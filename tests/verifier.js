@@ -1487,18 +1487,18 @@ var ${[...frame.c].join(" ")};
         args += f.map(([type, name]) => `${type} ${name}`).join(", ");
         args += ")";
       
-        const assumptions = e.map(([seq, type, name]) => `${name}: ${type} "${seq.join(" ")}"`).join("\n");
+        const assumptions = e.map(([seq, type, name]) => `    ${name}: ${type} ${seq.join(" ")}`).join("\n");
         let assumes = "";
         if (assumptions.length > 0) {
-          assumes = `
-  assumes
-    ${assumptions}
-`;
+          assumes = `  assumes {
+${assumptions}
+  }`;
         }
         const code =
 `lexicon "lexicon.mm";
 
 axiom ${label}${args} : ${type} ${axiom.join(" ")} {
+${assumes}
 }
 `;
 
@@ -1578,7 +1578,7 @@ ${body}
     await transpile("tests/miu.mm");
   });
 
-  it.only("demo0.mm", async () => {
+  it("demo0.mm", async () => {
     await transpile("tests/demo0.mm");
   });
 
