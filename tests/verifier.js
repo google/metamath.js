@@ -1578,6 +1578,10 @@ ${body}
     await transpile("tests/miu.mm");
   });
 
+  it.only("demo0.mm", async () => {
+    await transpile("tests/demo0.mm");
+  });
+
 });
 
 describe("Scratch", () => {
