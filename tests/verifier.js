@@ -1559,7 +1559,7 @@ ${assumes}
         const code =
 `lexicon "lexicon.mm";
 ${header}
-theorem ${label}${args} : ${type} ${theorem.join(" ")} {
+theorem ${label}${args} : ${type} '${theorem.join(" ")}' {
 ${body}
 }
 `;

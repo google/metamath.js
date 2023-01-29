@@ -4,7 +4,7 @@ include "w1.mm";
 include "t9.mm";
 include "ax4.mm";
 
-theorem t10() : |- - - - - - DND - - - - - - - - - - - - {
+theorem t10() : |- '- - - - - DND - - - - - - - - - - - -' {
   0. w0(): wff '-'
   1. w1(0): wff '- -'
   2. w1(1): wff '- - -'

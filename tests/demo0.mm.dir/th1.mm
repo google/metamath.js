@@ -8,7 +8,7 @@ include "wim.mm";
 include "a1.mm";
 include "mp.mm";
 
-theorem th1(term t) : |- t = t {
+theorem th1(term t) : |- 't = t' {
   0. tt(): term 't'
   1. tze(): term '0'
   2. tpl(0,1): term '( t + 0 )'

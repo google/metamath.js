@@ -4,7 +4,7 @@ include "w1.mm";
 include "t6.mm";
 include "ax2.mm";
 
-theorem t7() : |- C - - - - - - {
+theorem t7() : |- 'C - - - - - -' {
   0. w0(): wff '-'
   1. w0(): wff '-'
   2. w1(1): wff '- -'

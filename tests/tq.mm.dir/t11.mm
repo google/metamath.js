@@ -6,7 +6,7 @@ include "ax4.mm";
 include "ax5.mm";
 include "ax7.mm";
 
-theorem t11() : |- P - - - {
+theorem t11() : |- 'P - - -' {
   0. w0(): wff '-'
   1. w1(0): wff '- -'
   2. w0(): wff '-'
