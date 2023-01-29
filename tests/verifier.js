@@ -1435,7 +1435,7 @@ describe("transpiler", () => {
     assertThat(lexer.next().type).equalsTo("rblock");
   });
   
-  it.skip("pq.mm", async () => {
+  it.only("pq.mm", async () => {
     const fs = require("fs/promises");
     const program = await fs.readFile("tests/tq.mm");
     
@@ -1458,7 +1458,15 @@ describe("transpiler", () => {
       }
     });
 
-    mm.pop();
+    let frame = mm.pop();
+    // console.log(frame.c);
+    // console.log("common.mm");
+    const code = `
+const ${[...frame.c].join(" ")};
+var ${[...frame.c].join(" ")};
+`;
+    // console.log(fs);
+    await fs.writeFile("tests/tq.mm.dir/common.mm", code);
 
     // console.log(mm.labels);
 
