@@ -1,4 +1,4 @@
-include "common.mm";
+lexicon "lexicon.mm";
 include "w0.mm";
 include "ax0.mm";
 include "ax1.mm";

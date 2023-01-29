@@ -1470,8 +1470,8 @@ var ${[...frame.c].join(" ")};
     } catch (e) {
       fs.mkdir(dir);
     }
-        
-    await fs.writeFile(`${dir}/common.mm`, code);
+
+    await fs.writeFile(`${dir}/lexicon.mm`, code);
 
     for (const [label, value] of Object.entries(mm.labels)) {
       const [stmt] = value;
@@ -1496,7 +1496,7 @@ var ${[...frame.c].join(" ")};
 `;
         }
         const code =
-`include "common.mm";
+`lexicon "lexicon.mm";
 
 axiom ${label}${args} : ${type} ${axiom.join(" ")} {
 }
@@ -1552,7 +1552,7 @@ axiom ${label}${args} : ${type} ${axiom.join(" ")} {
         const body = proof.map(([step, [type, sequence], args], i) => `    ${i}. ${step}(${args}): ${type} ${sequence.join(" ")}`).join("\n");
         
         const code =
-`include "common.mm";
+`lexicon "lexicon.mm";
 ${header}
 theorem ${label}${args} : ${type} ${theorem.join(" ")} {
   proof
@@ -1565,8 +1565,6 @@ ${body}
         throw new Error(`Unknown statement type ${stmt}.`);
       }
     }
-
-
   }
   
   it("tq.mm", async () => {
