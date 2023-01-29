@@ -1435,7 +1435,7 @@ describe("transpiler", () => {
     assertThat(lexer.next().type).equalsTo("rblock");
   });
   
-  it.only("pq.mm", async () => {
+  it.skip("pq.mm", async () => {
     const fs = require("fs/promises");
     const program = await fs.readFile("tests/tq.mm");
     
@@ -1466,20 +1466,24 @@ const ${[...frame.c].join(" ")};
 var ${[...frame.c].join(" ")};
 `;
     // console.log(fs);
-    await fs.writeFile("tests/tq.mm.dir/common.mm", code);
-
-    // console.log(mm.labels);
+    const dir = "tests/tq.mm.dir";
+    await fs.writeFile(`${dir}/common.mm`, code);
 
     const [stmt] = mm.labels[label];
 
+    for (const [label, value] of Object.entries(mm.labels)) {
+      // console.log(label);
+    }
+
+    
+    return;
+    
     if (stmt == "$f") {
       const [, [type, name]] = mm.labels[label];
-      // console.log(mm.labels[label]);
-      console.log(`let ${label}: ${type} ${name};`);
+      const code = `let ${label}: ${type} ${name};`;
+      await fs.writeFile(`${dir}/${label}.mm`, code);
     } else  if (stmt == "$a") {
       const [, [d, f, e, [type, axiom]]] = mm.labels[label];
-      // console.log(e);
-
       let args = "(";
       args += f.map(([type, name]) => `${type} ${name}`).join(", ");
       args += ")";
@@ -1493,12 +1497,15 @@ var ${[...frame.c].join(" ")};
     ${assumptions}
 `;
       }
-      console.log(`
+      const code = `
 include "common.mm";
 
 axiom ${label}${args} : ${type} ${axiom.join(" ")} {
 }
-`);
+`;
+
+      await fs.writeFile(`${dir}/${label}.mm`, code);
+
     } else {
       const [, [d, f, e, [type, theorem]], func] = mm.labels[label];
 
@@ -1553,15 +1560,16 @@ axiom ${label}${args} : ${type} ${axiom.join(" ")} {
 
     // return;
 //${body.join("\n")}
-    console.log(`
+    const code = `
 include "common.mm";
 ${header}
 theorem ${label}${args} : ${type} ${theorem.join(" ")} {
   proof
 ${body}
 }
-`);
+`;
 
+      await fs.writeFile(`${dir}/${label}.mm`, code);
     }
       
     // console.log(t);
