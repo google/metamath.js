@@ -1462,31 +1462,42 @@ describe("transpiler", () => {
 
     // console.log(mm.labels);
 
-    const [stmt, [d, f, e, [type, axiom]]] = mm.labels[label];
+    const [stmt] = mm.labels[label];
 
-    let args = "(";
-    
-    args += f.map(([type, name]) => `${type} ${name}`).join(", ");
-    
-    args += ")";
-
-    if (stmt == "$a") {
+    if (stmt == "$f") {
+      const [, [type, name]] = mm.labels[label];
+      // console.log(mm.labels[label]);
+      console.log(`let ${label}: ${type} ${name};`);
+    } else  if (stmt == "$a") {
       const [, [d, f, e, [type, axiom]]] = mm.labels[label];
       // console.log(e);
+
+      let args = "(";
+      args += f.map(([type, name]) => `${type} ${name}`).join(", ");
+      args += ")";
       
       const assumptions = e.map(([seq, type, name]) => `${name}: ${type} "${seq.join(" ")}"`).join("\n");
       // console.log(assumptions);
+      let assumes = "";
+      if (assumptions.length > 0) {
+        assumes = `
+  assumes
+    ${assumptions}
+`;
+      }
       console.log(`
 include "common.mm";
 
 axiom ${label}${args} : ${type} ${axiom.join(" ")} {
-  assumes
-    ${assumptions}
 }
 `);
     } else {
       const [, [d, f, e, [type, theorem]], func] = mm.labels[label];
 
+      let args = "(";
+      args += f.map(([type, name]) => `${type} ${name}`).join(", ");
+      args += ")";
+      
       // console.log(e);
       // console.log(proof());
       const proof = func();
