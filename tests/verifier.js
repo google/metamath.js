@@ -1434,15 +1434,11 @@ describe("transpiler", () => {
     assertThat(lexer.next().type).equalsTo("ws");
     assertThat(lexer.next().type).equalsTo("rblock");
   });
-  
-  it("tq.mm", async () => {
+
+  async function transpile(src) {
     const fs = require("fs/promises");
-    const program = await fs.readFile("tests/tq.mm");
-    
-    // const label = "axpow";
-    // const label = "axext";
-    // const label = "theorem1";
-    const label = "t10";
+    const program = await fs.readFile(src);
+
     const mm = new MM();
     mm.push();
     
@@ -1459,21 +1455,26 @@ describe("transpiler", () => {
     });
 
     let frame = mm.pop();
-    // console.log(frame.c);
-    // console.log("common.mm");
-    const code = `
-const ${[...frame.c].join(" ")};
+    const code =
+`const ${[...frame.c].join(" ")};
 var ${[...frame.c].join(" ")};
 `;
-    // console.log(fs);
-    const dir = "tests/tq.mm.dir";
-    await fs.writeFile(`${dir}/common.mm`, code);
+    const dir = `${src}.dir`;
 
-    const [stmt] = mm.labels[label];
+    // Creates a directory if one doesn't exist
+    try {
+      const file = await fs.stat(dir);
+      if (!file.isDirectory()) {
+        throw new Error("hi");
+      }
+    } catch (e) {
+      fs.mkdir(dir);
+    }
+        
+    await fs.writeFile(`${dir}/common.mm`, code);
 
     for (const [label, value] of Object.entries(mm.labels)) {
       const [stmt] = value;
-      // console.log(`${label} ${stmt}`);
       if (stmt == "$e" || label == "$c" || label == "$v") {
         continue;
       } else if (stmt == "$f") {
@@ -1487,7 +1488,6 @@ var ${[...frame.c].join(" ")};
         args += ")";
       
         const assumptions = e.map(([seq, type, name]) => `${name}: ${type} "${seq.join(" ")}"`).join("\n");
-        // console.log(assumptions);
         let assumes = "";
         if (assumptions.length > 0) {
           assumes = `
@@ -1511,10 +1511,7 @@ axiom ${label}${args} : ${type} ${axiom.join(" ")} {
         args += f.map(([type, name]) => `${type} ${name}`).join(", ");
         args += ")";
         
-        // console.log(e);
-        // console.log(proof());
         const proof = func();
-        // return;
         
         const steps = proof.map(([step]) => step);
         const header = [...new Set(steps)]
@@ -1525,11 +1522,9 @@ axiom ${label}${args} : ${type} ${axiom.join(" ")} {
         let conds = "";
 
         if (e.length > 0) {
-          // conds += "|";
           args += " if (\n";
         }
         
-        // console.log(e);
         let hypothesis = [];
         for (let [seq, type, label] of e) {
           hypothesis.push(`  ${label}: ${type} "${seq.join(" ")}"`);
@@ -1556,8 +1551,6 @@ axiom ${label}${args} : ${type} ${axiom.join(" ")} {
 
         const body = proof.map(([step, [type, sequence], args], i) => `    ${i}. ${step}(${args}): ${type} ${sequence.join(" ")}`).join("\n");
         
-        // return;
-        //${body.join("\n")}
         const code =
 `include "common.mm";
 ${header}
@@ -1573,23 +1566,15 @@ ${body}
       }
     }
 
-    
-    return;
-    
-      
-    // console.log(t);
-    
-    // console.log(d);
 
-    // console.log(proof);
-    // console.log(mm.labels[label]);
-    // console.log(theorem);
+  }
+  
+  it("tq.mm", async () => {
+    await transpile("tests/tq.mm");
+  });
 
-    // console.log(f);
-    // console.log(e);
-    
-    // const [, , proof] = mm.labels[label];
-    // return proof;
+  it.only("pq.mm", async () => {
+    await transpile("tests/pq.mm");
   });
 
 });
