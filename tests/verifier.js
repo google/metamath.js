@@ -1435,7 +1435,7 @@ describe("transpiler", () => {
     assertThat(lexer.next().type).equalsTo("rblock");
   });
   
-  it.skip("pq.mm", async () => {
+  it("tq.mm", async () => {
     const fs = require("fs/promises");
     const program = await fs.readFile("tests/tq.mm");
     
@@ -1472,95 +1472,93 @@ var ${[...frame.c].join(" ")};
     const [stmt] = mm.labels[label];
 
     for (const [label, value] of Object.entries(mm.labels)) {
-      // console.log(label);
-    }
-
-    
-    return;
-    
-    if (stmt == "$f") {
-      const [, [type, name]] = mm.labels[label];
-      const code = `let ${label}: ${type} ${name};`;
-      await fs.writeFile(`${dir}/${label}.mm`, code);
-    } else  if (stmt == "$a") {
-      const [, [d, f, e, [type, axiom]]] = mm.labels[label];
-      let args = "(";
-      args += f.map(([type, name]) => `${type} ${name}`).join(", ");
-      args += ")";
+      const [stmt] = value;
+      // console.log(`${label} ${stmt}`);
+      if (stmt == "$e" || label == "$c" || label == "$v") {
+        continue;
+      } else if (stmt == "$f") {
+        const [, [type, name]] = mm.labels[label];
+        const code = `let ${label}: ${type} ${name};`;
+        await fs.writeFile(`${dir}/${label}.mm`, code);
+      } else  if (stmt == "$a") {
+        const [, [d, f, e, [type, axiom]]] = mm.labels[label];
+        let args = "(";
+        args += f.map(([type, name]) => `${type} ${name}`).join(", ");
+        args += ")";
       
-      const assumptions = e.map(([seq, type, name]) => `${name}: ${type} "${seq.join(" ")}"`).join("\n");
-      // console.log(assumptions);
-      let assumes = "";
-      if (assumptions.length > 0) {
-        assumes = `
+        const assumptions = e.map(([seq, type, name]) => `${name}: ${type} "${seq.join(" ")}"`).join("\n");
+        // console.log(assumptions);
+        let assumes = "";
+        if (assumptions.length > 0) {
+          assumes = `
   assumes
     ${assumptions}
 `;
-      }
-      const code = `
+        }
+        const code = `
 include "common.mm";
 
 axiom ${label}${args} : ${type} ${axiom.join(" ")} {
 }
 `;
 
-      await fs.writeFile(`${dir}/${label}.mm`, code);
+        await fs.writeFile(`${dir}/${label}.mm`, code);
 
-    } else {
-      const [, [d, f, e, [type, theorem]], func] = mm.labels[label];
+      } else if (stmt == "$p") {
+        const [, [d, f, e, [type, theorem]], func] = mm.labels[label];
 
-      let args = "(";
-      args += f.map(([type, name]) => `${type} ${name}`).join(", ");
-      args += ")";
-      
-      // console.log(e);
-      // console.log(proof());
-      const proof = func();
-      // return;
-
-      const steps = proof.map(([step]) => step);
-      const header = [...new Set(steps)]
-            .map((step) => `include "${step}.mm";\n`).join("");
-          
-      // const conds = e.length == 0 ? "" : " | " + e.map(([seq, type, label]) => `${label}: ${type} ${seq.join(" ")}`).join(", ");
-
-      let conds = "";
-
-      if (e.length > 0) {
-        // conds += "|";
-        args += " if (\n";
-      }
-
-      // console.log(e);
-      let hypothesis = [];
-      for (let [seq, type, label] of e) {
-        hypothesis.push(`  ${label}: ${type} "${seq.join(" ")}"`);
-      }
-      
-      if (e.length >0 ) {
-        args += hypothesis.join("\n");
+        let args = "(";
+        args += f.map(([type, name]) => `${type} ${name}`).join(", ");
         args += ")";
-      }
-      
-      let diff = [];
-      if (d.length > 0) {
-        args += " and (";
-        // args += "  [";
-      }
-      for (let [x, y] of d) {
-        diff.push(`${x} != ${y}`);
-      }
-      
-      if (d.length > 0) {
-        args += "" + diff.join(", ") + ")";
-      }
-      
+        
+        // console.log(e);
+        // console.log(proof());
+        const proof = func();
+        // return;
+        
+        const steps = proof.map(([step]) => step);
+        const header = [...new Set(steps)]
+              .map((step) => `include "${step}.mm";\n`).join("");
+          
+        // const conds = e.length == 0 ? "" : " | " + e.map(([seq, type, label]) => `${label}: ${type} ${seq.join(" ")}`).join(", ");
 
-      const body = proof.map(([step, [type, sequence], args], i) => `    ${i}. ${step}(${args}): ${type} ${sequence.join(" ")}`).join("\n");
+        let conds = "";
 
-    // return;
-//${body.join("\n")}
-    const code = `
+        if (e.length > 0) {
+          // conds += "|";
+          args += " if (\n";
+        }
+        
+        // console.log(e);
+        let hypothesis = [];
+        for (let [seq, type, label] of e) {
+          hypothesis.push(`  ${label}: ${type} "${seq.join(" ")}"`);
+        }
+        
+        if (e.length >0 ) {
+          args += hypothesis.join("\n");
+          args += ")";
+        }
+        
+        let diff = [];
+        if (d.length > 0) {
+          args += " and (";
+          // args += "  [";
+        }
+        for (let [x, y] of d) {
+          diff.push(`${x} != ${y}`);
+        }
+        
+        if (d.length > 0) {
+          args += "" + diff.join(", ") + ")";
+        }
+        
+
+        const body = proof.map(([step, [type, sequence], args], i) => `    ${i}. ${step}(${args}): ${type} ${sequence.join(" ")}`).join("\n");
+        
+        // return;
+        //${body.join("\n")}
+        const code = `
 include "common.mm";
 ${header}
 theorem ${label}${args} : ${type} ${theorem.join(" ")} {
@@ -1568,9 +1566,16 @@ theorem ${label}${args} : ${type} ${theorem.join(" ")} {
 ${body}
 }
 `;
-
-      await fs.writeFile(`${dir}/${label}.mm`, code);
+        
+        await fs.writeFile(`${dir}/${label}.mm`, code);
+      } else {
+        throw new Error(`Unknown statement type ${stmt}.`);
+      }
     }
+
+    
+    return;
+    
       
     // console.log(t);
     
