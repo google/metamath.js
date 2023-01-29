@@ -1574,6 +1574,10 @@ ${body}
     await transpile("tests/pq.mm");
   });
 
+  it("miu.mm", async () => {
+    await transpile("tests/miu.mm");
+  });
+
 });
 
 describe("Scratch", () => {
