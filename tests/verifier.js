@@ -1435,15 +1435,15 @@ describe("transpiler", () => {
     assertThat(lexer.next().type).equalsTo("rblock");
   });
   
-  it.skip("miu.mm", async () => {
+  it.skip("pq.mm", async () => {
     const fs = require("fs/promises");
     const program = await fs.readFile("tests/tq.mm");
     
     // const label = "axpow";
     // const label = "axext";
     // const label = "theorem1";
-    const label = "t11";
-    const mm = new MM(label);
+    const label = "t10";
+    const mm = new MM();
     mm.push();
     
     parse(program.toString(), {
@@ -1460,59 +1460,91 @@ describe("transpiler", () => {
 
     mm.pop();
 
-    const [p, [d, f, e, [type, theorem]], proof] = mm.labels[label];
+    // console.log(mm.labels);
+
+    const [stmt, [d, f, e, [type, axiom]]] = mm.labels[label];
 
     let args = "(";
-
+    
     args += f.map(([type, name]) => `${type} ${name}`).join(", ");
-
+    
     args += ")";
-    
-    // const conds = e.length == 0 ? "" : " | " + e.map(([seq, type, label]) => `${label}: ${type} ${seq.join(" ")}`).join(", ");
 
-    let conds = "";
+    if (stmt == "$a") {
+      const [, [d, f, e, [type, axiom]]] = mm.labels[label];
+      // console.log(e);
+      
+      const assumptions = e.map(([seq, type, name]) => `${name}: ${type} "${seq.join(" ")}"`).join("\n");
+      // console.log(assumptions);
+      console.log(`
+include "common.mm";
 
-    if (e.length > 0) {
-    // conds += "|";
-      args += " if (\n";
-    }
+axiom ${label}${args} : ${type} ${axiom.join(" ")} {
+  assumes
+    ${assumptions}
+}
+`);
+    } else {
+      const [, [d, f, e, [type, theorem]], func] = mm.labels[label];
 
-    // console.log(e);
-    let hypothesis = [];
-    for (let [seq, type, label] of e) {
-      hypothesis.push(`  ${label}: ${type} "${seq.join(" ")}"`);
-    }
+      // console.log(e);
+      // console.log(proof());
+      const proof = func();
+      // return;
 
-    if (e.length >0 ) {
-      args += hypothesis.join("\n");
-      args += ")";
-    }
-    
-    let diff = [];
-    if (d.length > 0) {
-      args += " and (";
-      // args += "  [";
-    }
-    for (let [x, y] of d) {
-      diff.push(`${x} != ${y}`);
-    }
+      const steps = proof.map(([step]) => step);
+      const header = [...new Set(steps)]
+            .map((step) => `include "${step}.mm";\n`).join("");
+          
+      // const conds = e.length == 0 ? "" : " | " + e.map(([seq, type, label]) => `${label}: ${type} ${seq.join(" ")}`).join(", ");
 
-    if (d.length > 0) {
-      args += "" + diff.join(", ") + ")";
-    }
-    
-    
-    const body = proof.map(([step, [type, sequence], args], i) => `  ${i}. ${step}(${args.join(", ")}): ${type} "${sequence.join(" ")}"`).join("\n");
+      let conds = "";
+
+      if (e.length > 0) {
+        // conds += "|";
+        args += " if (\n";
+      }
+
+      // console.log(e);
+      let hypothesis = [];
+      for (let [seq, type, label] of e) {
+        hypothesis.push(`  ${label}: ${type} "${seq.join(" ")}"`);
+      }
+      
+      if (e.length >0 ) {
+        args += hypothesis.join("\n");
+        args += ")";
+      }
+      
+      let diff = [];
+      if (d.length > 0) {
+        args += " and (";
+        // args += "  [";
+      }
+      for (let [x, y] of d) {
+        diff.push(`${x} != ${y}`);
+      }
+      
+      if (d.length > 0) {
+        args += "" + diff.join(", ") + ")";
+      }
+      
+
+      const body = proof.map(([step, [type, sequence], args], i) => `    ${i}. ${step}(${args}): ${type} ${sequence.join(" ")}`).join("\n");
 
     // return;
 //${body.join("\n")}
     console.log(`
-theorem ${label}${args} :
-  ${type} "${theorem.join(" ")}" {
+include "common.mm";
+${header}
+theorem ${label}${args} : ${type} ${theorem.join(" ")} {
+  proof
 ${body}
 }
 `);
 
+    }
+      
     // console.log(t);
     
     // console.log(d);
@@ -1531,7 +1563,7 @@ ${body}
 });
 
 describe("Scratch", () => {
-  it.only("Tarki's S2", () => {
+  it.skip("Tarki's S2", () => {
     const source = require("fs").readFileSync("tests/tarski.mm", {
       encoding: "utf8",
       flag: "r"
