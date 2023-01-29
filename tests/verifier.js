@@ -1549,13 +1549,12 @@ axiom ${label}${args} : ${type} ${axiom.join(" ")} {
         }
         
 
-        const body = proof.map(([step, [type, sequence], args], i) => `    ${i}. ${step}(${args}): ${type} ${sequence.join(" ")}`).join("\n");
+        const body = proof.map(([step, [type, sequence], args], i) => `  ${i}. ${step}(${args}): ${type} ${sequence.join(" ")}`).join("\n");
         
         const code =
 `lexicon "lexicon.mm";
 ${header}
 theorem ${label}${args} : ${type} ${theorem.join(" ")} {
-  proof
 ${body}
 }
 `;
