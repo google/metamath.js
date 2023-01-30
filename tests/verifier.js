@@ -1588,6 +1588,10 @@ ${body}
     await transpile("tests/demo0.mm");
   });
 
+  it("test.mm", async () => {
+    await transpile("tests/test.mm");
+  });
+
 });
 
 describe("Scratch", () => {
