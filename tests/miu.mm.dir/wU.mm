@@ -1,5 +1,5 @@
 lexicon "lexicon.mm";
 
-axiom wU(wff x) : wff 'x U' {
+axiom wU(wff x) : wff "x U" {
 
 }

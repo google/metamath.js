@@ -1338,7 +1338,8 @@ describe("Verifier", () => {
     const mm = process(file.toString());
 
     // console.log(mm.labels["$v"]);
-    console.log(mm.labels["$v"].find(([c, [name]]) => name == "'"));
+    console.log(mm.labels["$c"].find(([c, [name]]) => name.includes('"')));
+    // console.log(mm.labels["$c"].map(([c, [name]]) => name).join("\n"));
     return;
     
     const [, proof] = mm.theorem("young2d");
@@ -1492,7 +1493,7 @@ var ${[...frame.c].join(" ")};
         args += f.map(([type, name]) => `${type} ${name}`).join(", ");
         args += ")";
       
-        const assumptions = e.map(([seq, type, name]) => `    ${name}: ${type} '${seq.join(" ")}';`).join("\n");
+        const assumptions = e.map(([seq, type, name]) => `    ${name}: ${type} "${seq.join(" ")}";`).join("\n");
         let assumes = "";
         if (assumptions.length > 0) {
           assumes = `  assumes {
@@ -1502,7 +1503,7 @@ ${assumptions}
         const code =
 `lexicon "lexicon.mm";
 
-axiom ${label}${args} : ${type} '${axiom.join(" ")}' {
+axiom ${label}${args} : ${type} "${axiom.join(' ')}" {
 ${assumes}
 }
 `;
@@ -1554,12 +1555,12 @@ ${assumes}
         }
         
 
-        const body = proof.map(([step, [type, sequence], args], i) => `  ${i}. ${step}(${args}): ${type} '${sequence.join(" ")}'`).join("\n");
+        const body = proof.map(([step, [type, sequence], args], i) => `  ${i}. ${step}(${args}): ${type} "${sequence.join(' ')}"`).join("\n");
         
         const code =
 `lexicon "lexicon.mm";
 ${header}
-theorem ${label}${args} : ${type} '${theorem.join(" ")}' {
+theorem ${label}${args} : ${type} "${theorem.join(' ')}" {
 ${body}
 }
 `;

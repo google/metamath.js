@@ -1,5 +1,5 @@
 lexicon "lexicon.mm";
 
-axiom w0() : wff '-' {
+axiom w0() : wff "-" {
 
 }
