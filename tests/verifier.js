@@ -1404,7 +1404,7 @@ describe("Verifier", () => {
 
 
 describe("transpiler", () => {
-  const {parse} = require("../src/descent.js");
+  // const {parse} = require("../src/descent.js");
   const moo = require("moo");
 
   it("lexer", () => {
@@ -1591,6 +1591,297 @@ ${body}
   it("test.mm", async () => {
     await transpile("tests/test.mm");
   });
+
+  // const moo = require("moo");
+
+  const lexicon = {
+    ["comment"]: {match: /\$\([\s]+(?:(?!\$\))[\s\S])*\$\)/, lineBreaks: true},
+    ["ws"]: {match: /[\s]+/, lineBreaks: true},
+    ["theorem"]: "theorem",
+    ["axiom"]: "axiom",
+    ["proof"]: "proof",
+    ["end"]: "end",
+    ["let"]: "let",
+    ["const"]: "const",
+    ["if"]: "if",
+    ["then"]: "then",
+    [":"]: ":",
+    [";"]: ";",
+    ["label"]: /[A-Za-z0-9-_.]+/,
+    ["sequence"]: /[!-#%-~\?]+/,
+    // symbol: /[!-#%-~]+/,
+    // letter_or_digit: /[A-Za-z0-9]/,
+  };
+
+  const lexer = moo.compile(lexicon);
+
+  const parse = (code) => { lexer.reset(code); }
+  const next = () => { let next = lexer.next(); if (!next) return; let {type, text} = next; return [type, text]; };
+  const done = () => { assertThat(lexer.next()).equalsTo(undefined);};
+  const ws = () => { assertThat(next()[0]).equalsTo("ws"); };
+  const eat = (type, value) => { assertThat(next()).equalsTo([type, value ? value : type]); };
+
+  it("parser", () => {
+    let head;
+
+    function consume(type) {
+      if (!head) {
+        throw new Error(`Unexpected EOF: expecting "${type}" instead.`);
+      }
+      if (head[0] != type) {
+        throw new Error(`Unexpected token "${head[0]}": expecting "${type}" instead.`);
+      }
+      // assertThat(head[0]).equalsTo(type);
+      const value = head[1];
+      head = next();
+      return value;
+    }
+    
+    function declaration(type) {
+      const result = [];
+      consume(type);
+      consume("ws");
+      assertThat(head[0] == "label" ||
+                 head[0] == "sequence")
+        .equalsTo(true);
+      result.push(head[1]);
+      head = next();
+      consume("ws");
+      while (head  && (head[0] == "label" || head[0] == "sequence")) {
+        result.push(head[1]);
+        head = next();
+        consume("ws");
+      }
+      return [type, result];
+    }
+
+    function axiom() {
+      consume("axiom");
+      consume("ws");
+      let name = consume("label");
+      consume("ws");
+      let h = header();
+      consume("end");
+      consume("ws");
+      return ["axiom", name, h];
+    }
+
+    function header() {
+      let lets = [];
+      while (head && head[0] == "let") {
+        lets.push(declaration("let"));
+      }
+
+      let ifs = [];
+      while (head && head[0] == "if") {
+        ifs.push(declaration("if"));
+      }
+
+      // let then = [];
+      // while (head && head[0] == "then") {
+      let then = declaration("then");
+      // }
+      return [lets, ifs, then];
+    }
+
+    function theorem() {
+      consume("theorem");
+      consume("ws");
+      let name = consume("label");
+      consume("ws");
+      let h = header();
+      consume("proof");
+      consume("ws");
+      consume("end");
+      consume("ws");
+      return ["theorem", name, h];
+    }
+
+    function descent() {
+      head = next();
+      let result = [];
+      consume("ws");
+      do {
+        switch (head[0]) {
+        case "const": {
+          result.push(declaration("const"));
+          break;
+        }
+        case "let": {
+          result.push(declaration("let"));
+          break;
+        }
+        case "axiom": {
+          result.push(axiom());
+          break;
+        }
+        case "theorem": {
+          result.push(theorem());
+          break;
+        }
+        default: {
+          throw new Error(`Unknown token: ${head[0]}.`);
+        }
+        }
+      } while (head != undefined);
+      return result;
+    }
+    parse(`
+      const => +
+
+      let wff x y
+
+      axiom mp
+        let wff p q
+        if |- p => q
+        if |- p
+        then |- q
+      end
+
+      theorem foo
+        then |- ~ p
+        proof
+      end
+    `);
+    
+    assertThat(descent()).equalsTo([
+      ["const", ["=>", "+"]],
+      ["let", ["wff", "x", "y"]],
+      ["axiom", "mp", [
+        [
+          ["let", ["wff", "p", "q"]],
+        ], [
+          ["if", ["|-", "p", "=>", "q"]],
+          ["if", ["|-", "p"]],
+        ], 
+        ["then", ["|-", "q"]],
+      ]
+      ],
+      ["theorem", "foo", [
+        [],
+        [],
+        ["then", ["|-", "~", "p"]]
+      ]]
+    ]);
+  });
+  
+  it("lexer: const", async () => {
+    parse(`
+      const => + -
+    `);
+    ws();
+    eat("const");
+    ws();
+    eat("sequence", "=>");
+    ws();
+    eat("sequence", "+");
+    ws();
+    eat("label", "-");
+    ws();
+    done();
+  });
+  
+  it("lexer: let", async () => {
+    parse(`
+      let wff x y
+    `);
+    ws();
+    eat("let");
+    ws();
+    eat("label", "wff");
+    ws();
+    eat("label", "x");
+    ws();
+    eat("label", "y");
+    ws();
+    done();
+  });
+  
+  it("lexer: theorem", async () => {
+    parse(`
+      theorem foobar
+        let wff p
+      proof
+      end
+    `);
+
+    ws();
+    eat("theorem");
+    ws();
+    eat("label", "foobar");
+    ws();
+    eat("let");
+    ws();
+    eat("label", "wff");
+    ws();
+    eat("label", "p");
+    ws();
+    eat("proof");
+    ws();
+    eat("end");
+    ws();
+    done();
+  });
+  
+  it("lexer: axiom", async () => {
+    parse(`
+      axiom foobar
+        let wff p
+        let wff q
+        if p => q
+        if |- p
+        then |- q
+      end
+    `);
+
+    ws();
+    assertThat(next()).equalsTo(["axiom", "axiom"]);
+    ws();
+    assertThat(next()).equalsTo(["label", "foobar"]);
+    ws();
+    assertThat(next()).equalsTo(["let", "let"]);
+    ws();
+    assertThat(next()).equalsTo(["label", "wff"]);
+    ws();
+    assertThat(next()).equalsTo(["label", "p"]);
+    ws();
+    assertThat(next()).equalsTo(["let", "let"]);
+    ws();
+    assertThat(next()).equalsTo(["label", "wff"]);
+    ws();
+    assertThat(next()).equalsTo(["label", "q"]);
+    // assertThat(next()).equalsTo([":", ":"]);
+    ws();
+    assertThat(next()).equalsTo(["if", "if"]);
+    ws();
+    assertThat(next()).equalsTo(["label", "p"]);
+    ws();
+    assertThat(next()).equalsTo(["sequence", "=>"]);
+    ws();
+    assertThat(next()).equalsTo(["label", "q"]);
+    ws();
+    assertThat(next()).equalsTo(["if", "if"]);
+    ws();
+    assertThat(next()).equalsTo(["sequence", "|-"]);
+    ws();
+    assertThat(next()).equalsTo(["label", "p"]);
+    ws();
+    assertThat(next()).equalsTo(["then", "then"]);
+    ws();
+    assertThat(next()).equalsTo(["sequence", "|-"]);
+    ws();
+    assertThat(next()).equalsTo(["label", "q"]);
+    ws();
+    //assertThat(next()).equalsTo(["proof", "proof"]);
+    //assertThat(next()[0]).equalsTo("ws");
+    // assertThat(next()).equalsTo([";", ";"]);
+    // assertThat(next()[0]).equalsTo("ws");
+    assertThat(next()).equalsTo(["end", "end"]);
+    ws();
+    // assertThat(done()).equalsTo(true);
+    done();
+  });
+
 
 });
 
