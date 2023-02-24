@@ -1402,197 +1402,8 @@ describe("Verifier", () => {
 
 });
 
-
-describe("transpiler", () => {
-  // const {parse} = require("../src/descent.js");
+describe("parser", () => {
   const moo = require("moo");
-
-  it("lexer", () => {
-    const lexicon = {
-      theorem: "theorem",
-      comment: {match: /\/\*\*[\s]+(?:(?!\$\))[\s\S])*\*\//, lineBreaks: true},
-      lblock: "{",
-      rblock: "}",
-      lparen: "(",
-      rparen: ")",
-      ws: {match: /[\s]+/, lineBreaks: true},
-      label: /[\\.A-Za-z0-9_-]+/,
-      sequence: /[!-#%-~\?]+/,
-      // letter_or_digit: /[A-Za-z0-9]/,                                                                                   
-      // symbol: /[!-#%-~]+/,
-    };
-
-    const lexer = moo.compile(lexicon);
-
-    lexer.reset("theorem foo_-bar1.2(wff a) { /** hello */ }");
-    assertThat(lexer.next().type).equalsTo("theorem");
-    assertThat(lexer.next().type).equalsTo("ws");
-    assertThat(lexer.next().type).equalsTo("label");
-    assertThat(lexer.next().type).equalsTo("lparen");
-    assertThat(lexer.next().type).equalsTo("label");
-    assertThat(lexer.next().type).equalsTo("ws");
-    assertThat(lexer.next().type).equalsTo("label");
-    assertThat(lexer.next().type).equalsTo("rparen"); 
-    assertThat(lexer.next().type).equalsTo("ws");
-    assertThat(lexer.next().type).equalsTo("lblock");
-    assertThat(lexer.next().type).equalsTo("ws");
-    assertThat(lexer.next().type).equalsTo("comment");
-    assertThat(lexer.next().type).equalsTo("ws");
-    assertThat(lexer.next().type).equalsTo("rblock");
-  });
-
-  async function transpile(src) {
-    const fs = require("fs/promises");
-    const program = await fs.readFile(src);
-
-    const mm = new MM();
-    mm.push();
-    
-    parse(program.toString(), {
-      feed(statement) {
-        if (statement == "push") {
-          mm.push();
-        } else if (statement == "pop") {
-          mm.pop();
-        } else {
-          mm.feed([statement]);
-        }
-      }
-    });
-
-    let frame = mm.pop();
-    const code =
-`const ${[...frame.c].join(" ")};
-var ${[...frame.c].join(" ")};
-`;
-    const dir = `${src}.dir`;
-
-    // Creates a directory if one doesn't exist
-    try {
-      const file = await fs.stat(dir);
-      if (!file.isDirectory()) {
-        throw new Error("hi");
-      }
-    } catch (e) {
-      fs.mkdir(dir);
-    }
-
-    await fs.writeFile(`${dir}/lexicon.mm`, code);
-
-    for (const [label, value] of Object.entries(mm.labels)) {
-      const [stmt] = value;
-      if (stmt == "$e" || label == "$c" || label == "$v") {
-        continue;
-      } else if (stmt == "$f") {
-        const [, [type, name]] = mm.labels[label];
-        const code = `let ${label}: ${type} ${name};`;
-        await fs.writeFile(`${dir}/${label}.mm`, code);
-      } else  if (stmt == "$a") {
-        const [, [d, f, e, [type, axiom]]] = mm.labels[label];
-        let args = "(";
-        args += f.map(([type, name]) => `${type} ${name}`).join(", ");
-        args += ")";
-      
-        const assumptions = e.map(([seq, type, name]) => `    ${name}: ${type} "${seq.join(" ")}";`).join("\n");
-        let assumes = "";
-        if (assumptions.length > 0) {
-          assumes = `  assumes {
-${assumptions}
-  }`;
-        }
-        const code =
-`lexicon "lexicon.mm";
-
-axiom ${label}${args} : ${type} "${axiom.join(' ')}" {
-${assumes}
-}
-`;
-
-        await fs.writeFile(`${dir}/${label}.mm`, code);
-
-      } else if (stmt == "$p") {
-        const [, [d, f, e, [type, theorem]], func] = mm.labels[label];
-
-        let args = "(";
-        args += f.map(([type, name]) => `${type} ${name}`).join(", ");
-        args += ")";
-        
-        const proof = func();
-        
-        const steps = proof.map(([step]) => step);
-        const header = [...new Set(steps)]
-              .map((step) => `include "${step}.mm";\n`).join("");
-          
-        // const conds = e.length == 0 ? "" : " | " + e.map(([seq, type, label]) => `${label}: ${type} ${seq.join(" ")}`).join(", ");
-
-        let conds = "";
-
-        if (e.length > 0) {
-          args += " if (\n";
-        }
-        
-        let hypothesis = [];
-        for (let [seq, type, label] of e) {
-          hypothesis.push(`  ${label}: ${type} "${seq.join(" ")}"`);
-        }
-        
-        if (e.length >0 ) {
-          args += hypothesis.join("\n");
-          args += ")";
-        }
-        
-        let diff = [];
-        if (d.length > 0) {
-          args += " and (";
-          // args += "  [";
-        }
-        for (let [x, y] of d) {
-          diff.push(`${x} != ${y}`);
-        }
-        
-        if (d.length > 0) {
-          args += "" + diff.join(", ") + ")";
-        }
-        
-
-        const body = proof.map(([step, [type, sequence], args], i) => `  ${i}. ${step}(${args}): ${type} "${sequence.join(' ')}"`).join("\n");
-        
-        const code =
-`lexicon "lexicon.mm";
-${header}
-theorem ${label}${args} : ${type} "${theorem.join(' ')}" {
-${body}
-}
-`;
-        
-        await fs.writeFile(`${dir}/${label}.mm`, code);
-      } else {
-        throw new Error(`Unknown statement type ${stmt}.`);
-      }
-    }
-  }
-  
-  it("tq.mm", async () => {
-    await transpile("tests/tq.mm");
-  });
-
-  it("pq.mm", async () => {
-    await transpile("tests/pq.mm");
-  });
-
-  it("miu.mm", async () => {
-    await transpile("tests/miu.mm");
-  });
-
-  it("demo0.mm", async () => {
-    await transpile("tests/demo0.mm");
-  });
-
-  it("test.mm", async () => {
-    await transpile("tests/test.mm");
-  });
-
-  // const moo = require("moo");
 
   const lexicon = {
     ["comment"]: {match: /\$\([\s]+(?:(?!\$\))[\s\S])*\$\)/, lineBreaks: true},
@@ -1881,7 +1692,196 @@ ${body}
     // assertThat(done()).equalsTo(true);
     done();
   });
+});
 
+describe("transpiler", () => {
+  const {parse} = require("../src/descent.js");
+  const moo = require("moo");
+
+  it("lexer", () => {
+    const lexicon = {
+      theorem: "theorem",
+      comment: {match: /\/\*\*[\s]+(?:(?!\$\))[\s\S])*\*\//, lineBreaks: true},
+      lblock: "{",
+      rblock: "}",
+      lparen: "(",
+      rparen: ")",
+      ws: {match: /[\s]+/, lineBreaks: true},
+      label: /[\\.A-Za-z0-9_-]+/,
+      sequence: /[!-#%-~\?]+/,
+      // letter_or_digit: /[A-Za-z0-9]/,                                                                                   
+      // symbol: /[!-#%-~]+/,
+    };
+
+    const lexer = moo.compile(lexicon);
+
+    lexer.reset("theorem foo_-bar1.2(wff a) { /** hello */ }");
+    assertThat(lexer.next().type).equalsTo("theorem");
+    assertThat(lexer.next().type).equalsTo("ws");
+    assertThat(lexer.next().type).equalsTo("label");
+    assertThat(lexer.next().type).equalsTo("lparen");
+    assertThat(lexer.next().type).equalsTo("label");
+    assertThat(lexer.next().type).equalsTo("ws");
+    assertThat(lexer.next().type).equalsTo("label");
+    assertThat(lexer.next().type).equalsTo("rparen"); 
+    assertThat(lexer.next().type).equalsTo("ws");
+    assertThat(lexer.next().type).equalsTo("lblock");
+    assertThat(lexer.next().type).equalsTo("ws");
+    assertThat(lexer.next().type).equalsTo("comment");
+    assertThat(lexer.next().type).equalsTo("ws");
+    assertThat(lexer.next().type).equalsTo("rblock");
+  });
+
+  async function transpile(src) {
+    const fs = require("fs/promises");
+    const program = await fs.readFile(src);
+
+    const mm = new MM();
+    mm.push();
+    
+    parse(program.toString(), {
+      feed(statement) {
+        if (statement == "push") {
+          mm.push();
+        } else if (statement == "pop") {
+          mm.pop();
+        } else {
+          mm.feed([statement]);
+        }
+      }
+    });
+
+    let frame = mm.pop();
+    const code =
+`const ${[...frame.c].join(" ")};
+var ${[...frame.c].join(" ")};
+`;
+    const dir = `${src}.dir`;
+
+    // Creates a directory if one doesn't exist
+    try {
+      const file = await fs.stat(dir);
+      if (!file.isDirectory()) {
+        throw new Error("hi");
+      }
+    } catch (e) {
+      fs.mkdir(dir);
+    }
+
+    await fs.writeFile(`${dir}/lexicon.mm`, code);
+
+    for (const [label, value] of Object.entries(mm.labels)) {
+      const [stmt] = value;
+      if (stmt == "$e" || label == "$c" || label == "$v") {
+        continue;
+      } else if (stmt == "$f") {
+        const [, [type, name]] = mm.labels[label];
+        const code = `let ${label}: ${type} ${name};`;
+        await fs.writeFile(`${dir}/${label}.mm`, code);
+      } else  if (stmt == "$a") {
+        const [, [d, f, e, [type, axiom]]] = mm.labels[label];
+        let args = "(";
+        args += f.map(([type, name]) => `${type} ${name}`).join(", ");
+        args += ")";
+      
+        const assumptions = e.map(([seq, type, name]) => `    ${name}: ${type} "${seq.join(" ")}";`).join("\n");
+        let assumes = "";
+        if (assumptions.length > 0) {
+          assumes = `  assumes {
+${assumptions}
+  }`;
+        }
+        const code =
+`lexicon "lexicon.mm";
+
+axiom ${label}${args} : ${type} "${axiom.join(' ')}" {
+${assumes}
+}
+`;
+
+        await fs.writeFile(`${dir}/${label}.mm`, code);
+
+      } else if (stmt == "$p") {
+        const [, [d, f, e, [type, theorem]], func] = mm.labels[label];
+
+        let args = "(";
+        args += f.map(([type, name]) => `${type} ${name}`).join(", ");
+        args += ")";
+        
+        const proof = func();
+        
+        const steps = proof.map(([step]) => step);
+        const header = [...new Set(steps)]
+              .map((step) => `include "${step}.mm";\n`).join("");
+          
+        // const conds = e.length == 0 ? "" : " | " + e.map(([seq, type, label]) => `${label}: ${type} ${seq.join(" ")}`).join(", ");
+
+        let conds = "";
+
+        if (e.length > 0) {
+          args += " if (\n";
+        }
+        
+        let hypothesis = [];
+        for (let [seq, type, label] of e) {
+          hypothesis.push(`  ${label}: ${type} "${seq.join(" ")}"`);
+        }
+        
+        if (e.length >0 ) {
+          args += hypothesis.join("\n");
+          args += ")";
+        }
+        
+        let diff = [];
+        if (d.length > 0) {
+          args += " and (";
+          // args += "  [";
+        }
+        for (let [x, y] of d) {
+          diff.push(`${x} != ${y}`);
+        }
+        
+        if (d.length > 0) {
+          args += "" + diff.join(", ") + ")";
+        }
+        
+
+        const body = proof.map(([step, [type, sequence], args], i) => `  ${i}. ${step}(${args}): ${type} "${sequence.join(' ')}"`).join("\n");
+        
+        const code =
+`lexicon "lexicon.mm";
+${header}
+theorem ${label}${args} : ${type} "${theorem.join(' ')}" {
+${body}
+}
+`;
+        
+        await fs.writeFile(`${dir}/${label}.mm`, code);
+      } else {
+        throw new Error(`Unknown statement type ${stmt}.`);
+      }
+    }
+  }
+  
+  it("tq.mm", async () => {
+    await transpile("tests/tq.mm");
+  });
+
+  it("pq.mm", async () => {
+    await transpile("tests/pq.mm");
+  });
+
+  it("miu.mm", async () => {
+    await transpile("tests/miu.mm");
+  });
+
+  it("demo0.mm", async () => {
+    await transpile("tests/demo0.mm");
+  });
+
+  it("test.mm", async () => {
+    await transpile("tests/test.mm");
+  });
 
 });
 
