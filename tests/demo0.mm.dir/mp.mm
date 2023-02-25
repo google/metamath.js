@@ -1,8 +1,9 @@
-lexicon "lexicon.mm";
+include "lexicon.mm"
 
-axiom mp(wff P, wff Q) : |- "Q" {
-  assumes {
-    min: |- "P";
-    maj: |- "( P -> Q )";
-  }
-}
+axiom mp
+  let wff P
+  let wff Q
+  min: assume |- P
+  maj: assume |- ( P -> Q )
+  assert |- Q
+end

@@ -1,5 +1,7 @@
-lexicon "lexicon.mm";
+include "lexicon.mm"
 
-axiom ax() : |- "M I" {
+axiom ax
 
-}
+
+  assert |- M I
+end

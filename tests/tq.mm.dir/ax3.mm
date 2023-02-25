@@ -1,5 +1,8 @@
-lexicon "lexicon.mm";
+include "lexicon.mm"
 
-axiom ax3(wff x, wff y) : |- "x y DND x" {
+axiom ax3
+  let wff x
+  let wff y
 
-}
+  assert |- x y DND x
+end

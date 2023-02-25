@@ -1,5 +1,7 @@
-lexicon "lexicon.mm";
+include "lexicon.mm"
 
-axiom ax0(wff x) : |- "x p - q x -" {
+axiom ax0
+  let wff x
 
-}
+  assert |- x p - q x -
+end

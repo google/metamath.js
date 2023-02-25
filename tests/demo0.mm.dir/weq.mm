@@ -1,5 +1,8 @@
-lexicon "lexicon.mm";
+include "lexicon.mm"
 
-axiom weq(term t, term r) : wff "t = r" {
+axiom weq
+  let term t
+  let term r
 
-}
+  assert wff t = r
+end

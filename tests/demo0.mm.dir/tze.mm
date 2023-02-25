@@ -1,5 +1,7 @@
-lexicon "lexicon.mm";
+include "lexicon.mm"
 
-axiom tze() : term "0" {
+axiom tze
 
-}
+
+  assert term 0
+end

@@ -1,5 +1,7 @@
-lexicon "lexicon.mm";
+include "lexicon.mm"
 
-axiom wM(wff x) : wff "x M" {
+axiom wM
+  let wff x
 
-}
+  assert wff x M
+end

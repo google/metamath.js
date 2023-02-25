@@ -1,2 +1,2 @@
-const M I U |- wff;
-var M I U |- wff;
+const M I U |- wff
+let M I U |- wff

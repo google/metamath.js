@@ -1,7 +1,8 @@
-lexicon "lexicon.mm";
+include "lexicon.mm"
 
-axiom III(wff x, wff y) : |- "x U y" {
-  assumes {
-    IIIa: |- "x I I I y";
-  }
-}
+axiom III
+  let wff x
+  let wff y
+  IIIa: assume |- x I I I y
+  assert |- x U y
+end

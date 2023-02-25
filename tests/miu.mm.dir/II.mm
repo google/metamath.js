@@ -1,7 +1,7 @@
-lexicon "lexicon.mm";
+include "lexicon.mm"
 
-axiom II(wff x) : |- "M x x" {
-  assumes {
-    IIa: |- "M x";
-  }
-}
+axiom II
+  let wff x
+  IIa: assume |- M x
+  assert |- M x x
+end

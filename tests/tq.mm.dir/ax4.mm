@@ -1,7 +1,8 @@
-lexicon "lexicon.mm";
+include "lexicon.mm"
 
-axiom ax4(wff x, wff y) : |- "x DND x y" {
-  assumes {
-    ax4.1: |- "x DND y";
-  }
-}
+axiom ax4
+  let wff x
+  let wff y
+  ax4.1: assume |- x DND y
+  assert |- x DND x y
+end

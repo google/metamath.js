@@ -1,5 +1,8 @@
-lexicon "lexicon.mm";
+include "lexicon.mm"
 
-axiom wim(wff P, wff Q) : wff "( P -> Q )" {
+axiom wim
+  let wff P
+  let wff Q
 
-}
+  assert wff ( P -> Q )
+end

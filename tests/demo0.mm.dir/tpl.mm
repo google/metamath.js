@@ -1,5 +1,8 @@
-lexicon "lexicon.mm";
+include "lexicon.mm"
 
-axiom tpl(term t, term r) : term "( t + r )" {
+axiom tpl
+  let term t
+  let term r
 
-}
+  assert term ( t + r )
+end

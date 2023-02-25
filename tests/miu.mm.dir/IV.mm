@@ -1,7 +1,8 @@
-lexicon "lexicon.mm";
+include "lexicon.mm"
 
-axiom IV(wff x, wff y) : |- "x y" {
-  assumes {
-    IVa: |- "x U U y";
-  }
-}
+axiom IV
+  let wff x
+  let wff y
+  IVa: assume |- x U U y
+  assert |- x y
+end

@@ -1,2 +1,2 @@
-const 0 + = -> ( ) term wff |-;
-var 0 + = -> ( ) term wff |-;
+const 0 + = -> ( ) term wff |-
+let 0 + = -> ( ) term wff |-

@@ -1753,8 +1753,8 @@ describe("transpiler", () => {
 
     let frame = mm.pop();
     const code =
-`const ${[...frame.c].join(" ")};
-var ${[...frame.c].join(" ")};
+`const ${[...frame.c].join(" ")}
+let ${[...frame.c].join(" ")}
 `;
     const dir = `${src}.dir`;
 
@@ -1776,27 +1776,27 @@ var ${[...frame.c].join(" ")};
         continue;
       } else if (stmt == "$f") {
         const [, [type, name]] = mm.labels[label];
-        const code = `let ${label}: ${type} ${name};`;
+        const code = `${label}: let ${type} ${name}`;
         await fs.writeFile(`${dir}/${label}.mm`, code);
       } else  if (stmt == "$a") {
         const [, [d, f, e, [type, axiom]]] = mm.labels[label];
-        let args = "(";
-        args += f.map(([type, name]) => `${type} ${name}`).join(", ");
-        args += ")";
+        // let args = "(";
+        let args = f.map(([type, name]) => `  let ${type} ${name}`).join("\n");
+        // args += ")";
       
-        const assumptions = e.map(([seq, type, name]) => `    ${name}: ${type} "${seq.join(" ")}";`).join("\n");
-        let assumes = "";
-        if (assumptions.length > 0) {
-          assumes = `  assumes {
-${assumptions}
-  }`;
-        }
+        const assumptions = e.map(([seq, type, name]) => `  ${name}: assume ${type} ${seq.join(" ")}`).join("\n");
+        //let assumes = "";
+        //if (assumptions.length > 0) {
+        //  assumes = `${assumptions}`;
+        //}
         const code =
-`lexicon "lexicon.mm";
+`include "lexicon.mm"
 
-axiom ${label}${args} : ${type} "${axiom.join(' ')}" {
-${assumes}
-}
+axiom ${label}
+${args}
+${assumptions}
+  assert ${type} ${axiom.join(' ')}
+end
 `;
 
         await fs.writeFile(`${dir}/${label}.mm`, code);
@@ -1804,15 +1804,15 @@ ${assumes}
       } else if (stmt == "$p") {
         const [, [d, f, e, [type, theorem]], func] = mm.labels[label];
 
-        let args = "(";
-        args += f.map(([type, name]) => `${type} ${name}`).join(", ");
-        args += ")";
+        //let args = "(";
+        let args = f.map(([type, name]) => `  let ${type} ${name}`).join(", ");
+        //args += ")";
         
         const proof = func();
         
         const steps = proof.map(([step]) => step);
         const header = [...new Set(steps)]
-              .map((step) => `include "${step}.mm";\n`).join("");
+              .map((step) => `include "${step}.mm"\n`).join("");
           
         // const conds = e.length == 0 ? "" : " | " + e.map(([seq, type, label]) => `${label}: ${type} ${seq.join(" ")}`).join(", ");
 
@@ -1846,14 +1846,17 @@ ${assumes}
         }
         
 
-        const body = proof.map(([step, [type, sequence], args], i) => `  ${i}. ${step}(${args}): ${type} "${sequence.join(' ')}"`).join("\n");
+        const body = proof.map(([step, [type, sequence], args], i) => `    ${i}. ${step}(${args}): ${type} ${sequence.join(' ')}`).join("\n");
         
         const code =
-`lexicon "lexicon.mm";
+`include "lexicon.mm"
 ${header}
-theorem ${label}${args} : ${type} "${theorem.join(' ')}" {
+theorem ${label}
+${args}
+  assert ${type} ${theorem.join(' ')}
+  proof
 ${body}
-}
+end
 `;
         
         await fs.writeFile(`${dir}/${label}.mm`, code);

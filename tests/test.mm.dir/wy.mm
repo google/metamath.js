@@ -1,1 +1,1 @@
-let wy: ) y;
+wy: let ) y

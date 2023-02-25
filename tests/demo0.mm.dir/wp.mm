@@ -1,1 +1,1 @@
-let wp: wff P;
+wp: let wff P

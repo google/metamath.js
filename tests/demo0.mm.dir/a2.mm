@@ -1,5 +1,7 @@
-lexicon "lexicon.mm";
+include "lexicon.mm"
 
-axiom a2(term t) : |- "( t + 0 ) = t" {
+axiom a2
+  let term t
 
-}
+  assert |- ( t + 0 ) = t
+end

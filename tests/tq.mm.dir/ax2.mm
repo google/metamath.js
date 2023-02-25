@@ -1,7 +1,9 @@
-lexicon "lexicon.mm";
+include "lexicon.mm"
 
-axiom ax2(wff x, wff y, wff z) : |- "C z" {
-  assumes {
-    ax2.1: |- "x - t y - q z";
-  }
-}
+axiom ax2
+  let wff x
+  let wff y
+  let wff z
+  ax2.1: assume |- x - t y - q z
+  assert |- C z
+end

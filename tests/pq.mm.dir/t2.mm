@@ -1,8 +1,11 @@
-lexicon "lexicon.mm";
-include "w0.mm";
-include "ax0.mm";
+include "lexicon.mm"
+include "w0.mm"
+include "ax0.mm"
 
-theorem t2() : |- "- p - q - -" {
-  0. w0(): wff "-"
-  1. ax0(0): |- "- p - q - -"
-}
+theorem t2
+
+  assert |- - p - q - -
+  proof
+    0. w0(): wff -
+    1. ax0(0): |- - p - q - -
+end

@@ -1,1 +1,1 @@
-let wy: wff y;
+wy: let wff y

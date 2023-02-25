@@ -1,1 +1,1 @@
-let wq: wff Q;
+wq: let wff Q

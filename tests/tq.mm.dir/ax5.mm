@@ -1,7 +1,7 @@
-lexicon "lexicon.mm";
+include "lexicon.mm"
 
-axiom ax5(wff z) : |- "z DF - -" {
-  assumes {
-    ax5.1: |- "- - DND z";
-  }
-}
+axiom ax5
+  let wff z
+  ax5.1: assume |- - - DND z
+  assert |- z DF - -
+end
