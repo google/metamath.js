@@ -1435,33 +1435,58 @@ describe("parser", () => {
   it("parser", () => {
     let head;
 
-    function consume(type) {
+    function consume(...types) {
       if (!head) {
         throw new Error(`Unexpected EOF: expecting "${type}" instead.`);
       }
-      if (head[0] != type) {
-        throw new Error(`Unexpected token "${head[0]}": expecting "${type}" instead.`);
+      for (let type of types) {
+        if (head[0] == type) {
+          const value = head[1];
+          head = next();
+          return value;
+        }
       }
-      // assertThat(head[0]).equalsTo(type);
-      const value = head[1];
-      head = next();
-      return value;
+
+      throw new Error(`Unexpected token "${head[1]}" (${head[0]}) on line ${lexer.line} column ${lexer.col}: expecting "${types}" instead.`);
     }
-    
-    function declaration(type) {
+
+    function accepts(...types) {
+      if (!head) {
+        return false;
+      }
+      for (let type of types) {
+        if (head[0] == type) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function declaration(type, label = true, multiple = true) {
       const result = [];
       consume(type);
       consume("ws");
-      assertThat(head[0] == "label" ||
-                 head[0] == "sequence")
-        .equalsTo(true);
-      result.push(head[1]);
-      head = next();
+      if (label) {
+        result.push(consume("label", "sequence"));
+        if (accepts("ws")) {
+          consume("ws");
+        }
+        consume(":");
+        if (accepts("ws")) {
+          consume("ws");
+        }
+      }
+      let first = consume("label", "sequence");
+      result.push(first);
       consume("ws");
-      while (head  && (head[0] == "label" || head[0] == "sequence")) {
-        result.push(head[1]);
-        head = next();
-        consume("ws");
+      let second = consume("label", "sequence");
+      result.push(second);
+      consume("ws");
+      if (multiple) {
+        while (accepts("label", "sequence")) {
+          result.push(consume("label", "sequence"));
+          consume("ws");
+        };
       }
       return [type, result];
     }
@@ -1479,19 +1504,16 @@ describe("parser", () => {
 
     function header() {
       let lets = [];
-      while (head && head[0] == "let") {
-        lets.push(declaration("let"));
+      while (accepts("let")) {
+        lets.push(declaration("let", true, false));
       }
 
       let ifs = [];
-      while (head && head[0] == "assume") {
-        ifs.push(declaration("assume"));
+      while (accepts("assume")) {
+        ifs.push(declaration("assume", true, true));
       }
 
-      // let then = [];
-      // while (head && head[0] == "then") {
-      let then = declaration("assert");
-      // }
+      let then = declaration("assert", false, true);
       return [lets, ifs, then];
     }
 
@@ -1511,41 +1533,34 @@ describe("parser", () => {
     function descent() {
       head = next();
       let result = [];
-      consume("ws");
       do {
-        switch (head[0]) {
-        case "const": {
-          result.push(declaration("const"));
-          break;
-        }
-        case "let": {
+        if (accepts("ws")) {
+          consume("ws");
+        } else if (accepts("const")) {
+          result.push(declaration("const", false));
+        } else if (accepts("let")) {
           result.push(declaration("let"));
-          break;
-        }
-        case "axiom": {
+        } else if (accepts("axiom")) {
           result.push(axiom());
-          break;
-        }
-        case "theorem": {
+        } else if (accepts("theorem")) {
           result.push(theorem());
-          break;
-        }
-        default: {
+        } else {
           throw new Error(`Unknown token: ${head[0]}.`);
         }
-        }
-      } while (head != undefined);
+      } while (head);
       return result;
     }
     parse(`
       const => +
 
-      let wff x y
+      let wx: wff x
+      let wy: wff y
 
       axiom mp
-        let wff p q
-        assume |- p => q
-        assume |- p
+        let wp: wff p
+        let wq: wff q
+        assume maj: |- p => q
+        assume min: |- p
         assert |- q
       end
 
@@ -1557,13 +1572,15 @@ describe("parser", () => {
     
     assertThat(descent()).equalsTo([
       ["const", ["=>", "+"]],
-      ["let", ["wff", "x", "y"]],
+      ["let", ["wx", "wff", "x"]],
+      ["let", ["wy", "wff", "y"]],
       ["axiom", "mp", [
         [
-          ["let", ["wff", "p", "q"]],
+          ["let", ["wp", "wff", "p"]],
+          ["let", ["wq", "wff", "q"]],
         ], [
-          ["assume", ["|-", "p", "=>", "q"]],
-          ["assume", ["|-", "p"]],
+          ["assume", ["maj", "|-", "p", "=>", "q"]],
+          ["assume", ["min", "|-", "p"]],
         ], 
         ["assert", ["|-", "q"]],
       ]
@@ -1776,7 +1793,7 @@ let ${[...frame.c].join(" ")}
         continue;
       } else if (stmt == "$f") {
         const [, [type, name]] = mm.labels[label];
-        const code = `${label}: let ${type} ${name}`;
+        const code = `let ${label}: ${type} ${name}`;
         await fs.writeFile(`${dir}/${label}.mm`, code);
       } else  if (stmt == "$a") {
         const [, [d, f, e, [type, axiom]]] = mm.labels[label];
@@ -1784,7 +1801,7 @@ let ${[...frame.c].join(" ")}
         let args = f.map(([type, name]) => `  let ${type} ${name}`).join("\n");
         // args += ")";
       
-        const assumptions = e.map(([seq, type, name]) => `  ${name}: assume ${type} ${seq.join(" ")}`).join("\n");
+        const assumptions = e.map(([seq, type, name]) => `  assume ${name}: ${type} ${seq.join(" ")}`).join("\n");
         //let assumes = "";
         //if (assumptions.length > 0) {
         //  assumes = `${assumptions}`;
@@ -1824,7 +1841,7 @@ end
         
         let hypothesis = [];
         for (let [seq, type, label] of e) {
-          hypothesis.push(`  ${label}: ${type} "${seq.join(" ")}"`);
+          hypothesis.push(`  assume ${label}: ${type} "${seq.join(" ")}"`);
         }
         
         if (e.length >0 ) {

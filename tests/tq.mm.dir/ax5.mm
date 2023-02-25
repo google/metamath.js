@@ -2,6 +2,6 @@ include "lexicon.mm"
 
 axiom ax5
   let wff z
-  ax5.1: assume |- - - DND z
+  assume ax5.1: |- - - DND z
   assert |- z DF - -
 end

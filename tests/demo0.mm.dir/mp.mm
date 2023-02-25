@@ -3,7 +3,7 @@ include "lexicon.mm"
 axiom mp
   let wff P
   let wff Q
-  min: assume |- P
-  maj: assume |- ( P -> Q )
+  assume min: |- P
+  assume maj: |- ( P -> Q )
   assert |- Q
 end

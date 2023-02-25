@@ -1,1 +1,1 @@
-wx: let wff x
+let wx: wff x

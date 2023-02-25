@@ -1,1 +1,1 @@
-tr: let term r
+let tr: term r
