@@ -1413,15 +1413,19 @@ describe("parser", () => {
     ["proof"]: "proof",
     ["end"]: "end",
     ["let"]: "let",
+    ["step"]: "step",
     ["const"]: "const",
     ["assume"]: "assume",
     ["assert"]: "assert",
+    ["("]: "(",
+    [")"]: ")",
     [":"]: ":",
+    [","]: ",",
     [";"]: ";",
     ["label"]: /[A-Za-z0-9-_.]+/,
     ["sequence"]: /[!-#%-~\?]+/,
     // symbol: /[!-#%-~]+/,
-    // letter_or_digit: /[A-Za-z0-9]/,
+    // ["number"]: /[0-9]+/,
   };
 
   const lexer = moo.compile(lexicon);
@@ -1517,20 +1521,81 @@ describe("parser", () => {
       return [lets, ifs, then];
     }
 
+    function step() {
+      const step = [];
+      consume("step");
+      consume("ws");
+      step.push(consume("label"));
+      if (accepts("ws")) {
+        consume("ws");
+      }
+      consume(")");
+      if (accepts("ws")) {
+        consume("ws");
+      }
+      step.push(consume("label"));
+      if (accepts("ws")) {
+        consume("ws");
+      }
+      consume("(");
+      if (accepts("ws")) {
+        consume("ws");
+      }
+      let args = [];
+      step.push(args);
+      if (accepts("label")) {
+        args.push(consume("label"));
+        if (accepts("ws")) {
+          consume("ws");
+        }
+      }
+      while (accepts(",")) {
+        consume(",");
+        if (accepts("ws")) {
+          consume("ws");
+        }
+        args.push(consume("label"));
+      }
+      if (accepts("ws")) {
+        consume("ws");
+      }
+      consume(")");
+      if (accepts("ws")) {
+        consume("ws");
+      }
+      consume(":");
+      if (accepts("ws")) {
+        consume("ws");
+      }
+      let result = [];
+      step.push(result);
+      while (accepts("label", "sequence")) {
+        result.push(consume("label", "sequence"));
+        if (accepts("ws")) {
+          consume("ws");
+        }
+      }
+      return step;
+    }
+    
     function theorem() {
       consume("theorem");
       consume("ws");
       let name = consume("label");
       consume("ws");
-      let h = header();
-      consume("proof");
-      consume("ws");
+      let head = header();
+
+      let steps = [];
+      while (accepts("step")) {
+        steps.push(step());
+      }
+      
       consume("end");
       consume("ws");
-      return ["theorem", name, h];
+      return ["theorem", name, head, steps];
     }
 
-    function descent() {
+    function descend() {
       head = next();
       let result = [];
       do {
@@ -1566,11 +1631,12 @@ describe("parser", () => {
 
       theorem foo
         assert |- ~ p
-        proof
+        step 1) foo(): p
+        step 2) bar(1): ~ p
       end
     `);
     
-    assertThat(descent()).equalsTo([
+    assertThat(descend()).equalsTo([
       ["const", ["=>", "+"]],
       ["let", ["wx", "wff", "x"]],
       ["let", ["wy", "wff", "y"]],
@@ -1589,7 +1655,11 @@ describe("parser", () => {
         [],
         [],
         ["assert", ["|-", "~", "p"]]
-      ]]
+      ],
+       [
+         ["1", "foo", [], ["p"]],
+         ["2", "bar", ["1"], ["~", "p"]],
+       ]]
     ]);
   });
   
