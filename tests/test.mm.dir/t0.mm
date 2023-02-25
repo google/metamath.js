@@ -5,7 +5,7 @@ include "w1.mm"
 theorem t0
 
   assert " - -
-  proof
-    0. w0(): " -
-    1. w1(0): " - -
+
+  step 0) w0(): " -
+  step 1) w1(0): " - -
 end

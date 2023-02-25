@@ -1863,7 +1863,7 @@ end
         }
         
 
-        const body = proof.map(([step, [type, sequence], args], i) => `    ${i}. ${step}(${args}): ${type} ${sequence.join(' ')}`).join("\n");
+        const body = proof.map(([step, [type, sequence], args], i) => `  step ${i}) ${step}(${args}): ${type} ${sequence.join(' ')}`).join("\n");
         
         const code =
 `include "lexicon.mm"
@@ -1871,7 +1871,7 @@ ${header}
 theorem ${label}
 ${args}
   assert ${type} ${theorem.join(' ')}
-  proof
+
 ${body}
 end
 `;
