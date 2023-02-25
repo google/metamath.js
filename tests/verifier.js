@@ -1414,8 +1414,8 @@ describe("parser", () => {
     ["end"]: "end",
     ["let"]: "let",
     ["const"]: "const",
-    ["if"]: "if",
-    ["then"]: "then",
+    ["assume"]: "assume",
+    ["assert"]: "assert",
     [":"]: ":",
     [";"]: ";",
     ["label"]: /[A-Za-z0-9-_.]+/,
@@ -1484,13 +1484,13 @@ describe("parser", () => {
       }
 
       let ifs = [];
-      while (head && head[0] == "if") {
-        ifs.push(declaration("if"));
+      while (head && head[0] == "assume") {
+        ifs.push(declaration("assume"));
       }
 
       // let then = [];
       // while (head && head[0] == "then") {
-      let then = declaration("then");
+      let then = declaration("assert");
       // }
       return [lets, ifs, then];
     }
@@ -1544,13 +1544,13 @@ describe("parser", () => {
 
       axiom mp
         let wff p q
-        if |- p => q
-        if |- p
-        then |- q
+        assume |- p => q
+        assume |- p
+        assert |- q
       end
 
       theorem foo
-        then |- ~ p
+        assert |- ~ p
         proof
       end
     `);
@@ -1562,16 +1562,16 @@ describe("parser", () => {
         [
           ["let", ["wff", "p", "q"]],
         ], [
-          ["if", ["|-", "p", "=>", "q"]],
-          ["if", ["|-", "p"]],
+          ["assume", ["|-", "p", "=>", "q"]],
+          ["assume", ["|-", "p"]],
         ], 
-        ["then", ["|-", "q"]],
+        ["assert", ["|-", "q"]],
       ]
       ],
       ["theorem", "foo", [
         [],
         [],
-        ["then", ["|-", "~", "p"]]
+        ["assert", ["|-", "~", "p"]]
       ]]
     ]);
   });
@@ -1639,9 +1639,9 @@ describe("parser", () => {
       axiom foobar
         let wff p
         let wff q
-        if p => q
-        if |- p
-        then |- q
+        assume p => q
+        assume |- p
+        assert |- q
       end
     `);
 
@@ -1663,7 +1663,7 @@ describe("parser", () => {
     assertThat(next()).equalsTo(["label", "q"]);
     // assertThat(next()).equalsTo([":", ":"]);
     ws();
-    assertThat(next()).equalsTo(["if", "if"]);
+    assertThat(next()).equalsTo(["assume", "assume"]);
     ws();
     assertThat(next()).equalsTo(["label", "p"]);
     ws();
@@ -1671,13 +1671,13 @@ describe("parser", () => {
     ws();
     assertThat(next()).equalsTo(["label", "q"]);
     ws();
-    assertThat(next()).equalsTo(["if", "if"]);
+    assertThat(next()).equalsTo(["assume", "assume"]);
     ws();
     assertThat(next()).equalsTo(["sequence", "|-"]);
     ws();
     assertThat(next()).equalsTo(["label", "p"]);
     ws();
-    assertThat(next()).equalsTo(["then", "then"]);
+    assertThat(next()).equalsTo(["assert", "assert"]);
     ws();
     assertThat(next()).equalsTo(["sequence", "|-"]);
     ws();
