@@ -1428,194 +1428,224 @@ describe("parser", () => {
     // ["number"]: /[0-9]+/,
   };
 
-  const lexer = moo.compile(lexicon);
 
-  const parse = (code) => { lexer.reset(code); }
-  const next = () => { let next = lexer.next(); if (!next) return; let {type, text} = next; return [type, text]; };
-  const done = () => { assertThat(lexer.next()).equalsTo(undefined);};
-  const ws = () => { assertThat(next()[0]).equalsTo("ws"); };
-  const eat = (type, value) => { assertThat(next()).equalsTo([type, value ? value : type]); };
-
-  it("parser", () => {
-    let head;
-
-    function consume(...types) {
-      if (!head) {
+  class Lexer {
+    constructor() {
+      this.lexer = moo.compile(lexicon);
+    }
+    parse(code) {
+      this.lexer.reset(code);
+    }
+    next() {
+      let next = this.lexer.next();
+      if (!next) {
+        this.head = undefined;
+        return;
+      }
+      let {type, text} = next;
+      this.head = [type, text];
+      return this.head;
+    }
+    done() {
+      assertThat(this.lexer.next()).equalsTo(undefined);
+    }
+    ws() {
+      assertThat(this.next()[0]).equalsTo("ws");
+    }
+    eat(type, value) {
+      assertThat(this.next()).equalsTo([type, value ? value : type]);
+    };
+  }
+  
+  class Parser {
+    constructor() {
+      this.lexer = new Lexer();
+    }
+    parse(code) {
+      this.lexer.parse(code);
+      return this.top();
+    }
+    consume(...types) {
+      if (!this.lexer.head) {
         throw new Error(`Unexpected EOF: expecting "${type}" instead.`);
       }
       for (let type of types) {
-        if (head[0] == type) {
-          const value = head[1];
-          head = next();
+        if (this.lexer.head[0] == type) {
+          const value = this.lexer.head[1];
+          this.lexer.next();
           return value;
         }
       }
 
       throw new Error(`Unexpected token "${head[1]}" (${head[0]}) on line ${lexer.line} column ${lexer.col}: expecting "${types}" instead.`);
     }
-
-    function accepts(...types) {
-      if (!head) {
+    
+    accepts(...types) {
+      if (!this.lexer.head) {
         return false;
       }
       for (let type of types) {
-        if (head[0] == type) {
+        if (this.lexer.head[0] == type) {
           return true;
         }
       }
       return false;
     }
-
-    function declaration(type, label = true, multiple = true) {
+    
+    declaration(type, label = true, multiple = true) {
       const result = [];
-      consume(type);
-      consume("ws");
+      this.consume(type);
+      this.consume("ws");
       if (label) {
-        result.push(consume("label", "sequence"));
-        if (accepts("ws")) {
-          consume("ws");
+        result.push(this.consume("label", "sequence"));
+        if (this.accepts("ws")) {
+          this.consume("ws");
         }
-        consume(":");
-        if (accepts("ws")) {
-          consume("ws");
+        this.consume(":");
+        if (this.accepts("ws")) {
+          this.consume("ws");
         }
       }
-      let first = consume("label", "sequence");
+      let first = this.consume("label", "sequence");
       result.push(first);
-      consume("ws");
-      let second = consume("label", "sequence");
+      this.consume("ws");
+      let second = this.consume("label", "sequence");
       result.push(second);
-      consume("ws");
+      this.consume("ws");
       if (multiple) {
-        while (accepts("label", "sequence")) {
-          result.push(consume("label", "sequence"));
-          consume("ws");
+        while (this.accepts("label", "sequence")) {
+          result.push(this.consume("label", "sequence"));
+          this.consume("ws");
         };
       }
       return [type, result];
     }
 
-    function axiom() {
-      consume("axiom");
-      consume("ws");
-      let name = consume("label");
-      consume("ws");
-      let h = header();
-      consume("end");
-      consume("ws");
+    axiom() {
+      this.consume("axiom");
+      this.consume("ws");
+      let name = this.consume("label");
+      this.consume("ws");
+      let h = this.header();
+      this.consume("end");
+      this.consume("ws");
       return ["axiom", name, h];
     }
 
-    function header() {
+    header() {
       let lets = [];
-      while (accepts("let")) {
-        lets.push(declaration("let", true, false));
+      while (this.accepts("let")) {
+        lets.push(this.declaration("let", true, false));
       }
 
       let ifs = [];
-      while (accepts("assume")) {
-        ifs.push(declaration("assume", true, true));
+      while (this.accepts("assume")) {
+        ifs.push(this.declaration("assume", true, true));
       }
 
-      let then = declaration("assert", false, true);
+      let then = this.declaration("assert", false, true);
       return [lets, ifs, then];
     }
 
-    function step() {
-      const step = [];
-      consume("step");
-      consume("ws");
-      step.push(consume("label"));
-      if (accepts("ws")) {
-        consume("ws");
+    step() {
+      const result = [];
+      this.consume("step");
+      this.consume("ws");
+      result.push(this.consume("label"));
+      if (this.accepts("ws")) {
+        this.consume("ws");
       }
-      consume(")");
-      if (accepts("ws")) {
-        consume("ws");
+      this.consume(")");
+      if (this.accepts("ws")) {
+        this.consume("ws");
       }
-      step.push(consume("label"));
-      if (accepts("ws")) {
-        consume("ws");
+      result.push(this.consume("label"));
+      if (this.accepts("ws")) {
+        this.consume("ws");
       }
-      consume("(");
-      if (accepts("ws")) {
-        consume("ws");
+      this.consume("(");
+      if (this.accepts("ws")) {
+        this.consume("ws");
       }
       let args = [];
-      step.push(args);
-      if (accepts("label")) {
-        args.push(consume("label"));
-        if (accepts("ws")) {
-          consume("ws");
+      result.push(args);
+      if (this.accepts("label")) {
+        args.push(this.consume("label"));
+        if (this.accepts("ws")) {
+          this.consume("ws");
         }
       }
-      while (accepts(",")) {
-        consume(",");
-        if (accepts("ws")) {
-          consume("ws");
+      while (this.accepts(",")) {
+        this.consume(",");
+        if (this.accepts("ws")) {
+          this.consume("ws");
         }
-        args.push(consume("label"));
+        args.push(this.consume("label"));
       }
-      if (accepts("ws")) {
-        consume("ws");
+      if (this.accepts("ws")) {
+        this.consume("ws");
       }
-      consume(")");
-      if (accepts("ws")) {
-        consume("ws");
+      this.consume(")");
+      if (this.accepts("ws")) {
+        this.consume("ws");
       }
-      consume(":");
-      if (accepts("ws")) {
-        consume("ws");
+      this.consume(":");
+      if (this.accepts("ws")) {
+        this.consume("ws");
       }
-      let result = [];
-      step.push(result);
-      while (accepts("label", "sequence")) {
-        result.push(consume("label", "sequence"));
-        if (accepts("ws")) {
-          consume("ws");
+      let sequence = [];
+      result.push(sequence);
+      while (this.accepts("label", "sequence")) {
+        sequence.push(this.consume("label", "sequence"));
+        if (this.accepts("ws")) {
+          this.consume("ws");
         }
       }
-      return step;
+      return result;
     }
     
-    function theorem() {
-      consume("theorem");
-      consume("ws");
-      let name = consume("label");
-      consume("ws");
-      let head = header();
+    theorem() {
+      this.consume("theorem");
+      this.consume("ws");
+      let name = this.consume("label");
+      this.consume("ws");
+      let head = this.header();
 
       let steps = [];
-      while (accepts("step")) {
-        steps.push(step());
+      while (this.accepts("step")) {
+        steps.push(this.step());
       }
       
-      consume("end");
-      consume("ws");
+      this.consume("end");
+      this.consume("ws");
       return ["theorem", name, head, steps];
     }
 
-    function descend() {
-      head = next();
+    top() {
+      this.lexer.next();
       let result = [];
       do {
-        if (accepts("ws")) {
-          consume("ws");
-        } else if (accepts("const")) {
-          result.push(declaration("const", false));
-        } else if (accepts("let")) {
-          result.push(declaration("let"));
-        } else if (accepts("axiom")) {
-          result.push(axiom());
-        } else if (accepts("theorem")) {
-          result.push(theorem());
+        if (this.accepts("ws")) {
+          this.consume("ws");
+        } else if (this.accepts("const")) {
+          result.push(this.declaration("const", false));
+        } else if (this.accepts("let")) {
+          result.push(this.declaration("let"));
+        } else if (this.accepts("axiom")) {
+          result.push(this.axiom());
+        } else if (this.accepts("theorem")) {
+          result.push(this.theorem());
         } else {
           throw new Error(`Unknown token: ${head[0]}.`);
         }
-      } while (head);
+      } while (this.lexer.head);
       return result;
     }
-    parse(`
+
+  }
+  
+  it("parser", () => {
+    let result = new Parser().parse(`
       const => +
 
       let wx: wff x
@@ -1636,7 +1666,7 @@ describe("parser", () => {
       end
     `);
     
-    assertThat(descend()).equalsTo([
+    assertThat(result).equalsTo([
       ["const", ["=>", "+"]],
       ["let", ["wx", "wff", "x"]],
       ["let", ["wy", "wff", "y"]],
@@ -1664,65 +1694,70 @@ describe("parser", () => {
   });
   
   it("lexer: const", async () => {
-    parse(`
+    let lexer = new Lexer();
+    lexer.parse(`
       const => + -
     `);
-    ws();
-    eat("const");
-    ws();
-    eat("sequence", "=>");
-    ws();
-    eat("sequence", "+");
-    ws();
-    eat("label", "-");
-    ws();
-    done();
+    lexer.ws("ws");
+    lexer.eat("const");
+    lexer.ws();
+    lexer.eat("sequence", "=>");
+    lexer.ws();
+    lexer.eat("sequence", "+");
+    lexer.ws();
+    lexer.eat("label", "-");
+    lexer.ws();
+    lexer.done();
   });
   
   it("lexer: let", async () => {
-    parse(`
+    let lexer = new Lexer();
+    lexer.parse(`
       let wff x y
     `);
-    ws();
-    eat("let");
-    ws();
-    eat("label", "wff");
-    ws();
-    eat("label", "x");
-    ws();
-    eat("label", "y");
-    ws();
-    done();
+    lexer.ws();
+    lexer.eat("let");
+    lexer.ws();
+    lexer.eat("label", "wff");
+    lexer.ws();
+    lexer.eat("label", "x");
+    lexer.ws();
+    lexer.eat("label", "y");
+    lexer.ws();
+    lexer.done();
   });
   
   it("lexer: theorem", async () => {
-    parse(`
+    let lexer = new Lexer();
+    lexer.parse(`
       theorem foobar
         let wff p
       proof
       end
     `);
 
-    ws();
-    eat("theorem");
-    ws();
-    eat("label", "foobar");
-    ws();
-    eat("let");
-    ws();
-    eat("label", "wff");
-    ws();
-    eat("label", "p");
-    ws();
-    eat("proof");
-    ws();
-    eat("end");
-    ws();
-    done();
+    lexer.ws();
+    lexer.eat("theorem");
+    lexer.ws();
+    lexer.eat("label", "foobar");
+    lexer.ws();
+    lexer.eat("let");
+    lexer.ws();
+    lexer.eat("label", "wff");
+    lexer.ws();
+    lexer.eat("label", "p");
+    lexer.ws();
+    lexer.eat("proof");
+    lexer.ws();
+    lexer.eat("end");
+    lexer.ws();
+    lexer.done();
   });
   
   it("lexer: axiom", async () => {
-    parse(`
+    let lexer = new Lexer();
+
+    lexer.parse(`
       axiom foobar
         let wff p
         let wff q
@@ -1732,52 +1767,52 @@ describe("parser", () => {
       end
     `);
 
-    ws();
-    assertThat(next()).equalsTo(["axiom", "axiom"]);
-    ws();
-    assertThat(next()).equalsTo(["label", "foobar"]);
-    ws();
-    assertThat(next()).equalsTo(["let", "let"]);
-    ws();
-    assertThat(next()).equalsTo(["label", "wff"]);
-    ws();
-    assertThat(next()).equalsTo(["label", "p"]);
-    ws();
-    assertThat(next()).equalsTo(["let", "let"]);
-    ws();
-    assertThat(next()).equalsTo(["label", "wff"]);
-    ws();
-    assertThat(next()).equalsTo(["label", "q"]);
+    lexer.ws();
+    assertThat(lexer.next()).equalsTo(["axiom", "axiom"]);
+    lexer.ws();
+    assertThat(lexer.next()).equalsTo(["label", "foobar"]);
+    lexer.ws();
+    assertThat(lexer.next()).equalsTo(["let", "let"]);
+    lexer.ws();
+    assertThat(lexer.next()).equalsTo(["label", "wff"]);
+    lexer.ws();
+    assertThat(lexer.next()).equalsTo(["label", "p"]);
+    lexer.ws();
+    assertThat(lexer.next()).equalsTo(["let", "let"]);
+    lexer.ws();
+    assertThat(lexer.next()).equalsTo(["label", "wff"]);
+    lexer.ws();
+    assertThat(lexer.next()).equalsTo(["label", "q"]);
     // assertThat(next()).equalsTo([":", ":"]);
-    ws();
-    assertThat(next()).equalsTo(["assume", "assume"]);
-    ws();
-    assertThat(next()).equalsTo(["label", "p"]);
-    ws();
-    assertThat(next()).equalsTo(["sequence", "=>"]);
-    ws();
-    assertThat(next()).equalsTo(["label", "q"]);
-    ws();
-    assertThat(next()).equalsTo(["assume", "assume"]);
-    ws();
-    assertThat(next()).equalsTo(["sequence", "|-"]);
-    ws();
-    assertThat(next()).equalsTo(["label", "p"]);
-    ws();
-    assertThat(next()).equalsTo(["assert", "assert"]);
-    ws();
-    assertThat(next()).equalsTo(["sequence", "|-"]);
-    ws();
-    assertThat(next()).equalsTo(["label", "q"]);
-    ws();
+    lexer.ws();
+    assertThat(lexer.next()).equalsTo(["assume", "assume"]);
+    lexer.ws();
+    assertThat(lexer.next()).equalsTo(["label", "p"]);
+    lexer.ws();
+    assertThat(lexer.next()).equalsTo(["sequence", "=>"]);
+    lexer.ws();
+    assertThat(lexer.next()).equalsTo(["label", "q"]);
+    lexer.ws();
+    assertThat(lexer.next()).equalsTo(["assume", "assume"]);
+    lexer.ws();
+    assertThat(lexer.next()).equalsTo(["sequence", "|-"]);
+    lexer.ws();
+    assertThat(lexer.next()).equalsTo(["label", "p"]);
+    lexer.ws();
+    assertThat(lexer.next()).equalsTo(["assert", "assert"]);
+    lexer.ws();
+    assertThat(lexer.next()).equalsTo(["sequence", "|-"]);
+    lexer.ws();
+    assertThat(lexer.next()).equalsTo(["label", "q"]);
+    lexer.ws();
     //assertThat(next()).equalsTo(["proof", "proof"]);
     //assertThat(next()[0]).equalsTo("ws");
     // assertThat(next()).equalsTo([";", ";"]);
     // assertThat(next()[0]).equalsTo("ws");
-    assertThat(next()).equalsTo(["end", "end"]);
-    ws();
+    assertThat(lexer.next()).equalsTo(["end", "end"]);
+    lexer.ws();
     // assertThat(done()).equalsTo(true);
-    done();
+    lexer.done();
   });
 });
 
