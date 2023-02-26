@@ -1403,32 +1403,31 @@ describe("Verifier", () => {
 describe("parser", () => {
   const moo = require("moo");
 
-  const lexicon = {
-    ["comment-expr"]: {match: /\/\*\*.*\*\//, lineBreaks: true},
-    ["comment"]: {match: /\/\/.*\n/, lineBreaks: true},
-    ["ws"]: {match: /[\s]+/, lineBreaks: true},
-    ["theorem"]: "theorem",
-    ["axiom"]: "axiom",
-    ["proof"]: "proof",
-    ["end"]: "end",
-    ["let"]: "let",
-    ["step"]: "step",
-    ["const"]: "const",
-    ["_include_"]: "include",
-    ["assume"]: "assume",
-    ["assert"]: "assert",
-    ["("]: "(",
-    [")"]: ")",
-    ['"']: '"',
-    [":"]: ":",
-    [","]: ",",
-    [";"]: ";",
-    ["label"]: /[A-Za-z0-9-_.]+/,
-    ["sequence"]: /[!-#%-~\?]+/,
-  };
-
   class Lexer {
     constructor() {
+      const lexicon = {
+        ["comment-expr"]: {match: /\/\*\*.*\*\//, lineBreaks: true},
+        ["comment"]: {match: /\/\/.*\n/, lineBreaks: true},
+        ["ws"]: {match: /[\s]+/, lineBreaks: true},
+        ["theorem"]: "theorem",
+        ["axiom"]: "axiom",
+        ["proof"]: "proof",
+        ["end"]: "end",
+        ["let"]: "let",
+        ["step"]: "step",
+        ["const"]: "const",
+        ["_include_"]: "include",
+        ["assume"]: "assume",
+        ["assert"]: "assert",
+        ["("]: "(",
+        [")"]: ")",
+        ['"']: '"',
+        [":"]: ":",
+        [","]: ",",
+        [";"]: ";",
+        ["label"]: /[A-Za-z0-9-_.]+/,
+        ["sequence"]: /[!-#%-~\?]+/,
+      };
       this.lexer = moo.compile(lexicon);
     }
     parse(code) {
@@ -1463,7 +1462,7 @@ describe("parser", () => {
       this.lexer.parse(code);
       return this.top();
     }
-    consume(...types) {
+    eat(...types) {
       if (!this.lexer.head) {
         this.error();
       }
@@ -1499,10 +1498,10 @@ describe("parser", () => {
       const sp = ["ws", "comment", "comment-expr"];
       // const sp = ["ws"];
       if (this.accepts(...sp)) {
-        this.consume(...sp);
+        this.eat(...sp);
         // allows multiple whitespace types intermingled
         while (this.accepts(...sp)) {
-          this.consume(...sp);
+          this.eat(...sp);
         }
       } else if (!optional) {
         this.error();
@@ -1511,7 +1510,7 @@ describe("parser", () => {
     
     declaration(type, label = true, multiple = true) {
       const result = [];
-      this.consume(type);
+      this.eat(type);
       this.ws();
       const symbol = [
         // a subset of possible symbols
@@ -1528,20 +1527,20 @@ describe("parser", () => {
         "sequence",
       ];
       if (label) {
-        result.push(this.consume(...symbol));
+        result.push(this.eat(...symbol));
         this.ws(true);
-        this.consume(":");
+        this.eat(":");
         this.ws(true);
       }
-      let first = this.consume(...symbol);
+      let first = this.eat(...symbol);
       result.push(first);
       this.ws(false);
-      let second = this.consume(...symbol);
+      let second = this.eat(...symbol);
       result.push(second);
       this.ws(false);
       if (multiple) {
         while (this.accepts(...symbol)) {
-          result.push(this.consume(...symbol));
+          result.push(this.eat(...symbol));
           this.ws(false);
         };
       }
@@ -1549,12 +1548,12 @@ describe("parser", () => {
     }
 
     axiom() {
-      this.consume("axiom");
+      this.eat("axiom");
       this.ws();
-      let name = this.consume("label");
+      let name = this.eat("label");
       this.ws();
       let h = this.header();
-      this.consume("end");
+      this.eat("end");
       this.ws();
       return ["axiom", name, h];
     }
@@ -1579,45 +1578,45 @@ describe("parser", () => {
 
     step() {
       const result = [];
-      this.consume("step");
-      this.consume("ws");
-      result.push(this.consume("label"));
+      this.eat("step");
+      this.eat("ws");
+      result.push(this.eat("label"));
       this.ws(true);
-      this.consume(")");
+      this.eat(")");
       this.ws(true);
-      result.push(this.consume("label"));
+      result.push(this.eat("label"));
       this.ws(true);
-      this.consume("(");
+      this.eat("(");
       this.ws(true);
       let args = [];
       result.push(args);
       if (this.accepts("label")) {
-        args.push(this.consume("label"));
+        args.push(this.eat("label"));
         this.ws(true);
       }
       while (this.accepts(",")) {
-        this.consume(",");
+        this.eat(",");
         this.ws(true);
-        args.push(this.consume("label"));
+        args.push(this.eat("label"));
       }
       this.ws(true);
-      this.consume(")");
+      this.eat(")");
       this.ws(true);
-      this.consume(":");
+      this.eat(":");
       this.ws(true);
       let sequence = [];
       result.push(sequence);
       while (this.accepts("label", "sequence")) {
-        sequence.push(this.consume("label", "sequence"));
+        sequence.push(this.eat("label", "sequence"));
         this.ws(true);
       }
       return result;
     }
     
     theorem() {
-      this.consume("theorem");
+      this.eat("theorem");
       this.ws();
-      let name = this.consume("label");
+      let name = this.eat("label");
       this.ws();
       let head = this.header();
 
@@ -1626,17 +1625,17 @@ describe("parser", () => {
         steps.push(this.step());
       }
       
-      this.consume("end");
+      this.eat("end");
       this.ws();
       return ["theorem", name, head, steps];
     }
 
     include() {
-      this.consume("_include_");
+      this.eat("_include_");
       this.ws();
-      this.consume('"');
-      const name = this.consume("label");
-      this.consume('"');
+      this.eat('"');
+      const name = this.eat("label");
+      this.eat('"');
       this.ws();
       return ["include", name];
     }
