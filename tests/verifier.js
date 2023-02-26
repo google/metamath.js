@@ -1847,41 +1847,14 @@ describe("parser", () => {
   });
 });
 
-describe("transpiler", () => {
-  const {parse} = require("../src/descent.js");
-  const moo = require("moo");
-  const fs = require("fs/promises");
-
-  async function transpile(src) {
-    const program = await fs.readFile(src);
-    const files = await split(program);
-
-    const dir = `${src}.dir`;
-
-    // Creates a directory if one doesn't exist
-    try {
-      const file = await fs.stat(dir);
-      if (!file.isDirectory()) {
-        throw new Error("hi");
-      }
-    } catch (e) {
-      fs.mkdir(dir);
-    }
-
-    // console.log(files);
-
-    for (let [name, content] of Object.entries(files)) {
-      // console.log(name);
-      await fs.writeFile(`${dir}/${name}`, content);
-    }    
-  }
-  
-  async function split(program) {
+class Transpiler {
+  split(program) {
     const result = {};
 
     const mm = new MM();
     mm.push();
     
+    const {parse} = require("../src/descent.js");
     parse(program.toString(), {
       feed(statement) {
         if (statement == "push") {
@@ -2001,7 +1974,36 @@ end
     }
     return result;
   }
-  
+}
+
+describe("transpiler", () => {
+  const moo = require("moo");
+  const fs = require("fs/promises");
+
+  async function transpile(src) {
+    const program = await fs.readFile(src);
+    const files = await new Transpiler().split(program);
+
+    const dir = `${src}.dir`;
+
+    // Creates a directory if one doesn't exist
+    try {
+      const file = await fs.stat(dir);
+      if (!file.isDirectory()) {
+        throw new Error("hi");
+      }
+    } catch (e) {
+      fs.mkdir(dir);
+    }
+
+    // console.log(files);
+
+    for (let [name, content] of Object.entries(files)) {
+      // console.log(name);
+      await fs.writeFile(`${dir}/${name}`, content);
+    }    
+  }
+    
   it("tq.mm", async () => {
     await transpile("tests/tq.mm");
   });
