@@ -1406,7 +1406,8 @@ describe("parser", () => {
   const moo = require("moo");
 
   const lexicon = {
-    ["comment"]: {match: /\$\([\s]+(?:(?!\$\))[\s\S])*\$\)/, lineBreaks: true},
+    ["comment-expr"]: {match: /\/\*\*.*\*\//, lineBreaks: true},
+    ["comment"]: {match: /\/\/.*\n/, lineBreaks: true},
     ["ws"]: {match: /[\s]+/, lineBreaks: true},
     ["theorem"]: "theorem",
     ["axiom"]: "axiom",
@@ -1415,10 +1416,12 @@ describe("parser", () => {
     ["let"]: "let",
     ["step"]: "step",
     ["const"]: "const",
+    ["_include_"]: "include",
     ["assume"]: "assume",
     ["assert"]: "assert",
     ["("]: "(",
     [")"]: ")",
+    ['"']: '"',
     [":"]: ":",
     [","]: ",",
     [";"]: ";",
@@ -1427,7 +1430,6 @@ describe("parser", () => {
     // symbol: /[!-#%-~]+/,
     // ["number"]: /[0-9]+/,
   };
-
 
   class Lexer {
     constructor() {
@@ -1467,7 +1469,7 @@ describe("parser", () => {
     }
     consume(...types) {
       if (!this.lexer.head) {
-        throw new Error(`Unexpected EOF: expecting "${type}" instead.`);
+        this.error();
       }
       for (let type of types) {
         if (this.lexer.head[0] == type) {
@@ -1476,8 +1478,13 @@ describe("parser", () => {
           return value;
         }
       }
+      this.error();
+    }
 
-      throw new Error(`Unexpected token "${head[1]}" (${head[0]}) on line ${lexer.line} column ${lexer.col}: expecting "${types}" instead.`);
+    error() {
+      const {head} = this.lexer;
+      const {line, col} = this.lexer.lexer;
+      throw new Error(`Unexpected token "${head[1]}" (${head[0]}) on line ${line} column ${col}.`);
     }
     
     accepts(...types) {
@@ -1491,31 +1498,49 @@ describe("parser", () => {
       }
       return false;
     }
+
+    ws(optional = false) {
+      const sp = ["ws", "comment", "comment-expr"];
+      if (this.accepts(...sp)) {
+        this.consume(...sp);
+      } else if (!optional) {
+        this.error();
+      }
+    }
     
     declaration(type, label = true, multiple = true) {
       const result = [];
       this.consume(type);
-      this.consume("ws");
+      this.ws();
+      const symbol = [
+        // a subset of possible symbols
+        "label",
+        // reserved keywords that can also be symbols
+        '"',
+        "(",
+        ")",
+        ",",
+        ":",
+        ";",
+        // catch all types of sequences
+        "sequence",
+      ];
       if (label) {
-        result.push(this.consume("label", "sequence"));
-        if (this.accepts("ws")) {
-          this.consume("ws");
-        }
+        result.push(this.consume(...symbol));
+        this.ws(true);
         this.consume(":");
-        if (this.accepts("ws")) {
-          this.consume("ws");
-        }
+        this.ws(true);
       }
-      let first = this.consume("label", "sequence");
+      let first = this.consume(...symbol);
       result.push(first);
-      this.consume("ws");
-      let second = this.consume("label", "sequence");
+      this.ws();
+      let second = this.consume(...symbol);
       result.push(second);
-      this.consume("ws");
+      this.ws();
       if (multiple) {
-        while (this.accepts("label", "sequence")) {
-          result.push(this.consume("label", "sequence"));
-          this.consume("ws");
+        while (this.accepts(...symbol)) {
+          result.push(this.consume(...symbol));
+          this.ws();
         };
       }
       return [type, result];
@@ -1523,12 +1548,12 @@ describe("parser", () => {
 
     axiom() {
       this.consume("axiom");
-      this.consume("ws");
+      this.ws();
       let name = this.consume("label");
-      this.consume("ws");
+      this.ws();
       let h = this.header();
       this.consume("end");
-      this.consume("ws");
+      this.ws();
       return ["axiom", name, h];
     }
 
@@ -1552,63 +1577,43 @@ describe("parser", () => {
       this.consume("step");
       this.consume("ws");
       result.push(this.consume("label"));
-      if (this.accepts("ws")) {
-        this.consume("ws");
-      }
+      this.ws(true);
       this.consume(")");
-      if (this.accepts("ws")) {
-        this.consume("ws");
-      }
+      this.ws(true);
       result.push(this.consume("label"));
-      if (this.accepts("ws")) {
-        this.consume("ws");
-      }
+      this.ws(true);
       this.consume("(");
-      if (this.accepts("ws")) {
-        this.consume("ws");
-      }
+      this.ws(true);
       let args = [];
       result.push(args);
       if (this.accepts("label")) {
         args.push(this.consume("label"));
-        if (this.accepts("ws")) {
-          this.consume("ws");
-        }
+        this.ws(true);
       }
       while (this.accepts(",")) {
         this.consume(",");
-        if (this.accepts("ws")) {
-          this.consume("ws");
-        }
+        this.ws(true);
         args.push(this.consume("label"));
       }
-      if (this.accepts("ws")) {
-        this.consume("ws");
-      }
+      this.ws(true);
       this.consume(")");
-      if (this.accepts("ws")) {
-        this.consume("ws");
-      }
+      this.ws(true);
       this.consume(":");
-      if (this.accepts("ws")) {
-        this.consume("ws");
-      }
+      this.ws(true);
       let sequence = [];
       result.push(sequence);
       while (this.accepts("label", "sequence")) {
         sequence.push(this.consume("label", "sequence"));
-        if (this.accepts("ws")) {
-          this.consume("ws");
-        }
+        this.ws(true);
       }
       return result;
     }
     
     theorem() {
       this.consume("theorem");
-      this.consume("ws");
+      this.ws();
       let name = this.consume("label");
-      this.consume("ws");
+      this.ws();
       let head = this.header();
 
       let steps = [];
@@ -1617,16 +1622,26 @@ describe("parser", () => {
       }
       
       this.consume("end");
-      this.consume("ws");
+      this.ws();
       return ["theorem", name, head, steps];
     }
 
+    include() {
+      this.consume("_include_");
+      this.ws();
+      this.consume('"');
+      const name = this.consume("label");
+      this.consume('"');
+      this.ws();
+      return ["include", name];
+    }
+    
     top() {
       this.lexer.next();
       let result = [];
       do {
-        if (this.accepts("ws")) {
-          this.consume("ws");
+        if (this.accepts("ws", "comment", "comment-expr")) {
+          this.ws();
         } else if (this.accepts("const")) {
           result.push(this.declaration("const", false));
         } else if (this.accepts("let")) {
@@ -1635,18 +1650,23 @@ describe("parser", () => {
           result.push(this.axiom());
         } else if (this.accepts("theorem")) {
           result.push(this.theorem());
+        } else if (this.accepts("_include_")) {
+          result.push(this.include());
         } else {
-          throw new Error(`Unknown token: ${head[0]}.`);
+          this.error();
         }
       } while (this.lexer.head);
       return result;
     }
-
   }
   
   it("parser", () => {
     let result = new Parser().parse(`
-      const => +
+      // hello world
+
+      include "file.mm"
+
+      const => + " ( ) ; : , & || |-
 
       let wx: wff x
       let wy: wff y
@@ -1667,7 +1687,8 @@ describe("parser", () => {
     `);
     
     assertThat(result).equalsTo([
-      ["const", ["=>", "+"]],
+      ["include", "file.mm"],
+      ["const", ["=>", "+", '"', "(", ")", ";", ":", ",", "&", "||", "|-"]],
       ["let", ["wx", "wff", "x"]],
       ["let", ["wy", "wff", "y"]],
       ["axiom", "mp", [
