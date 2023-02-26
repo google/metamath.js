@@ -1850,44 +1850,34 @@ describe("parser", () => {
 describe("transpiler", () => {
   const {parse} = require("../src/descent.js");
   const moo = require("moo");
-
-  it("lexer", () => {
-    const lexicon = {
-      theorem: "theorem",
-      comment: {match: /\/\*\*[\s]+(?:(?!\$\))[\s\S])*\*\//, lineBreaks: true},
-      lblock: "{",
-      rblock: "}",
-      lparen: "(",
-      rparen: ")",
-      ws: {match: /[\s]+/, lineBreaks: true},
-      label: /[\\.A-Za-z0-9_-]+/,
-      sequence: /[!-#%-~\?]+/,
-      // letter_or_digit: /[A-Za-z0-9]/,                                                                                   
-      // symbol: /[!-#%-~]+/,
-    };
-
-    const lexer = moo.compile(lexicon);
-
-    lexer.reset("theorem foo_-bar1.2(wff a) { /** hello */ }");
-    assertThat(lexer.next().type).equalsTo("theorem");
-    assertThat(lexer.next().type).equalsTo("ws");
-    assertThat(lexer.next().type).equalsTo("label");
-    assertThat(lexer.next().type).equalsTo("lparen");
-    assertThat(lexer.next().type).equalsTo("label");
-    assertThat(lexer.next().type).equalsTo("ws");
-    assertThat(lexer.next().type).equalsTo("label");
-    assertThat(lexer.next().type).equalsTo("rparen"); 
-    assertThat(lexer.next().type).equalsTo("ws");
-    assertThat(lexer.next().type).equalsTo("lblock");
-    assertThat(lexer.next().type).equalsTo("ws");
-    assertThat(lexer.next().type).equalsTo("comment");
-    assertThat(lexer.next().type).equalsTo("ws");
-    assertThat(lexer.next().type).equalsTo("rblock");
-  });
+  const fs = require("fs/promises");
 
   async function transpile(src) {
-    const fs = require("fs/promises");
     const program = await fs.readFile(src);
+    const files = await split(program);
+
+    const dir = `${src}.dir`;
+
+    // Creates a directory if one doesn't exist
+    try {
+      const file = await fs.stat(dir);
+      if (!file.isDirectory()) {
+        throw new Error("hi");
+      }
+    } catch (e) {
+      fs.mkdir(dir);
+    }
+
+    // console.log(files);
+
+    for (let [name, content] of Object.entries(files)) {
+      // console.log(name);
+      await fs.writeFile(`${dir}/${name}`, content);
+    }    
+  }
+  
+  async function split(program) {
+    const result = {};
 
     const mm = new MM();
     mm.push();
@@ -1909,19 +1899,8 @@ describe("transpiler", () => {
 `const ${[...frame.c].join(" ")}
 let ${[...frame.c].join(" ")}
 `;
-    const dir = `${src}.dir`;
 
-    // Creates a directory if one doesn't exist
-    try {
-      const file = await fs.stat(dir);
-      if (!file.isDirectory()) {
-        throw new Error("hi");
-      }
-    } catch (e) {
-      fs.mkdir(dir);
-    }
-
-    await fs.writeFile(`${dir}/lexicon.mm`, code);
+    result["lexicon.mm"] = code;
 
     for (const [label, value] of Object.entries(mm.labels)) {
       const [stmt] = value;
@@ -1930,7 +1909,8 @@ let ${[...frame.c].join(" ")}
       } else if (stmt == "$f") {
         const [, [type, name]] = mm.labels[label];
         const code = `let ${label}: ${type} ${name}`;
-        await fs.writeFile(`${dir}/${label}.mm`, code);
+        // await fs.writeFile(`${dir}/${label}.mm`, code);
+        result[`${label}.mm`] = code;
       } else  if (stmt == "$a") {
         const [, [d, f, e, [type, axiom]]] = mm.labels[label];
         // let args = "(";
@@ -1952,7 +1932,8 @@ ${assumptions}
 end
 `;
 
-        await fs.writeFile(`${dir}/${label}.mm`, code);
+        // await fs.writeFile(`${dir}/${label}.mm`, code);
+        result[`${label}.mm`] = code;
 
       } else if (stmt == "$p") {
         const [, [d, f, e, [type, theorem]], func] = mm.labels[label];
@@ -2012,11 +1993,13 @@ ${body}
 end
 `;
         
-        await fs.writeFile(`${dir}/${label}.mm`, code);
+        // await fs.writeFile(`${dir}/${label}.mm`, code);
+        result[`${label}.mm`] = code;
       } else {
         throw new Error(`Unknown statement type ${stmt}.`);
       }
     }
+    return result;
   }
   
   it("tq.mm", async () => {
