@@ -1389,7 +1389,6 @@ describe("Verifier", () => {
   
   it("$v a $. $c b $. ${ $v c $. $}", async () => {
     const tree = build("$v a $. $c b $. ${ $v c $. $} $c d $.");
-    
     assertThat(tree).equalsTo([
       ["$v", ["a"]],
       ["$c", ["b"]],
@@ -1399,7 +1398,6 @@ describe("Verifier", () => {
       ["$c", ["d"]],
     ]);
   });
-
 });
 
 describe("parser", () => {
@@ -1427,8 +1425,6 @@ describe("parser", () => {
     [";"]: ";",
     ["label"]: /[A-Za-z0-9-_.]+/,
     ["sequence"]: /[!-#%-~\?]+/,
-    // symbol: /[!-#%-~]+/,
-    // ["number"]: /[0-9]+/,
   };
 
   class Lexer {
@@ -1501,8 +1497,13 @@ describe("parser", () => {
 
     ws(optional = false) {
       const sp = ["ws", "comment", "comment-expr"];
+      // const sp = ["ws"];
       if (this.accepts(...sp)) {
         this.consume(...sp);
+        // allows multiple whitespace types intermingled
+        while (this.accepts(...sp)) {
+          this.consume(...sp);
+        }
       } else if (!optional) {
         this.error();
       }
@@ -1522,6 +1523,7 @@ describe("parser", () => {
         ",",
         ":",
         ";",
+        "//",
         // catch all types of sequences
         "sequence",
       ];
@@ -1533,14 +1535,14 @@ describe("parser", () => {
       }
       let first = this.consume(...symbol);
       result.push(first);
-      this.ws();
+      this.ws(false);
       let second = this.consume(...symbol);
       result.push(second);
-      this.ws();
+      this.ws(false);
       if (multiple) {
         while (this.accepts(...symbol)) {
           result.push(this.consume(...symbol));
-          this.ws();
+          this.ws(false);
         };
       }
       return [type, result];
@@ -1558,16 +1560,19 @@ describe("parser", () => {
     }
 
     header() {
+      this.ws(true);
       let lets = [];
       while (this.accepts("let")) {
         lets.push(this.declaration("let", true, false));
       }
 
+      this.ws(true);
       let ifs = [];
       while (this.accepts("assume")) {
         ifs.push(this.declaration("assume", true, true));
       }
 
+      this.ws(true);
       let then = this.declaration("assert", false, true);
       return [lets, ifs, then];
     }
@@ -1640,8 +1645,10 @@ describe("parser", () => {
       this.lexer.next();
       let result = [];
       do {
-        if (this.accepts("ws", "comment", "comment-expr")) {
+        if (this.accepts("ws")) {
           this.ws();
+        } else if (this.accepts("//")) {
+          throw new Error("hi");
         } else if (this.accepts("const")) {
           result.push(this.declaration("const", false));
         } else if (this.accepts("let")) {
@@ -1666,14 +1673,18 @@ describe("parser", () => {
 
       include "file.mm"
 
-      const => + " ( ) ; : , & || |-
+      // tokens
+      const => + " ( ) ; : , & || |- /** this too is a comment */ // foo
 
+      // variable declarations
       let wx: wff x
       let wy: wff y
 
       axiom mp
         let wp: wff p
         let wq: wff q
+
+        // logical hypothesis
         assume maj: |- p => q
         assume min: |- p
         assert |- q
@@ -1682,7 +1693,7 @@ describe("parser", () => {
       theorem foo
         assert |- ~ p
         step 1) foo(): p
-        step 2) bar(1): ~ p
+        step 2) bar(1): ~ /** this is a comment */ p
       end
     `);
     
