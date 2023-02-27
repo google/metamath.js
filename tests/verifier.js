@@ -107,7 +107,7 @@ describe("Verifier", () => {
     assertThat(stack.assert("foo", ["bar"]))
       .equalsTo([
         [],
-        [["a", "bar"]],
+        [["a", "bar", "bar"]],
         [[["bar"], "|-", "foo"]],
         ["foo", ["bar"]]
       ]);
@@ -248,7 +248,7 @@ describe("Verifier", () => {
     assertThat(mm.labels["w2"])
       .equalsTo(["$a", [
         [],
-        [["wff", "p"], ["wff", "q"]],
+        [["wff", "p", "wp"], ["wff", "q", "wq"]],
         [],
         ["wff", ["(", "p", "->", "q", ")"]]
       ]]);
@@ -267,7 +267,7 @@ describe("Verifier", () => {
     assertThat(mm.labels["w2"])
       .equalsTo(["$a", [
         [["p", "q"]], // disjoint variables conditions
-        [["wff", "p"], ["wff", "q"]], // type hypothesis
+        [["wff", "p", "wp"], ["wff", "q", "wq"]], // type hypothesis
         [], // logical hypothesis
         ["wff", ["(", "p", "->", "q", ")"]]
       ]]);
@@ -303,9 +303,9 @@ describe("Verifier", () => {
     // If the hypothesis match, "b" implies "c".
     const [, mand, hyps] = stack.assert("A", ["b", "->", "c"]);
     assertThat(mand).equalsTo([
-      ["A", "a"],
-      ["A", "b"],
-      ["A", "c"],
+      ["A", "a", "let1"],
+      ["A", "b", "let3"],
+      ["A", "c", "let2"],
     ]);
     assertThat(hyps).equalsTo([[["~", "a"], "|-", "hypothesis"]]);
     stack.pop();
@@ -329,7 +329,7 @@ describe("Verifier", () => {
     assertThat(mm.labels["w2"])
       .equalsTo(["$a", [
         [],
-        [["wff", "p"], ["wff", "q"]],
+        [["wff", "p", "wp"], ["wff", "q", "wq"]],
         [],
         ["wff", ["(", "p", "->", "q", ")"]]
       ]]);
@@ -930,7 +930,7 @@ describe("Verifier", () => {
     parser.feed(code);
     const frame = mm.frames.pop();
     [p, [dvs, args, , theorem], proof] = mm.labels["th1"];
-    assertThat(args).equalsTo([["term", "t"]]);
+    assertThat(args).equalsTo([["term", "t", "tt"]]);
     assertThat(theorem).equalsTo(["|-", ["t", "=", "t"]]);
     const summary = proof()
           .filter(([label, [type]]) => type == "|-")
@@ -960,7 +960,7 @@ describe("Verifier", () => {
     const frame = mm.frames.pop();
 
     [p, [dvs, args, , theorem], proof] = mm.labels["id"];
-    assertThat(args).equalsTo([["term", "a"]]);
+    assertThat(args).equalsTo([["term", "a", "wva"]]);
     assertThat(theorem).equalsTo(["|-", ["a", "=", "a"]]);
     const summary = proof()
           .filter(([label, [type]]) => type == "|-")
@@ -1061,7 +1061,7 @@ describe("Verifier", () => {
     const frame = mm.frames.pop();
 
     [p, [dvs, args, , theorem], proof] = mm.labels["wal"];
-    assertThat(args).equalsTo([["type", "al"]]);
+    assertThat(args).equalsTo([["type", "al", "hal"]]);
     assertThat(theorem.flat().join(" ")).equalsTo("|- ! : ( ( al -> bool ) -> bool )");
     const summary = proof()
           .filter(([label, [type]]) => type == "|-")

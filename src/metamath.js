@@ -224,7 +224,7 @@ class Stack {
     for (const frame of [...this.stack].reverse()) {
       for (const [v, k, label] of [...frame.f].reverse()) {
         if (mandatory.has(v)) {
-          f.unshift([k, v]);
+          f.unshift([k, v, frame.f_labels[v]]);
           mandatory.delete(v);
         }
       }
