@@ -1,11 +1,11 @@
 include "lexicon.mm"
+
 include "w0.mm"
 include "w1.mm"
 include "t8.mm"
 include "ax4.mm"
 
 theorem t9
-
   assert |- - - - - - DND - - - - - - -
 
   step 0) w0(): wff -

@@ -1,9 +1,8 @@
 include "lexicon.mm"
+include "x.mm"
+include "y.mm"
+include "z.mm"
 
 axiom ax2
-  let wff x
-  let wff y
-  let wff z
-  assume ax2.1: |- x - t y - q z
-  assert |- C z
+  assume ax2.1: |- x - t y - q z  assert |- C z
 end

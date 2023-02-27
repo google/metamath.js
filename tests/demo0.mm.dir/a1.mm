@@ -1,9 +1,8 @@
 include "lexicon.mm"
+include "t.mm"
+include "r.mm"
+include "s.mm"
 
 axiom a1
-  let term t
-  let term r
-  let term s
-
   assert |- ( t = r -> ( t = s -> r = s ) )
 end

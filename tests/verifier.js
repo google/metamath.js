@@ -1887,22 +1887,15 @@ let ${[...frame.c].join(" ")}
         result[`${label}.mm`] = code;
       } else  if (stmt == "$a") {
         const [, [d, f, e, [type, axiom]]] = mm.labels[label];
-        // let args = "(";
-        let args = f.map(([type, name]) => `  let ${type} ${name}`).join("\n");
-        // args += ")";
-      
+        let args = f.map(([type, name]) => `include "${name}.mm"`).join("\n");
+        
         const assumptions = e.map(([seq, type, name]) => `  assume ${name}: ${type} ${seq.join(" ")}`).join("\n");
-        //let assumes = "";
-        //if (assumptions.length > 0) {
-        //  assumes = `${assumptions}`;
-        //}
         const code =
 `include "lexicon.mm"
+${args}
 
 axiom ${label}
-${args}
-${assumptions}
-  assert ${type} ${axiom.join(' ')}
+${assumptions}  assert ${type} ${axiom.join(' ')}
 end
 `;
 
@@ -1913,7 +1906,7 @@ end
         const [, [d, f, e, [type, theorem]], func] = mm.labels[label];
 
         //let args = "(";
-        let args = f.map(([type, name]) => `  let ${type} ${name}`).join(", ");
+        let args = f.map(([type, name]) => `include "${name}.mm"`).join("\n");
         //args += ")";
         
         const proof = func();
@@ -1926,19 +1919,19 @@ end
 
         let conds = "";
 
-        if (e.length > 0) {
-          args += " if (\n";
-        }
+        //if (e.length > 0) {
+        //  args += " if (\n";
+        //}
         
         let hypothesis = [];
         for (let [seq, type, label] of e) {
           hypothesis.push(`  assume ${label}: ${type} "${seq.join(" ")}"`);
         }
         
-        if (e.length >0 ) {
-          args += hypothesis.join("\n");
-          args += ")";
-        }
+        //if (e.length >0 ) {
+        //  args += hypothesis.join("\n");
+        //  args += ")";
+        //}
         
         let diff = [];
         if (d.length > 0) {
@@ -1958,9 +1951,9 @@ end
         
         const code =
 `include "lexicon.mm"
+${args}
 ${header}
 theorem ${label}
-${args}
   assert ${type} ${theorem.join(' ')}
 
 ${body}
@@ -2024,7 +2017,6 @@ describe("transpiler", () => {
   it("test.mm", async () => {
     await transpile("tests/test.mm");
   });
-
 });
 
 describe("Transpile and Parse", () => {

@@ -1,8 +1,7 @@
 include "lexicon.mm"
+include "P.mm"
+include "Q.mm"
 
 axiom wim
-  let wff P
-  let wff Q
-
   assert wff ( P -> Q )
 end

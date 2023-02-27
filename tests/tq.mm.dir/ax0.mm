@@ -1,7 +1,6 @@
 include "lexicon.mm"
+include "x.mm"
 
 axiom ax0
-  let wff x
-
   assert |- x t - q x
 end

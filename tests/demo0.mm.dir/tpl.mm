@@ -1,8 +1,7 @@
 include "lexicon.mm"
+include "t.mm"
+include "r.mm"
 
 axiom tpl
-  let term t
-  let term r
-
   assert term ( t + r )
 end

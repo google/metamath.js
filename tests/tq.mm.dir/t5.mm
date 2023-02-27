@@ -1,11 +1,11 @@
 include "lexicon.mm"
+
 include "w0.mm"
 include "w1.mm"
 include "t3.mm"
 include "ax1.mm"
 
 theorem t5
-
   assert |- - - t - - q - - - -
 
   step 0) w0(): wff -

@@ -1,9 +1,8 @@
 include "lexicon.mm"
+include "P.mm"
+include "Q.mm"
 
 axiom mp
-  let wff P
-  let wff Q
   assume min: |- P
-  assume maj: |- ( P -> Q )
-  assert |- Q
+  assume maj: |- ( P -> Q )  assert |- Q
 end
