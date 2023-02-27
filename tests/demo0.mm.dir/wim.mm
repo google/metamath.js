@@ -1,7 +1,7 @@
 include "lexicon.mm"
 
 axiom wim
-  let wff P
-  let wff Q
+  let wp: wff P
+  let wq: wff Q
   assert wff ( P -> Q )
 end

@@ -1,7 +1,7 @@
 include "lexicon.mm"
 
 axiom wxy
-  let wff x
-  let wff y
+  let wx: wff x
+  let wy: wff y
   assert wff x y
 end

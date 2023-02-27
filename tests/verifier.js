@@ -1887,7 +1887,7 @@ var ${[...frame.v].join(" ")}
         // result[`${label}.mm`] = code;
       } else  if (stmt == "$a") {
         const [, [d, f, e, [type, axiom]]] = mm.labels[label];
-        let args = f.map(([type, name]) => `  let ${type} ${name}`).join("\n");
+        let args = f.map(([type, name, label]) => `  let ${label}: ${type} ${name}`).join("\n");
         if (Object.entries(f).length  > 0) {
           args += "\n";
         }

@@ -1,7 +1,7 @@
 include "lexicon.mm"
 
 axiom weq
-  let term t
-  let term r
+  let tt: term t
+  let tr: term r
   assert wff t = r
 end

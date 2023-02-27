@@ -1,7 +1,7 @@
 include "lexicon.mm"
 
 axiom II
-  let wff x
+  let wx: wff x
   assume IIa: |- M x
   assert |- M x x
 end
