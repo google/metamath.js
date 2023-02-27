@@ -1871,31 +1871,38 @@ class Transpiler {
     let frame = mm.pop();
     const code =
 `const ${[...frame.c].join(" ")}
-let ${[...frame.c].join(" ")}
+var ${[...frame.v].join(" ")}
 `;
 
     result["lexicon.mm"] = code;
 
     for (const [label, value] of Object.entries(mm.labels)) {
       const [stmt] = value;
-      if (stmt == "$e" || label == "$c" || label == "$v") {
+      if (stmt == "$e" || stmt == "$f" || label == "$c" || label == "$v") {
         continue;
-      } else if (stmt == "$f") {
-        const [, [type, name]] = mm.labels[label];
-        const code = `let ${label}: ${type} ${name}`;
+      // } else if (stmt == "$f") {
+        // const [, [type, name]] = mm.labels[label];
+        // const code = `let ${label}: ${type} ${name}`;
         // await fs.writeFile(`${dir}/${label}.mm`, code);
-        result[`${label}.mm`] = code;
+        // result[`${label}.mm`] = code;
       } else  if (stmt == "$a") {
         const [, [d, f, e, [type, axiom]]] = mm.labels[label];
-        let args = f.map(([type, name]) => `include "${name}.mm"`).join("\n");
+        let args = f.map(([type, name]) => `  let ${type} ${name}`).join("\n");
+        if (Object.entries(f).length  > 0) {
+          args += "\n";
+        }
         
-        const assumptions = e.map(([seq, type, name]) => `  assume ${name}: ${type} ${seq.join(" ")}`).join("\n");
+        let assumptions = e.map(([seq, type, name]) => `  assume ${name}: ${type} ${seq.join(" ")}`).join("\n");
+
+        if (Object.entries(e).length > 0) {
+          assumptions += "\n";
+        }
+
         const code =
 `include "lexicon.mm"
-${args}
 
 axiom ${label}
-${assumptions}  assert ${type} ${axiom.join(' ')}
+${args}${assumptions}  assert ${type} ${axiom.join(' ')}
 end
 `;
 
@@ -1945,7 +1952,6 @@ end
         if (d.length > 0) {
           args += "" + diff.join(", ") + ")";
         }
-        
 
         const body = proof.map(([step, [type, sequence], args], i) => `  step ${i}) ${step}(${args}): ${type} ${sequence.join(' ')}`).join("\n");
         
@@ -2027,13 +2033,6 @@ describe("Transpile and Parse", () => {
     const files = await new Transpiler().split(program);
     // console.log(files);
 
-    console.log(files["lexicon.mm"]);
-    new Parser().parse(`
-const M I U |- wff
-let foo: M bar
-`);
-    return;
-    
     for (let [name, content] of Object.entries(files)) {
       // console.log(content);
       let parser = new Parser();

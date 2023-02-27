@@ -1,6 +1,6 @@
 include "lexicon.mm"
-include "t.mm"
 
 axiom a2
+  let term t
   assert |- ( t + 0 ) = t
 end

@@ -1,7 +1,7 @@
 include "lexicon.mm"
-include "x.mm"
-include "y.mm"
 
 axiom wxy
+  let wff x
+  let wff y
   assert wff x y
 end

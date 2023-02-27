@@ -1,6 +1,7 @@
 include "lexicon.mm"
-include "z.mm"
 
 axiom ax7
-  assume ax7.1: |- z - DF z  assert |- P z -
+  let wff z
+  assume ax7.1: |- z - DF z
+  assert |- P z -
 end

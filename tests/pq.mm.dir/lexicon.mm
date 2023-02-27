@@ -1,2 +1,2 @@
 const wff |- p q -
-let wff |- p q -
+var x y z

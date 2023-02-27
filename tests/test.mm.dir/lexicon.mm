@@ -1,2 +1,2 @@
 const " - )
-let " - )
+var x y

@@ -1,7 +1,8 @@
 include "lexicon.mm"
-include "x.mm"
-include "y.mm"
 
 axiom IV
-  assume IVa: |- x U U y  assert |- x y
+  let wff x
+  let wff y
+  assume IVa: |- x U U y
+  assert |- x y
 end
