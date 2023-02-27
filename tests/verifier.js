@@ -1407,14 +1407,15 @@ class Lexer {
       ["comment-expr"]: {match: /\/\*\*.*\*\//, lineBreaks: true},
       ["comment"]: {match: /\/\/.*\n/, lineBreaks: true},
       ["ws"]: {match: /[\s]+/, lineBreaks: true},
+      ["_include_"]: "include",
+      ["const"]: "const",
+      ["var"]: "var",
       ["theorem"]: "theorem",
       ["axiom"]: "axiom",
       ["proof"]: "proof",
       ["end"]: "end",
       ["let"]: "let",
       ["step"]: "step",
-      ["const"]: "const",
-      ["_include_"]: "include",
       ["assume"]: "assume",
       ["assert"]: "assert",
       ["("]: "(",
@@ -1648,6 +1649,8 @@ class Parser {
         throw new Error("hi");
       } else if (this.accepts("const")) {
         result.push(this.declaration("const", false));
+      } else if (this.accepts("var")) {
+        result.push(this.declaration("var", false));
       } else if (this.accepts("let")) {
         result.push(this.declaration("let"));
       } else if (this.accepts("axiom")) {
@@ -1675,6 +1678,8 @@ describe("parser", () => {
       const => + " ( ) ; : , & || |- /** this too is a comment */ // foo
       const M I U |- wff
 
+      var x y
+
       // variable declarations
       let wx: wff x
       let wy: wff y
@@ -1700,6 +1705,7 @@ describe("parser", () => {
       ["include", "file.mm"],
       ["const", ["=>", "+", '"', "(", ")", ";", ":", ",", "&", "||", "|-"]],
       ["const", ["M", "I", "U", "|-", "wff"]],
+      ["var", ["x", "y"]],
       ["let", ["wx", "wff", "x"]],
       ["let", ["wy", "wff", "y"]],
       ["axiom", "mp", [
