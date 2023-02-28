@@ -1605,25 +1605,32 @@ class Parser {
     const result = [];
     this.eat("step");
     this.eat("ws");
-    result.push(this.eat("label"));
+    result.push(this.label());
     this.ws(true);
     this.eat(")");
     this.ws(true);
-    result.push(this.eat("label"));
+    result.push(this.label());
     this.ws(true);
     this.eat("(");
     this.ws(true);
     let args = [];
     result.push(args);
-    if (this.accepts("label")) {
-      args.push(this.eat("label"));
+    if (this.accepts(...labels)) {
+      //console.log("accepted");
+      args.push(this.label());
       this.ws(true);
     }
+    //console.log(result);
+    //console.log(args);
+    //console.log(this.lexer.head);
+    //console.log(this.accepts(...labels));
     while (this.accepts(",")) {
       this.eat(",");
       this.ws(true);
-      args.push(this.eat("label"));
+      args.push(this.label());
     }
+    //console.log(this.lexer.head);
+    //throw new Error("hi");
     this.ws(true);
     this.eat(")");
     this.ws(true);
@@ -1631,8 +1638,8 @@ class Parser {
     this.ws(true);
     let sequence = [];
     result.push(sequence);
-    while (this.accepts("label", "sequence")) {
-      sequence.push(this.eat("label", "sequence"));
+    while (this.accepts(...symbols)) {
+      sequence.push(this.symbol());
       this.ws(true);
     }
     return result;
@@ -1746,6 +1753,7 @@ describe("parser", () => {
         assert |- ~ p
         step 1) foo(): p
         step 2) bar(1): ~ /** this is a comment */ p
+        step 3) tpl(0,1): term ( t + 0 )
       end
     `);
     
@@ -1782,6 +1790,7 @@ describe("parser", () => {
        [
          ["1", "foo", [], ["p"]],
          ["2", "bar", ["1"], ["~", "p"]],
+         ["3", "tpl", ["0", "1"], ["term", "(", "t", "+", "0", ")"]],
        ]]
     ]);
   });
@@ -2087,7 +2096,7 @@ describe("transpiler", () => {
 });
 
 describe("Transpile and Parse", () => {
-  it.skip("miu.mm", async () => {
+  it("miu.mm", async () => {
     const fs = require("fs/promises");
     for (let src of ["demo0.mm", "pq.mm", "tq.mm"]) {
       const program = await fs.readFile(`tests/${src}`);
