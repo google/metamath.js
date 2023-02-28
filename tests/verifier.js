@@ -1452,7 +1452,41 @@ class Lexer {
     assertThat(this.next()).equalsTo([type, value ? value : type]);
   };
 }
-  
+
+
+const symbols = [
+  // a subset of possible symbols
+  "label",
+  // reserved keywords that can also be symbols
+  '"',
+  "(",
+  ")",
+  ",",
+  ":",
+  ";",
+  "//",
+  // catch all types of sequences
+  "sequence",
+];
+
+const labels = [
+  // a subset of possible labels
+  "label",
+  // reserved keywords that can also be labels
+  "_include_",
+  "const",
+  "var",
+  "theorem",
+  "axiom",
+  "proof",
+  "end",
+  "let",
+  "step",
+  "assume",
+  "assert",
+  // catch all types of sequences
+];
+
 class Parser {
   constructor() {
     this.lexer = new Lexer();
@@ -1506,40 +1540,32 @@ class Parser {
       this.error();
     }
   }
-  
-  declaration(type, label = true, multiple = true) {
+
+  declaration(type, label = true, multiple = true, empty = true) {
     const result = [];
     this.eat(type);
     this.ws();
-    const symbol = [
-      // a subset of possible symbols
-      "label",
-      // reserved keywords that can also be symbols
-      '"',
-      "(",
-      ")",
-      ",",
-      ":",
-      ";",
-      "//",
-      // catch all types of sequences
-      "sequence",
-    ];
     if (label) {
-      result.push(this.eat(...symbol));
+      result.push(this. label());
       this.ws(true);
       this.eat(":");
       this.ws(true);
     }
-    let first = this.eat(...symbol);
+    let first = this.symbol();
     result.push(first);
     this.ws(false);
-    let second = this.eat(...symbol);
+    if (!this.accepts(...symbols) && empty) {
+      // If empty symbols are allowed
+      result.push("");
+      return [type, result];
+    }
+    let second = this.symbol();
+    //console.log(second);
     result.push(second);
     this.ws(false);
     if (multiple) {
-      while (this.accepts(...symbol)) {
-        result.push(this.eat(...symbol));
+      while (this.accepts(...symbols)) {
+        result.push(this.symbol());
         this.ws(false);
       };
     }
@@ -1549,7 +1575,7 @@ class Parser {
   axiom() {
     this.eat("axiom");
     this.ws();
-    let name = this.eat("label");
+    let name = this.label();
     this.ws();
     let h = this.header();
     this.eat("end");
@@ -1611,11 +1637,28 @@ class Parser {
     }
     return result;
   }
+
+  symbol() {
+    let name = this.eat(...symbols);
+    while (this.accepts(...symbols)) {
+      name += this.eat(...symbols);
+    }
+    return name;
+  }
+  
+  label() {
+    let name = this.eat(...labels);
+    while (this.accepts(...labels)) {
+      name += this.eat(...labels);
+    }
+    return name;
+  }
   
   theorem() {
     this.eat("theorem");
     this.ws();
-    let name = this.eat("label");
+
+    let name = this.label();
     this.ws();
     let head = this.header();
     
@@ -1675,7 +1718,7 @@ describe("parser", () => {
       include "file.mm"
 
       // tokens
-      const => + " ( ) ; : , & || |- /** this too is a comment */ // foo
+      const => -> + " ( ) ; : , & || |- /** this too is a comment */ // foo
       const M I U |- wff
 
       var x y
@@ -1694,7 +1737,12 @@ describe("parser", () => {
         assert |- q
       end
 
-      theorem foo
+      axiom we
+        // empty symbols allowed
+        assert |-
+      end
+
+      theorem theorem1
         assert |- ~ p
         step 1) foo(): p
         step 2) bar(1): ~ /** this is a comment */ p
@@ -1703,7 +1751,7 @@ describe("parser", () => {
     
     assertThat(result).equalsTo([
       ["include", "file.mm"],
-      ["const", ["=>", "+", '"', "(", ")", ";", ":", ",", "&", "||", "|-"]],
+      ["const", ["=>", "->", "+", '"', "(", ")", ";", ":", ",", "&", "||", "|-"]],
       ["const", ["M", "I", "U", "|-", "wff"]],
       ["var", ["x", "y"]],
       ["let", ["wx", "wff", "x"]],
@@ -1719,7 +1767,14 @@ describe("parser", () => {
         ["assert", ["|-", "q"]],
       ]
       ],
-      ["theorem", "foo", [
+      ["axiom", "we", [
+        [
+        ], [
+        ], 
+        ["assert", ["|-", ""]],
+      ]
+      ],
+      ["theorem", "theorem1", [
         [],
         [],
         ["assert", ["|-", "~", "p"]]
@@ -2034,21 +2089,17 @@ describe("transpiler", () => {
 describe("Transpile and Parse", () => {
   it.skip("miu.mm", async () => {
     const fs = require("fs/promises");
-    const src = "tests/miu.mm";
-    const program = await fs.readFile(src);
-    const files = await new Transpiler().split(program);
-    // console.log(files);
-
-    for (let [name, content] of Object.entries(files)) {
-      // console.log(content);
-      let parser = new Parser();
-      try {
-        parser.parse(content);
-      } catch (e) {
-        // console.log(e);
-        console.log(name);
-        console.log(content);
-        throw e;
+    for (let src of ["demo0.mm", "pq.mm", "tq.mm"]) {
+      const program = await fs.readFile(`tests/${src}`);
+      const files = await new Transpiler().split(program);
+      for (let [name, content] of Object.entries(files)) {
+        let parser = new Parser();
+        try {
+          parser.parse(content);
+        } catch (e) {
+          console.log(`Error parsing ${name} of ${src}.`);
+          throw e;
+        }
       }
     }
   });
