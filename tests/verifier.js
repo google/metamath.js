@@ -1845,10 +1845,12 @@ class Transpiler {
   dump() {
     let result = [];
     for (const [label] of Object.entries(this.mm.labels).filter(([, [type]]) => type == "$a")) {
-      result.push(this.axiom(label));
+      const [, code] = this.axiom(label);
+      result.push(code);
     }
     for (const [label] of Object.entries(this.mm.labels).filter(([, [type]]) => type == "$p")) {
-      result.push(this.theorem(label));
+      const [, code] = this.theorem(label);
+      result.push(code);
     }
     return result.join("");
   }
@@ -1872,10 +1874,11 @@ ${args}${assumptions}  assert ${type} ${axiom.join(' ')}
 end
 `;
 
-    return result;
+    return [[], result];
   }
 
   theorem(label) {
+    // const deps = [];
     const [, [d, f, e, [type, theorem]], func] = this.mm.labels[label];
 
     let args = f.map(([type, name, label]) => `  let ${label}: ${type} ${name}`).join("\n");
@@ -1887,9 +1890,9 @@ end
     const proof = func();
     
     const steps = proof.map(([step]) => step);
-    const header = [...new Set(steps)]
-          .filter((step) => !local.includes(step))
-          .map((step) => `include "${step}.mm"\n`).join("");
+    const deps = [...new Set(steps)]
+          .filter((step) => !local.includes(step));
+          // .map((step) => `include "${step}.mm"\n`).join("");
     
     let conds = "";
     
@@ -1913,7 +1916,6 @@ end
     const body = proof.map(([step, [type, sequence], args], i) => `  step ${i}) ${step}(${args}): ${type} ${sequence.join(' ')}`).join("\n");
     
     const code = `
-${header}
 theorem ${label}
 ${args}
   assert ${type} ${theorem.join(' ')}
@@ -1922,7 +1924,7 @@ ${body}
 end
 `;
 
-    return code;
+    return [deps, code];
   }
   
   parse(program) {
@@ -1947,19 +1949,15 @@ end
   
   split(program) {
     const result = {};
-
-    this.read(program);
     
     for (const [label, value] of Object.entries(this.mm.labels)) {
       const [stmt] = value;
       if (stmt == "$e" || stmt == "$f" || label == "$c" || label == "$v") {
         continue;
       } else  if (stmt == "$a") {
-        let code = this.axiom(label);
-        result[`${label}.mm`] = code;
+        result[label] = this.axiom(label);
       } else if (stmt == "$p") {
-        let code = this.theorem(label);
-        result[`${label}.mm`] = code;
+        result[label] = this.theorem(label);
       } else {
         throw new Error(`Unknown statement type ${stmt}.`);
       }
@@ -1974,7 +1972,7 @@ describe("transpiler", () => {
 
   async function transpile(src) {
     const program = await fs.readFile(src);
-    const files = await new Transpiler().split(program);
+    const files = await new Transpiler().read(program).split();
 
     const dir = `${src}.dir`;
 
@@ -1988,14 +1986,15 @@ describe("transpiler", () => {
       await fs.mkdir(dir);
     }
 
-    for (let [name, content] of Object.entries(files)) {
-      await fs.writeFile(`${dir}/${name}`, content);
+    for (let [name, [deps, content]] of Object.entries(files)) {
+      const header = deps.map((dep) => `include "${dep}.mm"`).join("\n") + "\n";
+      await fs.writeFile(`${dir}/${name}.mm`, `${deps.length > 0 ? header : ""}${content}`);
     }
   }
 
   it("empty", async () => {
     const transpiler = new Transpiler();
-    const result = transpiler.split(``);
+    const result = transpiler.read(``).split();
     assertThat(result).equalsTo({});
   });
   
@@ -2018,8 +2017,6 @@ axiom w2
   assert wff ( p -> q )
 end
 
-include "w2.mm"
-
 theorem wnew
   let wp: wff p
   let wr: wff r
@@ -2033,6 +2030,21 @@ theorem wnew
   step 4) w2(0,3): wff ( s -> ( r -> p ) )
 end
 `);
+
+    assertThat(transpiler.split()["wnew"]).equalsTo([["w2"], `
+theorem wnew
+  let wp: wff p
+  let wr: wff r
+  let ws: wff s
+  assert wff ( s -> ( r -> p ) )
+
+  step 0) ws(): wff s
+  step 1) wr(): wff r
+  step 2) wp(): wff p
+  step 3) w2(1,2): wff ( r -> p )
+  step 4) w2(0,3): wff ( s -> ( r -> p ) )
+end
+`]);
   });
   
   it("transpile", async () => {
@@ -2047,8 +2059,8 @@ describe("Transpile and Parse", () => {
     const fs = require("fs/promises");
     for (let src of ["demo0.mm", "pq.mm", "tq.mm", "test.mm"]) {
       const program = await fs.readFile(`tests/${src}`);
-      const files = await new Transpiler().split(program);
-      for (let [name, content] of Object.entries(files)) {
+      const files = await new Transpiler().read(program).split();
+      for (let [name, [deps, content]] of Object.entries(files)) {
         let parser = new Parser();
         try {
           parser.parse(content);
