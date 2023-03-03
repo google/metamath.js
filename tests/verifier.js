@@ -1950,11 +1950,6 @@ var ${[...frame.v].join(" ")}
       const [stmt] = value;
       if (stmt == "$e" || stmt == "$f" || label == "$c" || label == "$v") {
         continue;
-      // } else if (stmt == "$f") {
-        // const [, [type, name]] = mm.labels[label];
-        // const code = `let ${label}: ${type} ${name}`;
-        // await fs.writeFile(`${dir}/${label}.mm`, code);
-        // result[`${label}.mm`] = code;
       } else  if (stmt == "$a") {
         const [, [d, f, e, [type, axiom]]] = mm.labels[label];
         let args = f.map(([type, name, label]) => `  let ${label}: ${type} ${name}`).join("\n");
@@ -1976,15 +1971,12 @@ ${args}${assumptions}  assert ${type} ${axiom.join(' ')}
 end
 `;
 
-        // await fs.writeFile(`${dir}/${label}.mm`, code);
         result[`${label}.mm`] = code;
 
       } else if (stmt == "$p") {
         const [, [d, f, e, [type, theorem]], func] = mm.labels[label];
 
-        //let args = "(";
         let args = f.map(([type, name]) => `include "${name}.mm"`).join("\n");
-        //args += ")";
         
         const proof = func();
         
@@ -1992,28 +1984,16 @@ end
         const header = [...new Set(steps)]
               .map((step) => `include "${step}.mm"\n`).join("");
           
-        // const conds = e.length == 0 ? "" : " | " + e.map(([seq, type, label]) => `${label}: ${type} ${seq.join(" ")}`).join(", ");
-
         let conds = "";
 
-        //if (e.length > 0) {
-        //  args += " if (\n";
-        //}
-        
         let hypothesis = [];
         for (let [seq, type, label] of e) {
           hypothesis.push(`  assume ${label}: ${type} "${seq.join(" ")}"`);
         }
         
-        //if (e.length >0 ) {
-        //  args += hypothesis.join("\n");
-        //  args += ")";
-        //}
-        
         let diff = [];
         if (d.length > 0) {
           args += " and (";
-          // args += "  [";
         }
         for (let [x, y] of d) {
           diff.push(`${x} != ${y}`);
@@ -2066,32 +2046,15 @@ describe("transpiler", () => {
       fs.mkdir(dir);
     }
 
-    // console.log(files);
-
     for (let [name, content] of Object.entries(files)) {
-      // console.log(name);
       await fs.writeFile(`${dir}/${name}`, content);
     }    
   }
-    
-  it("tq.mm", async () => {
-    await transpile("tests/tq.mm");
-  });
 
-  it("pq.mm", async () => {
-    await transpile("tests/pq.mm");
-  });
-
-  it("miu.mm", async () => {
-    await transpile("tests/miu.mm");
-  });
-
-  it("demo0.mm", async () => {
-    await transpile("tests/demo0.mm");
-  });
-
-  it("test.mm", async () => {
-    await transpile("tests/test.mm");
+  it.only("transpile", async () => {
+    for (let file of ["tq.mm", "pq.mm", "miu.mm", "demo0.mm", "test.mm"]) {
+      await transpile(`tests/${file}`);
+    }
   });
 });
 
