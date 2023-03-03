@@ -747,65 +747,9 @@ describe("Verifier", () => {
     mm.read(code);
   });
   
-  it("id's proof", () => {
-    const [code] = parse(`
-      $c wff |- ( ) -> $.
-      $v ph ps ch $.
-
-      $( Let variable ph be a wff. $)
-      wph $f wff ph $.
-
-      $( Let variable ps be a wff. $)
-      wps $f wff ps $.
-
-      $( Let variable ch be a wff. $)
-      wch $f wff ch $.
-
-      wi $a wff ( ph -> ps ) $.
-
-      ax-1 $a |- ( ph -> ( ps -> ph ) ) $.
-
-      $\{
-        mpd.1 $e |- ( ph -> ps ) $.
-        mpd.2 $e |- ( ph -> ( ps -> ch ) ) $.
-        $(
-          makes this an axiom as opposed to a theorem, so that we
-          can skip bringing in the proof recursively.
-          mpd $p |- ( ph -> ch ) $=
-            ( wi a2i ax-mp ) ABFACFDABCEGH $.
-        $)
-        mpd $a |- ( ph -> ch ) $.
-      $\}
-
-      $( 1 1 1 2 Z 1 1 1 3 1 5 3 4 $)
-      $( mandatory: wph $)
-      $( local: wi ax-1 mpd $)
-      $( decompressed: wph wph wph wi (Z) wph wph wph ax-1 wph (Z: wph wph wph wi) ax-1 mpd $)
-      $(
-       wph, wph, wph  wi                  wph, wph, wph         ax-1                          wph
-
-
-                                          wff ph                                              wff ph
-                                          wff ph                |- ( ph -> ( ph -> ph ) )     |- ( ph -> ( ph -> ph ) )
-       wff ph                             wff ph                wff ph                        wff ph
-       wff ph         wff ( ph -> ph )    wff ( ph -> ph )      wff ( ph -> ph )              wff ( ph -> ph )
-       wff ph         wff ph              wff ph                wff ph                        wff ph
-
-
-       wi                               ax-1                                        mpd
-
-                        
-       wff ( ph -> ph )                 
-       wff ph                           |- ( ph -> ( ( ph -> ph ) -> ph ) )         
-       |- ( ph -> ( ph -> ph ) )        |- ( ph -> ( ph -> ph ) )
-       wff ph                           wff ph
-       wff ( ph -> ph )                 wff ( ph -> ph )
-       wff ph                           wff ph                                      |- ( ph -> ph )
-      $)
-      id $p |- ( ph -> ph ) $=
-        ( wi ax-1 mpd ) AAABZAAACAECD $.
-    `);
-
+  it("id's proof", async () => {
+    const file = await require("fs/promises").readFile("tests/id.mm");
+    const [code] = parse(file.toString());
     const mm = new MM();
     mm.read(code);
   });
@@ -1946,6 +1890,9 @@ var ${[...frame.v].join(" ")}
 
     result["lexicon.mm"] = code;
 
+    //console.log(frame);
+    //throw new Error("hi");
+    
     for (const [label, value] of Object.entries(mm.labels)) {
       const [stmt] = value;
       if (stmt == "$e" || stmt == "$f" || label == "$c" || label == "$v") {
@@ -1972,7 +1919,6 @@ end
 `;
 
         result[`${label}.mm`] = code;
-
       } else if (stmt == "$p") {
         const [, [d, f, e, [type, theorem]], func] = mm.labels[label];
 
@@ -1983,7 +1929,7 @@ end
         const steps = proof.map(([step]) => step);
         const header = [...new Set(steps)]
               .map((step) => `include "${step}.mm"\n`).join("");
-          
+
         let conds = "";
 
         let hypothesis = [];
@@ -2043,22 +1989,22 @@ describe("transpiler", () => {
         throw new Error("hi");
       }
     } catch (e) {
-      fs.mkdir(dir);
+      await fs.mkdir(dir);
     }
 
     for (let [name, content] of Object.entries(files)) {
       await fs.writeFile(`${dir}/${name}`, content);
-    }    
+    }
   }
 
-  it.only("transpile", async () => {
-    for (let file of ["tq.mm", "pq.mm", "miu.mm", "demo0.mm", "test.mm"]) {
+  it("transpile", async () => {
+    for (let file of ["tq.mm", "pq.mm", "miu.mm", "demo0.mm", "test.mm", "id.mm"]) {
       await transpile(`tests/${file}`);
     }
   });
 });
 
-describe.only("Transpile and Parse", () => {
+describe("Transpile and Parse", () => {
   it("transpile and parse", async () => {
     const fs = require("fs/promises");
     for (let src of ["demo0.mm", "pq.mm", "tq.mm", "test.mm"]) {
