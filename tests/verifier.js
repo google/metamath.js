@@ -1842,6 +1842,17 @@ class Transpiler {
     return this;
   }
 
+  dump() {
+    let result = [];
+    for (const [label] of Object.entries(this.mm.labels).filter(([, [type]]) => type == "$a")) {
+      result.push(this.axiom(label));
+    }
+    for (const [label] of Object.entries(this.mm.labels).filter(([, [type]]) => type == "$p")) {
+      result.push(this.theorem(label));
+    }
+    return result.join("");
+  }
+  
   axiom(label) {
     const [, [d, f, e, [type, axiom]]] = this.mm.labels[label];
     let args = f.map(([type, name, label]) => `  let ${label}: ${type} ${name}`).join("\n");
@@ -1938,7 +1949,6 @@ end
     const result = {};
 
     this.read(program);
-    // const frame = mm.pop();
     
     for (const [label, value] of Object.entries(this.mm.labels)) {
       const [stmt] = value;
@@ -2001,15 +2011,13 @@ describe("transpiler", () => {
       wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
     `);
 
-    assertThat(transpiler.axiom("w2")).equalsTo(`
+    assertThat(transpiler.dump()).equalsTo(`
 axiom w2
   let wp: wff p
   let wq: wff q
   assert wff ( p -> q )
 end
-`);
-    
-    assertThat(transpiler.theorem("wnew")).equalsTo(`
+
 include "w2.mm"
 
 theorem wnew
