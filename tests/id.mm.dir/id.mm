@@ -1,11 +1,10 @@
-include "lexicon.mm"
-include "ph.mm"
-include "wph.mm"
+
 include "wi.mm"
 include "ax-1.mm"
 include "mpd.mm"
 
 theorem id
+  let wph: wff ph
   assert |- ( ph -> ph )
 
   step 0) wph(): wff ph

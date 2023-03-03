@@ -1,1 +1,0 @@
-let wz: wff z

@@ -1,4 +1,3 @@
-include "lexicon.mm"
 
 include "we.mm"
 include "wM.mm"
@@ -11,6 +10,7 @@ include "III.mm"
 include "IV.mm"
 
 theorem theorem1
+
   assert |- M U I I U
 
   step 0) we(): wff 

@@ -1,1 +1,0 @@
-let wq: wff Q

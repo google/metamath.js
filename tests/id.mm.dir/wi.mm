@@ -1,4 +1,3 @@
-include "lexicon.mm"
 
 axiom wi
   let wph: wff ph

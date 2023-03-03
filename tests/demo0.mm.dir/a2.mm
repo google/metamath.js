@@ -1,4 +1,3 @@
-include "lexicon.mm"
 
 axiom a2
   let tt: term t

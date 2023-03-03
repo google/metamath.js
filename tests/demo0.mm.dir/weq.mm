@@ -1,4 +1,3 @@
-include "lexicon.mm"
 
 axiom weq
   let tt: term t

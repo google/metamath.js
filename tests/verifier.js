@@ -1863,9 +1863,86 @@ describe("parser", () => {
 });
 
 class Transpiler {
-  split(program) {
-    const result = {};
+  read(program) {
+    this.mm = this.parse(program);
+    // console.log("hi");
+    // throw new Error("hi");
+    return this;
+  }
 
+  axiom(label) {
+    const [, [d, f, e, [type, axiom]]] = this.mm.labels[label];
+    let args = f.map(([type, name, label]) => `  let ${label}: ${type} ${name}`).join("\n");
+    if (Object.entries(f).length  > 0) {
+      args += "\n";
+    }
+    
+    let assumptions = e.map(([seq, type, name]) => `  assume ${name}: ${type} ${seq.join(" ")}`).join("\n");
+
+    if (Object.entries(e).length > 0) {
+      assumptions += "\n";
+    }
+
+    const result = `
+axiom ${label}
+${args}${assumptions}  assert ${type} ${axiom.join(' ')}
+end
+`;
+
+    return result;
+  }
+
+  theorem(label) {
+    const [, [d, f, e, [type, theorem]], func] = this.mm.labels[label];
+
+    let args = f.map(([type, name, label]) => `  let ${label}: ${type} ${name}`).join("\n");
+
+    //console.log();
+    //throw new Error("hi");
+    const local = f.map(([, , label]) => label);
+    
+    const proof = func();
+    
+    const steps = proof.map(([step]) => step);
+    const header = [...new Set(steps)]
+          .filter((step) => !local.includes(step))
+          .map((step) => `include "${step}.mm"\n`).join("");
+    
+    let conds = "";
+    
+    let hypothesis = [];
+    for (let [seq, type, label] of e) {
+      hypothesis.push(`  assume ${label}: ${type} "${seq.join(" ")}"`);
+    }
+    
+    let diff = [];
+    if (d.length > 0) {
+      args += " and (";
+    }
+    for (let [x, y] of d) {
+      diff.push(`${x} != ${y}`);
+    }
+    
+    if (d.length > 0) {
+      args += "" + diff.join(", ") + ")";
+    }
+    
+    const body = proof.map(([step, [type, sequence], args], i) => `  step ${i}) ${step}(${args}): ${type} ${sequence.join(' ')}`).join("\n");
+    
+    const code = `
+${header}
+theorem ${label}
+${args}
+  assert ${type} ${theorem.join(' ')}
+
+${body}
+end
+`;
+
+    return code;
+  }
+  
+  parse(program) {
     const mm = new MM();
     mm.push();
     
@@ -1882,94 +1959,24 @@ class Transpiler {
       }
     });
 
-    const frame = mm.pop();
-    let code;
-    if (frame.c.size > 0) {
-      code = `const ${[...frame.c].join(" ")}\n`;
-    }
-    
-    if (frame.v.size > 0) {
-      code = code || "";
-      code += `var ${[...frame.v].join(" ")}\n`;
-    }
+    return mm;
+  }
+  
+  split(program) {
+    const result = {};
 
-    if (code) {
-      result["lexicon.mm"] = code;
-    }
-
-    //console.log(frame);
-    //throw new Error("hi");
+    this.read(program);
+    // const frame = mm.pop();
     
-    for (const [label, value] of Object.entries(mm.labels)) {
+    for (const [label, value] of Object.entries(this.mm.labels)) {
       const [stmt] = value;
       if (stmt == "$e" || stmt == "$f" || label == "$c" || label == "$v") {
         continue;
       } else  if (stmt == "$a") {
-        const [, [d, f, e, [type, axiom]]] = mm.labels[label];
-        let args = f.map(([type, name, label]) => `  let ${label}: ${type} ${name}`).join("\n");
-        if (Object.entries(f).length  > 0) {
-          args += "\n";
-        }
-        
-        let assumptions = e.map(([seq, type, name]) => `  assume ${name}: ${type} ${seq.join(" ")}`).join("\n");
-
-        if (Object.entries(e).length > 0) {
-          assumptions += "\n";
-        }
-
-        const code =
-`include "lexicon.mm"
-
-axiom ${label}
-${args}${assumptions}  assert ${type} ${axiom.join(' ')}
-end
-`;
-
+        let code = this.axiom(label);
         result[`${label}.mm`] = code;
       } else if (stmt == "$p") {
-        const [, [d, f, e, [type, theorem]], func] = mm.labels[label];
-
-        let args = f.map(([type, name]) => `include "${name}.mm"`).join("\n");
-        
-        const proof = func();
-        
-        const steps = proof.map(([step]) => step);
-        const header = [...new Set(steps)]
-              .map((step) => `include "${step}.mm"\n`).join("");
-
-        let conds = "";
-
-        let hypothesis = [];
-        for (let [seq, type, label] of e) {
-          hypothesis.push(`  assume ${label}: ${type} "${seq.join(" ")}"`);
-        }
-        
-        let diff = [];
-        if (d.length > 0) {
-          args += " and (";
-        }
-        for (let [x, y] of d) {
-          diff.push(`${x} != ${y}`);
-        }
-        
-        if (d.length > 0) {
-          args += "" + diff.join(", ") + ")";
-        }
-
-        const body = proof.map(([step, [type, sequence], args], i) => `  step ${i}) ${step}(${args}): ${type} ${sequence.join(' ')}`).join("\n");
-        
-        const code =
-`include "lexicon.mm"
-${args}
-${header}
-theorem ${label}
-  assert ${type} ${theorem.join(' ')}
-
-${body}
-end
-`;
-        
-        // await fs.writeFile(`${dir}/${label}.mm`, code);
+        let code = this.theorem(label);
         result[`${label}.mm`] = code;
       } else {
         throw new Error(`Unknown statement type ${stmt}.`);
@@ -2004,10 +2011,48 @@ describe("transpiler", () => {
     }
   }
 
-  it("simple", async () => {
+  it("empty", async () => {
     const transpiler = new Transpiler();
     const result = transpiler.split(``);
     assertThat(result).equalsTo({});
+  });
+  
+  it("simple", async () => {
+    const transpiler = new Transpiler().read(`
+      $c ( ) -> wff $.
+      $v p q r s $.
+      wp $f wff p $.
+      wq $f wff q $.
+      wr $f wff r $.
+      ws $f wff s $.
+      w2 $a wff ( p -> q ) $.
+      wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
+    `);
+
+    assertThat(transpiler.axiom("w2")).equalsTo(`
+axiom w2
+  let wp: wff p
+  let wq: wff q
+  assert wff ( p -> q )
+end
+`);
+    
+    assertThat(transpiler.theorem("wnew")).equalsTo(`
+include "w2.mm"
+
+theorem wnew
+  let wp: wff p
+  let wr: wff r
+  let ws: wff s
+  assert wff ( s -> ( r -> p ) )
+
+  step 0) ws(): wff s
+  step 1) wr(): wff r
+  step 2) wp(): wff p
+  step 3) w2(1,2): wff ( r -> p )
+  step 4) w2(0,3): wff ( s -> ( r -> p ) )
+end
+`);
   });
   
   it("transpile", async () => {

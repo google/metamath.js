@@ -1,1 +1,0 @@
-let wp: wff P

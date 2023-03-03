@@ -1,4 +1,3 @@
-include "lexicon.mm"
 
 axiom ax5
   let wz: wff z

@@ -1,4 +1,3 @@
-include "lexicon.mm"
 
 axiom mp
   let wp: wff P

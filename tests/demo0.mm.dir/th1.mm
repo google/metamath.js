@@ -1,6 +1,4 @@
-include "lexicon.mm"
-include "t.mm"
-include "tt.mm"
+
 include "tze.mm"
 include "tpl.mm"
 include "weq.mm"
@@ -10,6 +8,7 @@ include "a1.mm"
 include "mp.mm"
 
 theorem th1
+  let tt: term t
   assert |- t = t
 
   step 0) tt(): term t
