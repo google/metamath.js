@@ -1882,13 +1882,20 @@ class Transpiler {
       }
     });
 
-    let frame = mm.pop();
-    const code =
-`const ${[...frame.c].join(" ")}
-var ${[...frame.v].join(" ")}
-`;
+    const frame = mm.pop();
+    let code;
+    if (frame.c.size > 0) {
+      code = `const ${[...frame.c].join(" ")}\n`;
+    }
+    
+    if (frame.v.size > 0) {
+      code = code || "";
+      code += `var ${[...frame.v].join(" ")}\n`;
+    }
 
-    result["lexicon.mm"] = code;
+    if (code) {
+      result["lexicon.mm"] = code;
+    }
 
     //console.log(frame);
     //throw new Error("hi");
@@ -1997,6 +2004,12 @@ describe("transpiler", () => {
     }
   }
 
+  it("simple", async () => {
+    const transpiler = new Transpiler();
+    const result = transpiler.split(``);
+    assertThat(result).equalsTo({});
+  });
+  
   it("transpile", async () => {
     for (let file of ["tq.mm", "pq.mm", "miu.mm", "demo0.mm", "test.mm", "id.mm"]) {
       await transpile(`tests/${file}`);
