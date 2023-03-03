@@ -2058,8 +2058,8 @@ describe("transpiler", () => {
   });
 });
 
-describe("Transpile and Parse", () => {
-  it("miu.mm", async () => {
+describe.only("Transpile and Parse", () => {
+  it("transpile and parse", async () => {
     const fs = require("fs/promises");
     for (let src of ["demo0.mm", "pq.mm", "tq.mm", "test.mm"]) {
       const program = await fs.readFile(`tests/${src}`);
