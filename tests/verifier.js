@@ -1560,21 +1560,14 @@ class Parser {
     let args = [];
     result.push(args);
     if (this.accepts(...labels)) {
-      //console.log("accepted");
       args.push(this.label());
       this.ws(true);
     }
-    //console.log(result);
-    //console.log(args);
-    //console.log(this.lexer.head);
-    //console.log(this.accepts(...labels));
     while (this.accepts(",")) {
       this.eat(",");
       this.ws(true);
       args.push(this.label());
     }
-    //console.log(this.lexer.head);
-    //throw new Error("hi");
     this.ws(true);
     this.eat(")");
     this.ws(true);
@@ -1641,12 +1634,6 @@ class Parser {
         this.ws();
       } else if (this.accepts("//")) {
         throw new Error("hi");
-      } else if (this.accepts("const")) {
-        result.push(this.declaration("const", false));
-      } else if (this.accepts("var")) {
-        result.push(this.declaration("var", false));
-      } else if (this.accepts("let")) {
-        result.push(this.declaration("let"));
       } else if (this.accepts("axiom")) {
         result.push(this.axiom());
       } else if (this.accepts("theorem")) {
@@ -1668,16 +1655,6 @@ describe("parser", () => {
 
       include "file.mm"
 
-      // tokens
-      const => -> + " ( ) ; : , & || |- /** this too is a comment */ // foo
-      const M I U |- wff
-
-      var x y
-
-      // variable declarations
-      let wx: wff x
-      let wy: wff y
-
       axiom mp
         let wp: wff p
         let wq: wff q
@@ -1694,6 +1671,10 @@ describe("parser", () => {
       end
 
       theorem theorem1
+        // variable declarations
+        let wx: wff x
+        let wy: wff y
+
         assert |- ~ p
         step 1) foo(): p
         step 2) bar(1): ~ /** this is a comment */ p
@@ -1703,11 +1684,6 @@ describe("parser", () => {
     
     assertThat(result).equalsTo([
       ["include", "file.mm"],
-      ["const", ["=>", "->", "+", '"', "(", ")", ";", ":", ",", "&", "||", "|-"]],
-      ["const", ["M", "I", "U", "|-", "wff"]],
-      ["var", ["x", "y"]],
-      ["let", ["wx", "wff", "x"]],
-      ["let", ["wy", "wff", "y"]],
       ["axiom", "mp", [
         [
           ["let", ["wp", "wff", "p"]],
@@ -1727,7 +1703,10 @@ describe("parser", () => {
       ]
       ],
       ["theorem", "theorem1", [
-        [],
+        [
+          ["let", ["wx", "wff", "x"]],
+          ["let", ["wy", "wff", "y"]],
+        ],
         [],
         ["assert", ["|-", "~", "p"]]
       ],
@@ -1851,13 +1830,8 @@ describe("parser", () => {
     lexer.ws();
     assertThat(lexer.next()).equalsTo(["label", "q"]);
     lexer.ws();
-    //assertThat(next()).equalsTo(["proof", "proof"]);
-    //assertThat(next()[0]).equalsTo("ws");
-    // assertThat(next()).equalsTo([";", ";"]);
-    // assertThat(next()[0]).equalsTo("ws");
     assertThat(lexer.next()).equalsTo(["end", "end"]);
     lexer.ws();
-    // assertThat(done()).equalsTo(true);
     lexer.done();
   });
 });
@@ -1865,8 +1839,6 @@ describe("parser", () => {
 class Transpiler {
   read(program) {
     this.mm = this.parse(program);
-    // console.log("hi");
-    // throw new Error("hi");
     return this;
   }
 
