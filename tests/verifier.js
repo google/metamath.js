@@ -2218,6 +2218,36 @@ describe("Transpile and Parse", () => {
     const metamath = new Compiler().compile(typogram);
     assertThat(new Verifier().verify(metamath)).equalsTo(6);
   });
+
+  async function write(dir, file, content) {
+    const fs = require("fs/promises");
+
+    // Creates a directory if one doesn't exist
+    try {
+      const file = await fs.stat(dir);
+      if (!file.isDirectory()) {
+        throw new Error("hi");
+      }
+    } catch (e) {
+      await fs.mkdir(dir);
+    }
+
+    await fs.writeFile(`${dir}/${file}`, content);
+  }
+  
+  it("mpbirx", async function() {
+    const src = "hol.mm";
+    const program = await require("fs/promises").readFile(`tests/${src}`);
+    const files = new Transpiler()
+          .read(program.toString())
+          .closure("mpbirx", true);
+
+    for (const [file, [deps, body]] of Object.entries(files)) {
+      const header = deps.map((dep) => `include "${dep}.mm"`).join("\n");
+      const content = `${header}\n${body}`;
+      await write(`tests/${src}.dir`, `${file}.mm`, content);
+    }
+  });
   
   it("transpile, parse, compile and verify", async function() {
     this.timeout(50000); 
