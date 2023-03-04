@@ -1898,7 +1898,8 @@ end
 
     //console.log();
     //throw new Error("hi");
-    const local = f.map(([, , label]) => label);
+    const local = [...f.map(([, , label]) => label),
+                   ...e.map(([, , label]) => label)];
     
     const proof = func();
     
@@ -2153,6 +2154,8 @@ $\}`);
 });
 
 describe("Transpile and Parse", () => {
+  const {Verifier} = require("../src/descent.js");
+
   it("transpile and parse", async () => {
     const fs = require("fs/promises");
     for (let src of ["demo0.mm", "pq.mm", "tq.mm", "test.mm"]) {
@@ -2170,10 +2173,41 @@ describe("Transpile and Parse", () => {
     }
   });
 
+  it("ql.mm", async function() {
+    const program = await require("fs/promises").readFile(`tests/ql.mm`);
+    const files = new Transpiler().read(program.toString()).split();
+    const label = "testmod3";
+
+    const queue = [label];
+
+    const list = [];
+    
+    while (queue.length > 0) {
+      let head = queue.shift();
+      if (list.includes(head)) {
+        continue;
+      }
+      list.push(head);
+      let [deps] = files[head];
+      queue.push(...deps);
+    }
+
+    const result = [];
+
+    for (let file of list) {
+      const [, content] = files[file];
+      result.push(content);
+    }
+
+    const typogram = result.join("");
+
+    const metamath = new Compiler().compile(typogram);
+    assertThat(new Verifier().verify(metamath)).equalsTo(49);
+  });
+  
   it("transpile, parse, compile and verify", async function() {
     this.timeout(50000); 
 
-    const {Verifier} = require("../src/descent.js");
     // "ql.mm" passes, but we disable it because it takes a long time
     for (let src of ["demo0.mm", "pq.mm", "tq.mm", "test.mm", "trud.mm", "hol.mm"]) {
       const program = await require("fs/promises").readFile(`tests/${src}`);
