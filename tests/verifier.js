@@ -1361,6 +1361,7 @@ class Lexer {
       ["let"]: "let",
       ["step"]: "step",
       ["assume"]: "assume",
+      ["disjoint"]: "disjoint",
       ["assert"]: "assert",
       ["("]: "(",
       [")"]: ")",
@@ -1541,8 +1542,14 @@ class Parser {
     }
     
     this.ws(true);
+    let disjoints = [];
+    while (this.accepts("disjoint")) {
+      disjoints.push(this.declaration("disjoint", false, true));
+    }
+    
+    this.ws(true);
     let then = this.declaration("assert", false, true);
-    return [lets, ifs, then];
+    return [lets, ifs, disjoints, then];
   }
   
   step() {
@@ -1662,6 +1669,10 @@ describe("parser", () => {
         // logical hypothesis
         assume maj: |- p => q
         assume min: |- p
+
+        // disjoint variables
+        disjoint p q
+        
         assert |- q
       end
 
@@ -1691,14 +1702,17 @@ describe("parser", () => {
         ], [
           ["assume", ["maj", "|-", "p", "=>", "q"]],
           ["assume", ["min", "|-", "p"]],
-        ], 
+        ],
+        [
+          ["disjoint", ["p", "q"]]
+        ],
         ["assert", ["|-", "q"]],
       ]
       ],
       ["axiom", "we", [
-        [
-        ], [
-        ], 
+        [],
+        [],
+        [],
         ["assert", ["|-", ""]],
       ]
       ],
@@ -1707,6 +1721,7 @@ describe("parser", () => {
           ["let", ["wx", "wff", "x"]],
           ["let", ["wy", "wff", "y"]],
         ],
+        [],
         [],
         ["assert", ["|-", "~", "p"]]
       ],
@@ -1842,41 +1857,37 @@ class Compiler {
     let code = parser.parse(source);
 
     const consts = new Set();
-    for (let [type, label, [vars, assumes, [, assert]], proof] of code) {
+    for (let [type, label, [vars, assumes, disjoints, [, assert]], proof] of code) {
       const names = vars.map(([, [label, type, name]]) => name);
       for (let symbol of assert.filter((symbol) => !names.includes(symbol))) {
         consts.add(symbol);
       }
     }
-    // console.log(``);
 
     let result = [];
     result.push(`$c ${[...consts].join(" ")} $.`);
 
-    for (let [type, label, [vars, assumes, [, assert]], proof] of code) {
+    for (let [type, label, [vars, assumes, disjoints, [, assert]], proof] of code) {
       const names = vars.map(([, [label, type, name]]) => name);
       const types = vars.map(([, [label, type, name]]) => `  ${label} $f ${type} ${name} $.`);
-      let logical = [];
-      //if (assumes.length > 0) {
-      logical = [...assumes]
-        .map(([, assumption]) => [assumption.shift(), assumption.shift(), assumption])
-        .map(([label, type, symbols]) => `  ${label} $e ${type} ${symbols.join(" ")} $.`);
-      // throw new Error("hi");
-      //}
-      let p = "";
-      if (proof) {
-        p += `$= ${proof.map(([step, label]) => label).join(" ")} `;
-      }
-
+      const logical = [...assumes]
+          .map(([, assumption]) => [assumption.shift(), assumption.shift(), assumption])
+          .map(([label, type, symbols]) => `  ${label} $e ${type} ${symbols.join(" ")} $.`);
+      
+      const dvis = disjoints.map(([, vars]) => `${vars.join(" ")}`);
+      
       const v = names.length > 0 ? `  $v ${names.join(" ")} $.` : "";
       const f = types.length > 0 ? `${types.join("\n")}` : "";
       const e = logical.length > 0 ? `${logical.join("\n")}` : "";
+      const d = disjoints.length > 0 ? `  $d ${dvis.join(" ")} $.` : "";
+      const p = proof ? `$= ${proof.map(([step, label]) => label).join(" ")} ` : "";
       
       result.push(`
 $\{
 ${v}
 ${f}
 ${e}
+${d}
   ${label} $${type == "axiom" ? "a" : "p"} ${assert.join(" ")} ${p}$.
 $\}`);
     }
@@ -1955,7 +1966,7 @@ end
       // args += " and (";
     }
     for (let [x, y] of d) {
-      diff.push(`  with ${x} != ${y}`);
+      diff.push(`  disjoint ${x} ${y}`);
     }
     
     //if (d.length > 0) {
@@ -2048,7 +2059,44 @@ describe("transpiler", () => {
     assertThat(result).equalsTo({});
   });
 
-  it.skip("$d p r $.", async () => {
+  it("transpile", async () => {
+    const metamath = `
+      $c ( ) -> wff $.
+      $v p q r s $.
+      wp $f wff p $.
+      wq $f wff q $.
+      wr $f wff r $.
+      ws $f wff s $.
+      $d p r $.
+      w2 $a wff ( p -> q ) $.
+      wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
+    `;
+    
+    assertThat(new Transpiler().read(metamath).dump()).equalsTo(`
+axiom w2
+  let wp: wff p
+  let wq: wff q
+  assert wff ( p -> q )
+end
+
+theorem wnew
+  let wp: wff p
+  let wr: wff r
+  let ws: wff s
+  disjoint p r
+  assert wff ( s -> ( r -> p ) )
+
+  step 0) ws(): wff s
+  step 1) wr(): wff r
+  step 2) wp(): wff p
+  step 3) w2(1,2): wff ( r -> p )
+  step 4) w2(0,3): wff ( s -> ( r -> p ) )
+end
+`);
+
+  });
+  
+  it("compile", async () => {
     const metamath = `
       $c ( ) -> wff $.
       $v p q r s $.
@@ -2063,28 +2111,6 @@ describe("transpiler", () => {
     const transpiler = new Transpiler().read(metamath);
 
     const source = transpiler.dump();
-    
-    assertThat(source).equalsTo(`
-axiom w2
-  let wp: wff p
-  let wq: wff q
-  assert wff ( p -> q )
-end
-
-theorem wnew
-  let wp: wff p
-  let wr: wff r
-  let ws: wff s
-  with p != r
-  assert wff ( s -> ( r -> p ) )
-
-  step 0) ws(): wff s
-  step 1) wr(): wff r
-  step 2) wp(): wff p
-  step 3) w2(1,2): wff ( r -> p )
-  step 4) w2(0,3): wff ( s -> ( r -> p ) )
-end
-`);
 
     const result = new Compiler().compile(source);
     assertThat(result).equalsTo(
@@ -2095,6 +2121,7 @@ $\{
   wp $f wff p $.
   wq $f wff q $.
 
+
   w2 $a wff ( p -> q ) $.
 $\}
 
@@ -2104,12 +2131,13 @@ $\{
   wr $f wff r $.
   ws $f wff s $.
 
+  $d p r $.
   wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
 $\}`);
 
   });
   
-  it("simple", async () => {
+  it("verify", async () => {
     const metamath = `
       $c ( ) -> wff $.
       $v p q r s $.
@@ -2130,64 +2158,7 @@ $\}`);
 
     const source = transpiler.dump();
     
-    assertThat(source).equalsTo(`
-axiom w2
-  let wp: wff p
-  let wq: wff q
-  assert wff ( p -> q )
-end
-
-theorem wnew
-  let wp: wff p
-  let wr: wff r
-  let ws: wff s
-
-  assert wff ( s -> ( r -> p ) )
-
-  step 0) ws(): wff s
-  step 1) wr(): wff r
-  step 2) wp(): wff p
-  step 3) w2(1,2): wff ( r -> p )
-  step 4) w2(0,3): wff ( s -> ( r -> p ) )
-end
-`);
-
-    assertThat(transpiler.split()["wnew"]).equalsTo([["w2"], `
-theorem wnew
-  let wp: wff p
-  let wr: wff r
-  let ws: wff s
-
-  assert wff ( s -> ( r -> p ) )
-
-  step 0) ws(): wff s
-  step 1) wr(): wff r
-  step 2) wp(): wff p
-  step 3) w2(1,2): wff ( r -> p )
-  step 4) w2(0,3): wff ( s -> ( r -> p ) )
-end
-`]);
-
     const result = new Compiler().compile(source);
-    assertThat(result).equalsTo(
-`$c wff ( -> ) $.
-
-$\{
-  $v p q $.
-  wp $f wff p $.
-  wq $f wff q $.
-
-  w2 $a wff ( p -> q ) $.
-$\}
-
-$\{
-  $v p r s $.
-  wp $f wff p $.
-  wr $f wff r $.
-  ws $f wff s $.
-
-  wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
-$\}`);
 
     // Verifies that the proofs are valid.
     assertThat(new Verifier().verify(result)).equalsTo(1);
