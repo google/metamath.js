@@ -1860,6 +1860,8 @@ class Transpiler {
     const queue = [label];
 
     const list = [];
+
+    const result = {};
     
     while (queue.length > 0) {
       let head = queue.shift();
@@ -1871,14 +1873,12 @@ class Transpiler {
       queue.push(...deps);
     }
 
-    const result = [];
-
     for (let file of list) {
-      const [, content] = files[file];
-      result.push(content);
+      const [deps, content] = files[file];
+      result[file] = [deps, content];
     }
 
-    return result.join("");
+    return result;
   }
   
   dump() {
@@ -2201,11 +2201,22 @@ describe("Transpile and Parse", () => {
 
   it("testmod3", async function() {
     const program = await require("fs/promises").readFile(`tests/ql.mm`);
-    const typogram = new Transpiler()
+    const files = new Transpiler()
           .read(program.toString())
           .closure("testmod3");
+    const typogram = Object.values(files).map(([, content]) => content).join("");
     const metamath = new Compiler().compile(typogram);
     assertThat(new Verifier().verify(metamath)).equalsTo(49);
+  });
+  
+  it("mpbirx", async function() {
+    const program = await require("fs/promises").readFile(`tests/hol.mm`);
+    const files = new Transpiler()
+          .read(program.toString())
+          .closure("mpbirx", true);
+    const typogram = Object.values(files).map(([, content]) => content).join("");
+    const metamath = new Compiler().compile(typogram);
+    assertThat(new Verifier().verify(metamath)).equalsTo(6);
   });
   
   it("transpile, parse, compile and verify", async function() {
