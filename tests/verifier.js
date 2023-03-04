@@ -2171,14 +2171,18 @@ describe("Transpile and Parse", () => {
   it("transpile, parse, compile and verify", async () => {
     const {Verifier} = require("../src/descent.js");
     for (let src of ["demo0.mm", "pq.mm", "tq.mm", "test.mm", "trud.mm", "hol.mm"]) {
+      // ql.mm hangs to verify, most likely because it has so many compressed proofs
+      // that explode.
       //let src = "hol.mm";
-      // let src = "trud.mm";
+      // let src = "ql.mm";
       const program = await require("fs/promises").readFile(`tests/${src}`);
       const theorems = new Verifier().verify(program.toString());
       assertThat(theorems > 0).equalsTo(true);
       const typogram = new Transpiler().read(program.toString()).dump();
-      //console.log(typogram);
+    //console.log(typogram);
+    //return;
       const metamath = new Compiler().compile(typogram);
+      //continue;
       //console.log(metamath);
       //return;
       assertThat(new Verifier().verify(metamath)).equalsTo(theorems);      
