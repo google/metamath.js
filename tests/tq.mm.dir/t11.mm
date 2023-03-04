@@ -8,6 +8,7 @@ include "ax7.mm"
 theorem t11
 
 
+
   assert |- P - - -
 
   step 0) w0(): wff -

@@ -11,6 +11,7 @@ include "IV.mm"
 theorem theorem1
 
 
+
   assert |- M U I I U
 
   step 0) we(): wff 

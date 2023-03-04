@@ -5,6 +5,7 @@ include "mpd.mm"
 theorem id
   let wph: wff ph
 
+
   assert |- ( ph -> ph )
 
   step 0) wph(): wff ph

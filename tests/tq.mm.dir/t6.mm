@@ -6,6 +6,7 @@ include "ax1.mm"
 theorem t6
 
 
+
   assert |- - - t - - - q - - - - - -
 
   step 0) w0(): wff -

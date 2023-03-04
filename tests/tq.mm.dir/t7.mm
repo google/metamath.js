@@ -6,6 +6,7 @@ include "ax2.mm"
 theorem t7
 
 
+
   assert |- C - - - - - -
 
   step 0) w0(): wff -

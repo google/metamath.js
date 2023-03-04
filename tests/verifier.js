@@ -920,74 +920,9 @@ describe("Verifier", () => {
       ]);
   });
 
-  it("trud", () => {
-    const [code] = parse(`
-      $( Declare the primitive constant symbols for lambda calculus. $)
-      $c var $.   $( Typecode for variables (syntax) $)
-      $c type $.  $( Typecode for types (syntax) $)
-      $c term $.  $( Typecode for terms (syntax) $)
-      $c |- $.    $( Typecode for theorems (logical) $)
-      $c : $.     $( Typehood indicator $)
-      $c . $.     $( Separator $)
-      $c |= $.    $( Context separator $)
-      $c bool $.     $( Boolean type $)
-      $c ind $.   $( 'Individual' type $)
-      $c -> $.    $( Function type $)
-      $c ( $.     $( Open parenthesis $)
-      $c ) $.     $( Close parenthesis $)
-      $c , $.     $( Context comma $)
-      $c \\ $.     $( Lambda expression $)
-      $c = $.     $( Equality term $)
-      $c T. $.    $( Truth term $)
-      $c [ $.     $( Infix operator $)
-      $c ] $.     $( Infix operator $)
-
-      $v x y z f g p q $.  $( Bound variables $)
-      $v A B C F R S T $.  $( Term variables $)
-
-      $( Let variable A be a term. $)
-      ta $f term A $.
-      $( Let variable R be a term. $)
-      tr $f term R $.
-      $( Let variable S be a term. $)
-      ts $f term S $.
-      $( Let variable T be a term. $)
-      tt $f term T $.
-
-      $( Truth term. $)
-      kt $a term T. $.
-
-      $\{
-        ax-syl.1 $e |- R |= S $.
-        ax-syl.2 $e |- S |= T $.
-        $( Syllogism inference. $)
-        ax-syl $a |- R |= T $.
-
-        $( Syllogism inference. $)
-        syl $p |- R |= T $=
-          ( ax-syl ) ABCDEF $.
-          $( [8-Oct-2014] $)
-      $\}
-
-      $\{
-        ax-trud.1 $e |- R : bool $.
-        $( Deduction form of ~ tru . $)
-        ax-trud $a |- R |= T. $.
-
-        $( Deduction form of ~ tru . $)
-        trud $p |- R |= T. $=
-          ( ax-trud ) ABC $.
-          $( [7-Oct-2014] $)
-
-        ax-a1i.2 $e |- T. |= A $.
-
-        $( Change an empty context into any context. $)
-        a1i $p |- R |= A $=
-          ( kt ax-trud syl ) BEABCFDG $.
-          $( [7-Oct-2014] $)
-
-      $\}
-    `);
+  it("trud", async () => {
+    const file = await require("fs/promises").readFile("tests/trud.mm");
+    const [code] = parse(file.toString());
     const mm = new MM();
     mm.read(code);
   });
@@ -1419,8 +1354,8 @@ const labels = [
   "label",
   // reserved keywords that can also be labels
   "_include_",
-  "const",
-  "var",
+  // "const",
+  // "var",
   "theorem",
   "axiom",
   "proof",
@@ -1428,6 +1363,7 @@ const labels = [
   "let",
   "step",
   "assume",
+  "disjoint",
   "assert",
   // catch all types of sequences
 ];
@@ -1862,6 +1798,13 @@ class Compiler {
       for (let symbol of assert.filter((symbol) => !names.includes(symbol))) {
         consts.add(symbol);
       }
+      const logical = [...assumes]
+            .map(([, [type, ...symbols]]) => [type, symbols])
+            .map(([type, symbols]) => symbols.filter((symbol) => !names.includes(symbol)))
+            .flat();
+      for (let symbol of logical) {
+        consts.add(symbol);
+      }
     }
 
     let result = [];
@@ -1955,10 +1898,11 @@ end
     
     let conds = "";
     
-    //let hypothesis = [];
-    //for (let [seq, type, label] of e) {
-    //  hypothesis.push(`  assume ${label}: ${type} "${seq.join(" ")}"`);
-    //}
+    let assumptions = e.map(([seq, type, name]) => `  assume ${name}: ${type} ${seq.join(" ")}`).join("\n");
+
+    if (Object.entries(e).length > 0) {
+      assumptions += "\n";
+    }
     
     let diff = [];
     if (d.length > 0) {
@@ -1978,6 +1922,7 @@ end
     const code = `
 theorem ${label}
 ${args}
+${assumptions}
 ${d.length > 0 ? diff.join("\n") : ""}
   assert ${type} ${theorem.join(' ')}
 
@@ -2061,18 +2006,29 @@ describe("transpiler", () => {
 
   it("transpile", async () => {
     const metamath = `
-      $c ( ) -> wff $.
+      $c ( ) -> wff : $.
       $v p q r s $.
       wp $f wff p $.
       wq $f wff q $.
       wr $f wff r $.
       ws $f wff s $.
       $d p r $.
+      $\{
+        foo $e ( p -> q ) $.
+        w0 $a wff ( p : q ) $.
+      $\}
       w2 $a wff ( p -> q ) $.
       wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
     `;
     
     assertThat(new Transpiler().read(metamath).dump()).equalsTo(`
+axiom w0
+  let wp: wff p
+  let wq: wff q
+  assume foo: ( p -> q )
+  assert wff ( p : q )
+end
+
 axiom w2
   let wp: wff p
   let wq: wff q
@@ -2083,6 +2039,7 @@ theorem wnew
   let wp: wff p
   let wr: wff r
   let ws: wff s
+
   disjoint p r
   assert wff ( s -> ( r -> p ) )
 
@@ -2098,13 +2055,17 @@ end
   
   it("compile", async () => {
     const metamath = `
-      $c ( ) -> wff $.
+      $c ( ) -> wff : $.
       $v p q r s $.
       wp $f wff p $.
       wq $f wff q $.
       wr $f wff r $.
       ws $f wff s $.
       $d p r $.
+      $\{
+        foo $e p : q $.
+        w0 $a wff ( p -> q ) $.
+      $\}
       w2 $a wff ( p -> q ) $.
       wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
     `;
@@ -2114,7 +2075,16 @@ end
 
     const result = new Compiler().compile(source);
     assertThat(result).equalsTo(
-`$c wff ( -> ) $.
+`$c wff ( -> ) : $.
+
+$\{
+  $v p q $.
+  wp $f wff p $.
+  wq $f wff q $.
+  foo $e p : q $.
+
+  w0 $a wff ( p -> q ) $.
+$\}
 
 $\{
   $v p q $.
@@ -2191,15 +2161,17 @@ describe("Transpile and Parse", () => {
 
   it("transpile, parse, compile and verify", async () => {
     const {Verifier} = require("../src/descent.js");
-    for (let src of ["demo0.mm", "pq.mm", "tq.mm", "test.mm"]) {
+    for (let src of ["demo0.mm", "pq.mm", "tq.mm", "test.mm", "trud.mm"]) {
       // let src = "hol.mm";
+      // let src = "trud.mm";
       const program = await require("fs/promises").readFile(`tests/${src}`);
       const theorems = new Verifier().verify(program.toString());
       assertThat(theorems > 0).equalsTo(true);
       const typogram = new Transpiler().read(program.toString()).dump();
       //console.log(typogram);
       const metamath = new Compiler().compile(typogram);
-      // console.log(metamath);
+    //console.log(metamath);
+    //return;
       assertThat(new Verifier().verify(metamath)).equalsTo(theorems);      
     }
   });
