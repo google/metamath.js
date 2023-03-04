@@ -275,7 +275,20 @@ function process(program) {
   return mm;
 }
 
+class Verifier {
+  verify(program) {
+    let proofs = 0;
+    let mm = process(program);
+    for (const [, [, , proof]] of Object.entries(mm.labels).filter(([, [type]]) => type == "$p")) {
+      proof();
+      proofs++;
+    }
+    return proofs;
+  }
+}
+
 module.exports = {
   parse: parse,
   process: process,
+  Verifier: Verifier,
 };

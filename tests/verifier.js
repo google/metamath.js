@@ -2036,7 +2036,7 @@ describe("transpiler", () => {
   });
   
   it("simple", async () => {
-    const transpiler = new Transpiler().read(`
+    const metamath = `
       $c ( ) -> wff $.
       $v p q r s $.
       wp $f wff p $.
@@ -2045,7 +2045,13 @@ describe("transpiler", () => {
       ws $f wff s $.
       w2 $a wff ( p -> q ) $.
       wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
-    `);
+    `;
+
+    const {Verifier} = require("../src/descent.js");
+    // Verifies that the proofs are valid.
+    assertThat(new Verifier().verify(metamath)).equalsTo(1);
+
+    const transpiler = new Transpiler().read(metamath);
 
     const source = transpiler.dump();
     
@@ -2085,7 +2091,8 @@ theorem wnew
 end
 `]);
 
-    assertThat(new Compiler().compile(source)).equalsTo(
+    const result = new Compiler().compile(source);
+    assertThat(result).equalsTo(
 `$c wff ( -> ) $.
 
 $\{
@@ -2102,6 +2109,9 @@ $\{
   ws $f wff s $.
   wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
 $\}`);
+
+    // Verifies that the proofs are valid.
+    assertThat(new Verifier().verify(result)).equalsTo(1);
   });
   
   it("transpile", async () => {
