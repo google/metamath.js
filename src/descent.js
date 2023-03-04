@@ -201,7 +201,9 @@ class Parser {
     }
   }
   error() {
-    throw new Error(`Syntax error: unexpected ${this.head.value.type} token.`);
+    // console.log(this.head);
+    const {line, col} = this.head.value;
+    throw new Error(`Syntax error on line ${line} column ${col}: unexpected ${this.head.value.type} token.`);
   }
   block() {
     this.eat("lscope");

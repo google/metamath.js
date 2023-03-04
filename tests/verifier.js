@@ -1856,13 +1856,13 @@ class Compiler {
     for (let [type, label, [vars, assumes, [, assert]], proof] of code) {
       const names = vars.map(([, [label, type, name]]) => name);
       const types = vars.map(([, [label, type, name]]) => `  ${label} $f ${type} ${name} $.`);
-      let e = "";
-      if (assumes.length > 0) {
-        e = [...assumes]
-          .map(([, assumption]) => [assumption.shift(), assumption.shift(), assumption])
-          .map(([label, type, symbols]) => `  ${label} $e ${type} ${symbols.join(" ")} $.`);
-        // throw new Error("hi");
-      }
+      let logical = [];
+      //if (assumes.length > 0) {
+      logical = [...assumes]
+        .map(([, assumption]) => [assumption.shift(), assumption.shift(), assumption])
+        .map(([label, type, symbols]) => `  ${label} $e ${type} ${symbols.join(" ")} $.`);
+      // throw new Error("hi");
+      //}
       let p = "";
       if (proof) {
         p += `$= ${proof.map(([step, label]) => label).join(" ")} `;
@@ -1870,6 +1870,7 @@ class Compiler {
 
       const v = names.length > 0 ? `  $v ${names.join(" ")} $.` : "";
       const f = types.length > 0 ? `${types.join("\n")}` : "";
+      const e = logical.length > 0 ? `${logical.join("\n")}` : "";
       
       result.push(`
 $\{
@@ -2153,13 +2154,16 @@ describe("Transpile and Parse", () => {
     }
   });
 
-  it("miu.mm", async () => {
+  it("transpile, parse, compile and verify", async () => {
     const {Verifier} = require("../src/descent.js");
-    const program = await require("fs/promises").readFile(`tests/miu.mm`); 
-    assertThat(new Verifier().verify(program.toString())).equalsTo(1);
-    const typogram = new Transpiler().read(program.toString()).dump();
-    const metamath = new Compiler().compile(typogram);
-    assertThat(new Verifier().verify(metamath)).equalsTo(1);
+    for (let src of ["demo0.mm", "pq.mm", "tq.mm", "test.mm"]) {
+      const program = await require("fs/promises").readFile(`tests/${src}`);
+      const theorems = new Verifier().verify(program.toString());
+      assertThat(theorems > 0).equalsTo(true);
+      const typogram = new Transpiler().read(program.toString()).dump();
+      const metamath = new Compiler().compile(typogram);
+      assertThat(new Verifier().verify(metamath)).equalsTo(theorems);      
+    }
   });
 });
 
