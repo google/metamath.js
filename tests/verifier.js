@@ -1855,6 +1855,32 @@ class Transpiler {
     return this;
   }
 
+  closure(label) {
+    const files = this.split();
+    const queue = [label];
+
+    const list = [];
+    
+    while (queue.length > 0) {
+      let head = queue.shift();
+      if (list.includes(head)) {
+        continue;
+      }
+      list.push(head);
+      let [deps] = files[head];
+      queue.push(...deps);
+    }
+
+    const result = [];
+
+    for (let file of list) {
+      const [, content] = files[file];
+      result.push(content);
+    }
+
+    return result.join("");
+  }
+  
   dump() {
     let result = [];
     for (const [label] of Object.entries(this.mm.labels).filter(([, [type]]) => type == "$a")) {
@@ -2173,34 +2199,11 @@ describe("Transpile and Parse", () => {
     }
   });
 
-  it("ql.mm", async function() {
+  it("testmod3", async function() {
     const program = await require("fs/promises").readFile(`tests/ql.mm`);
-    const files = new Transpiler().read(program.toString()).split();
-    const label = "testmod3";
-
-    const queue = [label];
-
-    const list = [];
-    
-    while (queue.length > 0) {
-      let head = queue.shift();
-      if (list.includes(head)) {
-        continue;
-      }
-      list.push(head);
-      let [deps] = files[head];
-      queue.push(...deps);
-    }
-
-    const result = [];
-
-    for (let file of list) {
-      const [, content] = files[file];
-      result.push(content);
-    }
-
-    const typogram = result.join("");
-
+    const typogram = new Transpiler()
+          .read(program.toString())
+          .closure("testmod3");
     const metamath = new Compiler().compile(typogram);
     assertThat(new Verifier().verify(metamath)).equalsTo(49);
   });
