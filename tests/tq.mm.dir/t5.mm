@@ -5,6 +5,7 @@ include "ax1.mm"
 
 theorem t5
 
+
   assert |- - - t - - q - - - -
 
   step 0) w0(): wff -

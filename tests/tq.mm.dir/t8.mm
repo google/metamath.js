@@ -4,6 +4,7 @@ include "ax3.mm"
 
 theorem t8
 
+
   assert |- - - - - - DND - -
 
   step 0) w0(): wff -

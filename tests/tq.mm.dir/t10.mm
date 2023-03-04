@@ -5,6 +5,7 @@ include "ax4.mm"
 
 theorem t10
 
+
   assert |- - - - - - DND - - - - - - - - - - - -
 
   step 0) w0(): wff -

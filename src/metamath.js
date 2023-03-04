@@ -164,7 +164,6 @@ class Stack {
   }
 
   lookupD(a, b) {
-    
     for (const frame of [...this.stack].reverse()) {
       // console.log();
       const pair = a < b ? [a, b] : [b, a];

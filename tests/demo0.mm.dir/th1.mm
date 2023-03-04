@@ -8,6 +8,7 @@ include "mp.mm"
 
 theorem th1
   let tt: term t
+
   assert |- t = t
 
   step 0) tt(): term t

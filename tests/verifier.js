@@ -1352,8 +1352,8 @@ class Lexer {
       ["comment"]: {match: /\/\/.*\n/, lineBreaks: true},
       ["ws"]: {match: /[\s]+/, lineBreaks: true},
       ["_include_"]: "include",
-      ["const"]: "const",
-      ["var"]: "var",
+      //["const"]: "const",
+      //["var"]: "var",
       ["theorem"]: "theorem",
       ["axiom"]: "axiom",
       ["proof"]: "proof",
@@ -1724,7 +1724,7 @@ describe("parser", () => {
       const => + -
     `);
     lexer.ws("ws");
-    lexer.eat("const");
+    lexer.eat("label", "const");
     lexer.ws();
     lexer.eat("sequence", "=>");
     lexer.ws();
@@ -1941,32 +1941,33 @@ end
     const steps = proof.map(([step]) => step);
     const deps = [...new Set(steps)]
           .filter((step) => !local.includes(step));
-          // .map((step) => `include "${step}.mm"\n`).join("");
     
     let conds = "";
     
-    let hypothesis = [];
-    for (let [seq, type, label] of e) {
-      hypothesis.push(`  assume ${label}: ${type} "${seq.join(" ")}"`);
-    }
+    //let hypothesis = [];
+    //for (let [seq, type, label] of e) {
+    //  hypothesis.push(`  assume ${label}: ${type} "${seq.join(" ")}"`);
+    //}
     
     let diff = [];
     if (d.length > 0) {
-      args += " and (";
+      // throw new Error("unsupported distinguished variables operator");
+      // args += " and (";
     }
     for (let [x, y] of d) {
-      diff.push(`${x} != ${y}`);
+      diff.push(`  with ${x} != ${y}`);
     }
     
-    if (d.length > 0) {
-      args += "" + diff.join(", ") + ")";
-    }
+    //if (d.length > 0) {
+    //  args += "" + diff.join(", ") + ")";
+    //}
     
     const body = proof.map(([step, [type, sequence], args], i) => `  step ${i}) ${step}(${args}): ${type} ${sequence.join(' ')}`).join("\n");
     
     const code = `
 theorem ${label}
 ${args}
+${d.length > 0 ? diff.join("\n") : ""}
   assert ${type} ${theorem.join(' ')}
 
 ${body}
@@ -2046,6 +2047,67 @@ describe("transpiler", () => {
     const result = transpiler.read(``).split();
     assertThat(result).equalsTo({});
   });
+
+  it.skip("$d p r $.", async () => {
+    const metamath = `
+      $c ( ) -> wff $.
+      $v p q r s $.
+      wp $f wff p $.
+      wq $f wff q $.
+      wr $f wff r $.
+      ws $f wff s $.
+      $d p r $.
+      w2 $a wff ( p -> q ) $.
+      wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
+    `;
+    const transpiler = new Transpiler().read(metamath);
+
+    const source = transpiler.dump();
+    
+    assertThat(source).equalsTo(`
+axiom w2
+  let wp: wff p
+  let wq: wff q
+  assert wff ( p -> q )
+end
+
+theorem wnew
+  let wp: wff p
+  let wr: wff r
+  let ws: wff s
+  with p != r
+  assert wff ( s -> ( r -> p ) )
+
+  step 0) ws(): wff s
+  step 1) wr(): wff r
+  step 2) wp(): wff p
+  step 3) w2(1,2): wff ( r -> p )
+  step 4) w2(0,3): wff ( s -> ( r -> p ) )
+end
+`);
+
+    const result = new Compiler().compile(source);
+    assertThat(result).equalsTo(
+`$c wff ( -> ) $.
+
+$\{
+  $v p q $.
+  wp $f wff p $.
+  wq $f wff q $.
+
+  w2 $a wff ( p -> q ) $.
+$\}
+
+$\{
+  $v p r s $.
+  wp $f wff p $.
+  wr $f wff r $.
+  ws $f wff s $.
+
+  wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
+$\}`);
+
+  });
   
   it("simple", async () => {
     const metamath = `
@@ -2079,6 +2141,7 @@ theorem wnew
   let wp: wff p
   let wr: wff r
   let ws: wff s
+
   assert wff ( s -> ( r -> p ) )
 
   step 0) ws(): wff s
@@ -2094,6 +2157,7 @@ theorem wnew
   let wp: wff p
   let wr: wff r
   let ws: wff s
+
   assert wff ( s -> ( r -> p ) )
 
   step 0) ws(): wff s
@@ -2157,11 +2221,14 @@ describe("Transpile and Parse", () => {
   it("transpile, parse, compile and verify", async () => {
     const {Verifier} = require("../src/descent.js");
     for (let src of ["demo0.mm", "pq.mm", "tq.mm", "test.mm"]) {
+      // let src = "hol.mm";
       const program = await require("fs/promises").readFile(`tests/${src}`);
       const theorems = new Verifier().verify(program.toString());
       assertThat(theorems > 0).equalsTo(true);
       const typogram = new Transpiler().read(program.toString()).dump();
+      //console.log(typogram);
       const metamath = new Compiler().compile(typogram);
+      // console.log(metamath);
       assertThat(new Verifier().verify(metamath)).equalsTo(theorems);      
     }
   });

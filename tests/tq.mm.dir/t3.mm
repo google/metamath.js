@@ -3,6 +3,7 @@ include "ax0.mm"
 
 theorem t3
 
+
   assert |- - - t - q - -
 
   step 0) t0(): wff - -
