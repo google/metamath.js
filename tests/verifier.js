@@ -1848,23 +1848,26 @@ class Compiler {
         consts.add(symbol);
       }
     }
-    console.log(``);
+    // console.log(``);
 
     let result = [];
     result.push(`$c ${[...consts].join(" ")} $.`);
 
     for (let [type, label, [vars, assumes, [, assert]], proof] of code) {
-      const v = vars.map(([, [label, type, name]]) => name);
-      const f = vars.map(([, [label, type, name]]) => `  ${label} $f ${type} ${name} $.`);
+      const names = vars.map(([, [label, type, name]]) => name);
+      const conditions = vars.map(([, [label, type, name]]) => `  ${label} $f ${type} ${name} $.`);
       let p = "";
       if (proof) {
         p += `$= ${proof.map(([step, label]) => label).join(" ")} `;
       }
+
+      const v = names.length > 0 ? `  $v ${names.join(" ")} $.` : "";
+      const f = conditions.length > 0 ? `${conditions.join("\n")}` : "";
       
       result.push(`
 $\{
-  $v ${v.join(" ")} $.
-${f.join("\n")}
+${v}
+${f}
   ${label} $${type == "axiom" ? "a" : "p"} ${assert.join(" ")} ${p}$.
 $\}`);
     }
@@ -2048,6 +2051,7 @@ describe("transpiler", () => {
     `;
 
     const {Verifier} = require("../src/descent.js");
+
     // Verifies that the proofs are valid.
     assertThat(new Verifier().verify(metamath)).equalsTo(1);
 
@@ -2113,7 +2117,7 @@ $\}`);
     // Verifies that the proofs are valid.
     assertThat(new Verifier().verify(result)).equalsTo(1);
   });
-  
+
   it("transpile", async () => {
     for (let file of ["tq.mm", "pq.mm", "miu.mm", "demo0.mm", "test.mm", "id.mm"]) {
       await transpile(`tests/${file}`);
@@ -2137,6 +2141,15 @@ describe("Transpile and Parse", () => {
         }
       }
     }
+  });
+
+  it.skip("miu.mm", async () => {
+    const {Verifier} = require("../src/descent.js");
+    const program = await require("fs/promises").readFile(`tests/miu.mm`); 
+    assertThat(new Verifier().verify(program.toString())).equalsTo(1);
+    const typogram = new Transpiler().read(program.toString()).dump();
+    const metamath = new Compiler().compile(typogram);
+    assertThat(new Verifier().verify(metamath)).equalsTo(1);
   });
 });
 
