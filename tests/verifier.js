@@ -1794,15 +1794,23 @@ class Compiler {
 
     const consts = new Set();
     for (let [type, label, [vars, assumes, disjoints, [, assert]], proof] of code) {
-      const names = vars.map(([, [label, type, name]]) => name);
-      for (let symbol of assert.filter((symbol) => !names.includes(symbol))) {
-        consts.add(symbol);
+      // All variable types are constants
+      for (let type of vars.map(([, [label, type, name]]) => type)) {
+        consts.add(type);
       }
+
+      const names = vars.map(([, [label, type, name]]) => name);
+
+      // All symbols in logical hypothesis that aren't variables are constants
       const logical = [...assumes]
             .map(([, [type, ...symbols]]) => [type, symbols])
             .map(([type, symbols]) => symbols.filter((symbol) => !names.includes(symbol)))
             .flat();
       for (let symbol of logical) {
+        consts.add(symbol);
+      }
+      // All symbols in assertions that aren't variables are constants
+      for (let symbol of assert.filter((symbol) => !names.includes(symbol))) {
         consts.add(symbol);
       }
     }
@@ -2006,7 +2014,7 @@ describe("transpiler", () => {
 
   it("transpile", async () => {
     const metamath = `
-      $c ( ) -> wff : $.
+      $c ( ) -> wff : var $.
       $v p q r s $.
       wp $f wff p $.
       wq $f wff q $.
@@ -2015,7 +2023,7 @@ describe("transpiler", () => {
       $d p r $.
       $\{
         foo $e ( p -> q ) $.
-        w0 $a wff ( p : q ) $.
+        w0 $a wff ( p var q ) $.
       $\}
       w2 $a wff ( p -> q ) $.
       wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
@@ -2026,7 +2034,7 @@ axiom w0
   let wp: wff p
   let wq: wff q
   assume foo: ( p -> q )
-  assert wff ( p : q )
+  assert wff ( p var q )
 end
 
 axiom w2
@@ -2055,7 +2063,7 @@ end
   
   it("compile", async () => {
     const metamath = `
-      $c ( ) -> wff : $.
+      $c ( ) -> wff : var $.
       $v p q r s $.
       wp $f wff p $.
       wq $f wff q $.
@@ -2063,6 +2071,7 @@ end
       ws $f wff s $.
       $d p r $.
       $\{
+        bar $f var p $.
         foo $e p : q $.
         w0 $a wff ( p -> q ) $.
       $\}
@@ -2075,12 +2084,12 @@ end
 
     const result = new Compiler().compile(source);
     assertThat(result).equalsTo(
-`$c wff ( -> ) : $.
+`$c wff var : ( -> ) $.
 
 $\{
-  $v p q $.
-  wp $f wff p $.
+  $v q p $.
   wq $f wff q $.
+  bar $f var p $.
   foo $e p : q $.
 
   w0 $a wff ( p -> q ) $.
@@ -2161,8 +2170,8 @@ describe("Transpile and Parse", () => {
 
   it("transpile, parse, compile and verify", async () => {
     const {Verifier} = require("../src/descent.js");
-    for (let src of ["demo0.mm", "pq.mm", "tq.mm", "test.mm", "trud.mm"]) {
-      // let src = "hol.mm";
+    for (let src of ["demo0.mm", "pq.mm", "tq.mm", "test.mm", "trud.mm", "hol.mm"]) {
+      //let src = "hol.mm";
       // let src = "trud.mm";
       const program = await require("fs/promises").readFile(`tests/${src}`);
       const theorems = new Verifier().verify(program.toString());
@@ -2170,8 +2179,8 @@ describe("Transpile and Parse", () => {
       const typogram = new Transpiler().read(program.toString()).dump();
       //console.log(typogram);
       const metamath = new Compiler().compile(typogram);
-    //console.log(metamath);
-    //return;
+      //console.log(metamath);
+      //return;
       assertThat(new Verifier().verify(metamath)).equalsTo(theorems);      
     }
   });
