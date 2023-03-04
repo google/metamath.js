@@ -1855,19 +1855,27 @@ class Compiler {
 
     for (let [type, label, [vars, assumes, [, assert]], proof] of code) {
       const names = vars.map(([, [label, type, name]]) => name);
-      const conditions = vars.map(([, [label, type, name]]) => `  ${label} $f ${type} ${name} $.`);
+      const types = vars.map(([, [label, type, name]]) => `  ${label} $f ${type} ${name} $.`);
+      let e = "";
+      if (assumes.length > 0) {
+        e = [...assumes]
+          .map(([, assumption]) => [assumption.shift(), assumption.shift(), assumption])
+          .map(([label, type, symbols]) => `  ${label} $e ${type} ${symbols.join(" ")} $.`);
+        // throw new Error("hi");
+      }
       let p = "";
       if (proof) {
         p += `$= ${proof.map(([step, label]) => label).join(" ")} `;
       }
 
       const v = names.length > 0 ? `  $v ${names.join(" ")} $.` : "";
-      const f = conditions.length > 0 ? `${conditions.join("\n")}` : "";
+      const f = types.length > 0 ? `${types.join("\n")}` : "";
       
       result.push(`
 $\{
 ${v}
 ${f}
+${e}
   ${label} $${type == "axiom" ? "a" : "p"} ${assert.join(" ")} ${p}$.
 $\}`);
     }
@@ -2103,6 +2111,7 @@ $\{
   $v p q $.
   wp $f wff p $.
   wq $f wff q $.
+
   w2 $a wff ( p -> q ) $.
 $\}
 
@@ -2111,6 +2120,7 @@ $\{
   wp $f wff p $.
   wr $f wff r $.
   ws $f wff s $.
+
   wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
 $\}`);
 
@@ -2143,7 +2153,7 @@ describe("Transpile and Parse", () => {
     }
   });
 
-  it.skip("miu.mm", async () => {
+  it("miu.mm", async () => {
     const {Verifier} = require("../src/descent.js");
     const program = await require("fs/promises").readFile(`tests/miu.mm`); 
     assertThat(new Verifier().verify(program.toString())).equalsTo(1);
