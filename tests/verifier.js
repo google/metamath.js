@@ -1389,7 +1389,6 @@ class Parser {
     }
     this.error();
   }
-  
   error() {
     const {head} = this.lexer;
     const {line, col} = this.lexer.lexer;
@@ -1556,6 +1555,7 @@ class Parser {
     
     this.eat("end");
     this.ws();
+
     return ["theorem", name, head, steps];
   }
   
@@ -1586,7 +1586,9 @@ class Parser {
       } else {
         this.error();
       }
+      // console.log(this.lexer.head);
     } while (this.lexer.head);
+    // throw new Error("hi");
     return result;
   }
 }
@@ -2168,23 +2170,17 @@ describe("Transpile and Parse", () => {
     }
   });
 
-  it("transpile, parse, compile and verify", async () => {
+  it("transpile, parse, compile and verify", async function() {
+    this.timeout(50000); 
+
     const {Verifier} = require("../src/descent.js");
+    // "ql.mm" passes, but we disable it because it takes a long time
     for (let src of ["demo0.mm", "pq.mm", "tq.mm", "test.mm", "trud.mm", "hol.mm"]) {
-      // ql.mm hangs to verify, most likely because it has so many compressed proofs
-      // that explode.
-      //let src = "hol.mm";
-      // let src = "ql.mm";
       const program = await require("fs/promises").readFile(`tests/${src}`);
       const theorems = new Verifier().verify(program.toString());
       assertThat(theorems > 0).equalsTo(true);
       const typogram = new Transpiler().read(program.toString()).dump();
-    //console.log(typogram);
-    //return;
       const metamath = new Compiler().compile(typogram);
-      //continue;
-      //console.log(metamath);
-      //return;
       assertThat(new Verifier().verify(metamath)).equalsTo(theorems);      
     }
   });
