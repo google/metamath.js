@@ -1836,6 +1836,43 @@ describe("parser", () => {
   });
 });
 
+class Compiler {
+  compile(source) {
+    let parser = new Parser();
+    let code = parser.parse(source);
+
+    const consts = new Set();
+    for (let [type, label, [vars, assumes, [, assert]], proof] of code) {
+      const names = vars.map(([, [label, type, name]]) => name);
+      for (let symbol of assert.filter((symbol) => !names.includes(symbol))) {
+        consts.add(symbol);
+      }
+    }
+    console.log(``);
+
+    let result = [];
+    result.push(`$c ${[...consts].join(" ")} $.`);
+
+    for (let [type, label, [vars, assumes, [, assert]], proof] of code) {
+      const v = vars.map(([, [label, type, name]]) => name);
+      const f = vars.map(([, [label, type, name]]) => `  ${label} $f ${type} ${name} $.`);
+      let p = "";
+      if (proof) {
+        p += `$= ${proof.map(([step, label]) => label).join(" ")} `;
+      }
+      
+      result.push(`
+$\{
+  $v ${v.join(" ")} $.
+${f.join("\n")}
+  ${label} $${type == "axiom" ? "a" : "p"} ${assert.join(" ")} ${p}$.
+$\}`);
+    }
+
+    return result.join("\n");
+  }
+}
+
 class Transpiler {
   read(program) {
     this.mm = this.parse(program);
@@ -2010,7 +2047,9 @@ describe("transpiler", () => {
       wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
     `);
 
-    assertThat(transpiler.dump()).equalsTo(`
+    const source = transpiler.dump();
+    
+    assertThat(source).equalsTo(`
 axiom w2
   let wp: wff p
   let wq: wff q
@@ -2045,6 +2084,24 @@ theorem wnew
   step 4) w2(0,3): wff ( s -> ( r -> p ) )
 end
 `]);
+
+    assertThat(new Compiler().compile(source)).equalsTo(
+`$c wff ( -> ) $.
+
+$\{
+  $v p q $.
+  wp $f wff p $.
+  wq $f wff q $.
+  w2 $a wff ( p -> q ) $.
+$\}
+
+$\{
+  $v p r s $.
+  wp $f wff p $.
+  wr $f wff r $.
+  ws $f wff s $.
+  wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
+$\}`);
   });
   
   it("transpile", async () => {
