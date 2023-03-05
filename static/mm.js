@@ -18,13 +18,14 @@ class Code extends React.Component {
 class Theorem extends React.Component {
   render() {
     const mm = this.props.mm;
-
     const statement = mm.labels[this.props.label];
     let [a, [d = [], args = [], hyp = [], [type = "", theorem = []] = []], proof = []] = statement;
 
     return (
-       <div>
+      <div>
+        {false &&
          <h1>{a == "$a" ? "Axiom" : "Theorem"} "{this.props.label}"</h1>
+        }
 
          {!statement && (
             <div>
@@ -37,12 +38,14 @@ class Theorem extends React.Component {
              <h2>Arguments</h2>  
              <table>
                <thead>
-                 <tr><th>Type</th><th>Name</th></tr>
+                 <tr><th>Label</th><th>Type</th><th>Symbol</th></tr>
                </thead>
                <tbody>
-               {args.map(([type, name], i) =>
+               {args.map(([type, name, label], i) =>
                <tr key={i}>
-                 <td><Code mm={mm} src={type}/></td><td><Code mm={mm} src={name}/></td>
+                   <td>{label}</td>
+                   <td><Code mm={mm} src={type}/></td>
+                   <td><Code mm={mm} src={name}/></td>
                </tr>
                )}
                </tbody>
@@ -52,7 +55,7 @@ class Theorem extends React.Component {
 
          {hyp.length > 0 && (
            <div>
-             <h2>Assumption</h2>  
+             <h2>Assumptions</h2>  
              <table>
                <thead>
                 <tr><th>Label</th><th>Type</th><th>Condition</th></tr>
@@ -219,8 +222,6 @@ class Metamath extends React.Component {
     
     const label = window.location.hash ? window.location.hash.substr(1) : this.props.label;
 
-    // console.log(process);
-    
     this.state = {
       source: source,
       mm: process(source),
@@ -255,13 +256,23 @@ class Metamath extends React.Component {
     const mm = this.state.mm;
     
     return (
-      <div>
-        {hash && (
-          <button onClick={() => history.back()}>Back</button>
-        )}
-        <Theorem mm={mm} label={this.state.label} />
-        <Proof mm={mm} proof={proof()}/>
+      <div className="doc">
+        <div className="post">
+          <div className="post-title">
+          <h1>{a == "$p" ? "Theorem" : "Axiom"} {this.state.label}</h1>
+          </div>
+          <div className="post-info">
+            <div>metamath</div>
+            <div className="post-date">2023</div>
+          </div>
+          <div className="post-body">
+            <div>
+              <Theorem mm={mm} label={this.state.label} />
+              <Proof mm={mm} proof={proof()}/>
+            </div>
+        </div>
       </div>
+    </div>
     );
   }
 }
