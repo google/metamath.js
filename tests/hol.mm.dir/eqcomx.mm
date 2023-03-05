@@ -46,11 +46,11 @@ theorem eqcomx
   step 20) tb(): term B
   step 21) kc(19,20): term ( ( = A ) B )
   step 22) tr(): term R
-  step 23) eqcomx.3(): |- R,|=,(,(,=,A,),B,)
+  step 23) eqcomx.3(): |- R |= ( ( = A ) B )
   step 24) ax-cb1(21,22,23): |- R : bool
   step 25) hal(): type al
   step 26) ta(): term A
-  step 27) eqcomx.1(): |- A,:,al
+  step 27) eqcomx.1(): |- A : al
   step 28) ax-refl(25,26,27): |- T. |= ( ( = A ) A )
   step 29) a1i(15,16,24,28): |- R |= ( ( = A ) A )
   step 30) ke(): term =
@@ -113,7 +113,7 @@ theorem eqcomx
   step 87) tb(): term B
   step 88) kc(86,87): term ( ( = A ) B )
   step 89) tr(): term R
-  step 90) eqcomx.3(): |- R,|=,(,(,=,A,),B,)
+  step 90) eqcomx.3(): |- R |= ( ( = A ) B )
   step 91) ax-cb1(88,89,90): |- R : bool
   step 92) hal(): type al
   step 93) hal(): type al
@@ -125,7 +125,7 @@ theorem eqcomx
   step 99) weq(98): |- = : ( al -> ( al -> bool ) )
   step 100) ax-refl(96,97,99): |- T. |= ( ( = = ) = )
   step 101) a1i(82,83,91,100): |- R |= ( ( = = ) = )
-  step 102) eqcomx.3(): |- R,|=,(,(,=,A,),B,)
+  step 102) eqcomx.3(): |- R |= ( ( = A ) B )
   step 103) hal(): type al
   step 104) hal(): type al
   step 105) hb(): type bool
@@ -138,8 +138,8 @@ theorem eqcomx
   step 112) weq(111): |- = : ( al -> ( al -> bool ) )
   step 113) hal(): type al
   step 114) weq(113): |- = : ( al -> ( al -> bool ) )
-  step 115) eqcomx.1(): |- A,:,al
-  step 116) eqcomx.2(): |- B,:,al
+  step 115) eqcomx.1(): |- A : al
+  step 116) eqcomx.2(): |- B : al
   step 117) ax-ceq(103,106,107,108,109,110,112,114,115,116): |- ( ( ( = = ) = ) , ( ( = A ) B ) ) |= ( ( = ( = A ) ) ( = B ) )
   step 118) syl2anc(66,67,72,77,101,102,117): |- R |= ( ( = ( = A ) ) ( = B ) )
   step 119) ke(): term =
@@ -154,11 +154,11 @@ theorem eqcomx
   step 128) tb(): term B
   step 129) kc(127,128): term ( ( = A ) B )
   step 130) tr(): term R
-  step 131) eqcomx.3(): |- R,|=,(,(,=,A,),B,)
+  step 131) eqcomx.3(): |- R |= ( ( = A ) B )
   step 132) ax-cb1(129,130,131): |- R : bool
   step 133) hal(): type al
   step 134) ta(): term A
-  step 135) eqcomx.1(): |- A,:,al
+  step 135) eqcomx.1(): |- A : al
   step 136) ax-refl(133,134,135): |- T. |= ( ( = A ) A )
   step 137) a1i(123,124,132,136): |- R |= ( ( = A ) A )
   step 138) hal(): type al
@@ -179,7 +179,7 @@ theorem eqcomx
   step 153) ta(): term A
   step 154) hal(): type al
   step 155) weq(154): |- = : ( al -> ( al -> bool ) )
-  step 156) eqcomx.1(): |- A,:,al
+  step 156) eqcomx.1(): |- A : al
   step 157) wc(148,151,152,153,155,156): |- ( = A ) : ( al -> bool )
   step 158) hal(): type al
   step 159) hal(): type al
@@ -189,10 +189,10 @@ theorem eqcomx
   step 163) tb(): term B
   step 164) hal(): type al
   step 165) weq(164): |- = : ( al -> ( al -> bool ) )
-  step 166) eqcomx.2(): |- B,:,al
+  step 166) eqcomx.2(): |- B : al
   step 167) wc(158,161,162,163,165,166): |- ( = B ) : ( al -> bool )
-  step 168) eqcomx.1(): |- A,:,al
-  step 169) eqcomx.1(): |- A,:,al
+  step 168) eqcomx.1(): |- A : al
+  step 169) eqcomx.1(): |- A : al
   step 170) ax-ceq(138,139,140,141,144,147,157,167,168,169): |- ( ( ( = ( = A ) ) ( = B ) ) , ( ( = A ) A ) ) |= ( ( = ( ( = A ) A ) ) ( ( = B ) A ) )
   step 171) syl2anc(42,43,52,57,118,137,170): |- R |= ( ( = ( ( = A ) A ) ) ( ( = B ) A ) )
   step 172) ax-eqmp(4,9,10,29,171): |- R |= ( ( = B ) A )

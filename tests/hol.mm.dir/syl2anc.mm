@@ -22,9 +22,9 @@ theorem syl2anc
   step 5) tr(): term R
   step 6) ts(): term S
   step 7) tt(): term T
-  step 8) syl2anc.1(): |- R,|=,S
-  step 9) syl2anc.2(): |- R,|=,T
+  step 8) syl2anc.1(): |- R |= S
+  step 9) syl2anc.2(): |- R |= T
   step 10) jca(5,6,7,8,9): |- R |= ( S , T )
-  step 11) syl2anc.3(): |- (,S,,,T,),|=,A
+  step 11) syl2anc.3(): |- ( S , T ) |= A
   step 12) syl(0,3,4,10,11): |- R |= A
 end
