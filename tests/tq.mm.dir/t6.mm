@@ -18,5 +18,5 @@ theorem t6
   step 6) w1(5): wff - - -
   step 7) w1(6): wff - - - -
   step 8) t5(): |- - - t - - q - - - -
-  step 9) ax1(1,3,7,8): |- - - t - - - q - - - - - -
+  step 9) ax1(1, 3, 7, 8): |- - - t - - - q - - - - - -
 end

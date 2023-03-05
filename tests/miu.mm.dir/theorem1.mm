@@ -41,10 +41,10 @@ theorem theorem1
   step 24) we(): wff 
   step 25) wI(24): wff I
   step 26) ax(): |- M I
-  step 27) II(25,26): |- M I I
-  step 28) II(23,27): |- M I I I I
-  step 29) I_(20,28): |- M I I I I U
-  step 30) III(12,15,29): |- M U I U
-  step 31) II(10,30): |- M U I U U I U
-  step 32) IV(3,6,31): |- M U I I U
+  step 27) II(25, 26): |- M I I
+  step 28) II(23, 27): |- M I I I I
+  step 29) I_(20, 28): |- M I I I I U
+  step 30) III(12, 15, 29): |- M U I U
+  step 31) II(10, 30): |- M U I U U I U
+  step 32) IV(3, 6, 31): |- M U I I U
 end

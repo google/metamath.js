@@ -13,5 +13,5 @@ theorem t4
   step 2) w0(): wff -
   step 3) w0(): wff -
   step 4) ax0(3): |- - t - q -
-  step 5) ax1(0,1,2,4): |- - t - - q - -
+  step 5) ax1(0, 1, 2, 4): |- - t - - q - -
 end

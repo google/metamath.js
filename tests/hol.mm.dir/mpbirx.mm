@@ -26,8 +26,8 @@ theorem mpbirx
   step 9) ta(): term A
   step 10) tr(): term R
   step 11) mpbirx.2(): |- R |= A
-  step 12) ax-cb2(9,10,11): |- A : bool
+  step 12) ax-cb2(9, 10, 11): |- A : bool
   step 13) mpbirx.3(): |- R |= ( ( = B ) A )
-  step 14) eqcomx(4,5,6,7,8,12,13): |- R |= ( ( = A ) B )
-  step 15) ax-eqmp(0,1,2,3,14): |- R |= B
+  step 14) eqcomx(4, 5, 6, 7, 8, 12, 13): |- R |= ( ( = A ) B )
+  step 15) ax-eqmp(0, 1, 2, 3, 14): |- R |= B
 end

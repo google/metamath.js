@@ -16,7 +16,7 @@ theorem a1i
   step 2) ta(): term A
   step 3) tr(): term R
   step 4) ax-trud.1(): |- R : bool
-  step 5) ax-trud(3,4): |- R |= T.
+  step 5) ax-trud(3, 4): |- R |= T.
   step 6) ax-a1i.2(): |- T. |= A
-  step 7) syl(0,1,2,5,6): |- R |= A
+  step 7) syl(0, 1, 2, 5, 6): |- R |= A
 end

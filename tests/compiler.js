@@ -274,8 +274,8 @@ theorem wnew
   step 0) ws(): wff s
   step 1) wr(): wff r
   step 2) wp(): wff p
-  step 3) w2(1,2): wff ( r -> p )
-  step 4) w2(0,3): wff ( s -> ( r -> p ) )
+  step 3) w2(1, 2): wff ( r -> p )
+  step 4) w2(0, 3): wff ( s -> ( r -> p ) )
 end
 `);
 

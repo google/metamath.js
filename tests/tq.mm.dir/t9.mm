@@ -17,5 +17,5 @@ theorem t9
   step 5) w0(): wff -
   step 6) w1(5): wff - -
   step 7) t8(): |- - - - - - DND - -
-  step 8) ax4(4,6,7): |- - - - - - DND - - - - - - -
+  step 8) ax4(4, 6, 7): |- - - - - - DND - - - - - - -
 end

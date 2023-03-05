@@ -19,5 +19,5 @@ theorem t7
   step 7) w1(6): wff - - - - -
   step 8) w1(7): wff - - - - - -
   step 9) t6(): |- - - t - - - q - - - - - -
-  step 10) ax2(0,2,8,9): |- C - - - - - -
+  step 10) ax2(0, 2, 8, 9): |- C - - - - - -
 end

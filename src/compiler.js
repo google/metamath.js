@@ -535,7 +535,7 @@ end
     //  args += "" + diff.join(", ") + ")";
     //}
     
-    const body = proof.map(([step, [type, sequence], args], i) => `  step ${i}) ${step}(${args}): ${type} ${sequence.flat().join(' ')}`).join("\n");
+    const body = proof.map(([step, [type, sequence], args], i) => `  step ${i}) ${step}(${args.join(", ")}): ${type} ${sequence.flat().join(' ')}`).join("\n");
     
     const code = `
 theorem ${label}

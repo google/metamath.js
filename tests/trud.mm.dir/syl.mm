@@ -15,5 +15,5 @@ theorem syl
   step 2) tt(): term T
   step 3) ax-syl.1(): |- R |= S
   step 4) ax-syl.2(): |- S |= T
-  step 5) ax-syl(0,1,2,3,4): |- R |= T
+  step 5) ax-syl(0, 1, 2, 3, 4): |- R |= T
 end

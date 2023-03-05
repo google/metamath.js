@@ -13,5 +13,5 @@ theorem t8
   step 2) w0(): wff -
   step 3) w1(2): wff - -
   step 4) w1(3): wff - - -
-  step 5) ax3(1,4): |- - - - - - DND - -
+  step 5) ax3(1, 4): |- - - - - - DND - -
 end

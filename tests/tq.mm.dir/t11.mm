@@ -21,8 +21,8 @@ theorem t11
   step 7) w0(): wff -
   step 8) w0(): wff -
   step 9) w0(): wff -
-  step 10) ax3(8,9): |- - - DND -
-  step 11) ax4(6,7,10): |- - - DND - - -
-  step 12) ax5(4,11): |- - - - DF - -
-  step 13) ax7(1,12): |- P - - -
+  step 10) ax3(8, 9): |- - - DND -
+  step 11) ax4(6, 7, 10): |- - - DND - - -
+  step 12) ax5(4, 11): |- - - - DF - -
+  step 13) ax7(1, 12): |- P - - -
 end
