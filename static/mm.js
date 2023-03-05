@@ -33,21 +33,17 @@ class Theorem extends React.Component {
             </div>
          )}
       
-         {args.length > 0 && (
-           <div>     
-             <h2>Arguments</h2>  
+         {theorem.length > 0 && (
+            <div>
+             <h2>Assertion</h2>
              <table>
                <thead>
-                 <tr><th>Label</th><th>Type</th><th>Symbol</th></tr>
+                 <tr><th>Type</th><th>Assertion</th></tr>
                </thead>
                <tbody>
-               {args.map(([type, name, label], i) =>
-               <tr key={i}>
-                   <td>{label}</td>
-                   <td><Code mm={mm} src={type}/></td>
-                   <td><Code mm={mm} src={name}/></td>
+               <tr>
+                 <td><Code mm={mm} src={type}/></td><td><Code mm={mm} src={theorem.join(" ")}/></td>
                </tr>
-               )}
                </tbody>
              </table>
            </div>
@@ -71,17 +67,21 @@ class Theorem extends React.Component {
            </div>
          )}
 
-         {theorem.length > 0 && (
-            <div>
-             <h2>Assertion</h2>
+         {false && args.length > 0 && (
+           <div>     
+             <h2>Arguments</h2>  
              <table>
                <thead>
-                 <tr><th>Type</th><th>Assertion</th></tr>
+                 <tr><th>Label</th><th>Type</th><th>Symbol</th></tr>
                </thead>
                <tbody>
-               <tr>
-                 <td><Code mm={mm} src={type}/></td><td><Code mm={mm} src={theorem.join(" ")}/></td>
+               {args.map(([type, name, label], i) =>
+               <tr key={i}>
+                   <td>{label}</td>
+                   <td><Code mm={mm} src={type}/></td>
+                   <td><Code mm={mm} src={name}/></td>
                </tr>
+               )}
                </tbody>
              </table>
            </div>
@@ -176,6 +176,21 @@ class Proof extends React.Component {
     }
     const mm = this.props.mm;
     const proof = this.props.proof;
+
+    const style = function (highlight, i, type) {
+      const base = type == "|-" ? {} : {display: "none"};
+      if (!highlight) {
+        return base;
+      }
+      if (highlight.includes(i)) {
+        return base;
+      }
+      return Object.assign(base, {
+        opacity: 0.1,
+        backgroundColor: "none"
+      });
+    };
+    
     return (
       <div>
 
@@ -189,8 +204,7 @@ class Proof extends React.Component {
             <tbody>
             {proof.map(([step, [type, result], args], i) =>
               <tr key={i}
-                style={!this.state.highlight ? {} : (
-                  this.state.highlight.includes(i) ? {} : {opacity: 0.1, backgroundColor: "none"})}
+                style={style(this.state.highlight, i, type)}
                 onMouseEnter={() => this.setState({"highlight": [...args, i], "open": step})}
                 onMouseLeave={() => this.setState({"highlight": undefined, "open": undefined})}>
                 <td>{i}</td>
