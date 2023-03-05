@@ -1790,6 +1790,9 @@ describe("parser", () => {
 });
 
 class Compiler {
+  constructor(loader) {
+    this.load = loader;
+  }
   async preprocess(dir, file) {
     const queue = [file];
 
@@ -1797,8 +1800,8 @@ class Compiler {
     
     while (queue.length > 0) {
       const head = queue.shift();
-      
-      const program = await require("fs/promises").readFile(`${dir}/${head}`);
+
+      const program = await this.load(`${dir}/${head}`);
 
       const parser = new Parser();
       const code = parser.parse(program.toString());
@@ -2296,7 +2299,11 @@ describe("Transpile and Parse", () => {
     const dir = "tests/hol.mm.dir";
     const file = "mpbirx.mm";
 
-    const files = await new Compiler().preprocess(dir, file);
+    const loader = (async (file) => {
+      return require("fs/promises").readFile(file);
+    });
+    
+    const files = await new Compiler(loader).preprocess(dir, file);
 
     // The result of preprocessing the file lead to
     // fetching all of these other files
@@ -2326,11 +2333,15 @@ describe("Transpile and Parse", () => {
     ]);
   });
   
-  it("mpbirx: compile and verify", async function() {
+  it("mpbirx: preprocess, compile and verify", async function() {
     const dir = "tests/hol.mm.dir";
     const file = "mpbirx.mm";
 
-    const metamath = await new Compiler().compile(dir, file);
+    const loader = (async (file) => {
+      return require("fs/promises").readFile(file);
+    });
+    
+    const metamath = await new Compiler(loader).compile(dir, file);
 
     assertThat(new Verifier().verify(metamath)).equalsTo(6);      
   });
