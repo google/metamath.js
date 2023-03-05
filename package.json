@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha -w tests",
-    "build": "browserify src/metamath.js src/parser.js --standalone module -o static/index.js;"
+    "build": "browserify src/module.js --standalone module -o static/module.js;"
   },
   "repository": {
     "type": "git",
