@@ -1,14 +1,31 @@
-
-<script src="static/module.js"></script>
-
-<script type="text/babel" src="/static/mm.js"></script>
-
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-
-<div id="metamath"></div>
-
+<html>
+  <head>
+    <link rel="stylesheet" href="static/index.css">
+    <link rel="stylesheet" type="text/css" href="/static/google-sans.css" media="screen">
+    <script src="static/module.js"></script>
+    <script type="text/babel" src="/static/mm.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <div class="container">
+        <span class="title">Metamathematics</class>
+      </div>
+    </div>
+    <main>
+      <div class="doc">
+        <div class="post">
+          <div class="post-title">
+            <h1>Metamathematics</h1>
+          </div>
+          <div class="post-info">
+            <div>Sam Goto</div>
+            <div class="post-date">2023</div>
+          </div>
+          <div class="post-body">
+            <div id="metamath"></div>
 <script data-type="module" type="text/babel">
 const code = await fetch("/tests/tq.mm");
 
@@ -39,4 +56,9 @@ ReactDOM.render(
   
 </script>
 
-hello world
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</head>
