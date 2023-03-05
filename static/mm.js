@@ -282,7 +282,9 @@ class Metamath extends React.Component {
           <div className="post-body">
             <div>
               <Theorem mm={mm} label={this.state.label} />
-              <Proof mm={mm} proof={proof()}/>
+              {a == "$p" &&
+                <Proof mm={mm} proof={proof()}/>
+              }
             </div>
         </div>
       </div>
