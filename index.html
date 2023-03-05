@@ -1,11 +1,26 @@
 
 <script src="static/module.js"></script>
 
-<script>
-  console.log("hi");
-  console.log(module);
-  //let {parse, grammar} = module;
-  //console.log(parse);
+<script type="module">
+  const {compiler: {Compiler}, descent: {Verifier}} = module;
+
+  async function loader(file) {
+    // console.log(file);
+    const response = await fetch(file);
+    const body = await response.text();
+    return body;
+  }
+  
+  const compiler = new Compiler(loader);
+
+  const result = await compiler.compile("tests/hol.mm.dir", "mpbirx.mm");
+
+  console.log(result);
+
+  const theorems = new Verifier().verify(result);
+
+  console.log(theorems);
+  
 </script>
 
 hello world
