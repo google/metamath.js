@@ -376,7 +376,7 @@ describe("Transpile and Parse", () => {
 
   it("transpile and parse", async () => {
     const fs = require("fs/promises");
-    for (let src of ["demo0.mm", "pq.mm", "tq.mm", "test.mm"]) {
+    for (let src of ["tq.mm", "pq.mm", "miu.mm", "demo0.mm", "test.mm", "id.mm", "trud.mm"]) {
       const program = await fs.readFile(`tests/${src}`);
       const files = await new Transpiler().read(program).split();
       for (let [name, [deps, content]] of Object.entries(files)) {
