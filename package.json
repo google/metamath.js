@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -w tests"
+    "test": "mocha -w tests",
+    "build": "browserify src/metamath.js src/parser.js --standalone module -o static/index.js;"
   },
   "repository": {
     "type": "git",
