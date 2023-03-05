@@ -1790,10 +1790,53 @@ describe("parser", () => {
 });
 
 class Compiler {
-  compile(source) {
-    let parser = new Parser();
-    let code = parser.parse(source);
+  async preprocess(dir, file) {
+    const queue = [file];
 
+    const files = {};
+    
+    while (queue.length > 0) {
+      const head = queue.shift();
+      
+      const program = await require("fs/promises").readFile(`${dir}/${head}`);
+
+      const parser = new Parser();
+      const code = parser.parse(program.toString());
+
+      files[head] = code;
+
+      // Take all include statements that have never
+      // been seen before and push them into the queue
+      const include = code
+            .filter(([type]) => type == "include")
+            .map(([, name]) => name)
+            .filter((name) => !files[name]);
+
+      queue.push(...include);
+    }
+
+    return files;
+  }
+
+  async compile(dirOrSource, file) {
+    if (!file) {
+      let parser = new Parser();
+      let code = parser.parse(dirOrSource);      
+      return this.transpile(code);
+    }
+    const files = await this.preprocess(dirOrSource, file);
+    const dump = Object.values(files)
+          .flat()
+          .filter(([type]) => type != "include");
+    return this.transpile(dump);
+  }
+
+  transpile(code) {
+    //console.log(code);
+    //throw new Error();
+
+    // console.log(code);
+    
     const consts = new Set();
     for (let [type, label, [vars, assumes, disjoints, [, assert]], proof] of code) {
       // All variable types are constants
@@ -2111,7 +2154,7 @@ end
 
     const source = transpiler.dump();
 
-    const result = new Compiler().compile(source);
+    const result = await new Compiler().compile(source);
     assertThat(result).equalsTo(
 `$c wff var : ( -> ) $.
 
@@ -2166,7 +2209,7 @@ $\}`);
 
     const source = transpiler.dump();
     
-    const result = new Compiler().compile(source);
+    const result = await new Compiler().compile(source);
 
     // Verifies that the proofs are valid.
     assertThat(new Verifier().verify(result)).equalsTo(1);
@@ -2205,7 +2248,7 @@ describe("Transpile and Parse", () => {
           .read(program.toString())
           .closure("testmod3");
     const typogram = Object.values(files).map(([, content]) => content).join("");
-    const metamath = new Compiler().compile(typogram);
+    const metamath = await new Compiler().compile(typogram);
     assertThat(new Verifier().verify(metamath)).equalsTo(49);
   });
   
@@ -2215,7 +2258,7 @@ describe("Transpile and Parse", () => {
           .read(program.toString())
           .closure("mpbirx", true);
     const typogram = Object.values(files).map(([, content]) => content).join("");
-    const metamath = new Compiler().compile(typogram);
+    const metamath = await new Compiler().compile(typogram);
     assertThat(new Verifier().verify(metamath)).equalsTo(6);
   });
 
@@ -2235,7 +2278,7 @@ describe("Transpile and Parse", () => {
     await fs.writeFile(`${dir}/${file}`, content);
   }
   
-  it("mpbirx", async function() {
+  it("mpbirx: transpile", async function() {
     const src = "hol.mm";
     const program = await require("fs/promises").readFile(`tests/${src}`);
     const files = new Transpiler()
@@ -2249,6 +2292,49 @@ describe("Transpile and Parse", () => {
     }
   });
   
+  it("mpbirx: preprocess", async function() {
+    const dir = "tests/hol.mm.dir";
+    const file = "mpbirx.mm";
+
+    const files = await new Compiler().preprocess(dir, file);
+
+    // The result of preprocessing the file lead to
+    // fetching all of these other files
+    assertThat(Object.keys(files)).equalsTo([
+      'mpbirx.mm',
+      'hb.mm',
+      'ax-cb2.mm',
+      'eqcomx.mm',
+      'ax-eqmp.mm',
+      'ke.mm',
+      'kc.mm',
+      'ax-cb1.mm',
+      'ax-refl.mm',
+      'a1i.mm',
+      'ht.mm',
+      'weq.mm',
+      'ax-ceq.mm',
+      'syl2anc.mm',
+      'wc.mm',
+      'kt.mm',
+      'ax-trud.mm',
+      'syl.mm',
+      'kct.mm',
+      'jca.mm',
+      'ax-syl.mm',
+      'ax-jca.mm'
+    ]);
+  });
+  
+  it("mpbirx: compile and verify", async function() {
+    const dir = "tests/hol.mm.dir";
+    const file = "mpbirx.mm";
+
+    const metamath = await new Compiler().compile(dir, file);
+
+    assertThat(new Verifier().verify(metamath)).equalsTo(6);      
+  });
+  
   it("transpile, parse, compile and verify", async function() {
     this.timeout(50000); 
 
@@ -2258,7 +2344,7 @@ describe("Transpile and Parse", () => {
       const theorems = new Verifier().verify(program.toString());
       assertThat(theorems > 0).equalsTo(true);
       const typogram = new Transpiler().read(program.toString()).dump();
-      const metamath = new Compiler().compile(typogram);
+      const metamath = await new Compiler().compile(typogram);
       assertThat(new Verifier().verify(metamath)).equalsTo(theorems);      
     }
   });
