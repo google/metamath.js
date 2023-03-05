@@ -364,7 +364,7 @@ $\}`);
   });
 
   it("transpile", async () => {
-    for (let file of ["tq.mm", "pq.mm", "miu.mm", "demo0.mm", "test.mm", "id.mm"]) {
+    for (let file of ["tq.mm", "pq.mm", "miu.mm", "demo0.mm", "test.mm", "id.mm", "trud.mm"]) {
       await transpile(`tests/${file}`);
     }
   });
