@@ -1,7 +1,7 @@
 <html>
   <head>
     <link rel="stylesheet" href="static/index.css">
-    <link rel="stylesheet" type="text/css" href="/static/google-sans.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="static/google-sans.css" media="screen">
     <script src="static/module.js"></script>
     <script type="text/babel" src="/static/mm.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -27,7 +27,7 @@
           <div class="post-body">
             <div id="metamath"></div>
 <script data-type="module" type="text/babel">
-const code = await fetch("/tests/tq.mm");
+const code = await fetch("tests/tq.mm");
 
 ReactDOM.render(
   <Metamath label="t11">{await code.text()}</Metamath>,
