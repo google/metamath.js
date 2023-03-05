@@ -1,6 +1,22 @@
 
 <script src="static/module.js"></script>
 
+<script type="text/babel" src="/static/mm.js"></script>
+
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+<div id="metamath"></div>
+
+<script data-type="module" type="text/babel">
+const code = await fetch("/tests/tq.mm");
+
+ReactDOM.render(
+  <Metamath label="t11">{await code.text()}</Metamath>,
+  document.querySelector("#metamath"));
+</script>
+
 <script type="module">
   const {compiler: {Compiler}, descent: {Verifier}} = module;
 
@@ -15,11 +31,11 @@
 
   const result = await compiler.compile("tests/hol.mm.dir", "mpbirx.mm");
 
-  console.log(result);
+  // console.log(result);
 
   const theorems = new Verifier().verify(result);
 
-  console.log(theorems);
+  // console.log(theorems);
   
 </script>
 
