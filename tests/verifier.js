@@ -787,6 +787,103 @@ describe("Verifier", () => {
 
     const mm = new MM();
     mm.read(code);
+
+    const [p, [d, f, e]] = mm.labels["idALT"];
+    // console.log(f);
+    
+    const [, , proof] = mm.labels["idALT"];
+    assertThat(proof().map(([step]) => step)).equalsTo([
+      'wph',  'wph',  'wph',  'wi',    'wi',
+      'wph',  'wph',  'wi',   'wph',   'wph',
+      'ax-1', 'wph',  'wph',  'wph',   'wi',
+      'wph',  'wi',   'wi',   'wph',   'wph',
+      'wph',  'wi',   'wi',   'wph',   'wph',
+      'wi',   'wi',   'wph',  'wph',   'wph',
+      'wi',   'ax-1', 'wph',  'wph',   'wph',
+      'wi',   'wph',  'ax-2', 'ax-mp', 'ax-mp'
+    ]);
+  });
+
+  it("decompress proof", () => {
+    const [code] = parse(`
+      $c wff |- ( ) -> $.
+      $v ph ps ch $.
+
+      $( Let variable ph be a wff. $)
+      wph $f wff ph $.
+
+      $( Let variable ps be a wff. $)
+      wps $f wff ps $.
+
+      $( Let variable ch be a wff. $)
+      wch $f wff ch $.
+
+      wi $a wff ( ph -> ps ) $.
+
+      ax-1 $a |- ( ph -> ( ps -> ph ) ) $.
+      ax-2 $a |- ( ( ph -> ( ps -> ch ) ) -> ( ( ph -> ps ) -> ( ph -> ch ) ) ) $.
+
+      $\{
+        min $e |- ph $.
+        maj $e |- ( ph -> ps ) $.
+        ax-mp $a |- ps $.
+      $\}
+
+      $( [wph, wi, ax-1, ax-2, ax-mp] $)
+      $( [wph, wph, wph, wi, *, wi, *, wph, wph, ax-1, wph, ...] $)
+      idALT $p |- ( ph -> ph ) $=
+        ( wi ax-1 ax-2 ax-mp ) AAABZBZFAACAFABBGFBAFCAFADEE $.
+    `);
+
+    const mm = new MM();
+    mm.read(code);
+
+    const compressed = "AAABZBZFAACAFABBGFBAFCAFADEE";
+    
+    assertThat(mm.numbers(compressed)).equalsTo([
+      1,
+      1,
+      1,
+      2,
+      -1, // marker
+      2,
+      -1, // marker
+      6,
+      1,
+      1,
+      3,
+      1,
+      6,
+      1,
+      2,
+      2,
+      7,
+      6,
+      2,
+      1,
+      6,
+      3,
+      1,
+      6,
+      1,
+      4,
+      5,
+      5
+    ]);
+    
+    let result = mm.decompress(
+      ["(", "wi ax-1 ax-2 ax-mp".split(" "), ")", compressed],
+      ["wph"]);
+    assertThat(result).equalsTo([
+      'wph',  'wph',  'wph',  'wi',    'wi',
+      'wph',  'wph',  'wi',   'wph',   'wph',
+      'ax-1', 'wph',  'wph',  'wph',   'wi',
+      'wph',  'wi',   'wi',   'wph',   'wph',
+      'wph',  'wi',   'wi',   'wph',   'wph',
+      'wi',   'wi',   'wph',  'wph',   'wph',
+      'wi',   'ax-1', 'wph',  'wph',   'wph',
+      'wi',   'wph',  'ax-2', 'ax-mp', 'ax-mp'
+    ]);
   });
 
   it("peirceroll", () => {

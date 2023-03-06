@@ -328,13 +328,7 @@ class MM {
   // https://mm.ivank.net/js/MM.js
   // https://github.com/david-a-wheeler/mmverify.py/blob/master/mmverify.py
 
-  decompress(proof, labels) {
-    const m = labels.length;
-
-    const [l, local, r, compressed] = proof;
-    
-    const n = local.length;
-
+  numbers(compressed) {
     let integers = [];
     let current = 0;
 
@@ -359,9 +353,14 @@ class MM {
       }
     }
 
-    // console.log(integers);
-    
-    const steps = integers.map((integer) => {
+    return integers;
+  }
+
+  steps(labels, local, integers) {
+    const m = labels.length;
+    const n = local.length;
+
+    return integers.map((integer) => {
       if (integer == -1) {
         return -1;
         return integer;
@@ -375,26 +374,28 @@ class MM {
         return integer - (m + n + 1);
       }
     });
+  }
 
+  tree(steps, i) {
     const statements = this.labels;
-    
-    function tree(i) {
-      if (!statements[steps[i]]) {
-        throw new Error(`Can't find entry ${steps[i]}.`);
-      }
-      const [type, [dvs, f = [], e = []]] = statements[steps[i]];
-      let result = 0;
-      if (type == "$f" || type == "$e") {
-        return 1;
-      } else if (type == "$a" || type == "$p") {
-        for (let j = 0; j < (f.length + e.length); j++) {
-          const offset = tree(i - 1 - result);
-          result += offset;
-        }
-      }
-      return result + 1;
-    }
 
+    if (!statements[steps[i]]) {
+      throw new Error(`Can't find entry ${steps[i]}.`);
+    }
+    const [type, [dvs, f = [], e = []]] = statements[steps[i]];
+    let result = 0;
+    if (type == "$f" || type == "$e") {
+      return 1;
+    } else if (type == "$a" || type == "$p") {
+      for (let j = 0; j < (f.length + e.length); j++) {
+        const offset = this.tree(steps, i - 1 - result);
+        result += offset;
+      }
+    }
+    return result + 1;
+  }
+
+  expand(steps) {
     const markers = [];
 
     let i = 0;
@@ -404,7 +405,7 @@ class MM {
         i++;
       } else if (number == -1) {
         // push the subtree to the markers
-        const size = tree(i - 1);
+        const size = this.tree(steps, i - 1);
         const subtree = steps.slice(i - size, i);
         markers.push(subtree);
         // delete the marker
@@ -415,8 +416,6 @@ class MM {
         // replace the number with the marked subtree
         // https://stackoverflow.com/questions/44959025/rangeerror-maximum-call-stack-size-exceeded-caused-by-array-splice-apply
         if (markers[number].length > 65536) {
-          // console.log(markers[number]);
-          // console.log(compressed);
           throw new Error("proof too long");
         }
         steps.splice(i, 1, ...markers[number]);
@@ -424,6 +423,13 @@ class MM {
     }
 
     return steps;
+  }
+  
+  decompress(proof, labels) {
+    const [, local, , compressed] = proof;
+    let integers = this.numbers(compressed);
+    const steps = this.steps(labels, local, integers);
+    return this.expand(steps);
   }
 
   verify(label, type, theorem, proof, generate) {
