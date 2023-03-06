@@ -240,9 +240,8 @@ class Metamath extends React.Component {
     const label = window.location.hash ? window.location.hash.substr(1) : this.props.label;
 
     this.state = {
-      source: source,
-      mm: process(source),
       label: label,
+      file: this.props.file,
       open: false,
     };
   }
@@ -261,13 +260,71 @@ class Metamath extends React.Component {
     });
   }
   
-  componentDidMount() {
+  async componentDidMount() {
     window.addEventListener('hashchange', this.compute.bind(this), false);
+
+    // console.log(this.props.label);
+    
+    const compiler = new Compiler(this.loader.bind(this));
+
+    const source = await compiler.compile(
+      this.props.dir, this.props.file);
+
+    this.setState({
+      source: source,
+      mm: process(source),
+    });
+
   }
 
+  async loader(file) {
+    const response = await fetch(file);
+    const body = await response.text();
+    
+    // resolve(body);
+    // return body;
+
+    const that = this;
+    return new Promise((resolve, reject) => {
+      // Waits 100 ms arbitrarily to simulate slow
+      // networks
+      // console.log(`Loading ${file}`);
+      // console.log(that);
+      that.setState({
+        file: file
+      });
+      setTimeout(() => {
+        resolve(body);
+      }, 0);
+    });
+    
+    // return body;
+  }  
+
   render() {
+
+    if (!this.state.mm) {
+      return (
+      <div className="doc">
+        <div className="post">
+          <div className="post-title">
+          <h1>Loading {this.state.label}</h1>
+          </div>
+          <div className="post-info">
+            <div>metamath</div>
+            <div className="post-date">2023</div>
+          </div>
+          <div className="post-body">
+            Verifying {this.state.file}
+          </div>
+        </div>
+      </div>
+      );
+    }
+    
     const statement = this.state.mm.labels[this.state.label];
-    let [a, [d = [], args = [], hyp = [], [type, theorem] = []], proof = () => []] = statement;
+    // let [a, [d = [], args = [], hyp = [], [type, theorem] = []], proof = () => []] = statement;
+    const [a] = statement;
 
     const hash = window.location.hash;
     const mm = this.state.mm;
@@ -296,35 +353,15 @@ const {compiler: {Compiler}, descent: {Verifier}} = module;
 class MetaMath extends HTMLElement {
   // connect component
   async connectedCallback() {
-    const compiler = new Compiler(this.loader);
 
     const dir = this.getAttribute("dir");
     const file = this.getAttribute("file");
     const label = this.getAttribute("label");
-    
-    const result = await compiler.compile(
-      dir, file);
 
     ReactDOM.render(
-        <Metamath label={label}>{result}</Metamath>,
+        <Metamath dir={dir} file={file} label={label}></Metamath>,
       this);
   }
-
-  async loader(file) {
-    const response = await fetch(file);
-    const body = await response.text();
-
-    return new Promise((resolve, reject) => {
-      // Waits 100 ms arbitrarily to simulate slow
-      // networks
-      console.log(`Loading ${file}`);
-      setTimeout(() => {
-        resolve(body);
-      }, 100);
-    });
-    
-    // return body;
-  }  
 }
 
 customElements.define("meta-math", MetaMath);
