@@ -292,3 +292,29 @@ class Metamath extends React.Component {
     );
   }
 }
+
+const {compiler: {Compiler}, descent: {Verifier}} = module;
+
+class MetaMath extends HTMLElement {
+  // connect component
+  async connectedCallback() {
+    const compiler = new Compiler(this.loader);
+
+    const dir = this.getAttribute("dir");
+    const file = this.getAttribute("file");
+    const result = await compiler.compile(
+      dir, file);
+
+    ReactDOM.render(
+        <Metamath label={file}>{result}</Metamath>,
+      this);
+  }
+
+  async loader(file) {
+    const response = await fetch(file);
+    const body = await response.text();
+    return body;
+  }  
+}
+
+customElements.define("meta-math", MetaMath);

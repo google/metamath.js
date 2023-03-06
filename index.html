@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="static/index.css">
     <link rel="stylesheet" type="text/css" href="static/google-sans.css" media="screen">
     <script src="static/module.js"></script>
-    <script type="text/babel" src="static/mm.js"></script>
+    <script data-type="module" type="text/babel" src="static/mm.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
@@ -16,26 +16,7 @@
       </div>
     </div>
     <main>
-      <div id="metamath"></div>
+      <meta-math dir="tests/hol.mm.dir", file="mpbirx.mm"></meta-math>
     </main>
-<script data-type="module" type="text/babel">
-  const {compiler: {Compiler}, descent: {Verifier}} = module;
-
-  async function loader(file) {
-    const response = await fetch(file);
-    const body = await response.text();
-    return body;
-  }
-  
-  const compiler = new Compiler(loader);
-
-  const result = await compiler.compile(
-    "tests/hol.mm.dir", "mpbirx.mm");
-
-  ReactDOM.render(
-      <Metamath label="mpbirx">{result}</Metamath>,
-    document.querySelector("#metamath"));
-</script>
-
   </body>
 </head>
