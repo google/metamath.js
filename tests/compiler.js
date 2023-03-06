@@ -411,6 +411,18 @@ describe("Transpile and Parse", () => {
     assertThat(new Verifier().verify(metamath)).equalsTo(6);
   });
 
+  it.skip("2p2e4", async function() {
+    // Hits "proof too long", probably as one of its dependencies, and so
+    // fails.
+    const program = await require("fs/promises").readFile(`tests/set.mm`);
+    const files = new Transpiler()
+          .read(program.toString())
+          .closure("2p2e4", true);
+    const typogram = Object.values(files).map(([, content]) => content).join("");
+    const metamath = await new Compiler().compile(typogram);
+    assertThat(new Verifier().verify(metamath)).equalsTo(6);
+  });
+
   async function write(dir, file, content) {
     const fs = require("fs/promises");
 
