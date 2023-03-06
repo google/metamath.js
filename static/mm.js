@@ -264,6 +264,8 @@ class Metamath extends React.Component {
 
   render() {
     const statement = this.state.mm.labels[this.state.label];
+    //console.log(this.state.label);
+    //console.log(this.state.mm.labels[this.state.label]);
     let [a, [d = [], args = [], hyp = [], [type, theorem] = []], proof = () => []] = statement;
 
     const hash = window.location.hash;
@@ -302,11 +304,17 @@ class MetaMath extends HTMLElement {
 
     const dir = this.getAttribute("dir");
     const file = this.getAttribute("file");
+    const label = this.getAttribute("label");
+
+    // console.log(`Loading ${dir} ${file}`);
+    
     const result = await compiler.compile(
       dir, file);
 
+    // console.log(result);
+    
     ReactDOM.render(
-        <Metamath label={file}>{result}</Metamath>,
+        <Metamath label={label}>{result}</Metamath>,
       this);
   }
 
