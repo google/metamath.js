@@ -19,7 +19,7 @@ class Theorem extends React.Component {
   render() {
     const mm = this.props.mm;
     const statement = mm.labels[this.props.label];
-    let [a, [d = [], args = [], hyp = [], [type = "", theorem = []] = []], proof = []] = statement;
+    let [a, [d = [], args = [], hyp = [], [type = "", theorem = []] = []], proof = () => []] = statement;
 
     return (
       <div>
@@ -86,6 +86,10 @@ class Theorem extends React.Component {
              </table>
            </div>
          )}
+
+         {a == "$p" &&
+           <Proof mm={mm} proof={proof()}/>
+         }
 
         </div>
     );
@@ -233,7 +237,6 @@ class Metamath extends React.Component {
   constructor(props) {
     super(props);
     const source = this.props.children;
-    
     const label = window.location.hash ? window.location.hash.substr(1) : this.props.label;
 
     this.state = {
@@ -264,8 +267,6 @@ class Metamath extends React.Component {
 
   render() {
     const statement = this.state.mm.labels[this.state.label];
-    //console.log(this.state.label);
-    //console.log(this.state.mm.labels[this.state.label]);
     let [a, [d = [], args = [], hyp = [], [type, theorem] = []], proof = () => []] = statement;
 
     const hash = window.location.hash;
@@ -282,15 +283,10 @@ class Metamath extends React.Component {
             <div className="post-date">2023</div>
           </div>
           <div className="post-body">
-            <div>
-              <Theorem mm={mm} label={this.state.label} />
-              {a == "$p" &&
-                <Proof mm={mm} proof={proof()}/>
-              }
-            </div>
+            <Theorem mm={mm} label={this.state.label} />
+          </div>
         </div>
       </div>
-    </div>
     );
   }
 }
@@ -305,14 +301,10 @@ class MetaMath extends HTMLElement {
     const dir = this.getAttribute("dir");
     const file = this.getAttribute("file");
     const label = this.getAttribute("label");
-
-    // console.log(`Loading ${dir} ${file}`);
     
     const result = await compiler.compile(
       dir, file);
 
-    // console.log(result);
-    
     ReactDOM.render(
         <Metamath label={label}>{result}</Metamath>,
       this);
@@ -321,7 +313,17 @@ class MetaMath extends HTMLElement {
   async loader(file) {
     const response = await fetch(file);
     const body = await response.text();
-    return body;
+
+    return new Promise((resolve, reject) => {
+      // Waits 100 ms arbitrarily to simulate slow
+      // networks
+      console.log(`Loading ${file}`);
+      setTimeout(() => {
+        resolve(body);
+      }, 100);
+    });
+    
+    // return body;
   }  
 }
 
