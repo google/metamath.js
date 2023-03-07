@@ -609,9 +609,68 @@ class MM {
   }
 }
 
+class Compressor {
+  constructor(local, steps) {
+    this.steps = steps;
+    this.local = local;
+  }
+  external() {
+    return this.steps
+      .filter((step) => typeof step != "number")
+      .filter((label) => !this.local.includes(label))
+      .filter((label, i, self) => self.indexOf(label) == i);
+  }
+  
+  integers() {
+    let labels = this.local;
+    let refs = this.external();
+    return this.steps.map((step) => {
+      if (step == -1) {
+        // A marker
+        return step;
+      } else if (labels.includes(step)) {
+        // A hypothesis reference
+        return 1 + labels.indexOf(step);
+      } else if (refs.includes(step)) {
+        // A local array reference
+        return 1 + labels.length + refs.indexOf(step);
+      } else if (typeof step == "number") {
+        // A reference to a marker
+        return 1 + labels.length + refs.length + step;
+      } else {
+        throw new Error(`Invalid ${step}`);
+      }
+    });
+  }
+
+  compress() {
+    return this.integers()
+      .map((number) => number == -1 ? "Z" : Compressor.encode(number))
+      .join("");
+  }
+    
+  static encode(number) {
+    const digits = [];
+      
+    let n = number - 1;
+
+    let msb = Math.floor(n / 20);
+      
+    while (msb > 0) {
+      const ch = String.fromCharCode('U'.charCodeAt(0) + ((msb - 1) % 5));
+      digits.push(ch);
+      msb = Math.floor((msb - 1) / 5);
+    }
+      
+    const remainder = n % 20;
+    digits.push(String.fromCharCode('A'.charCodeAt(0) + remainder));
+    return digits.join("");
+  }
+}
 
 module.exports = {
   Frame: Frame,
   Stack: Stack,
-  MM: MM
+  MM: MM,
+  Compressor: Compressor,
 };
