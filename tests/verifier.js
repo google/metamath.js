@@ -860,7 +860,9 @@ describe("Verifier", () => {
       5
     ]);
 
-    assertThat(mm.steps(labels, local, integers))
+    const steps = mm.steps(labels, local, integers);
+    
+    assertThat(steps)
       .equalsTo([
         'wph',
         'wph',
@@ -895,6 +897,7 @@ describe("Verifier", () => {
     let result = mm.decompress(
       ["(", local, ")", compressed],
       labels);
+
     assertThat(result).equalsTo([
       'wph',  'wph',  'wph',  'wi',    'wi',
       'wph',  'wph',  'wi',   'wph',   'wph',
@@ -905,6 +908,55 @@ describe("Verifier", () => {
       'wi',   'ax-1', 'wph',  'wph',   'wph',
       'wi',   'wph',  'ax-2', 'ax-mp', 'ax-mp'
     ]);
+
+    // Now, lets try to compress it, by recomputing
+    // all of the variables here using the steps that
+    // were generated during the decompression.
+
+    // First, filter out local references and construct
+    // a unique set of labels.
+    const refs = steps
+          .filter((step) => typeof step != "number")
+          .filter((label) => !labels.includes(label))
+          .filter((label, i, self) => self.indexOf(label) == i);
+
+    // The unique references should be the same as the
+    // local array that was used for decompression and
+    // stated explicitly in the theorem.
+    assertThat(local).equalsTo(refs);
+
+    const numbers = steps.map((step) => {
+      if (step == -1) {
+        // A marker
+        return step;
+      } else if (labels.includes(step)) {
+        // A hypothesis reference
+        return 1 + labels.indexOf(step);
+      } else if (refs.includes(step)) {
+        // A local array reference
+        return 1 + labels.length + refs.indexOf(step);
+      } else if (typeof step == "number") {
+        // A reference to a marker
+        return 1 + labels.length + refs.length + step;
+      } else {
+        throw new Error(`Invalid ${step}`);
+      }
+    });
+
+    return;
+    
+    assertThat(numbers).equalsTo(integers);
+    
+    const integer = 120;
+
+    const quotient = Math.floor(integer / 20);
+    const remainder = integer % 20;
+
+    assertThat(quotient).equalsTo(6);
+    assertThat(remainder).equalsTo(0);
+
+    
+    
   });
 
   it("peirceroll", () => {
