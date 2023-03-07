@@ -813,7 +813,66 @@ describe("Verifier", () => {
     ]);
   });
 
-  it("decompress proof", async () => {
+  class Compressor {
+    constructor(local, steps) {
+      this.steps = steps;
+      this.local = local;
+    }
+    external() {
+      return this.steps
+        .filter((step) => typeof step != "number")
+          .filter((label) => !this.local.includes(label))
+          .filter((label, i, self) => self.indexOf(label) == i);
+    }
+
+    integers() {
+      let labels = this.local;
+      let refs = this.external();
+      return this.steps.map((step) => {
+        if (step == -1) {
+          // A marker
+          return step;
+        } else if (labels.includes(step)) {
+          // A hypothesis reference
+          return 1 + labels.indexOf(step);
+        } else if (refs.includes(step)) {
+          // A local array reference
+          return 1 + labels.length + refs.indexOf(step);
+        } else if (typeof step == "number") {
+          // A reference to a marker
+          return 1 + labels.length + refs.length + step;
+        } else {
+          throw new Error(`Invalid ${step}`);
+        }
+      });
+    }
+
+    compress() {
+      return this.integers()
+        .map((number) => number == -1 ? "Z" : Compressor.encode(number))
+        .join("");
+    }
+    
+    static encode(number) {
+      const digits = [];
+      
+      let n = number - 1;
+
+      let msb = Math.floor(n / 20);
+      
+      while (msb > 0) {
+        const ch = String.fromCharCode('U'.charCodeAt(0) + ((msb - 1) % 5));
+        digits.push(ch);
+        msb = Math.floor((msb - 1) / 5);
+      }
+      
+      const remainder = n % 20;
+      digits.push(String.fromCharCode('A'.charCodeAt(0) + remainder));
+      return digits.join("");
+    }
+  }
+  
+  it("decompress then compress proof", async () => {
     const file = await require("fs/promises").readFile("tests/idalt.mm");
 
     const [code] = parse(file.toString());
@@ -913,82 +972,39 @@ describe("Verifier", () => {
     // all of the variables here using the steps that
     // were generated during the decompression.
 
-    // First, filter out local references and construct
+    // First, filter out external references and construct
     // a unique set of labels.
-    const refs = steps
-          .filter((step) => typeof step != "number")
-          .filter((label) => !labels.includes(label))
-          .filter((label, i, self) => self.indexOf(label) == i);
-
+    const refs = new Compressor(labels, steps).external();
+    
     // The unique references should be the same as the
     // local array that was used for decompression and
     // stated explicitly in the theorem.
     assertThat(local).equalsTo(refs);
 
-    const numbers = steps.map((step) => {
-      if (step == -1) {
-        // A marker
-        return step;
-      } else if (labels.includes(step)) {
-        // A hypothesis reference
-        return 1 + labels.indexOf(step);
-      } else if (refs.includes(step)) {
-        // A local array reference
-        return 1 + labels.length + refs.indexOf(step);
-      } else if (typeof step == "number") {
-        // A reference to a marker
-        return 1 + labels.length + refs.length + step;
-      } else {
-        throw new Error(`Invalid ${step}`);
-      }
-    });
+    const numbers = new Compressor(labels, steps).integers();
 
-    // return;
-    
     assertThat(numbers).equalsTo(integers);
     
-    const integer = 1;
-
-    function encode(number) {
-      const digits = [];
-
-      let n = number - 1;
-
-      let msb = Math.floor(n / 20);
-      
-      while (msb > 0) {
-        const ch = String.fromCharCode('U'.charCodeAt(0) + ((msb - 1) % 5));
-        digits.push(ch);
-        msb = Math.floor((msb - 1) / 5);
-      }
-      
-      const remainder = n % 20;
-      digits.push(String.fromCharCode('A'.charCodeAt(0) + remainder));
-      return digits.join("");
-    }
-
-    assertThat(encode(1)).equalsTo("A");
-    assertThat(encode(2)).equalsTo("B");
-    assertThat(encode(3)).equalsTo("C");
+    assertThat(Compressor.encode(1)).equalsTo("A");
+    assertThat(Compressor.encode(2)).equalsTo("B");
+    assertThat(Compressor.encode(3)).equalsTo("C");
     // ...
-    assertThat(encode(20)).equalsTo("T");
-    assertThat(encode(21)).equalsTo("UA");
-    assertThat(encode(22)).equalsTo("UB");
+    assertThat(Compressor.encode(20)).equalsTo("T");
+    assertThat(Compressor.encode(21)).equalsTo("UA");
+    assertThat(Compressor.encode(22)).equalsTo("UB");
     // ...
-    assertThat(encode(40)).equalsTo("UT");
-    assertThat(encode(41)).equalsTo("VA");
-    assertThat(encode(42)).equalsTo("VB");
+    assertThat(Compressor.encode(40)).equalsTo("UT");
+    assertThat(Compressor.encode(41)).equalsTo("VA");
+    assertThat(Compressor.encode(42)).equalsTo("VB");
     // ...
-    assertThat(encode(120)).equalsTo("YT");
-    assertThat(encode(121)).equalsTo("UUA");
+    assertThat(Compressor.encode(120)).equalsTo("YT");
+    assertThat(Compressor.encode(121)).equalsTo("UUA");
     // ...
-    assertThat(encode(620)).equalsTo("YYT");
-    assertThat(encode(621)).equalsTo("UUUA");
+    assertThat(Compressor.encode(620)).equalsTo("YYT");
+    assertThat(Compressor.encode(621)).equalsTo("UUUA");
     // ... etc ...
 
-    assertThat(numbers
-               .map((number) => number == -1 ? "Z" : encode(number))
-               .join(""))
+    assertThat(new Compressor(labels, steps).compress())
       .equalsTo(compressed);
   });
 
