@@ -943,20 +943,53 @@ describe("Verifier", () => {
       }
     });
 
-    return;
+    // return;
     
     assertThat(numbers).equalsTo(integers);
     
-    const integer = 120;
+    const integer = 1;
 
-    const quotient = Math.floor(integer / 20);
-    const remainder = integer % 20;
+    function encode(number) {
+      const digits = [];
 
-    assertThat(quotient).equalsTo(6);
-    assertThat(remainder).equalsTo(0);
+      let n = number - 1;
 
-    
-    
+      let msb = Math.floor(n / 20);
+      
+      while (msb > 0) {
+        const ch = String.fromCharCode('U'.charCodeAt(0) + ((msb - 1) % 5));
+        digits.push(ch);
+        msb = Math.floor((msb - 1) / 5);
+      }
+      
+      const remainder = n % 20;
+      digits.push(String.fromCharCode('A'.charCodeAt(0) + remainder));
+      return digits.join("");
+    }
+
+    assertThat(encode(1)).equalsTo("A");
+    assertThat(encode(2)).equalsTo("B");
+    assertThat(encode(3)).equalsTo("C");
+    // ...
+    assertThat(encode(20)).equalsTo("T");
+    assertThat(encode(21)).equalsTo("UA");
+    assertThat(encode(22)).equalsTo("UB");
+    // ...
+    assertThat(encode(40)).equalsTo("UT");
+    assertThat(encode(41)).equalsTo("VA");
+    assertThat(encode(42)).equalsTo("VB");
+    // ...
+    assertThat(encode(120)).equalsTo("YT");
+    assertThat(encode(121)).equalsTo("UUA");
+    // ...
+    assertThat(encode(620)).equalsTo("YYT");
+    assertThat(encode(621)).equalsTo("UUUA");
+    // ... etc ...
+
+    assertThat(numbers
+               .map((number) => number == -1 ? "Z" : encode(number))
+               .join(""))
+      .equalsTo(compressed);
   });
 
   it("peirceroll", () => {
