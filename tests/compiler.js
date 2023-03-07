@@ -397,6 +397,8 @@ describe("Transpile and Parse", () => {
           .read(program.toString())
           .closure("testmod3");
     const typogram = Object.values(files).map(([, content]) => content).join("");
+    //console.log(typogram);
+    //return;
     const metamath = await new Compiler().compile(typogram);
     assertThat(new Verifier().verify(metamath)).equalsTo(49);
   });

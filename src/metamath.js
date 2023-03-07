@@ -451,8 +451,9 @@ class MM {
         // a prior computation / verification, and saves that
         // result so that it can be reused later, without
         // incurring into the recomputation.
-        markers.push(stack[stack.length - 1]);
-        steps.push([step, stack[stack.length - 1]]);
+        const top = stack[stack.length - 1];
+        markers.push(top);
+        steps.push([step, top.slice(1)]);
         continue;
       } else if (typeof step == "number") {
         // Takes a prior computation, which was already
@@ -460,7 +461,7 @@ class MM {
         // the stack at some point), and reuses its result
         // in another computation by pushing it into the stack.
         stack.push(markers[step]);
-        steps.push([step, markers[step]]);
+        steps.push([step, markers[step].slice(1)]);
         continue;
       }
       

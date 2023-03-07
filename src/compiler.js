@@ -512,7 +512,7 @@ end
     
     const steps = proof.map(([step]) => step);
     const deps = [...new Set(steps)]
-          .filter((step) => !local.includes(step));
+          .filter((step) => !local.includes(step) && typeof step != "number");
     
     let conds = "";
     
@@ -534,8 +534,10 @@ end
     //if (d.length > 0) {
     //  args += "" + diff.join(", ") + ")";
     //}
+
+    // console.log(proof);
     
-    const body = proof.map(([step, [type, sequence], args], i) => `  step ${i}) ${step}(${args.join(", ")}): ${type} ${sequence.flat().join(' ')}`).join("\n");
+    const body = proof.map(([step, [type, sequence = []], args = []], i) => `  step ${i}) ${step}(${args.join(", ")}): ${type} ${sequence.flat().join(' ')}`).join("\n");
     
     const code = `
 theorem ${label}
