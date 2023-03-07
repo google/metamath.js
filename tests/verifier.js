@@ -792,7 +792,10 @@ describe("Verifier", () => {
     // console.log(f);
     
     const [, , proof] = mm.labels["idALT"];
-    assertThat(proof().map(([step]) => step)).equalsTo([
+
+    const result = proof(true, false);
+    
+    assertThat(result.map(([step]) => step)).equalsTo([
       'wph',  'wph',  'wph',  'wi',    'wi',
       'wph',  'wph',  'wi',   'wph',   'wph',
       'ax-1', 'wph',  'wph',  'wph',   'wi',
@@ -801,6 +804,39 @@ describe("Verifier", () => {
       'wi',   'wi',   'wph',  'wph',   'wph',
       'wi',   'ax-1', 'wph',  'wph',   'wph',
       'wi',   'wph',  'ax-2', 'ax-mp', 'ax-mp'
+    ]);
+
+    const markers = proof(true, true);
+    
+    assertThat(markers.map(([step]) => step)).equalsTo([
+      'wph',
+      'wph',
+      'wph',
+      'wi',
+      -1, // marker
+      'wi',
+      -1, // marker
+      0,
+      'wph',
+      'wph',
+      'ax-1',
+      'wph',
+      0,
+      'wph',
+      'wi',
+      'wi',
+      1,
+      0,
+      'wi',
+      'wph',
+      0,
+      'ax-1',
+      'wph',
+      0,
+      'wph',
+      'ax-2',
+      'ax-mp',
+      'ax-mp'
     ]);
   });
 
@@ -839,8 +875,14 @@ describe("Verifier", () => {
     mm.read(code);
 
     const compressed = "AAABZBZFAACAFABBGFBAFCAFADEE";
+
+    const labels = ["wph"];
+
+    const local = "wi ax-1 ax-2 ax-mp".split(" ");
     
-    assertThat(mm.numbers(compressed)).equalsTo([
+    const integers = mm.numbers(compressed);
+
+    assertThat(integers).equalsTo([
       1,
       1,
       1,
@@ -870,10 +912,42 @@ describe("Verifier", () => {
       5,
       5
     ]);
-    
+
+    assertThat(mm.steps(labels, local, integers))
+      .equalsTo([
+        'wph',
+        'wph',
+        'wph',
+        'wi',
+        -1, // marker
+        'wi',
+        -1, // marker
+        0, // call
+        'wph',
+        'wph',
+        'ax-1',
+        'wph',
+        0, // call
+        'wph',
+        'wi',
+        'wi',
+        1, // call
+        0, // call
+        'wi',
+        'wph',
+        0, // call
+        'ax-1',
+        'wph',
+        0, // call
+        'wph',
+        'ax-2',
+        'ax-mp',
+        'ax-mp'
+      ]);
+
     let result = mm.decompress(
-      ["(", "wi ax-1 ax-2 ax-mp".split(" "), ")", compressed],
-      ["wph"]);
+      ["(", local, ")", compressed],
+      labels);
     assertThat(result).equalsTo([
       'wph',  'wph',  'wph',  'wi',    'wi',
       'wph',  'wph',  'wi',   'wph',   'wph',

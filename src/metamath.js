@@ -300,8 +300,8 @@ class MM {
                 .map(([rule, type]) => this.frames.lookupE(rule, type));
           labels.push(...args);
           labels.push(...hyps);
-          result = (generate = true) => {
-            let p = this.decompress(proof, labels);
+          result = (generate = true, markers = false) => {
+            let p = this.decompress(proof, labels, markers);
             return this.verify(label, type, theorem, p, generate);
           }
         }
@@ -363,7 +363,6 @@ class MM {
     return integers.map((integer) => {
       if (integer == -1) {
         return -1;
-        return integer;
       } else if (integer > 0 && integer <= m) {
         return labels[integer - 1];
       } else if (integer > m && integer <= (m + n)) {
@@ -425,20 +424,46 @@ class MM {
     return steps;
   }
   
-  decompress(proof, labels) {
+  decompress(proof, labels, markers = false) {
     const [, local, , compressed] = proof;
     let integers = this.numbers(compressed);
     const steps = this.steps(labels, local, integers);
+    // We can either choose to decompress the proof using
+    // markers, which substantially speed up the processing
+    // by reusing prior computation.
+    if (markers) {
+      return steps;
+    }
+    // Or we can expand the proof fully, which recomputes
+    // all subproofs.
     return this.expand(steps);
   }
 
   verify(label, type, theorem, proof, generate) {
     const stack = [];
-
     const steps = [];
-
+    const markers = [];
+    
     let index = 0;
     for (const step of proof) {
+      if (step == -1) {
+        // Take the top of the stack, which is the result of
+        // a prior computation / verification, and saves that
+        // result so that it can be reused later, without
+        // incurring into the recomputation.
+        markers.push(stack[stack.length - 1]);
+        steps.push([step, stack[stack.length - 1]]);
+        continue;
+      } else if (typeof step == "number") {
+        // Takes a prior computation, which was already
+        // previously verified (since it was at the top of
+        // the stack at some point), and reuses its result
+        // in another computation by pushing it into the stack.
+        stack.push(markers[step]);
+        steps.push([step, markers[step]]);
+        continue;
+      }
+      
       if (!this.labels[step]) {
         throw new Error(`Unknown theorem "${step}" in the proof for "${label}".`);
       }
