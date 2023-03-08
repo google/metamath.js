@@ -1075,7 +1075,8 @@ describe("Verifier", () => {
     assertThat(summary)
       .equalsTo([
         "ax-a1: |- a = a ' '",
-        "ax-a1: |- a = a ' '",
+        "-1: |- a = a ' '",
+        "1: |- a = a ' '",
         "ax-r1: |- a ' ' = a",
         "ax-r2: |- a = a",
       ]);

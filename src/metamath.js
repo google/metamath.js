@@ -300,11 +300,8 @@ class MM {
                 .map(([rule, type]) => this.frames.lookupE(rule, type));
           labels.push(...args);
           labels.push(...hyps);
-          result = (generate = true, markers = false) => {
+          result = (generate = true, markers = true) => {
             let p = this.decompress(proof, labels, markers);
-            //console.log(p);
-            //console.log(proof);
-            //console.log(label);
             return this.verify(label, type, theorem, p, generate);
           }
         }
