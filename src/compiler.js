@@ -1,5 +1,5 @@
 const moo = require("moo");
-const {MM} = require("./metamath.js");
+const {MM, Compressor} = require("./metamath.js");
 
 class Lexer {
   constructor() {
@@ -25,6 +25,8 @@ class Lexer {
       [":"]: ":",
       [","]: ",",
       [";"]: ";",
+      ["@"]: "@",
+      ["#"]: "#",
       ["label"]: /[A-Za-z0-9-_.]+/,
       ["sequence"]: /[!-#%-~\?]+/,
     };
@@ -75,6 +77,8 @@ const symbols = [
   ",",
   ":",
   ";",
+  "@",
+  "#",
   "//",
   // catch all types of sequences
   "sequence",
@@ -217,21 +221,11 @@ class Parser {
     let then = this.declaration("assert", false, true);
     return [lets, ifs, disjoints, then];
   }
-  
-  step() {
-    const result = [];
-    this.eat("step");
-    this.eat("ws");
-    result.push(this.label());
-    this.ws(true);
-    this.eat(")");
-    this.ws(true);
-    result.push(this.label());
-    this.ws(true);
+
+  args() {
     this.eat("(");
     this.ws(true);
     let args = [];
-    result.push(args);
     if (this.accepts(...labels)) {
       args.push(this.label());
       this.ws(true);
@@ -243,6 +237,31 @@ class Parser {
     }
     this.ws(true);
     this.eat(")");
+    return args;
+  }
+  
+  step() {
+    const result = [];
+    this.eat("step");
+    this.eat("ws");
+    // index
+    result.push(this.label());
+    this.ws(true);
+    this.eat(")");
+    this.ws(true);
+    // a step can either be ...
+    if (this.accepts("#")) {
+      // ... a marker ...
+      result.push(this.eat("#"));
+    } else if (this.accepts("@")) {
+      // ... a recall ...
+      result.push(this.eat("@"));
+      result.push(this.label());
+    } else {
+      // ... or call.
+      result.push(this.label());
+      result.push(this.args());
+    }
     this.ws(true);
     this.eat(":");
     this.ws(true);
@@ -414,7 +433,33 @@ class Compiler {
       const f = types.length > 0 ? `${types.join("\n")}` : "";
       const e = logical.length > 0 ? `${logical.join("\n")}` : "";
       const d = disjoints.length > 0 ? `  $d ${dvis.join(" ")} $.` : "";
-      const p = proof ? `$= ${proof.map(([step, label]) => label).join(" ")} ` : "";
+
+      let p = "";
+
+      if (proof) {
+        let compress = false;
+        const s = proof.map(([, label, marker]) => {
+          if (label == "#") {
+            compress = true;
+            return -1;
+          } else if (label == "@") {
+            return parseInt(marker);
+          }
+          return label;
+        });
+
+        if (!compress) {
+          p = `$= ${proof.map(([step, label]) => label).join(" ")} `;
+        } else {
+          const f = vars.map(([letty, [label]]) => label);
+          const e = [...assumes]
+                .map(([, assumption]) => [assumption.shift(), assumption.shift(), assumption])
+                .map(([label, type, symbols]) => label);
+          const compressor = new Compressor([...f, ...e], s);
+          const compressed = compressor.compress();
+          p = `$= ( ${compressor.external().join(" ")} ) ${compressor.compress()} `;
+        }
+      }
       
       result.push(`
 $\{
@@ -459,6 +504,9 @@ class Transpiler {
       result[file] = [deps, content];
     }
 
+    //console.log(result);
+    //throw new Error("hi");
+    
     return result;
   }
   
@@ -507,10 +555,15 @@ end
     //throw new Error("hi");
     const local = [...f.map(([, , label]) => label),
                    ...e.map(([, , label]) => label)];
-    
-    const proof = func();
+
+    // console.log(this.mm.frames.stack);
+    const proof = func(undefined, true);
     
     const steps = proof.map(([step]) => step);
+    // const compressed = new Compressor(local, steps).compress();
+    //console.log(steps);
+    //console.log(compressed);
+    // throw new Error();
     const deps = [...new Set(steps)]
           .filter((step) => !local.includes(step) && typeof step != "number");
     
@@ -537,7 +590,10 @@ end
 
     // console.log(proof);
     
-    const body = proof.map(([step, [type, sequence = []], args = []], i) => `  step ${i}) ${step}(${args.join(", ")}): ${type} ${sequence.flat().join(' ')}`).join("\n");
+    const body = proof.map(([step, [type, sequence = []], args = []], i) => {
+      const call = typeof step == "number" ? (step == -1 ? `#` : `@${step}`) : `${step}(${args.join(", ")})`;
+      return `  step ${i}) ${call}: ${type} ${sequence.flat().join(' ')}`;
+    }).join("\n");
     
     const code = `
 theorem ${label}

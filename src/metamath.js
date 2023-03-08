@@ -302,6 +302,9 @@ class MM {
           labels.push(...hyps);
           result = (generate = true, markers = false) => {
             let p = this.decompress(proof, labels, markers);
+            //console.log(p);
+            //console.log(proof);
+            //console.log(label);
             return this.verify(label, type, theorem, p, generate);
           }
         }
@@ -535,7 +538,7 @@ class MM {
                 if (el1 == el2) {
                   throw new Error(`${x} (${a}) and ${y} (${b}) are disjoined variables, and they share ${el}. `);
                 }
-                
+                // console.log(label);
                 // Second, each possible pair of variables, one from each expression, must exist in
                 // an active $d statement of the $p statement containing the proof.
                 if (!this.frames.lookupD(el1, el2)) {
@@ -614,6 +617,7 @@ class Compressor {
     this.steps = steps;
     this.local = local;
   }
+  
   external() {
     return this.steps
       .filter((step) => typeof step != "number")

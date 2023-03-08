@@ -1,4 +1,5 @@
 const Assert = require("assert");
+const {Verifier} = require("../src/descent.js");
 
 describe("Compiler", () => {
   const {Transpiler, Compiler, Parser, Lexer} = require("../src/compiler.js");
@@ -37,6 +38,8 @@ describe("Compiler", () => {
         step 1) foo(): p
         step 2) bar(1): ~ /** this is a comment */ p
         step 3) tpl(0,1): term ( t + 0 )
+        step 4) #: term ( t + 0 ) // creates a checkpoint with the top of the stack
+        step 5) @4: term ( t + 0 ) // recalls a checkpoint
       end
     `);
     
@@ -76,6 +79,8 @@ describe("Compiler", () => {
          ["1", "foo", [], ["p"]],
          ["2", "bar", ["1"], ["~", "p"]],
          ["3", "tpl", ["0", "1"], ["term", "(", "t", "+", "0", ")"]],
+         ["4", "#", ["term", "(", "t", "+", "0", ")"]],
+         ["5", "@", "4", ["term", "(", "t", "+", "0", ")"]],
        ]]
     ]);
   });
@@ -336,6 +341,14 @@ $\}`);
 
   });
   
+  it("transpile, compile and verify idALT", async () => {
+    const program = await fs.readFile("tests/idalt.mm");
+    const transpiler = new Transpiler().read(program.toString());
+    const source = transpiler.dump();
+    const result = await new Compiler().compile(source);
+    assertThat(new Verifier().verify(result)).equalsTo(1);
+  });
+  
   it("verify", async () => {
     const metamath = `
       $c ( ) -> wff $.
@@ -347,8 +360,6 @@ $\}`);
       w2 $a wff ( p -> q ) $.
       wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
     `;
-
-    const {Verifier} = require("../src/descent.js");
 
     // Verifies that the proofs are valid.
     assertThat(new Verifier().verify(metamath)).equalsTo(1);
@@ -397,14 +408,13 @@ describe("Transpile and Parse", () => {
           .read(program.toString())
           .closure("testmod3");
     const typogram = Object.values(files).map(([, content]) => content).join("");
-    //console.log(typogram);
-    //return;
     const metamath = await new Compiler().compile(typogram);
     assertThat(new Verifier().verify(metamath)).equalsTo(49);
   });
   
   it("mpbirx", async function() {
     const program = await require("fs/promises").readFile(`tests/hol.mm`);
+    // console.log(metamath);
     const files = new Transpiler()
           .read(program.toString())
           .closure("mpbirx", true);
