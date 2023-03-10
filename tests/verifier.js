@@ -1348,11 +1348,70 @@ describe("Verifier", () => {
 
       id $p |- ( ph -> ph ) $=
         ( wi ax-1 mpd ) AAABZAAACAECD $.
-
      `);
 
     const [, proof] = mm.theorem("id");
-    assertThat(proof() != undefined).equalsTo(true);
+    assertThat(proof().length).equalsTo(13);
+  });
+
+  it("disjoint variables", () => {
+    const mm = process(`
+      $c wff ( ) -> $.
+      $v x y a $.
+
+      wx $f wff x $.
+      wy $f wff y $.
+
+      wa $f wff a $.
+
+      $\{
+        $d x y $.
+        wi $a wff ( x -> y ) $.
+      $\}
+ 
+      $\{
+        disjoint $p wff ( a -> a ) $= wa wa wi $.
+      $\}
+     `);
+
+    const [, proof] = mm.theorem("disjoint");
+
+    try {
+      proof(false);
+    } catch (e) {
+      assertThat(e.message)
+        .equalsTo("x (=a) and y (=a) are disjoined variables and can't carry the same value. ");
+    }
+  });
+
+  it("disjoint variables from caller", () => {
+    const mm = process(`
+      $c wff ( ) -> $.
+      $v x y a $.
+
+      wx $f wff x $.
+      wy $f wff y $.
+
+      wa $f wff a $.
+
+      $\{
+        wi $a wff ( x -> y ) $.
+      $\}
+ 
+      $\{
+        $d x y $.
+        disjoint $p wff ( a -> a ) $= wa wa wi $.
+      $\}
+     `);
+
+    const [, proof] = mm.theorem("disjoint");
+
+    try {
+      proof(false);
+    } catch (e) {
+      assertThat(e.message)
+        .equalsTo("x (=a) and y (=a) are disjoined variables and can't carry the same value. ");
+    }
   });
 
   it("miu.mm", async () => {

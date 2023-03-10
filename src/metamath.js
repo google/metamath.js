@@ -217,7 +217,7 @@ class Stack {
         }
       }
     }
-      
+    
     const f = [];
 
     for (const frame of [...this.stack].reverse()) {
@@ -422,7 +422,7 @@ class MM {
               for (let el2 of b) {
                 // First, the two expressions must have no variables in common.
                 if (el1 == el2) {
-                  throw new Error(`${x} (${a}) and ${y} (${b}) are disjoined variables, and they share ${el}. `);
+                  throw new Error(`${x} (=${a}) and ${y} (=${b}) are disjoined variables and can't carry the same value. `);
                 }
                 // console.log(label);
                 // Second, each possible pair of variables, one from each expression, must exist in
