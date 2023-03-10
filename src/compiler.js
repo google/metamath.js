@@ -1,5 +1,5 @@
 const moo = require("moo");
-const {MM, Compressor} = require("./metamath.js");
+const {MM, Compressor, Decompressor} = require("./metamath.js");
 
 class Lexer {
   constructor() {
@@ -470,6 +470,9 @@ class Compiler {
                 .map(([label, type, symbols]) => label);
           const compressor = new Compressor([...f, ...e], s);
           const compressed = compressor.compress();
+          //console.log(s);
+          //throw new Error("hi");
+          
           p = `$= ( ${compressor.external().join(" ")} ) ${compressor.compress()} `;
         }
       }
@@ -560,23 +563,21 @@ end
 
   theorem(label) {
     // const deps = [];
-    const [, [d, f, e, [type, theorem]], func] = this.mm.labels[label];
+    const [, [d, f, e, [type, theorem]], func, proof] = this.mm.labels[label];
 
     let args = f.map(([type, name, label]) => `  let ${label}: ${type} ${name}`).join("\n");
 
-    //console.log();
-    //throw new Error("hi");
     const local = [...f.map(([, , label]) => label),
                    ...e.map(([, , label]) => label)];
 
-    // console.log(this.mm.frames.stack);
-    const proof = func(undefined, true);
-    
-    const steps = proof.map(([step]) => step);
-    // const compressed = new Compressor(local, steps).compress();
-    //console.log(steps);
-    //console.log(compressed);
-    // throw new Error();
+    let steps = proof;
+    if (proof[0] == "(") {
+      const [, external, , compressed] = proof;
+      steps = new Decompressor().decompress(local, external, compressed);
+      //console.log(steps);
+      //throw new Error("hi");
+    }
+
     const deps = [...new Set(steps)]
           .filter((step) => !local.includes(step) && typeof step != "number");
     
@@ -601,9 +602,7 @@ end
     //  args += "" + diff.join(", ") + ")";
     //}
 
-    // console.log(proof);
-    
-    const body = proof.map(([step, [type, sequence = []], args = []], i) => {
+    const body = steps.map((step, i) => {
       const call = typeof step == "number" ? (step == -1 ? `#` : `@${step}`) : `${step}`;
       return `    ${call}`;
     }).join("\n");

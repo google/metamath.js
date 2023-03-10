@@ -824,9 +824,9 @@ describe("Verifier", () => {
 
     const compressed = "AAABZBZFAACAFABBGFBAFCAFADEE";
 
-    const labels = ["wph"];
+    const local = ["wph"];
 
-    const local = "wi ax-1 ax-2 ax-mp".split(" ");
+    const external = "wi ax-1 ax-2 ax-mp".split(" ");
     
     const integers = new Decompressor().decode(compressed);
 
@@ -862,7 +862,7 @@ describe("Verifier", () => {
     ]);
 
     const steps = new Decompressor()
-          .decompress(local, labels, compressed);
+          .decompress(local, external, compressed);
     
     assertThat(steps)
       .equalsTo([
@@ -898,7 +898,7 @@ describe("Verifier", () => {
 
     
     let result = new Decompressor().explode(
-      local, labels, compressed, mm.labels);
+      local, external, compressed, mm.labels);
 
     assertThat(result).equalsTo([
       'wph',  'wph',  'wph',  'wi',    'wi',
@@ -918,14 +918,14 @@ describe("Verifier", () => {
 
     // First, filter out external references and construct
     // a unique set of labels.
-    const refs = new Compressor(labels, steps).external();
+    const refs = new Compressor(local, steps).external();
     
     // The unique references should be the same as the
     // local array that was used for decompression and
     // stated explicitly in the theorem.
-    assertThat(local).equalsTo(refs);
+    assertThat(external).equalsTo(refs);
 
-    const numbers = new Compressor(labels, steps).integers();
+    const numbers = new Compressor(local, steps).integers();
 
     assertThat(numbers).equalsTo(integers);
     
@@ -948,7 +948,7 @@ describe("Verifier", () => {
     assertThat(Compressor.encode(621)).equalsTo("UUUA");
     // ... etc ...
 
-    assertThat(new Compressor(labels, steps).compress())
+    assertThat(new Compressor(local, steps).compress())
       .equalsTo(compressed);
   });
 

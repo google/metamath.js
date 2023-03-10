@@ -301,10 +301,10 @@ class MM {
           labels.push(...args);
           labels.push(...hyps);
           result = (generate = true, markers = true) => {
-            const [, local, , compressed] = proof;
+            const [, external, , compressed] = proof;
             let p = markers ?
-                new Decompressor().decompress(local, labels, compressed) :
-                new Decompressor().explode(local, labels, compressed, this.labels);
+                new Decompressor().decompress(labels, external, compressed) :
+                new Decompressor().explode(labels, external, compressed, this.labels);
             return this.verify(label, type, theorem, p, generate);
           }
         }
@@ -330,6 +330,8 @@ class MM {
     const stack = [];
     const steps = [];
     const markers = [];
+
+    // throw new Error("hi");
     
     let index = 0;
     for (const step of proof) {
@@ -605,7 +607,7 @@ class Decompressor {
     // markers, which substantially speed up the processing
     // by reusing prior computation.
     let integers = this.decode(compressed);
-    return this.steps(external, local, integers);
+    return this.steps(local, external, integers);
   }
   
   explode(local, external, compressed, other) {
@@ -625,6 +627,7 @@ class Compressor {
   }
   
   external() {
+    // throw new Error("hi");
     return this.steps
       .filter((step) => typeof step != "number")
       .filter((label) => !this.local.includes(label))
