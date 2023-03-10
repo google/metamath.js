@@ -9,11 +9,12 @@ theorem t5
 
   assert |- - - t - - q - - - -
 
-  step 0) w0(): wff -
-  step 1) w1(0): wff - -
-  step 2) w0(): wff -
-  step 3) w0(): wff -
-  step 4) w1(3): wff - -
-  step 5) t3(): |- - - t - q - -
-  step 6) ax1(1, 2, 4, 5): |- - - t - - q - - - -
+  proof
+    w0;
+    w1;
+    w0;
+    w0;
+    w1;
+    t3;
+    ax1;
 end

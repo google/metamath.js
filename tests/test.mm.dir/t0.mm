@@ -7,6 +7,7 @@ theorem t0
 
   assert " - -
 
-  step 0) w0(): " -
-  step 1) w1(0): " - -
+  proof
+    w0;
+    w1;
 end

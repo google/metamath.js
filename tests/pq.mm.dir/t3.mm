@@ -8,7 +8,8 @@ theorem t3
 
   assert |- - - p - q - - -
 
-  step 0) w0(): wff -
-  step 1) w1(0): wff - -
-  step 2) ax0(1): |- - - p - q - - -
+  proof
+    w0;
+    w1;
+    ax0;
 end

@@ -94,7 +94,7 @@ const labels = [
   "theorem",
   "axiom",
   "proof",
-  "end",
+  //"end",
   "let",
   "step",
   "assume",
@@ -297,12 +297,27 @@ class Parser {
     let name = this.label();
     this.ws();
     let head = this.header();
+
+    this.ws(true);
+    this.eat("proof");
+    this.ws(true);
     
     let steps = [];
-    while (this.accepts("step")) {
-      steps.push(this.step());
-    }
-    
+    do {
+      if (this.accepts(...labels)) {
+        steps.push(this.label());
+      } else if (this.accepts("#")) {
+        steps.push(this.eat("#"));
+      } else if (this.accepts("@")) {
+        steps.push(`${this.eat("@")}${this.label()}`);
+      } else {
+        break;
+      }
+      this.ws(true);
+      this.eat(";");
+      this.ws();
+    } while (true);
+
     this.eat("end");
     this.ws();
 
@@ -438,18 +453,18 @@ class Compiler {
 
       if (proof) {
         let compress = false;
-        const s = proof.map(([, label, marker]) => {
+        const s = proof.map((label) => {
           if (label == "#") {
             compress = true;
             return -1;
-          } else if (label == "@") {
-            return parseInt(marker);
+          } else if (label.startsWith("@")) {
+            return parseInt(label.substr(1));
           }
           return label;
         });
 
         if (!compress) {
-          p = `$= ${proof.map(([step, label]) => label).join(" ")} `;
+          p = `$= ${proof.join(" ")} `;
         } else {
           const f = vars.map(([letty, [label]]) => label);
           const e = [...assumes]
@@ -591,8 +606,8 @@ end
     // console.log(proof);
     
     const body = proof.map(([step, [type, sequence = []], args = []], i) => {
-      const call = typeof step == "number" ? (step == -1 ? `#` : `@${step}`) : `${step}(${args.join(", ")})`;
-      return `  step ${i}) ${call}: ${type} ${sequence.flat().join(' ')}`;
+      const call = typeof step == "number" ? (step == -1 ? `#` : `@${step}`) : `${step}`;
+      return `    ${call};`;
     }).join("\n");
     
     const code = `
@@ -602,6 +617,7 @@ ${assumptions}
 ${d.length > 0 ? diff.join("\n") : ""}
   assert ${type} ${theorem.join(' ')}
 
+  proof
 ${body}
 end
 `;

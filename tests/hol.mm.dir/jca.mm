@@ -10,10 +10,11 @@ theorem jca
 
   assert |- R |= ( S , T )
 
-  step 0) tr(): term R
-  step 1) ts(): term S
-  step 2) tt(): term T
-  step 3) ax-jca.1(): |- R |= S
-  step 4) ax-jca.2(): |- R |= T
-  step 5) ax-jca(0, 1, 2, 3, 4): |- R |= ( S , T )
+  proof
+    tr;
+    ts;
+    tt;
+    ax-jca.1;
+    ax-jca.2;
+    ax-jca;
 end

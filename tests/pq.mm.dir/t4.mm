@@ -8,8 +8,9 @@ theorem t4
 
   assert |- - - - p - q - - - -
 
-  step 0) w0(): wff -
-  step 1) w1(0): wff - -
-  step 2) w1(1): wff - - -
-  step 3) ax0(2): |- - - - p - q - - - -
+  proof
+    w0;
+    w1;
+    w1;
+    ax0;
 end

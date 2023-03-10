@@ -35,11 +35,15 @@ describe("Compiler", () => {
         let wy: wff y
 
         assert |- ~ p
-        step 1) foo(): p
-        step 2) bar(1): ~ /** this is a comment */ p
-        step 3) tpl(0,1): term ( t + 0 )
-        step 4) #: term ( t + 0 ) // creates a checkpoint with the top of the stack
-        step 5) @4: term ( t + 0 ) // recalls a checkpoint
+
+        proof
+
+          foo;
+          bar;
+          tpl;
+          #;
+          @4;
+
       end
     `);
     
@@ -76,11 +80,11 @@ describe("Compiler", () => {
         ["assert", ["|-", "~", "p"]]
       ],
        [
-         ["1", "foo", [], ["p"]],
-         ["2", "bar", ["1"], ["~", "p"]],
-         ["3", "tpl", ["0", "1"], ["term", "(", "t", "+", "0", ")"]],
-         ["4", "#", ["term", "(", "t", "+", "0", ")"]],
-         ["5", "@", "4", ["term", "(", "t", "+", "0", ")"]],
+         "foo",
+         "bar",
+         "tpl",
+         "#",
+         "@4",
        ]]
     ]);
   });
@@ -276,11 +280,12 @@ theorem wnew
   disjoint p r
   assert wff ( s -> ( r -> p ) )
 
-  step 0) ws(): wff s
-  step 1) wr(): wff r
-  step 2) wp(): wff p
-  step 3) w2(1, 2): wff ( r -> p )
-  step 4) w2(0, 3): wff ( s -> ( r -> p ) )
+  proof
+    ws;
+    wr;
+    wp;
+    w2;
+    w2;
 end
 `);
 
@@ -424,12 +429,15 @@ describe("Transpile and Parse", () => {
   });
 
   it.skip("2p2e4", async function() {
+    this.timeout(50000);
     // Hits "proof too long", probably as one of its dependencies, and so
     // fails.
     const program = await require("fs/promises").readFile(`tests/set.mm`);
     const files = new Transpiler()
-          .read(program.toString())
-          .closure("2p2e4", true);
+          .read(program.toString());
+
+    return;
+    // .closure("2p2e4", true);
     const typogram = Object.values(files).map(([, content]) => content).join("");
     const metamath = await new Compiler().compile(typogram);
     assertThat(new Verifier().verify(metamath)).equalsTo(6);

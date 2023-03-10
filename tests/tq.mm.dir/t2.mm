@@ -7,6 +7,7 @@ theorem t2
 
   assert |- - t - q -
 
-  step 0) w0(): wff -
-  step 1) ax0(0): |- - t - q -
+  proof
+    w0;
+    ax0;
 end
