@@ -827,10 +827,8 @@ describe("Verifier", () => {
     const labels = ["wph"];
 
     const local = "wi ax-1 ax-2 ax-mp".split(" ");
-
-    let decompressor = new Decompressor();
     
-    const integers = decompressor.numbers(compressed);
+    const integers = new Decompressor().decode(compressed);
 
     assertThat(integers).equalsTo([
       1,
@@ -863,7 +861,8 @@ describe("Verifier", () => {
       5
     ]);
 
-    const steps = decompressor.steps(labels, local, integers);
+    const steps = new Decompressor()
+          .decompress(local, labels, compressed);
     
     assertThat(steps)
       .equalsTo([
@@ -897,11 +896,9 @@ describe("Verifier", () => {
         'ax-mp'
       ]);
 
-    // return;
     
-    let result = decompressor.decompress(
-      ["(", local, ")", compressed],
-      labels, false, mm.labels);
+    let result = new Decompressor().explode(
+      local, labels, compressed, mm.labels);
 
     assertThat(result).equalsTo([
       'wph',  'wph',  'wph',  'wi',    'wi',

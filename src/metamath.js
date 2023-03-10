@@ -301,8 +301,10 @@ class MM {
           labels.push(...args);
           labels.push(...hyps);
           result = (generate = true, markers = true) => {
-            let decompressor = new Decompressor();
-            let p = decompressor.decompress(proof, labels, markers, this.labels);
+            const [, local, , compressed] = proof;
+            let p = markers ?
+                new Decompressor().decompress(local, labels, compressed) :
+                new Decompressor().explode(local, labels, compressed, this.labels);
             return this.verify(label, type, theorem, p, generate);
           }
         }
@@ -495,7 +497,7 @@ class MM {
 }
 
 class Decompressor {
-  numbers(compressed) {
+  decode(compressed) {
     let integers = [];
     let current = 0;
 
@@ -597,20 +599,19 @@ class Decompressor {
 
     return steps;
   }
-  
-  decompress(proof, labels, markers = false, other) {
-    const [, local, , compressed] = proof;
-    let integers = this.numbers(compressed);
-    const steps = this.steps(labels, local, integers);
+
+  decompress(local, external, compressed) {
     // We can either choose to decompress the proof using
     // markers, which substantially speed up the processing
     // by reusing prior computation.
-    if (markers) {
-      return steps;
-    }
+    let integers = this.decode(compressed);
+    return this.steps(external, local, integers);
+  }
+  
+  explode(local, external, compressed, other) {
     // Or we can expand the proof fully, which recomputes
     // all subproofs.
-    // console.log(other);
+    const steps = this.decompress(local, external, compressed);
     return this.expand(steps, other);
   }
 
