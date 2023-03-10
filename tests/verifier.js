@@ -815,7 +815,7 @@ describe("Verifier", () => {
 
   it("decompress then compress proof", async () => {
     const file = await require("fs/promises").readFile("tests/idalt.mm");
-    const {Compressor} = require("./../src/metamath.js");
+    const {Decompressor, Compressor} = require("./../src/metamath.js");
 
     const [code] = parse(file.toString());
 
@@ -827,8 +827,10 @@ describe("Verifier", () => {
     const labels = ["wph"];
 
     const local = "wi ax-1 ax-2 ax-mp".split(" ");
+
+    let decompressor = new Decompressor();
     
-    const integers = mm.numbers(compressed);
+    const integers = decompressor.numbers(compressed);
 
     assertThat(integers).equalsTo([
       1,
@@ -861,7 +863,7 @@ describe("Verifier", () => {
       5
     ]);
 
-    const steps = mm.steps(labels, local, integers);
+    const steps = decompressor.steps(labels, local, integers);
     
     assertThat(steps)
       .equalsTo([
@@ -895,9 +897,11 @@ describe("Verifier", () => {
         'ax-mp'
       ]);
 
-    let result = mm.decompress(
+    // return;
+    
+    let result = decompressor.decompress(
       ["(", local, ")", compressed],
-      labels);
+      labels, false, mm.labels);
 
     assertThat(result).equalsTo([
       'wph',  'wph',  'wph',  'wi',    'wi',
@@ -910,6 +914,7 @@ describe("Verifier", () => {
       'wi',   'wph',  'ax-2', 'ax-mp', 'ax-mp'
     ]);
 
+    // return;
     // Now, lets try to compress it, by recomputing
     // all of the variables here using the steps that
     // were generated during the decompression.

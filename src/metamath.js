@@ -301,7 +301,8 @@ class MM {
           labels.push(...args);
           labels.push(...hyps);
           result = (generate = true, markers = true) => {
-            let p = this.decompress(proof, labels, markers);
+            let decompressor = new Decompressor();
+            let p = decompressor.decompress(proof, labels, markers, this.labels);
             return this.verify(label, type, theorem, p, generate);
           }
         }
@@ -321,122 +322,6 @@ class MM {
     this.frames.push();
     this.feed(statements);
     return this.frames.pop();
-  }
-
-  // Algorithms from:
-  // https://us.metamath.org/downloads/metamath.pdf
-  // https://mm.ivank.net/js/MM.js
-  // https://github.com/david-a-wheeler/mmverify.py/blob/master/mmverify.py
-
-  numbers(compressed) {
-    let integers = [];
-    let current = 0;
-
-    // removes whitespaces from the compressed proof
-    for (let ch of compressed.replace(/\s/g, "")) {
-      if (ch >= 'A' && ch <= 'T') {
-        // Shift the current integer left by 20 bits.
-        // Add the next 20 bits as the least significant bits.
-        const result = current * 20 + ch.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
-        integers.push(result);
-        // Reset the current integer.
-        current = 0;
-      } else if (ch >= 'U' && ch <= 'Y') {
-        // Shift the current integer left by 5 bits.
-        current = current * 5;
-        // Add the next 5 bits as the last significant bits.
-        current += ch.charCodeAt(0) - 'U'.charCodeAt(0) + 1;
-      } else if (ch == 'Z') {
-        integers.push(-1);
-      } else {
-        throw new Error(`Unexpected character "${ch}" in compressed proof`);
-      }
-    }
-
-    return integers;
-  }
-
-  steps(labels, local, integers) {
-    const m = labels.length;
-    const n = local.length;
-
-    return integers.map((integer) => {
-      if (integer == -1) {
-        return -1;
-      } else if (integer > 0 && integer <= m) {
-        return labels[integer - 1];
-      } else if (integer > m && integer <= (m + n)) {
-        const i = integer - m;
-        return local[i - 1];
-      } else {
-        // A marker.
-        return integer - (m + n + 1);
-      }
-    });
-  }
-
-  tree(steps, i) {
-    const statements = this.labels;
-
-    if (!statements[steps[i]]) {
-      throw new Error(`Can't find entry ${steps[i]}.`);
-    }
-    const [type, [dvs, f = [], e = []]] = statements[steps[i]];
-    let result = 0;
-    if (type == "$f" || type == "$e") {
-      return 1;
-    } else if (type == "$a" || type == "$p") {
-      for (let j = 0; j < (f.length + e.length); j++) {
-        const offset = this.tree(steps, i - 1 - result);
-        result += offset;
-      }
-    }
-    return result + 1;
-  }
-
-  expand(steps) {
-    const markers = [];
-
-    let i = 0;
-    while (i < steps.length) {
-      const number = steps[i];
-      if (typeof steps[i] == "string") {
-        i++;
-      } else if (number == -1) {
-        // push the subtree to the markers
-        const size = this.tree(steps, i - 1);
-        const subtree = steps.slice(i - size, i);
-        markers.push(subtree);
-        // delete the marker
-        steps.splice(i, 1);
-      } else if (!markers[number]) {
-        throw new Error(`Marker #${number} not found while unrolling ${proof.join('')}.`);
-      } else {
-        // replace the number with the marked subtree
-        // https://stackoverflow.com/questions/44959025/rangeerror-maximum-call-stack-size-exceeded-caused-by-array-splice-apply
-        if (markers[number].length > 65536) {
-          throw new Error("proof too long");
-        }
-        steps.splice(i, 1, ...markers[number]);
-      }
-    }
-
-    return steps;
-  }
-  
-  decompress(proof, labels, markers = false) {
-    const [, local, , compressed] = proof;
-    let integers = this.numbers(compressed);
-    const steps = this.steps(labels, local, integers);
-    // We can either choose to decompress the proof using
-    // markers, which substantially speed up the processing
-    // by reusing prior computation.
-    if (markers) {
-      return steps;
-    }
-    // Or we can expand the proof fully, which recomputes
-    // all subproofs.
-    return this.expand(steps);
   }
 
   verify(label, type, theorem, proof, generate) {
@@ -609,6 +494,129 @@ class MM {
   }
 }
 
+class Decompressor {
+  numbers(compressed) {
+    let integers = [];
+    let current = 0;
+
+    // removes whitespaces from the compressed proof
+    for (let ch of compressed.replace(/\s/g, "")) {
+      if (ch >= 'A' && ch <= 'T') {
+        // Shift the current integer left by 20 bits.
+        // Add the next 20 bits as the least significant bits.
+        const result = current * 20 + ch.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
+        integers.push(result);
+        // Reset the current integer.
+        current = 0;
+      } else if (ch >= 'U' && ch <= 'Y') {
+        // Shift the current integer left by 5 bits.
+        current = current * 5;
+        // Add the next 5 bits as the last significant bits.
+        current += ch.charCodeAt(0) - 'U'.charCodeAt(0) + 1;
+      } else if (ch == 'Z') {
+        integers.push(-1);
+      } else {
+        throw new Error(`Unexpected character "${ch}" in compressed proof`);
+      }
+    }
+
+    return integers;
+  }
+
+
+  // Algorithms from:
+  // https://us.metamath.org/downloads/metamath.pdf
+  // https://mm.ivank.net/js/MM.js
+  // https://github.com/david-a-wheeler/mmverify.py/blob/master/mmverify.py
+
+  steps(labels, local, integers) {
+    const m = labels.length;
+    const n = local.length;
+
+    return integers.map((integer) => {
+      if (integer == -1) {
+        return -1;
+      } else if (integer > 0 && integer <= m) {
+        return labels[integer - 1];
+      } else if (integer > m && integer <= (m + n)) {
+        const i = integer - m;
+        return local[i - 1];
+      } else {
+        // A marker.
+        return integer - (m + n + 1);
+      }
+    });
+  }
+
+  tree(steps, i, other) {
+    // const statements = this.labels;
+    const statements = other;
+
+    if (!statements[steps[i]]) {
+      throw new Error(`Can't find entry ${steps[i]}.`);
+    }
+    const [type, [dvs, f = [], e = []]] = statements[steps[i]];
+    let result = 0;
+    if (type == "$f" || type == "$e") {
+      return 1;
+    } else if (type == "$a" || type == "$p") {
+      for (let j = 0; j < (f.length + e.length); j++) {
+        const offset = this.tree(steps, i - 1 - result, other);
+        result += offset;
+      }
+    }
+    return result + 1;
+  }
+
+  expand(steps, other) {
+    const markers = [];
+
+    let i = 0;
+    while (i < steps.length) {
+      const number = steps[i];
+      if (typeof steps[i] == "string") {
+        i++;
+      } else if (number == -1) {
+        // push the subtree to the markers
+        const size = this.tree(steps, i - 1, other);
+        const subtree = steps.slice(i - size, i);
+        markers.push(subtree);
+        // delete the marker
+        steps.splice(i, 1);
+      } else if (!markers[number]) {
+        throw new Error(`Marker #${number} not found while unrolling ${proof.join('')}.`);
+      } else {
+        // replace the number with the marked subtree
+        // https://stackoverflow.com/questions/44959025/rangeerror-maximum-call-stack-size-exceeded-caused-by-array-splice-apply
+        if (markers[number].length > 65536) {
+          throw new Error("proof too long");
+        }
+        steps.splice(i, 1, ...markers[number]);
+      }
+    }
+
+    return steps;
+  }
+  
+  decompress(proof, labels, markers = false, other) {
+    const [, local, , compressed] = proof;
+    let integers = this.numbers(compressed);
+    const steps = this.steps(labels, local, integers);
+    // We can either choose to decompress the proof using
+    // markers, which substantially speed up the processing
+    // by reusing prior computation.
+    if (markers) {
+      return steps;
+    }
+    // Or we can expand the proof fully, which recomputes
+    // all subproofs.
+    // console.log(other);
+    return this.expand(steps, other);
+  }
+
+
+}
+
 class Compressor {
   constructor(local, steps) {
     this.steps = steps;
@@ -674,4 +682,5 @@ module.exports = {
   Stack: Stack,
   MM: MM,
   Compressor: Compressor,
+  Decompressor: Decompressor,
 };
