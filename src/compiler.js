@@ -313,8 +313,6 @@ class Parser {
       } else {
         break;
       }
-      this.ws(true);
-      this.eat(";");
       this.ws();
     } while (true);
 
@@ -607,7 +605,7 @@ end
     
     const body = proof.map(([step, [type, sequence = []], args = []], i) => {
       const call = typeof step == "number" ? (step == -1 ? `#` : `@${step}`) : `${step}`;
-      return `    ${call};`;
+      return `    ${call}`;
     }).join("\n");
     
     const code = `

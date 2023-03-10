@@ -11,10 +11,10 @@ theorem syl
   assert |- R |= T
 
   proof
-    tr;
-    ts;
-    tt;
-    ax-syl.1;
-    ax-syl.2;
-    ax-syl;
+    tr
+    ts
+    tt
+    ax-syl.1
+    ax-syl.2
+    ax-syl
 end

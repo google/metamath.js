@@ -9,17 +9,17 @@ theorem id
   assert |- ( ph -> ph )
 
   proof
-    wph;
-    wph;
-    wph;
-    wi;
-    #;
-    wph;
-    wph;
-    wph;
-    ax-1;
-    wph;
-    @0;
-    ax-1;
-    mpd;
+    wph
+    wph
+    wph
+    wi
+    #
+    wph
+    wph
+    wph
+    ax-1
+    wph
+    @0
+    ax-1
+    mpd
 end

@@ -8,7 +8,7 @@ theorem trud
   assert |- R |= T.
 
   proof
-    tr;
-    ax-trud.1;
-    ax-trud;
+    tr
+    ax-trud.1
+    ax-trud
 end

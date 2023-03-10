@@ -38,11 +38,11 @@ describe("Compiler", () => {
 
         proof
 
-          foo;
-          bar;
-          tpl;
-          #;
-          @4;
+          foo
+          bar
+          tpl
+          #
+          @4
 
       end
     `);
@@ -281,11 +281,11 @@ theorem wnew
   assert wff ( s -> ( r -> p ) )
 
   proof
-    ws;
-    wr;
-    wp;
-    w2;
-    w2;
+    ws
+    wr
+    wp
+    w2
+    w2
 end
 `);
 

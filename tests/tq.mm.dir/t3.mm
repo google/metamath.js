@@ -8,6 +8,6 @@ theorem t3
   assert |- - - t - q - -
 
   proof
-    t0;
-    ax0;
+    t0
+    ax0
 end

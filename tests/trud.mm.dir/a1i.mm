@@ -12,12 +12,12 @@ theorem a1i
   assert |- R |= A
 
   proof
-    tr;
-    kt;
-    ta;
-    tr;
-    ax-trud.1;
-    ax-trud;
-    ax-a1i.2;
-    syl;
+    tr
+    kt
+    ta
+    tr
+    ax-trud.1
+    ax-trud
+    ax-a1i.2
+    syl
 end

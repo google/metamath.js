@@ -9,8 +9,8 @@ theorem t4
   assert |- - - - p - q - - - -
 
   proof
-    w0;
-    w1;
-    w1;
-    ax0;
+    w0
+    w1
+    w1
+    ax0
 end

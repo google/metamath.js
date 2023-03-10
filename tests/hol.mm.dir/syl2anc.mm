@@ -15,17 +15,17 @@ theorem syl2anc
   assert |- R |= A
 
   proof
-    tr;
-    ts;
-    tt;
-    kct;
-    ta;
-    tr;
-    ts;
-    tt;
-    syl2anc.1;
-    syl2anc.2;
-    jca;
-    syl2anc.3;
-    syl;
+    tr
+    ts
+    tt
+    kct
+    ta
+    tr
+    ts
+    tt
+    syl2anc.1
+    syl2anc.2
+    jca
+    syl2anc.3
+    syl
 end

@@ -10,13 +10,13 @@ theorem t9
   assert |- - - - - - DND - - - - - - -
 
   proof
-    w0;
-    w1;
-    w1;
-    w1;
-    w1;
-    w0;
-    w1;
-    t8;
-    ax4;
+    w0
+    w1
+    w1
+    w1
+    w1
+    w0
+    w1
+    t8
+    ax4
 end

@@ -10,12 +10,12 @@ theorem t6
   assert |- - p - - - q - - - -
 
   proof
-    w0;
-    w0;
-    w1;
-    w0;
-    w1;
-    w1;
-    t5;
-    ax1;
+    w0
+    w0
+    w1
+    w0
+    w1
+    w1
+    t5
+    ax1
 end

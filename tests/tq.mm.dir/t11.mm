@@ -12,18 +12,18 @@ theorem t11
   assert |- P - - -
 
   proof
-    w0;
-    w1;
-    w0;
-    w1;
-    w1;
-    w0;
-    w1;
-    w0;
-    w0;
-    w0;
-    ax3;
-    ax4;
-    ax5;
-    ax7;
+    w0
+    w1
+    w0
+    w1
+    w1
+    w0
+    w1
+    w0
+    w0
+    w0
+    ax3
+    ax4
+    ax5
+    ax7
 end

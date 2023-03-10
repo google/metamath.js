@@ -11,10 +11,10 @@ theorem jca
   assert |- R |= ( S , T )
 
   proof
-    tr;
-    ts;
-    tt;
-    ax-jca.1;
-    ax-jca.2;
-    ax-jca;
+    tr
+    ts
+    tt
+    ax-jca.1
+    ax-jca.2
+    ax-jca
 end

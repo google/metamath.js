@@ -8,7 +8,7 @@ theorem t1
   assert wff - - -
 
   proof
-    w0;
-    w1;
-    w1;
+    w0
+    w1
+    w1
 end

@@ -9,10 +9,10 @@ theorem t4
   assert |- - t - - q - -
 
   proof
-    w0;
-    w0;
-    w0;
-    w0;
-    ax0;
-    ax1;
+    w0
+    w0
+    w0
+    w0
+    ax0
+    ax1
 end

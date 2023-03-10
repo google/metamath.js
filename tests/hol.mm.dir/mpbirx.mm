@@ -15,20 +15,20 @@ theorem mpbirx
   assert |- R |= B
 
   proof
-    ta;
-    tb;
-    tr;
-    mpbirx.2;
-    hb;
-    tb;
-    ta;
-    tr;
-    mpbirx.1;
-    ta;
-    tr;
-    mpbirx.2;
-    ax-cb2;
-    mpbirx.3;
-    eqcomx;
-    ax-eqmp;
+    ta
+    tb
+    tr
+    mpbirx.2
+    hb
+    tb
+    ta
+    tr
+    mpbirx.1
+    ta
+    tr
+    mpbirx.2
+    ax-cb2
+    mpbirx.3
+    eqcomx
+    ax-eqmp
 end

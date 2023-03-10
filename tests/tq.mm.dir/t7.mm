@@ -10,15 +10,15 @@ theorem t7
   assert |- C - - - - - -
 
   proof
-    w0;
-    w0;
-    w1;
-    w0;
-    w1;
-    w1;
-    w1;
-    w1;
-    w1;
-    t6;
-    ax2;
+    w0
+    w0
+    w1
+    w0
+    w1
+    w1
+    w1
+    w1
+    w1
+    t6
+    ax2
 end

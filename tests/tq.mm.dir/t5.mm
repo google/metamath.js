@@ -10,11 +10,11 @@ theorem t5
   assert |- - - t - - q - - - -
 
   proof
-    w0;
-    w1;
-    w0;
-    w0;
-    w1;
-    t3;
-    ax1;
+    w0
+    w1
+    w0
+    w0
+    w1
+    t3
+    ax1
 end

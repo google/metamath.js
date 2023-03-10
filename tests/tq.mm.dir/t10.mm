@@ -10,18 +10,18 @@ theorem t10
   assert |- - - - - - DND - - - - - - - - - - - -
 
   proof
-    w0;
-    w1;
-    w1;
-    w1;
-    w1;
-    w0;
-    w1;
-    w1;
-    w1;
-    w1;
-    w1;
-    w1;
-    t9;
-    ax4;
+    w0
+    w1
+    w1
+    w1
+    w1
+    w0
+    w1
+    w1
+    w1
+    w1
+    w1
+    w1
+    t9
+    ax4
 end
