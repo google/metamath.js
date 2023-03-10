@@ -1442,6 +1442,55 @@ describe("Verifier", () => {
     assertThat(proof(false)).equalsTo();
   });
 
+  it("dummy variables not part of layout", () => {
+    const mm = process(`
+      $c wff ( ) -> $.
+      $v x y a dummy $.
+
+      wx $f wff x $.
+      wy $f wff y $.
+
+      wa $f wff a $.
+
+      $\{
+        $(
+          Because dummy is never used in the header of the
+          axiom, it doesn't influence its stack layout:
+          it does not require the stack to pop three variables
+          (dummy, x, y) rather than two (x, y).
+        $)
+        wdummy $f wff dummy $.
+        wi $a wff ( x -> y ) $.
+      $\}
+ 
+      $\{
+        disjoint $p wff ( a -> a ) $= wa wa wi $.
+      $\}
+     `);
+
+    const [p, [d, f, e]] = mm.labels["wi"];
+
+    assertThat(d).equalsTo([]);
+    assertThat(f).equalsTo([
+      // Because the $f wdummy statements makes a
+      // statement about a variable that isn't in the
+      // header of the theorem, it doesn't get added to
+      // the mandatory parameters of the theorem, i.e.
+      // it does not affect the stack layout.
+      ["wff", "x", "wx"],
+      ["wff", "y", "wy"],
+    ]);
+    assertThat(e).equalsTo([]);
+    
+    const [, proof] = mm.theorem("disjoint");
+
+    assertThat(proof(false)).equalsTo([
+      ["wa", ["wff", ["a"]], []],
+      ["wa", ["wff", ["a"]], []],
+      ["wi", ["wff", ["(", "a", "->", "a", ")"]], [0, 1]],
+    ]);
+  });
+
   it("miu.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/miu.mm");

@@ -499,6 +499,8 @@ class Transpiler {
 
   closure(label) {
     const files = this.split();
+    //console.log(files);
+    //throw new Error("hi");
     const queue = [label];
 
     const list = [];
@@ -511,6 +513,9 @@ class Transpiler {
         continue;
       }
       list.push(head);
+      //if (!files[head]) {
+      //  throw new Error(`Can't find ${head} in files.`);
+      //}
       let [deps] = files[head];
       queue.push(...deps);
     }
@@ -574,12 +579,21 @@ end
     if (proof[0] == "(") {
       const [, external, , compressed] = proof;
       steps = new Decompressor().decompress(local, external, compressed);
-      //console.log(steps);
-      //throw new Error("hi");
     }
 
     const deps = [...new Set(steps)]
-          .filter((step) => !local.includes(step) && typeof step != "number");
+          .filter((step) => !local.includes(step))
+          .filter((step) => typeof step != "number");
+
+    //if (deps.includes("vx")) {
+      //console.log(label);
+    //  console.log(deps);
+    //  console.log(proof);
+      //console.log(local);
+      //console.log(d);
+      //console.log(this.mm.labels[label]);
+    //  throw new Error("hi");
+    //}
     
     let conds = "";
     
@@ -590,18 +604,10 @@ end
     }
     
     let diff = [];
-    if (d.length > 0) {
-      // throw new Error("unsupported distinguished variables operator");
-      // args += " and (";
-    }
     for (let [x, y] of d) {
       diff.push(`  disjoint ${x} ${y}`);
     }
     
-    //if (d.length > 0) {
-    //  args += "" + diff.join(", ") + ")";
-    //}
-
     const body = steps.map((step, i) => {
       const call = typeof step == "number" ? (step == -1 ? `#` : `@${step}`) : `${step}`;
       return `    ${call}`;

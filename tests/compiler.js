@@ -433,11 +433,17 @@ describe("Transpile and Parse", () => {
     // Hits "proof too long", probably as one of its dependencies, and so
     // fails.
     const program = await require("fs/promises").readFile(`tests/set.mm`);
-    const files = new Transpiler()
-          .read(program.toString());
 
+    //console.log(new Transpiler()
+    //            .read(program.toString()).mm.labels["vx"]);
+
+    //return;
+    
+    const files = new Transpiler()
+          .read(program.toString())
+          .closure("2p2e4", true);
+    console.log(files);
     return;
-    // .closure("2p2e4", true);
     const typogram = Object.values(files).map(([, content]) => content).join("");
     const metamath = await new Compiler().compile(typogram);
     assertThat(new Verifier().verify(metamath)).equalsTo(6);
@@ -466,6 +472,25 @@ describe("Transpile and Parse", () => {
           .read(program.toString())
           .closure("mpbirx", true);
 
+    for (const [file, [deps, body]] of Object.entries(files)) {
+      const header = deps.map((dep) => `include "${dep}.mm"`).join("\n");
+      const content = `${header}\n${body}`;
+      await write(`tests/${src}.dir`, `${file}.mm`, content);
+    }
+  });
+  
+  it.skip("eqid: transpile", async function() {
+    this.timeout(50000);
+    const src = "set.mm";
+    const program = await require("fs/promises").readFile(`tests/${src}`);
+    const theorem = new Transpiler()
+          .read(program.toString())
+          .theorem("eqid");
+
+    // console.log(theorem);
+    
+    return;
+    
     for (const [file, [deps, body]] of Object.entries(files)) {
       const header = deps.map((dep) => `include "${dep}.mm"`).join("\n");
       const content = `${header}\n${body}`;
