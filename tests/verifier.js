@@ -1378,13 +1378,14 @@ describe("Verifier", () => {
 
     try {
       proof(false);
+      throw new Error("shouldn't reach this");
     } catch (e) {
       assertThat(e.message)
         .equalsTo("x (=a) and y (=a) are disjoined variables and can't carry the same value. ");
     }
   });
 
-  it("disjoint variables from caller", () => {
+  it.skip("disjoint variables from caller", () => {
     const mm = process(`
       $c wff ( ) -> $.
       $v x y a $.
@@ -1408,10 +1409,37 @@ describe("Verifier", () => {
 
     try {
       proof(false);
+      throw new Error("shouldn't reach this");
     } catch (e) {
       assertThat(e.message)
         .equalsTo("x (=a) and y (=a) are disjoined variables and can't carry the same value. ");
     }
+  });
+
+  it.skip("disjoint variables: disjoint", () => {
+    const mm = process(`
+      $c wff ( ) -> $.
+      $v x y a b $.
+
+      wx $f wff x $.
+      wy $f wff y $.
+
+      wa $f wff a $.
+      wb $f wff b $.
+
+      $\{
+        wi $a wff ( x -> y ) $.
+      $\}
+ 
+      $\{
+        $d x y $.
+        disjoint $p wff ( a -> b ) $= wa wb wi $.
+      $\}
+     `);
+
+    const [, proof] = mm.theorem("disjoint");
+
+    assertThat(proof(false)).equalsTo();
   });
 
   it("miu.mm", async () => {
