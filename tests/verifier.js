@@ -112,7 +112,8 @@ describe("Verifier", () => {
         ["foo", ["bar"]],
         // TODO: is mmverify ignoring the disjoint requirements
         // of dummy variables
-        []
+        [],
+        {}
       ]);
 
     //assertThat(new MM().read(parse(`
@@ -254,7 +255,8 @@ describe("Verifier", () => {
         [["wff", "p", "wp"], ["wff", "q", "wq"]],
         [],
         ["wff", ["(", "p", "->", "q", ")"]],
-        []
+        [],
+        {}
       ]]);
   }); 
 
@@ -274,7 +276,8 @@ describe("Verifier", () => {
         [["wff", "p", "wp"], ["wff", "q", "wq"]], // type hypothesis
         [], // logical hypothesis
         ["wff", ["(", "p", "->", "q", ")"]],
-        []
+        [],
+        {}
       ]]);
   }); 
 
@@ -337,7 +340,8 @@ describe("Verifier", () => {
         [["wff", "p", "wp"], ["wff", "q", "wq"]],
         [],
         ["wff", ["(", "p", "->", "q", ")"]],
-        []
+        [],
+        {}
       ]]);
     
     assertThat(top.v)
@@ -818,7 +822,7 @@ describe("Verifier", () => {
       'ax-mp'
     ]);
   });
-
+  
   it("decompress then compress proof", async () => {
     const file = await require("fs/promises").readFile("tests/idalt.mm");
     const {Decompressor, Compressor} = require("./../src/metamath.js");
@@ -1555,11 +1559,20 @@ describe("Verifier", () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/hol.mm");
     const mm = process(file.toString());
-    const [, [d, , , , dummies]] = mm.labels["cl"];
+    const [, [d, f, , , dummies, dummy]] = mm.labels["cl"];
+    // Mandatory variables requirements
     assertThat(d).equalsTo([
       ["B", "x"],
       ["C", "x"],
       ["al", "x"],
+    ]);
+    assertThat(f).equalsTo([
+      ["type", "al", "hal"],
+      ["type", "be", "hbe"],
+      ["var", "x","vx"],
+      ["term", "A", "ta"],
+      ["term", "B", "tb"],
+      ["term", "C", "tc"]
     ]);
     assertThat(dummies).equalsTo([
       ["A", "y"],
@@ -1568,6 +1581,7 @@ describe("Verifier", () => {
       ["C", "y"],
       ["al", "y"],
     ]);
+    assertThat(dummy).equalsTo({y: "vy"});
   });
 
   function build(program) {

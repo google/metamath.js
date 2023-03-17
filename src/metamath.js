@@ -193,7 +193,7 @@ class Stack {
           .flat();
     
     const mandatory = new Set();
-
+    
     for (const [hyp] of [...e, [rule, type]]) {
       for (const tok of hyp) {
         // console.log(hyp);
@@ -207,6 +207,7 @@ class Stack {
 
     const dvs = [];
     const dummies = [];
+    const dummy = {};
     for (const {d} of [...this.stack].reverse()) {
       for (const pair of d) {
         const [x, y] = pair;
@@ -217,6 +218,21 @@ class Stack {
           dvs.push(pair);
         } else {
           dummies.push(pair);
+          // Capture dummy variables (variables that are
+          // used internally in proofs but don't who up
+          // in the header of the theorem) and their
+          // disjointness requirements.
+
+          // TODO: we should probably store the types
+          // here too, rather than just the label
+          // references, since the labels can be overriden
+          // in different scopes.
+          if (!mandatory.has(x)) {
+            dummy[x] = this.lookupF(x);
+          }
+          if (!mandatory.has(y)) {
+            dummy[y] = this.lookupF(y);
+          }
         }
       }
     }
@@ -232,7 +248,7 @@ class Stack {
       }
     }
     
-    return [dvs, f, e, [type, rule], dummies];
+    return [dvs, f, e, [type, rule], dummies, dummy];
   }
 }
 
@@ -287,7 +303,6 @@ class MM {
         this.labels[label] = [e, [type, rule]];
       } else if (second == "$p") {
         const [label, p, type, theorem, d, proof] = stmt;
-
         let result = {};
         if (proof[0] != "(") {
           result = (generate = true) => {
@@ -309,6 +324,13 @@ class MM {
                 new Decompressor().decompress(labels, external, compressed) :
                 new Decompressor().explode(labels, external, compressed, this.labels);
             return this.verify(label, type, theorem, p, generate);
+          }
+
+          // const labels = this.labels;
+          const that = this;
+          proof.decompress = () => {
+            const [, external, , compressed] = proof;
+            return new Decompressor().explode(labels, external, compressed, that.labels);
           }
         }
         
@@ -383,10 +405,10 @@ class MM {
           if (top[1] != k) {
             console.log(`Stack at ${sp} because ${mandatory.length} args + ${hyp.length} hypothesis:`);
             for (let [index, type, string] of stack.reverse()) {
-              console.log(`  ${type} ${string.join("")}`);
+              console.log(`  ${type} ${string.flat().join(" ")}`);
             }
-            console.log(mandatory);
-            throw new Error(`Step ${step} of ${label}: argument type of ${v} doesn't match with the top of the stack. Expected ${k} but got ${top[1]}.`);
+            // console.log(mandatory);
+            throw new Error(`Step "${step}" of "${label}": argument type of "${v}" doesn't match with the top of the stack. Expected "${k}" but got "${top[1]}".`);
           }
           subs[v] = top[2];
           args.push(top[0]);
@@ -591,7 +613,8 @@ class Decompressor {
         // delete the marker
         steps.splice(i, 1);
       } else if (!markers[number]) {
-        throw new Error(`Marker #${number} not found while unrolling ${proof.join('')}.`);
+        // console.log(other);
+        throw new Error(`Marker #${number} not found while unrolling proof.`);
       } else {
         // replace the number with the marked subtree
         // https://stackoverflow.com/questions/44959025/rangeerror-maximum-call-stack-size-exceeded-caused-by-array-splice-apply

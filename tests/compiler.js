@@ -390,9 +390,9 @@ describe("Transpile and Parse", () => {
   const {Verifier} = require("../src/descent.js");
   const {Transpiler, Compiler, Parser} = require("../src/compiler.js");
 
-  it("transpile and parse", async () => {
-    const fs = require("fs/promises");
-    for (let src of ["tq.mm", "pq.mm", "miu.mm", "demo0.mm", "test.mm", "id.mm", "trud.mm"]) {
+  for (let src of ["tq.mm", "pq.mm", "miu.mm", "demo0.mm", "test.mm", "id.mm", "trud.mm"]) {
+    it(`Transpile and parse: ${src}`, async () => {
+      const fs = require("fs/promises");
       const program = await fs.readFile(`tests/${src}`);
       const files = await new Transpiler().read(program).split();
       for (let [name, [deps, content]] of Object.entries(files)) {
@@ -404,30 +404,27 @@ describe("Transpile and Parse", () => {
           throw e;
         }
       }
-    }
-  });
+    });
+  }
 
-  it("testmod3", async function() {
-    const program = await require("fs/promises").readFile(`tests/ql.mm`);
-    const files = new Transpiler()
-          .read(program.toString())
-          .closure("testmod3");
-    const typogram = Object.values(files).map(([, content]) => content).join("");
-    const metamath = await new Compiler().compile(typogram);
-    assertThat(new Verifier().verify(metamath)).equalsTo(49);
-  });
+  for (const [file, label, expects] of [
+    ["hol.mm", "mpbirx", 6],
+    ["hol.mm", "cl", 39],
+    ["ql.mm", "testmod3", 49]
+  ]) {
+    it(`Transpile, compile and verify: ${file} ${label}`, async function() {
+      const program = await require("fs/promises").readFile(`tests/${file}`);
+      const files = new Transpiler()
+            .read(program.toString())
+            .closure(label, true);
+      const typogram = Object.values(files).map(([, content]) => content).join("");
+      // console.log(typogram);
+      const metamath = await new Compiler().compile(typogram);
+      //console.log(metamath);
+      assertThat(new Verifier().verify(metamath)).equalsTo(expects);
+    });
+  }
   
-  it("mpbirx", async function() {
-    const program = await require("fs/promises").readFile(`tests/hol.mm`);
-    // console.log(metamath);
-    const files = new Transpiler()
-          .read(program.toString())
-          .closure("mpbirx", true);
-    const typogram = Object.values(files).map(([, content]) => content).join("");
-    const metamath = await new Compiler().compile(typogram);
-    assertThat(new Verifier().verify(metamath)).equalsTo(6);
-  });
-
   it.skip("2p2e4", async function() {
     this.timeout(50000);
     // Hits "proof too long", probably as one of its dependencies, and so
@@ -464,40 +461,144 @@ describe("Transpile and Parse", () => {
 
     await fs.writeFile(`${dir}/${file}`, content);
   }
-  
-  it("mpbirx: transpile", async function() {
+
+  for (const [src, label] of [
+    ["hol.mm", "mpbirx"],
+    ["hol.mm", "cl"],
+  ]) {
+    it(`Transpile theorem: ${src}.dir/${label}.mm`, async function() {
+      const program = await require("fs/promises").readFile(`tests/${src}`);
+      const [deps, body] = new Transpiler()
+            .read(program.toString())
+            .theorem(label, true);
+
+      const header = deps.map((dep) => `include "${dep}.mm"`).join("\n");
+      const content = `${header}\n${body}`;
+      await write(`tests/${src}.dir`, `${label}.mm`, content);
+
+      const metamath = await new Compiler().compile(body);
+      // console.log(metamath);
+    });
+  }
+
+
+  it("$d: hol.mm / cl", async function() {
     const src = "hol.mm";
+    const label = "cl";
+    const program = await require("fs/promises").readFile(`tests/${src}`);
+    const [deps, content] = new Transpiler()
+          .read(program.toString())
+          .theorem(label);
+    assertThat(await new Compiler().compile(content)).
+      equalsTo(`$c type var term |- : [ = ] |= T. ( \\ . ) $.
+
+$\{
+  $v al be x A B C y $.
+  hal $f type al $.
+  hbe $f type be $.
+  vx $f var x $.
+  ta $f term A $.
+  tb $f term B $.
+  tc $f term C $.
+  vy $f var y $.
+  cl.1 $e |- A : be $.
+  cl.2 $e |- C : al $.
+  cl.3 $e |- [ x : al = C ] |= [ A = B ] $.
+  $d B x $.
+  $d C x $.
+  $d al x $.
+  $d A y $.
+  $d x y $.
+  $d B y $.
+  $d C y $.
+  $d al y $.
+  cl $p |- T. |= [ ( \\ x : al . A C ) = B ] $= ( vy tv ke kbr eqtypi wv ax-17 clf ) ABCJDEFGHIABCEAJKZBDEACKFLMGINAJOZPAACFRHSPQ $.
+$\}`);;
+  });
+
+  it("compress proof of cl", async function() {
+    const src = "hol.mm";
+    const label = "cl";
     const program = await require("fs/promises").readFile(`tests/${src}`);
     const files = new Transpiler()
           .read(program.toString())
-          .closure("mpbirx", true);
+          .closure(label);
 
-    for (const [file, [deps, body]] of Object.entries(files)) {
-      const header = deps.map((dep) => `include "${dep}.mm"`).join("\n");
-      const content = `${header}\n${body}`;
-      await write(`tests/${src}.dir`, `${file}.mm`, content);
-    }
+    const dump = Object
+          .values(files)
+          .map(([deps, content]) => content)
+          .join("");
+    
+    const metamath = await new Compiler().compile(dump);
+
+    const {process} = require("../src/descent.js");
+    const mm = process(metamath);
+    const [, [d, f, e, rule], verifier, proof] = mm.labels[label];
   });
   
-  it.skip("eqid: transpile", async function() {
-    this.timeout(50000);
-    const src = "set.mm";
+  it("correspondence: hol.mm / cl", async function() {
+    const src = "hol.mm";
+    const label = "cl";
     const program = await require("fs/promises").readFile(`tests/${src}`);
-    const theorem = new Transpiler()
+    const files = new Transpiler()
           .read(program.toString())
-          .theorem("eqid");
+          .closure(label, true);
 
-    // console.log(theorem);
+    const dump = Object
+          .values(files)
+          .map(([deps, content]) => content)
+          .join("");
     
-    return;
+    const metamath = await new Compiler().compile(dump);
+
+    const {process} = require("../src/descent.js");
+
+    // process the original content
+    const mm1 = process(program.toString());
+    const [, [d1, f1, e1, rule1], verifier1, proof1] = mm1.labels[label];
+
+    // process the transpiled and compiled content
+    const mm2 = process(metamath);
+    const [, [d2, f2, e2, rule2], verifier2, proof2] = mm2.labels[label];
+
+    assertThat(mm1.labels["tv"]).equalsTo(mm2.labels["tv"]);
+
+    // Asserts that the assertion is the same across both programs.
     
-    for (const [file, [deps, body]] of Object.entries(files)) {
-      const header = deps.map((dep) => `include "${dep}.mm"`).join("\n");
-      const content = `${header}\n${body}`;
-      await write(`tests/${src}.dir`, `${file}.mm`, content);
-    }
+    assertThat(rule1).equalsTo(rule2);
+    assertThat(d1).equalsTo(d2);
+    assertThat(f1).equalsTo(f2);
+    assertThat(e1).equalsTo(e2);
+    const [, local1, , compressed1] = proof1;
+    const [, local2, , compressed2] = proof2;
+
+    assertThat(local1).equalsTo(local2);
+    assertThat(compressed1).equalsTo(compressed2);
+    
+    assertThat(proof1.decompress()).equalsTo(proof2.decompress());
   });
   
+  for (let [src, label] of [
+    ["hol.mm", "wal"],
+    ["hol.mm", "cl"],
+    ["hol.mm", "mpbirx"],
+  ]) {
+    it(`Transpile the closure: ${label}`, async function() {
+      this.timeout(50000);
+      // const src = "hol.mm";
+      const program = await require("fs/promises").readFile(`tests/${src}`);
+      const files = new Transpiler()
+            .read(program.toString())
+            .closure(label);
+    
+      for (const [file, [deps, body]] of Object.entries(files)) {
+        const header = deps.map((dep) => `include "${dep}.mm"`).join("\n");
+        const content = `${header}\n${body}`;
+        await write(`tests/${src}.dir`, `${file}.mm`, content);
+      }
+    });
+  }
+    
   it("mpbirx: preprocess", async function() {
     const dir = "tests/hol.mm.dir";
     const file = "mpbirx.mm";
@@ -536,32 +637,41 @@ describe("Transpile and Parse", () => {
     ]);
   });
   
-  it("mpbirx: preprocess, compile and verify", async function() {
-    const dir = "tests/hol.mm.dir";
-    const file = "mpbirx.mm";
-
-    const loader = (async (file) => {
-      return require("fs/promises").readFile(file);
+  for (let [dir, file] of [
+    ["tests/hol.mm.dir", "mpbirx.mm"]
+  ]) {
+    it(`Compile and verify: ${file}`, async function() {
+      const loader = (async (file) => {
+        return require("fs/promises").readFile(file);
+      });
+      
+      const metamath = await new Compiler(loader).compile(dir, file);
+      
+      assertThat(new Verifier().verify(metamath)).equalsTo(6);      
     });
-    
-    const metamath = await new Compiler(loader).compile(dir, file);
+  }
 
-    assertThat(new Verifier().verify(metamath)).equalsTo(6);      
-  });
-  
-  it("transpile, parse, compile and verify", async function() {
-    this.timeout(50000); 
-
-    // "ql.mm" passes, but we disable it because it takes a long time
-    for (let src of ["demo0.mm", "pq.mm", "tq.mm", "test.mm", "trud.mm", "hol.mm"]) {
+  // "ql.mm" passes, but we disable it because it takes a long time
+  for (let src of [
+    "demo0.mm",
+    "pq.mm",
+    "tq.mm",
+    "test.mm",
+    //"ql.mm",
+    "trud.mm",
+    "hol.mm"
+  ]) {
+    it(`Transpile, dump, parse, compile and verify all of: ${src}`, async function() {
+      this.timeout(50000); 
       const program = await require("fs/promises").readFile(`tests/${src}`);
       const theorems = new Verifier().verify(program.toString());
       assertThat(theorems > 0).equalsTo(true);
       const typogram = new Transpiler().read(program.toString()).dump();
       const metamath = await new Compiler().compile(typogram);
-      assertThat(new Verifier().verify(metamath)).equalsTo(theorems);      
-    }
-  });
+      assertThat(new Verifier().verify(metamath)).equalsTo(theorems);
+    });
+  }
+  
 });
 
 function assertThat(x) {

@@ -391,7 +391,7 @@ class Compiler {
   async compile(dirOrSource, file) {
     if (!file) {
       let parser = new Parser();
-      let code = parser.parse(dirOrSource);      
+      let code = parser.parse(dirOrSource);
       return this.transpile(code);
     }
     const files = await this.preprocess(dirOrSource, file);
@@ -405,7 +405,7 @@ class Compiler {
     //console.log(code);
     //throw new Error();
 
-    // console.log(code);
+    //console.log(code);
     
     const consts = new Set();
     for (let [type, label, [vars, assumes, disjoints, [, assert]], proof] of code) {
@@ -434,19 +434,43 @@ class Compiler {
     result.push(`$c ${[...consts].join(" ")} $.`);
 
     for (let [type, label, [vars, assumes, disjoints, [, assert]], proof] of code) {
+
       const names = vars.map(([, [label, type, name]]) => name);
+
+      const mandatory = new Set();
+
+      for (const hyp of [...JSON.parse(JSON.stringify(assumes)).map(([, string]) => string.splice(1)), assert]) {
+        for (const tok of hyp) {
+          if (names.includes(tok)) {
+            mandatory.add(tok);
+          } else if (!consts.has(tok)) {
+            throw new Error(`Undeclared token: "${tok}" is neither a constant nor a variable.`);
+          }
+        }
+      }
+
+      // console.log(mandatory);
+      
       const types = vars.map(([, [label, type, name]]) => `  ${label} $f ${type} ${name} $.`);
-      const logical = [...assumes]
-          .map(([, assumption]) => [assumption.shift(), assumption.shift(), assumption])
-          .map(([label, type, symbols]) => `  ${label} $e ${type} ${symbols.join(" ")} $.`);
+      //console.log(assumes);
+      const logical = [...JSON.parse(JSON.stringify(assumes))]
+            .map(([, assumption]) => [assumption.shift(), assumption.shift(), assumption])
+            .map(([label, type, symbols]) => `  ${label} $e ${type} ${symbols.join(" ")} $.`);
+      //console.log(assumes);
+      //throw new Error("hi");
+      //console.log(assumes);
+      //throw new Error("hi");
       
       const dvis = disjoints.map(([, vars]) => `${vars.join(" ")}`);
+
+      const d = disjoints.map(([, [a, b]]) => `  $d ${a} ${b} $.`).join("\n");
+      //throw new Error();
       
       const v = names.length > 0 ? `  $v ${names.join(" ")} $.` : "";
       const f = types.length > 0 ? `${types.join("\n")}` : "";
       const e = logical.length > 0 ? `${logical.join("\n")}` : "";
-      const d = disjoints.length > 0 ? `  $d ${dvis.join(" ")} $.` : "";
-
+      //const d = disjoints.length > 0 ? `  $d ${dvis.join(" ")} $.` : "";
+      
       let p = "";
 
       if (proof) {
@@ -464,14 +488,16 @@ class Compiler {
         if (!compress) {
           p = `$= ${proof.join(" ")} `;
         } else {
-          const f = vars.map(([letty, [label]]) => label);
-          const e = [...assumes]
+          const f = vars
+                .filter(([, [, , name]]) => mandatory.has(name))
+                .map(([letty, [label, type, name]]) => label);
+          const e = [...JSON.parse(JSON.stringify(assumes))]
                 .map(([, assumption]) => [assumption.shift(), assumption.shift(), assumption])
                 .map(([label, type, symbols]) => label);
+          //console.log(f);
+          //throw new Error("hi");
           const compressor = new Compressor([...f, ...e], s);
           const compressed = compressor.compress();
-          //console.log(s);
-          //throw new Error("hi");
           
           p = `$= ( ${compressor.external().join(" ")} ) ${compressor.compress()} `;
         }
@@ -513,9 +539,6 @@ class Transpiler {
         continue;
       }
       list.push(head);
-      //if (!files[head]) {
-      //  throw new Error(`Can't find ${head} in files.`);
-      //}
       let [deps] = files[head];
       queue.push(...deps);
     }
@@ -524,9 +547,6 @@ class Transpiler {
       const [deps, content] = files[file];
       result[file] = [deps, content];
     }
-
-    //console.log(result);
-    //throw new Error("hi");
     
     return result;
   }
@@ -568,13 +588,27 @@ end
 
   theorem(label) {
     // const deps = [];
-    const [, [d, f, e, [type, theorem]], func, proof] = this.mm.labels[label];
+    const [, [d, f, e, [type, theorem], ddummy, dummy], func, proof] = this.mm.labels[label];
 
-    let args = f.map(([type, name, label]) => `  let ${label}: ${type} ${name}`).join("\n");
+    const labels = this.mm.labels;
+    const dummies = Object
+          .entries(dummy)
+          .map(([name, label]) => [labels[label][1][0], name, label]);
+
+    let args = [...f, ...dummies]
+        .map(([type, name, label]) => `  let ${label}: ${type} ${name}`)
+        .join("\n");
+    
+    const dlabels = dummies.map(([type, name, label]) => label);
 
     const local = [...f.map(([, , label]) => label),
                    ...e.map(([, , label]) => label)];
 
+    //console.log(d);
+    
+    //console.log(ddummy);
+    //throw new Error("hi");
+    
     let steps = proof;
     if (proof[0] == "(") {
       const [, external, , compressed] = proof;
@@ -583,18 +617,9 @@ end
 
     const deps = [...new Set(steps)]
           .filter((step) => !local.includes(step))
+          .filter((step) => !dlabels.includes(step))
           .filter((step) => typeof step != "number");
 
-    //if (deps.includes("vx")) {
-      //console.log(label);
-    //  console.log(deps);
-    //  console.log(proof);
-      //console.log(local);
-      //console.log(d);
-      //console.log(this.mm.labels[label]);
-    //  throw new Error("hi");
-    //}
-    
     let conds = "";
     
     let assumptions = e.map(([seq, type, name]) => `  assume ${name}: ${type} ${seq.join(" ")}`).join("\n");
@@ -605,6 +630,10 @@ end
     
     let diff = [];
     for (let [x, y] of d) {
+      diff.push(`  disjoint ${x} ${y}`);
+    }
+    
+    for (let [x, y] of ddummy) {
       diff.push(`  disjoint ${x} ${y}`);
     }
     
