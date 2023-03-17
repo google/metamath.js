@@ -206,6 +206,7 @@ class Stack {
     }
 
     const dvs = [];
+    const dummies = [];
     for (const {d} of [...this.stack].reverse()) {
       for (const pair of d) {
         const [x, y] = pair;
@@ -214,6 +215,8 @@ class Stack {
         // condition to the assertion.
         if (mandatory.has(x) && mandatory.has(y)) {
           dvs.push(pair);
+        } else {
+          dummies.push(pair);
         }
       }
     }
@@ -229,7 +232,7 @@ class Stack {
       }
     }
     
-    return [dvs, f, e, [type, rule]];
+    return [dvs, f, e, [type, rule], dummies];
   }
 }
 

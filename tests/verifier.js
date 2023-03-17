@@ -109,7 +109,10 @@ describe("Verifier", () => {
         [],
         [["a", "bar", "bar"]],
         [[["bar"], "|-", "foo"]],
-        ["foo", ["bar"]]
+        ["foo", ["bar"]],
+        // TODO: is mmverify ignoring the disjoint requirements
+        // of dummy variables
+        []
       ]);
 
     //assertThat(new MM().read(parse(`
@@ -250,7 +253,8 @@ describe("Verifier", () => {
         [],
         [["wff", "p", "wp"], ["wff", "q", "wq"]],
         [],
-        ["wff", ["(", "p", "->", "q", ")"]]
+        ["wff", ["(", "p", "->", "q", ")"]],
+        []
       ]]);
   }); 
 
@@ -269,7 +273,8 @@ describe("Verifier", () => {
         [["p", "q"]], // disjoint variables conditions
         [["wff", "p", "wp"], ["wff", "q", "wq"]], // type hypothesis
         [], // logical hypothesis
-        ["wff", ["(", "p", "->", "q", ")"]]
+        ["wff", ["(", "p", "->", "q", ")"]],
+        []
       ]]);
   }); 
 
@@ -331,7 +336,8 @@ describe("Verifier", () => {
         [],
         [["wff", "p", "wp"], ["wff", "q", "wq"]],
         [],
-        ["wff", ["(", "p", "->", "q", ")"]]
+        ["wff", ["(", "p", "->", "q", ")"]],
+        []
       ]]);
     
     assertThat(top.v)
@@ -1090,7 +1096,7 @@ describe("Verifier", () => {
     const mm = new MM();
     mm.read(code);
   });
-    
+
   it("Verify hol.mm", async () => {
     const fs = require("fs/promises");
     const nearley = require("nearley");
@@ -1544,6 +1550,25 @@ describe("Verifier", () => {
       }
     }    
   }).timeout(1000000);
+
+  it("Disjoint requirements of cl of hol.mm", async () => {
+    const fs = require("fs/promises");
+    const file = await fs.readFile("tests/hol.mm");
+    const mm = process(file.toString());
+    const [, [d, , , , dummies]] = mm.labels["cl"];
+    assertThat(d).equalsTo([
+      ["B", "x"],
+      ["C", "x"],
+      ["al", "x"],
+    ]);
+    assertThat(dummies).equalsTo([
+      ["A", "y"],
+      ["x", "y"],
+      ["B", "y"],
+      ["C", "y"],
+      ["al", "y"],
+    ]);
+  });
 
   function build(program) {
     let root = [];
