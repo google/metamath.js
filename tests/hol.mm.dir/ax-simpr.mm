@@ -1,4 +1,5 @@
 
+
 axiom ax-simpr
   let tr: term R
   let ts: term S

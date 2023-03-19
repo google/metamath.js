@@ -1,4 +1,5 @@
 
+
 axiom kc
   let tf: term F
   let tt: term T

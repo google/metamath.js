@@ -1,4 +1,5 @@
 
+
 axiom ax-beta
   let hal: type al
   let hbe: type be

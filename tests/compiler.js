@@ -388,8 +388,9 @@ $\}`);
     "id.mm",
     "trud.mm",
     "hol.mm",
+    "ql.mm",
   ]) {
-    it.only(`Transpile ${file}`, async () => {
+    it(`Transpile ${file}`, async () => {
       await transpile(`tests/${file}`);
     });
   }

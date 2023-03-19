@@ -1,4 +1,5 @@
 
+
 axiom ax-distrc
   let hal: type al
   let hbe: type be

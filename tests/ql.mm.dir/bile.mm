@@ -1,0 +1,34 @@
+include "wo.mm"
+include "ax-r5.mm"
+include "oridm.mm"
+include "ax-r2.mm"
+include "df-le1.mm"
+
+theorem bile
+  let wva: term a
+  let wvb: term b
+  assume bile.1: |- a = b
+
+
+  assert |- a =< b
+
+  proof
+    wva
+    wvb
+    wva
+    wvb
+    wo
+    wvb
+    wvb
+    wo
+    wvb
+    wva
+    wvb
+    wvb
+    bile.1
+    ax-r5
+    wvb
+    oridm
+    ax-r2
+    df-le1
+end
