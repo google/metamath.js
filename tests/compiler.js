@@ -389,8 +389,11 @@ $\}`);
     "trud.mm",
     "hol.mm",
     "ql.mm",
+    // Transpiling Set.mm takes too long to do on a regular basis 
+    // "set.mm",
   ]) {
-    it(`Transpile ${file}`, async () => {
+    it(`Transpile ${file}`, async function () {
+      this.timeout(50000);
       await transpile(`tests/${file}`);
     });
   }
