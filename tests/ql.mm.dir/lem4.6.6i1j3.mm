@@ -37,8 +37,8 @@ include "df-i0.mm"
 include "3tr1.mm"
 
 theorem lem4.6.6i1j3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->1 b ) v ( a ->3 b ) ) = ( a ->0 b )

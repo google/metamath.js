@@ -4,8 +4,8 @@ include "orabs.mm"
 include "bi1.mm"
 
 theorem wa5b
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a v ( a ^ b ) ) == a ) = 1

@@ -11,7 +11,7 @@ include "ax-r1.mm"
 include "ax-r2.mm"
 
 theorem i2id
-  let wva: term a
+  param wva: term a
 
 
   assert |- ( a ->2 a ) = 1

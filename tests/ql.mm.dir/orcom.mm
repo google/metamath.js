@@ -1,8 +1,8 @@
 include "ax-a2.mm"
 
 theorem orcom
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a v b ) = ( b v a )

@@ -23,8 +23,8 @@ include "df-id1.mm"
 include "3tr1.mm"
 
 theorem lem3.3.7i1e2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ==1 ( a ^ b ) ) = ( ( a ^ b ) ==1 a )

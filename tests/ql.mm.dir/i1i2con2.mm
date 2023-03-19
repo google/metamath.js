@@ -8,8 +8,8 @@ include "ud2lem0a.mm"
 include "ax-r2.mm"
 
 theorem i1i2con2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ' ->1 b ) = ( b ' ->2 a )

@@ -6,8 +6,8 @@ include "bi1.mm"
 include "wr2.mm"
 
 theorem wlebi
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wlebi.1: |- ( a =<2 b ) = 1
   assume wlebi.2: |- ( b =<2 a ) = 1
 

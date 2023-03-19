@@ -9,9 +9,9 @@ include "ax-r1.mm"
 include "lbtr.mm"
 
 theorem i3orlem4
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a v c ) ' ^ ( b v c ) ) =< ( ( a v c ) ->3 ( b v c ) )

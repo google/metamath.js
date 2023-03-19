@@ -6,8 +6,8 @@ include "ax-r1.mm"
 include "con3.mm"
 
 theorem oran1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a v b ' ) = ( a ' ^ b ) '

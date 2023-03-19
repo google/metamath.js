@@ -6,8 +6,8 @@ include "wr2.mm"
 include "wdf-le1.mm"
 
 theorem wbile
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wbile.1: |- ( a == b ) = 1
 
 

@@ -1,7 +1,7 @@
 
 
 axiom kc
-  let tf: term F
-  let tt: term T
+  param tf: term F
+  param tt: term T
   assert term ( F T )
 end

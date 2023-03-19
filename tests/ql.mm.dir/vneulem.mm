@@ -5,10 +5,10 @@ include "vneulem16.mm"
 include "tr.mm"
 
 theorem vneulem
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
   assume vneulem.1: |- ( ( a v b ) ^ ( c v d ) ) = 0
 
 

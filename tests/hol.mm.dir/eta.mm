@@ -22,10 +22,10 @@ include "cla4v.mm"
 include "syl.mm"
 
 theorem eta
-  let hal: type al
-  let hbe: type be
-  let vx: var x
-  let tf: term F
+  param hal: type al
+  param hbe: type be
+  param vx: var x
+  param tf: term F
   let vf: var f
   assume eta.1: |- F : ( al -> be )
 

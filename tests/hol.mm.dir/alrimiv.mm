@@ -17,10 +17,10 @@ include "a1i.mm"
 include "mpbir.mm"
 
 theorem alrimiv
-  let hal: type al
-  let vx: var x
-  let ta: term A
-  let tr: term R
+  param hal: type al
+  param vx: var x
+  param ta: term A
+  param tr: term R
   assume alrimiv.1: |- R |= A
 
   disjoint R x

@@ -1,6 +1,6 @@
 
 axiom ax-1
-  let wph: wff ph
-  let wps: wff ps
+  param wph: wff ph
+  param wps: wff ps
   assert |- ( ph -> ( ps -> ph ) )
 end

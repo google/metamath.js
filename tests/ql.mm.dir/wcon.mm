@@ -4,8 +4,8 @@ include "conb.mm"
 include "bi1.mm"
 
 theorem wcon
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a == b ) == ( a ' == b ' ) ) = 1

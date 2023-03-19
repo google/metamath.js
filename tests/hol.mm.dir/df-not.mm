@@ -1,5 +1,5 @@
 
 axiom df-not
-  let vp: var p
+  param vp: var p
   assert |- T. |= [ ~ = \ p : bool . [ p : bool ==> F. ] ]
 end

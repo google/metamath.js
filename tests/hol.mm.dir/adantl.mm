@@ -2,9 +2,9 @@ include "adantr.mm"
 include "ancoms.mm"
 
 theorem adantl
-  let tr: term R
-  let ts: term S
-  let tt: term T
+  param tr: term R
+  param ts: term S
+  param tt: term T
   assume adantr.1: |- R |= T
   assume adantr.2: |- S : bool
 

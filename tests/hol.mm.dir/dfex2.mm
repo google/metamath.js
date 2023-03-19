@@ -16,8 +16,8 @@ include "ax4e.mm"
 include "ded.mm"
 
 theorem dfex2
-  let hal: type al
-  let tf: term F
+  param hal: type al
+  param tf: term F
   let vx: var x
   assume dfex2.1: |- F : ( al -> bool )
 

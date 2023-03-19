@@ -57,8 +57,8 @@ include "df-i1.mm"
 include "ud1lem0a.mm"
 
 theorem u3lem13b
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->3 b ' ) ->3 a ' ) = ( a ->1 b )

@@ -6,9 +6,9 @@ include "lbtr.mm"
 include "lei3.mm"
 
 theorem binr3
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume binr3.1: |- ( a ->3 c ) = 1
   assume binr3.2: |- ( b ->3 c ) = 1
 

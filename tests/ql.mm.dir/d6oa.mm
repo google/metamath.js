@@ -9,12 +9,12 @@ include "oa4uto4.mm"
 include "oa4to6.mm"
 
 theorem d6oa
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wve: term e
-  let wvf: term f
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wve: term e
+  param wvf: term f
   assume d6oa.1: |- a =< b '
   assume d6oa.2: |- c =< d '
   assume d6oa.3: |- e =< f '

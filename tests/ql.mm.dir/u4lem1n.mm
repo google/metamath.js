@@ -19,8 +19,8 @@ include "oran.mm"
 include "3tr1.mm"
 
 theorem u4lem1n
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->4 b ) ->4 a ) ' = ( ( ( ( a ' v b ) ^ ( a ' v b ' ) ) ^ a ) v ( ( a ' ^ b ) v ( a ' ^ b ' ) ) )

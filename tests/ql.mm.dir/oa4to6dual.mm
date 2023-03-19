@@ -5,13 +5,13 @@ include "oa4to6lem4.mm"
 include "letr.mm"
 
 theorem oa4to6dual
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wve: term e
-  let wvf: term f
-  let wvg: term g
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wve: term e
+  param wvf: term f
+  param wvg: term g
   assume oa4to6lem.1: |- a ' =< b
   assume oa4to6lem.2: |- c ' =< d
   assume oa4to6lem.3: |- e ' =< f

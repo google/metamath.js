@@ -4,8 +4,8 @@ include "lecon.mm"
 include "lei3.mm"
 
 theorem binr1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume binr1.1: |- ( a ->3 b ) = 1
 
 

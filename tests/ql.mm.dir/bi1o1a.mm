@@ -38,8 +38,8 @@ include "anor3.mm"
 include "2an.mm"
 
 theorem bi1o1a
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a == b ) = ( ( a ->1 ( a ^ b ) ) ^ ( ( a v b ) ->1 a ) )

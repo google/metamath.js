@@ -31,10 +31,10 @@ include "3tr1.mm"
 include "lbtr.mm"
 
 theorem e2ast2
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
   assume e2ast2.1: |- a =< b '
   assume e2ast2.2: |- c =< d '
   assume e2ast2.3: |- a =< c '

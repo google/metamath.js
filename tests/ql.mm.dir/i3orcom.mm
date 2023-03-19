@@ -7,8 +7,8 @@ include "bi1.mm"
 include "wwbmp.mm"
 
 theorem i3orcom
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a v b ) ->3 ( b v a ) ) = 1

@@ -20,8 +20,8 @@ include "df-t.mm"
 include "3tr1.mm"
 
 theorem wql2lem5
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wql2lem5.1: |- ( a ->2 b ) = 1
 
 

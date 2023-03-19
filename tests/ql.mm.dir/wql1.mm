@@ -18,9 +18,9 @@ include "wql1lem.mm"
 include "3tr.mm"
 
 theorem wql1
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume wql1.1: |- ( a ->1 b ) = 1
   assume wql1.2: |- ( ( a v c ) ->1 ( b v c ) ) = 1
   assume wql1.3: |- c = b

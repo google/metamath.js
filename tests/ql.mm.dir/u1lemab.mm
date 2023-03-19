@@ -16,8 +16,8 @@ include "lan.mm"
 include "ax-r5.mm"
 
 theorem u1lemab
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->1 b ) ^ b ) = ( ( a ^ b ) v ( a ' ^ b ) )

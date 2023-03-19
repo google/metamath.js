@@ -8,8 +8,8 @@ include "lor.mm"
 include "3tr2.mm"
 
 theorem oml2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume oml2.1: |- a =< b
 
 

@@ -11,9 +11,9 @@ include "le2or.mm"
 include "oridm.mm"
 
 theorem ledio
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( a v ( b ^ c ) ) =< ( ( a v b ) ^ ( a v c ) )

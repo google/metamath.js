@@ -7,12 +7,12 @@ include "ax-17.mm"
 include "clf.mm"
 
 theorem cl
-  let hal: type al
-  let hbe: type be
-  let vx: var x
-  let ta: term A
-  let tb: term B
-  let tc: term C
+  param hal: type al
+  param hbe: type be
+  param vx: var x
+  param ta: term A
+  param tb: term B
+  param tc: term C
   let vy: var y
   assume cl.1: |- A : be
   assume cl.2: |- C : al

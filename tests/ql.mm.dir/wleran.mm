@@ -8,9 +8,9 @@ include "wr2.mm"
 include "wdf2le1.mm"
 
 theorem wleran
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume wle.1: |- ( a =<2 b ) = 1
 
 

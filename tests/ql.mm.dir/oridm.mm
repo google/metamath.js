@@ -10,7 +10,7 @@ include "lor.mm"
 include "ax-a5.mm"
 
 theorem oridm
-  let wva: term a
+  param wva: term a
 
 
   assert |- ( a v a ) = a

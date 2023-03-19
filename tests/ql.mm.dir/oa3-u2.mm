@@ -21,9 +21,9 @@ include "oa4to6dual.mm"
 include "bltr.mm"
 
 theorem oa3-u2
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume oa3-u2.1: |- ( ( ( a ' ->1 c ) ->1 c ) ^ ( ( a ' ->1 c ) v ( c ^ ( ( ( ( a ' ->1 c ) ^ c ) v ( ( ( a ' ->1 c ) ->1 c ) ^ ( c ->1 c ) ) ) v ( ( ( ( a ' ->1 c ) ^ ( b ' ->1 c ) ) v ( ( ( a ' ->1 c ) ->1 c ) ^ ( ( b ' ->1 c ) ->1 c ) ) ) ^ ( ( c ^ ( b ' ->1 c ) ) v ( ( c ->1 c ) ^ ( ( b ' ->1 c ) ->1 c ) ) ) ) ) ) ) ) =< c
 
 

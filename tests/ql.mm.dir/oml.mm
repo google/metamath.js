@@ -6,8 +6,8 @@ include "omlem2.mm"
 include "lem3.1.mm"
 
 theorem oml
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a v ( a ' ^ ( a v b ) ) ) = ( a v b )

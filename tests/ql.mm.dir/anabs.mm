@@ -10,8 +10,8 @@ include "ax-a5.mm"
 include "con2.mm"
 
 theorem anabs
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ^ ( a v b ) ) = a

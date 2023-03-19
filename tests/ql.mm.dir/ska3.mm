@@ -10,8 +10,8 @@ include "df-t.mm"
 include "3tr1.mm"
 
 theorem ska3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a == b ) ' v ( a ' == b ' ) ) = 1

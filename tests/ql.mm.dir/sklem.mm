@@ -14,8 +14,8 @@ include "lor.mm"
 include "or1.mm"
 
 theorem sklem
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume sklem.1: |- a =< b
 
 

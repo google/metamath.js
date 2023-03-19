@@ -8,13 +8,13 @@ include "ax-r4.mm"
 include "le3tr1.mm"
 
 theorem gomaex3h5
-  let wvc: term c
-  let wvd: term d
-  let wvk: term k
-  let wvm: term m
-  let wvp: term p
-  let wvq: term q
-  let wvr: term r
+  param wvc: term c
+  param wvd: term d
+  param wvk: term k
+  param wvm: term m
+  param wvp: term p
+  param wvq: term q
+  param wvr: term r
   assume gomaex3h5.11: |- r = ( ( p ' ->1 q ) ' ^ ( c v d ) )
   assume gomaex3h5.16: |- k = r
   assume gomaex3h5.17: |- m = ( p ' ->1 q )

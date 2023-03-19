@@ -9,12 +9,12 @@ include "a1i.mm"
 include "mpbirx.mm"
 
 theorem dfov2
-  let hal: type al
-  let hbe: type be
-  let ta: term A
-  let tb: term B
-  let tf: term F
-  let tr: term R
+  param hal: type al
+  param hbe: type be
+  param ta: term A
+  param tb: term B
+  param tf: term F
+  param tr: term R
   assume dfov1.1: |- F : ( al -> ( be -> bool ) )
   assume dfov1.2: |- A : al
   assume dfov1.3: |- B : be

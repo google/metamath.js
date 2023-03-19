@@ -16,9 +16,9 @@ include "w3tr2.mm"
 include "wcon1.mm"
 
 theorem wfh3
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume wfh.1: |- C ( a , b ) = 1
   assume wfh.2: |- C ( a , c ) = 1
 

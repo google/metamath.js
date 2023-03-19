@@ -1,6 +1,6 @@
 
 axiom wxy
-  let wx: wff x
-  let wy: wff y
+  param wx: wff x
+  param wy: wff y
   assert wff x y
 end

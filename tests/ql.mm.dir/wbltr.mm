@@ -5,9 +5,9 @@ include "wr2.mm"
 include "wdf-le1.mm"
 
 theorem wbltr
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume wbltr.1: |- ( a == b ) = 1
   assume wbltr.2: |- ( b =<2 c ) = 1
 

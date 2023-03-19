@@ -4,10 +4,10 @@ include "wran.mm"
 include "wr2.mm"
 
 theorem w2an
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
   assume w2an.1: |- ( a == b ) = 1
   assume w2an.2: |- ( c == d ) = 1
 

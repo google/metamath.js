@@ -1,12 +1,12 @@
 
 axiom ax-tdef
-  let hal: type al
-  let hbe: type be
-  let vx: var x
-  let ta: term A
-  let tb: term B
-  let tf: term F
-  let tr: term R
+  param hal: type al
+  param hbe: type be
+  param vx: var x
+  param ta: term A
+  param tb: term B
+  param tf: term F
+  param tr: term R
   assume ax-tdef.1: |- B : al
   assume ax-tdef.2: |- F : ( al -> bool )
   assume ax-tdef.3: |- T. |= ( F B )

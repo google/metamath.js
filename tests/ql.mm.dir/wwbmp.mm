@@ -6,8 +6,8 @@ include "ax-r2.mm"
 include "wr3.mm"
 
 theorem wwbmp
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wwbmp.1: |- a = 1
   assume wwbmp.2: |- ( a == b ) = 1
 

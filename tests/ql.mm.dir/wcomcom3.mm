@@ -3,8 +3,8 @@ include "wcomcom.mm"
 include "wcomcom2.mm"
 
 theorem wcomcom3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wcomcom.1: |- C ( a , b ) = 1
 
 

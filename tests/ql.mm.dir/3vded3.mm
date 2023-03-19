@@ -29,9 +29,9 @@ include "ax-r5.mm"
 include "3tr.mm"
 
 theorem 3vded3
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume 3vded3.1: |- ( c ->0 C ( a , c ) ) = 1
   assume 3vded3.2: |- ( c ->0 a ) = 1
   assume 3vded3.3: |- ( c ->0 ( a ->0 b ) ) = 1

@@ -20,8 +20,8 @@ include "lor.mm"
 include "or0.mm"
 
 theorem u1lemanb
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->1 b ) ^ b ' ) = ( a ' ^ b ' )

@@ -12,9 +12,9 @@ include "ud1lem0ab.mm"
 include "le3tr1.mm"
 
 theorem 1oai1
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ->1 c ) ^ ( ( a ^ b ) ' ->1 ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) =< ( b ->1 c )

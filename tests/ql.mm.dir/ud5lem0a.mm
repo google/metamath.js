@@ -9,9 +9,9 @@ include "df-i5.mm"
 include "3tr1.mm"
 
 theorem ud5lem0a
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume ud5lem0a.1: |- a = b
 
 

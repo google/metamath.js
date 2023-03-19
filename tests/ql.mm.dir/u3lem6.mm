@@ -12,8 +12,8 @@ include "ax-r5.mm"
 include "ax-r2.mm"
 
 theorem u3lem6
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->3 ( a ->3 ( a ->3 b ) ) ) = ( a ->3 ( a ->3 b ) )

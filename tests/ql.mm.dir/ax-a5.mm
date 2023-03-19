@@ -1,6 +1,6 @@
 
 axiom ax-a5
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assert |- ( a v ( a ' v b ) ' ) = a
 end

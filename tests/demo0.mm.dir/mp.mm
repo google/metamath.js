@@ -1,7 +1,7 @@
 
 axiom mp
-  let wp: wff P
-  let wq: wff Q
+  param wp: wff P
+  param wq: wff Q
   assume min: |- P
   assume maj: |- ( P -> Q )
   assert |- Q

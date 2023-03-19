@@ -23,11 +23,11 @@ include "letr.mm"
 include "oau.mm"
 
 theorem oa4uto4g
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wvh: term h
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wvh: term h
   assume oa4uto4g.1: |- ( ( b ' ->1 d ) ^ ( ( b ' ' ->1 d ) v ( ( a ' ' ->1 d ) ^ ( ( ( ( b ' ->1 d ) ^ ( a ' ->1 d ) ) v ( ( b ' ' ->1 d ) ^ ( a ' ' ->1 d ) ) ) v ( ( ( ( b ' ->1 d ) ^ ( c ' ->1 d ) ) v ( ( b ' ' ->1 d ) ^ ( c ' ' ->1 d ) ) ) ^ ( ( ( a ' ->1 d ) ^ ( c ' ->1 d ) ) v ( ( a ' ' ->1 d ) ^ ( c ' ' ->1 d ) ) ) ) ) ) ) ) =< d
   assume oa4uto4g.4: |- h = ( ( ( a ^ c ) v ( ( a ->1 d ) ^ ( c ->1 d ) ) ) ^ ( ( b ^ c ) v ( ( b ->1 d ) ^ ( c ->1 d ) ) ) )
 

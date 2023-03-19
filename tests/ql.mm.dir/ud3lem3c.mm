@@ -11,8 +11,8 @@ include "ax-a2.mm"
 include "orabs.mm"
 
 theorem ud3lem3c
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->3 b ) ' v ( a v b ) ) = ( a v b )

@@ -2,8 +2,8 @@ include "wr1.mm"
 include "wwbmp.mm"
 
 theorem wwbmpr
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wwbmpr.1: |- b = 1
   assume wwbmpr.2: |- ( a == b ) = 1
 

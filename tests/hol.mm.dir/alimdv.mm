@@ -23,11 +23,11 @@ include "hbct.mm"
 include "alrimi.mm"
 
 theorem alimdv
-  let hal: type al
-  let vx: var x
-  let ta: term A
-  let tb: term B
-  let tr: term R
+  param hal: type al
+  param vx: var x
+  param ta: term A
+  param tb: term B
+  param tr: term R
   let vy: var y
   assume alimdv.1: |- ( R , A ) |= B
 

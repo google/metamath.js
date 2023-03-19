@@ -11,11 +11,11 @@ include "mpbi.mm"
 include "dfov2.mm"
 
 theorem eqtri
-  let hal: type al
-  let ta: term A
-  let tb: term B
-  let tc: term C
-  let tr: term R
+  param hal: type al
+  param ta: term A
+  param tb: term B
+  param tc: term C
+  param tr: term R
   assume eqtri.1: |- A : al
   assume eqtri.2: |- R |= [ A = B ]
   assume eqtri.3: |- R |= [ B = C ]

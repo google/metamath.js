@@ -38,11 +38,11 @@ include "syl.mm"
 include "mpd.mm"
 
 theorem exlimdv2
-  let hal: type al
-  let vx: var x
-  let tf: term F
-  let tr: term R
-  let tt: term T
+  param hal: type al
+  param vx: var x
+  param tf: term F
+  param tr: term R
+  param tt: term T
   let vp: var p
   assume exlimdv2.1: |- F : ( al -> bool )
   assume exlimdv2.2: |- ( R , ( F x : al ) ) |= T

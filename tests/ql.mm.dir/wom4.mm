@@ -8,8 +8,8 @@ include "wlor.mm"
 include "w3tr2.mm"
 
 theorem wom4
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wom4.1: |- ( a =<2 b ) = 1
 
 

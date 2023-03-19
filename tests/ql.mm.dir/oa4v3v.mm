@@ -18,11 +18,11 @@ include "le3tr2.mm"
 include "lecon1.mm"
 
 theorem oa4v3v
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wve: term e
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wve: term e
   assume oa4v3v.1: |- d =< b '
   assume oa4v3v.2: |- e =< c '
   assume oa4v3v.3: |- ( ( d v b ) ^ ( e v c ) ) =< ( b v ( d ^ ( e v ( ( d v e ) ^ ( b v c ) ) ) ) )

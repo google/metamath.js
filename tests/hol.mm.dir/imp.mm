@@ -7,9 +7,9 @@ include "adantr.mm"
 include "mpd.mm"
 
 theorem imp
-  let tr: term R
-  let ts: term S
-  let tt: term T
+  param tr: term R
+  param ts: term S
+  param tt: term T
   assume imp.1: |- S : bool
   assume imp.2: |- T : bool
   assume imp.3: |- R |= [ S ==> T ]

@@ -12,10 +12,10 @@ include "wc.mm"
 include "ax-eqmp.mm"
 
 theorem eqcomx
-  let hal: type al
-  let ta: term A
-  let tb: term B
-  let tr: term R
+  param hal: type al
+  param ta: term A
+  param tb: term B
+  param tr: term R
   assume eqcomx.1: |- A : al
   assume eqcomx.2: |- B : al
   assume eqcomx.3: |- R |= ( ( = A ) B )

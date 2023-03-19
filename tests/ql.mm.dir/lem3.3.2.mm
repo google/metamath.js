@@ -8,8 +8,8 @@ include "ax-r2.mm"
 include "skr0.mm"
 
 theorem lem3.3.2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume lem3.3.2.1: |- a = 1
   assume lem3.3.2.2: |- ( a ->0 b ) = 1
 

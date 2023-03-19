@@ -14,8 +14,8 @@ include "ax-r2.mm"
 include "con2.mm"
 
 theorem u3lem1n
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->3 b ) ->3 a ) ' = ( ( a ' ^ b ) v ( a ' ^ b ' ) )

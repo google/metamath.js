@@ -30,13 +30,13 @@ include "eta.mm"
 include "3eqtr3i.mm"
 
 theorem leqf
-  let hal: type al
-  let hbe: type be
-  let vx: var x
-  let vy: var y
-  let ta: term A
-  let tb: term B
-  let tr: term R
+  param hal: type al
+  param hbe: type be
+  param vx: var x
+  param vy: var y
+  param ta: term A
+  param tb: term B
+  param tr: term R
   let vz: var z
   assume leqf.1: |- A : be
   assume leqf.2: |- R |= [ A = B ]

@@ -6,9 +6,9 @@ include "anabs.mm"
 include "ax-r2.mm"
 
 theorem leoa
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume leoa.1: |- ( a v c ) = b
 
 

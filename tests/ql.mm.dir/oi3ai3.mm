@@ -27,8 +27,8 @@ include "lan.mm"
 include "3tr1.mm"
 
 theorem oi3ai3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ^ b ) v ( a ->3 b ) ' ) = ( ( a v b ) ^ ( a ' ->3 b ' ) )

@@ -13,8 +13,8 @@ include "ax-r1.mm"
 include "ax-r2.mm"
 
 theorem i3n2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ' ->3 b ' ) = ( ( a ^ b ) v ( ( a v b ' ) ^ ( a ' v ( a ^ b ' ) ) ) )

@@ -17,11 +17,11 @@ include "a1i.mm"
 include "mpbir.mm"
 
 theorem alrimi
-  let hal: type al
-  let vx: var x
-  let vy: var y
-  let ta: term A
-  let tr: term R
+  param hal: type al
+  param vx: var x
+  param vy: var y
+  param ta: term A
+  param tr: term R
   assume alrimi.1: |- R |= A
   assume alrimi.2: |- T. |= [ ( \ x : al . R y : al ) = R ]
 

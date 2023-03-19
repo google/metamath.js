@@ -3,7 +3,7 @@ include "ax-a1.mm"
 include "bi1.mm"
 
 theorem ska9
-  let wva: term a
+  param wva: term a
 
 
   assert |- ( a == a ' ' ) = 1

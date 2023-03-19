@@ -39,9 +39,9 @@ include "or12.mm"
 include "2an.mm"
 
 theorem orbi
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a == c ) v ( b == c ) ) = ( ( ( a ->2 c ) v ( b ->2 c ) ) ^ ( ( c ->1 a ) v ( c ->1 b ) ) )

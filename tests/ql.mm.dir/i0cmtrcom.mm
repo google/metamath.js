@@ -20,8 +20,8 @@ include "lem3.1.mm"
 include "df-c1.mm"
 
 theorem i0cmtrcom
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume i0cmtrcom.1: |- ( a ->0 C ( a , b ) ) = 1
 
 

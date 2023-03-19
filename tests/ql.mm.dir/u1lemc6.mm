@@ -14,8 +14,8 @@ include "lecom.mm"
 include "comcom6.mm"
 
 theorem u1lemc6
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->1 b ) C ( a ' ->1 b )

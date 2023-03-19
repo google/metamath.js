@@ -8,9 +8,9 @@ include "w3tr1.mm"
 include "wdf-c1.mm"
 
 theorem wbctr
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume wbctr.1: |- ( a == b ) = 1
   assume wbctr.2: |- C ( b , c ) = 1
 

@@ -4,8 +4,8 @@ include "adantl.mm"
 include "ded.mm"
 
 theorem dedi
-  let ts: term S
-  let tt: term T
+  param ts: term S
+  param tt: term T
   assume dedi.1: |- S |= T
   assume dedi.2: |- T |= S
 

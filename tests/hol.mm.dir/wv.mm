@@ -1,7 +1,7 @@
 
 
 axiom wv
-  let hal: type al
-  let vx: var x
+  param hal: type al
+  param vx: var x
   assert |- x : al : al
 end

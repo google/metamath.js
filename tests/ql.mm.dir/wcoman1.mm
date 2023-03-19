@@ -3,8 +3,8 @@ include "wlea.mm"
 include "wlecom.mm"
 
 theorem wcoman1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- C ( ( a ^ b ) , a ) = 1

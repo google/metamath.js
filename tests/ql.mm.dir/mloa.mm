@@ -29,9 +29,9 @@ include "2or.mm"
 include "le3tr2.mm"
 
 theorem mloa
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a == b ) ^ ( ( b == c ) v ( ( b v ( a == b ) ) ^ ( c v ( a == c ) ) ) ) ) =< ( c v ( a == c ) )

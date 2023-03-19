@@ -12,8 +12,8 @@ include "wdf-c1.mm"
 include "wcomcom5.mm"
 
 theorem wcomdr
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wcomdr.1: |- ( a == ( ( a v b ) ^ ( a v b ' ) ) ) = 1
 
 

@@ -5,8 +5,8 @@ include "lem3.3.3lem2.mm"
 include "ler2an.mm"
 
 theorem lem3.3.3lem3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ==5 b ) =< ( ( a ->1 b ) ^ ( b ->1 a ) )

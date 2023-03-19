@@ -13,13 +13,13 @@ include "3tr.mm"
 include "le3tr2.mm"
 
 theorem oa6to4
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wve: term e
-  let wvf: term f
-  let wvg: term g
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wve: term e
+  param wvf: term f
+  param wvg: term g
   assume oa6to4.1: |- b ' = ( a ->1 g ) '
   assume oa6to4.2: |- d ' = ( c ->1 g ) '
   assume oa6to4.3: |- f ' = ( e ->1 g ) '

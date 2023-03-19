@@ -10,8 +10,8 @@ include "a1i.mm"
 include "ded.mm"
 
 theorem eqtru
-  let ta: term A
-  let tr: term R
+  param ta: term A
+  param tr: term R
   assume eqtru.1: |- R |= A
 
 

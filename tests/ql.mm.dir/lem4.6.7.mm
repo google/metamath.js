@@ -27,8 +27,8 @@ include "df-i1.mm"
 include "lbtr.mm"
 
 theorem lem4.6.7
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume lem4.6.7.1: |- a ' =< b
 
 

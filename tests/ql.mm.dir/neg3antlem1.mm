@@ -15,9 +15,9 @@ include "lea.mm"
 include "letr.mm"
 
 theorem neg3antlem1
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume neg3ant.1: |- ( a ->3 c ) = ( b ->3 c )
 
 

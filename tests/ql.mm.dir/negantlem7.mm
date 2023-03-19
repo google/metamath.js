@@ -7,9 +7,9 @@ include "3tr2.mm"
 include "con1.mm"
 
 theorem negantlem7
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume negant.1: |- ( a ->1 c ) = ( b ->1 c )
 
 

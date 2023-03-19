@@ -6,8 +6,8 @@ include "wr2.mm"
 include "wdf-le1.mm"
 
 theorem wlea
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ^ b ) =<2 a ) = 1

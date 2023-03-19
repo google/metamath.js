@@ -7,8 +7,8 @@ include "nom52.mm"
 include "ax-r2.mm"
 
 theorem nom63
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( b ==3 ( a v b ) ) = ( a ->2 b )

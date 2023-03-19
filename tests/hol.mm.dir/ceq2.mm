@@ -6,12 +6,12 @@ include "eqid.mm"
 include "ceq12.mm"
 
 theorem ceq2
-  let hal: type al
-  let hbe: type be
-  let ta: term A
-  let tb: term B
-  let tf: term F
-  let tr: term R
+  param hal: type al
+  param hbe: type be
+  param ta: term A
+  param tb: term B
+  param tf: term F
+  param tr: term R
   assume ceq12.1: |- F : ( al -> be )
   assume ceq12.2: |- A : al
   assume ceq2.3: |- R |= [ A = B ]

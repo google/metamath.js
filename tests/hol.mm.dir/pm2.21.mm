@@ -17,7 +17,7 @@ include "cla4v.mm"
 include "syl.mm"
 
 theorem pm2.21
-  let ta: term A
+  param ta: term A
   let vp: var p
   assume pm2.21.1: |- A : bool
 

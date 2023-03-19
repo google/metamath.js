@@ -11,8 +11,8 @@ include "ax-r2.mm"
 include "2vwomr2.mm"
 
 theorem 2vwomr2a
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume 2vwomr2a.1: |- ( a ->2 b ) = 1
 
 

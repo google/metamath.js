@@ -52,9 +52,9 @@ include "ledi.mm"
 include "leror.mm"
 
 theorem ska2
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a == b ) ' v ( ( b == c ) ' v ( a == c ) ) ) = 1

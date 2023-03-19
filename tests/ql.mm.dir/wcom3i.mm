@@ -15,8 +15,8 @@ include "w3tr2.mm"
 include "wdf-c1.mm"
 
 theorem wcom3i
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wcom3i.1: |- ( ( a ^ ( a ' v b ) ) == ( a ^ b ) ) = 1
 
 

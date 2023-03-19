@@ -3,8 +3,8 @@ include "ax-a2.mm"
 include "bi1.mm"
 
 theorem wa2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a v b ) == ( b v a ) ) = 1

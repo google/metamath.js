@@ -44,8 +44,8 @@ include "3tr1.mm"
 include "i0i3.mm"
 
 theorem i3con
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->3 b ) ->3 ( ( a ->3 b ) ->3 ( b ' ->3 a ' ) ) ) = 1

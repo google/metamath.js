@@ -18,8 +18,8 @@ include "or1.mm"
 include "ax-r2.mm"
 
 theorem u3lem8
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ' ->3 ( a ->3 ( a ' ->3 b ) ) ) = 1

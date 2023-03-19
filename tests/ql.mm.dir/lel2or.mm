@@ -4,9 +4,9 @@ include "oridm.mm"
 include "lbtr.mm"
 
 theorem lel2or
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume lel2.1: |- a =< b
   assume lel2.2: |- c =< b
 

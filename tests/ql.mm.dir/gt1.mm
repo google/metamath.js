@@ -7,10 +7,10 @@ include "com2or.mm"
 include "bctr.mm"
 
 theorem gt1
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
   assume gt1.1: |- a = ( b v c )
   assume gt1.2: |- b =< d
   assume gt1.3: |- c =< d '

@@ -4,8 +4,8 @@ include "cmtrcom.mm"
 include "ax-r2.mm"
 
 theorem wcomcom
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wcomcom.1: |- C ( a , b ) = 1
 
 

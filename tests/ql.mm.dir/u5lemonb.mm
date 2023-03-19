@@ -11,8 +11,8 @@ include "lor.mm"
 include "ax-r2.mm"
 
 theorem u5lemonb
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->5 b ) v b ' ) = ( ( ( a ^ b ) v ( a ' ^ b ) ) v b ' )

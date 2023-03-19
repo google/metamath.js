@@ -15,9 +15,9 @@ include "ska4.mm"
 include "lbtr.mm"
 
 theorem wom2
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- a =< ( ( a == b ) ' v ( ( a v c ) == ( b v c ) ) )

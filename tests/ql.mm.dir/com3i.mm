@@ -14,8 +14,8 @@ include "3tr2.mm"
 include "df-c1.mm"
 
 theorem com3i
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume com3i.1: |- ( a ^ ( a ' v b ) ) = ( a ^ b )
 
 

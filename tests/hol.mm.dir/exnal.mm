@@ -19,9 +19,9 @@ include "leq.mm"
 include "3eqtr4i.mm"
 
 theorem exnal
-  let hal: type al
-  let vx: var x
-  let ta: term A
+  param hal: type al
+  param vx: var x
+  param ta: term A
   let vy: var y
   assume exmid.1: |- A : bool
 

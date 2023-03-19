@@ -12,8 +12,8 @@ include "ax-r2.mm"
 include "2an.mm"
 
 theorem com3ii
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume comcom.1: |- a C b
 
 

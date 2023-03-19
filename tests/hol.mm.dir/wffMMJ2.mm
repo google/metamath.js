@@ -1,6 +1,6 @@
 
 axiom wffMMJ2
-  let ta: term A
-  let tb: term B
+  param ta: term A
+  param tb: term B
   assert wff A |= B
 end

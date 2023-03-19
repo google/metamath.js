@@ -6,8 +6,8 @@ include "bi1.mm"
 include "wwbmpr.mm"
 
 theorem i3aa
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume i3aa.1: |- a = 1
 
 

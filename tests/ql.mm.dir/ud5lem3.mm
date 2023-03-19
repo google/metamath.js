@@ -42,8 +42,8 @@ include "anor2.mm"
 include "oml.mm"
 
 theorem ud5lem3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->5 b ) ->5 ( a v ( a ' ^ b ) ) ) = ( a v b )

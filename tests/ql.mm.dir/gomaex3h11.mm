@@ -6,10 +6,10 @@ include "ax-r4.mm"
 include "le3tr1.mm"
 
 theorem gomaex3h11
-  let wve: term e
-  let wvf: term f
-  let wvy: term y
-  let wvz: term z
+  param wve: term e
+  param wvf: term f
+  param wvy: term y
+  param wvz: term z
   assume gomaex3h11.22: |- y = ( e v f ) '
   assume gomaex3h11.23: |- z = f
 

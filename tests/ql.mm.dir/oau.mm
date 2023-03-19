@@ -29,9 +29,9 @@ include "lebi.mm"
 include "df-le1.mm"
 
 theorem oau
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume oau.1: |- ( a ^ ( ( a ->1 c ) v b ) ) =< c
 
 

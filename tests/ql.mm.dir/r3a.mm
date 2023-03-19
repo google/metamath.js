@@ -8,8 +8,8 @@ include "3tr2.mm"
 include "ax-r3.mm"
 
 theorem r3a
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume r3a.1: |- 1 = ( a == b )
 
 

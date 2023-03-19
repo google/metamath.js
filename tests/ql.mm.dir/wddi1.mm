@@ -2,9 +2,9 @@ include "wdcom.mm"
 include "wfh1.mm"
 
 theorem wddi1
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ^ ( b v c ) ) == ( ( a ^ b ) v ( a ^ c ) ) ) = 1

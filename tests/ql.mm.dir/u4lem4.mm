@@ -32,8 +32,8 @@ include "or32.mm"
 include "oridm.mm"
 
 theorem u4lem4
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->4 ( a ->4 ( b ->4 a ) ) ) = ( a ->4 ( b ->4 a ) )

@@ -13,8 +13,8 @@ include "ax-r1.mm"
 include "ax-r2.mm"
 
 theorem u1lemonb
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->1 b ) v b ' ) = 1

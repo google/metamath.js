@@ -13,9 +13,9 @@ include "df2i3.mm"
 include "le3tr1.mm"
 
 theorem i3orlem5
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ' ^ b ' ) ^ c ' ) =< ( ( a v c ) ->3 ( b v c ) )

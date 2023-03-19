@@ -19,7 +19,7 @@ include "df-i3.mm"
 include "3tr1.mm"
 
 theorem i3id
-  let wva: term a
+  param wva: term a
 
 
   assert |- ( a ->3 a ) = 1

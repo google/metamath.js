@@ -16,9 +16,9 @@ include "comcom2.mm"
 include "wwfh1.mm"
 
 theorem wwfh3
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume wwfh3.1: |- b ' C a
   assume wwfh3.2: |- c ' C a
 

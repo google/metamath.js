@@ -13,8 +13,8 @@ include "df-id5.mm"
 include "df-i1.mm"
 
 theorem lem3.3.3lem2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ==5 b ) =< ( b ->1 a )

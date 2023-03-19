@@ -11,8 +11,8 @@ include "df-c1.mm"
 include "comcom5.mm"
 
 theorem comdr
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume comdr.1: |- a = ( ( a v b ) ^ ( a v b ' ) )
 
 

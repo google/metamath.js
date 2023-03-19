@@ -15,8 +15,8 @@ include "an1.mm"
 include "ax-r2.mm"
 
 theorem u2lemc4
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume ulemc3.1: |- a C b
 
 

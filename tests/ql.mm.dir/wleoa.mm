@@ -6,9 +6,9 @@ include "wa5c.mm"
 include "wr2.mm"
 
 theorem wleoa
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume wleoa.1: |- ( ( a v c ) == b ) = 1
 
 

@@ -4,9 +4,9 @@ include "ax-a2.mm"
 include "lbtr.mm"
 
 theorem lerr
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume le.1: |- a =< b
 
 

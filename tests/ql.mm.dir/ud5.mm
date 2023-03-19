@@ -11,8 +11,8 @@ include "ud5lem3.mm"
 include "ax-r1.mm"
 
 theorem ud5
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a v b ) = ( ( a ->5 b ) ->5 ( ( ( a ->5 b ) ->5 ( b ->5 a ) ) ->5 a ) )

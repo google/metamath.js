@@ -2,10 +2,10 @@ include "wr1.mm"
 include "wle3tr1.mm"
 
 theorem wle3tr2
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
   assume wle3tr2.1: |- ( a =<2 b ) = 1
   assume wle3tr2.2: |- ( a == c ) = 1
   assume wle3tr2.3: |- ( b == d ) = 1

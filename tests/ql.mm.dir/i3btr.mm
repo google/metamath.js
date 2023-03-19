@@ -4,9 +4,9 @@ include "bi1.mm"
 include "wwbmp.mm"
 
 theorem i3btr
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume i3btr.1: |- ( a ->3 b ) = 1
   assume i3btr.2: |- b = c
 

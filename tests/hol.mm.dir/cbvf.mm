@@ -32,13 +32,13 @@ include "eta.mm"
 include "3eqtr3i.mm"
 
 theorem cbvf
-  let hal: type al
-  let hbe: type be
-  let vx: var x
-  let vy: var y
-  let vz: var z
-  let ta: term A
-  let tb: term B
+  param hal: type al
+  param hbe: type be
+  param vx: var x
+  param vy: var y
+  param vz: var z
+  param ta: term A
+  param tb: term B
   let vp: var p
   assume cbvf.1: |- A : be
   assume cbvf.2: |- T. |= [ ( \ y : al . A z : al ) = A ]

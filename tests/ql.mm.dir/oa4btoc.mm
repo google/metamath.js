@@ -13,10 +13,10 @@ include "le2an.mm"
 include "letr.mm"
 
 theorem oa4btoc
-  let wva: term a
-  let wvc: term c
-  let wve: term e
-  let wvg: term g
+  param wva: term a
+  param wvc: term c
+  param wve: term e
+  param wvg: term g
   assume oa4btoc.1: |- ( ( a ->1 g ) ^ ( a v ( c ^ ( ( ( a ^ c ) v ( ( a ->1 g ) ^ ( c ->1 g ) ) ) v ( ( ( a ^ e ) v ( ( a ->1 g ) ^ ( e ->1 g ) ) ) ^ ( ( c ^ e ) v ( ( c ->1 g ) ^ ( e ->1 g ) ) ) ) ) ) ) ) =< g
 
 

@@ -38,10 +38,10 @@ include "mpd.mm"
 include "syl.mm"
 
 theorem ax11
-  let hal: type al
-  let vx: var x
-  let vy: var y
-  let ta: term A
+  param hal: type al
+  param vx: var x
+  param vy: var y
+  param ta: term A
   assume ax11.1: |- A : bool
 
   disjoint A x

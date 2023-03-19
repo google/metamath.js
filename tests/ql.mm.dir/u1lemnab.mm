@@ -13,8 +13,8 @@ include "3tr2.mm"
 include "con1.mm"
 
 theorem u1lemnab
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->1 b ) ' ^ b ) = 0

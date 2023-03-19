@@ -3,8 +3,8 @@ include "ancom.mm"
 include "bi1.mm"
 
 theorem ska5
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ^ b ) == ( b ^ a ) ) = 1

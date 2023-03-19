@@ -11,11 +11,11 @@ include "3tr1.mm"
 include "lbtr.mm"
 
 theorem gomaex3lem4
-  let wva: term a
-  let wvb: term b
-  let wvd: term d
-  let wve: term e
-  let wvp: term p
+  param wva: term a
+  param wvb: term b
+  param wvd: term d
+  param wve: term e
+  param wvp: term p
   assume gomaex3lem4.9: |- p = ( ( a v b ) ->1 ( d v e ) ' ) '
 
 

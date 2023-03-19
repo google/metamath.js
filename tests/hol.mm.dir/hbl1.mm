@@ -6,13 +6,13 @@ include "ax-hbl1.mm"
 include "a1i.mm"
 
 theorem hbl1
-  let hal: type al
-  let hbe: type be
-  let hga: type ga
-  let vx: var x
-  let ta: term A
-  let tb: term B
-  let tr: term R
+  param hal: type al
+  param hbe: type be
+  param hga: type ga
+  param vx: var x
+  param ta: term A
+  param tb: term B
+  param tr: term R
   assume ax-hbl1.1: |- A : ga
   assume ax-hbl1.2: |- B : al
   assume hbl1.3: |- R : bool

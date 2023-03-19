@@ -7,9 +7,9 @@ include "ax-ded.mm"
 include "dfov2.mm"
 
 theorem ded
-  let tr: term R
-  let ts: term S
-  let tt: term T
+  param tr: term R
+  param ts: term S
+  param tt: term T
   assume ded.1: |- ( R , S ) |= T
   assume ded.2: |- ( R , T ) |= S
 

@@ -6,8 +6,8 @@ include "con2.mm"
 include "bi1.mm"
 
 theorem ska10
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a v b ) ' == ( a ' ^ b ' ) ) = 1

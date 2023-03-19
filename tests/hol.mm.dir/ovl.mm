@@ -21,16 +21,16 @@ include "weqi.mm"
 include "cl.mm"
 
 theorem ovl
-  let hal: type al
-  let hbe: type be
-  let hga: type ga
-  let vx: var x
-  let vy: var y
-  let ta: term A
-  let tb: term B
-  let tc: term C
-  let ts: term S
-  let tt: term T
+  param hal: type al
+  param hbe: type be
+  param hga: type ga
+  param vx: var x
+  param vy: var y
+  param ta: term A
+  param tb: term B
+  param tc: term C
+  param ts: term S
+  param tt: term T
   assume ovl.1: |- A : ga
   assume ovl.2: |- S : al
   assume ovl.3: |- T : be

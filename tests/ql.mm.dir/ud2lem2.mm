@@ -16,8 +16,8 @@ include "anidm.mm"
 include "oml.mm"
 
 theorem ud2lem2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a v ( a ' ^ b ' ) ) ->2 a ) = ( a v b )

@@ -6,8 +6,8 @@ include "nom25.mm"
 include "ax-r2.mm"
 
 theorem nom35
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ^ b ) == a ) = ( a ->1 b )

@@ -7,7 +7,7 @@ include "bi1.mm"
 include "wwbmp.mm"
 
 theorem bina2
-  let wva: term a
+  param wva: term a
 
 
   assert |- ( a ' ' ->3 a ) = 1

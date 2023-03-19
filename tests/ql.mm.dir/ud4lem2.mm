@@ -35,8 +35,8 @@ include "an1.mm"
 include "oml.mm"
 
 theorem ud4lem2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a v ( a ' ^ b ' ) ) ->4 a ) = ( a v b )

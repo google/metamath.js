@@ -26,8 +26,8 @@ include "ax-a2.mm"
 include "3tr.mm"
 
 theorem u1lem8
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->1 b ) ^ ( a ' ->1 b ) ) = ( ( a ^ b ) v ( a ' ^ b ) )

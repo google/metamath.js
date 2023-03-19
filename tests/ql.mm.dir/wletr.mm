@@ -12,9 +12,9 @@ include "wr2.mm"
 include "wdf2le1.mm"
 
 theorem wletr
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume wletr.1: |- ( a =<2 b ) = 1
   assume wletr.2: |- ( b =<2 c ) = 1
 

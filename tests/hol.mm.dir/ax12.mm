@@ -21,10 +21,10 @@ include "adantr.mm"
 include "ex.mm"
 
 theorem ax12
-  let hal: type al
-  let vx: var x
-  let vy: var y
-  let vz: var z
+  param hal: type al
+  param vx: var x
+  param vy: var y
+  param vz: var z
   let vp: var p
 
   disjoint x z

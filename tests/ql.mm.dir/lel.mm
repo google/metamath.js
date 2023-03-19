@@ -6,9 +6,9 @@ include "ax-r2.mm"
 include "df2le1.mm"
 
 theorem lel
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume le.1: |- a =< b
 
 

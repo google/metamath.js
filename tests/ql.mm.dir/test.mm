@@ -34,9 +34,9 @@ include "ancom.mm"
 include "an1.mm"
 
 theorem test
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( ( c v ( a ' v b ' ) ) ^ ( c ' ^ ( c v ( a ^ b ) ) ) ) v ( ( c ' ^ ( a ^ b ) ) v ( c ^ ( c ' v ( a ^ b ) ) ) ) ) = ( ( c v ( a ^ b ) ) ^ ( c ' v ( a ^ b ) ) )

@@ -7,9 +7,9 @@ include "dfov1.mm"
 include "ax-eqmp.mm"
 
 theorem mpbi
-  let ta: term A
-  let tb: term B
-  let tr: term R
+  param ta: term A
+  param tb: term B
+  param tr: term R
   assume mpbi.1: |- R |= A
   assume mpbi.2: |- R |= [ A = B ]
 

@@ -4,8 +4,8 @@ include "bicom.mm"
 include "ax-r2.mm"
 
 theorem wr1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wr1.1: |- ( a == b ) = 1
 
 

@@ -7,8 +7,8 @@ include "id.mm"
 include "syl2anc.mm"
 
 theorem trul
-  let tr: term R
-  let ts: term S
+  param tr: term R
+  param ts: term S
   assume trul.1: |- ( T. , R ) |= S
 
 

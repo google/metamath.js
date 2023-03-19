@@ -1,5 +1,5 @@
 
 axiom wU
-  let wx: wff x
+  param wx: wff x
   assert wff x U
 end

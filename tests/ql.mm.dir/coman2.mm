@@ -4,8 +4,8 @@ include "coman1.mm"
 include "bctr.mm"
 
 theorem coman2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ^ b ) C b

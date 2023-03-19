@@ -23,9 +23,9 @@ include "ovl.mm"
 include "eqtri.mm"
 
 theorem anval
-  let vf: var f
-  let ta: term A
-  let tb: term B
+  param vf: var f
+  param ta: term A
+  param tb: term B
   let vp: var p
   let vq: var q
   let vx: var x

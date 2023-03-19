@@ -28,8 +28,8 @@ include "an1.mm"
 include "ax-a2.mm"
 
 theorem ud1lem1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->1 b ) ->1 ( b ->1 a ) ) = ( a v ( a ' ^ b ' ) )

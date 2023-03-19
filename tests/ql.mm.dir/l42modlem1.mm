@@ -14,10 +14,10 @@ include "3tr.mm"
 include "3tr1.mm"
 
 theorem l42modlem1
-  let wva: term a
-  let wvb: term b
-  let wvd: term d
-  let wve: term e
+  param wva: term a
+  param wvb: term b
+  param wvd: term d
+  param wve: term e
 
 
   assert |- ( ( ( a v b ) v d ) ^ ( ( a v b ) v e ) ) = ( ( a v b ) v ( ( a v d ) ^ ( b v e ) ) )

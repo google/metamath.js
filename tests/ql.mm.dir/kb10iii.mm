@@ -18,9 +18,9 @@ include "letr.mm"
 include "lecon2.mm"
 
 theorem kb10iii
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume kb10iii.1: |- b ' =< ( a ->1 c )
 
 

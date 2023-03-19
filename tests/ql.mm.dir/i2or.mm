@@ -14,9 +14,9 @@ include "ax-r1.mm"
 include "lbtr.mm"
 
 theorem i2or
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ->2 c ) v ( b ->2 c ) ) =< ( ( a ^ b ) ->2 c )

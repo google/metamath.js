@@ -1,8 +1,8 @@
 
 axiom ax2
-  let wx: wff x
-  let wy: wff y
-  let wz: wff z
+  param wx: wff x
+  param wy: wff y
+  param wz: wff z
   assume ax2.1: |- x - t y - q z
   assert |- C z
 end

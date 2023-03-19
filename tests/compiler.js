@@ -11,8 +11,8 @@ describe("Compiler", () => {
       include "file.mm"
 
       axiom mp
-        let wp: wff p
-        let wq: wff q
+        param wp: wff p
+        param wq: wff q
 
         // logical hypothesis
         assume maj: |- p => q
@@ -31,8 +31,8 @@ describe("Compiler", () => {
 
       theorem theorem1
         // variable declarations
-        let wx: wff x
-        let wy: wff y
+        param wx: wff x
+        param wy: wff y
 
         assert |- ~ p
 
@@ -51,19 +51,27 @@ describe("Compiler", () => {
       ["include", "file.mm"],
       ["axiom", "mp", [
         [
-          ["let", ["wp", "wff", "p"]],
-          ["let", ["wq", "wff", "q"]],
+          // arguments
+          ["param", ["wp", "wff", "p"]],
+          ["param", ["wq", "wff", "q"]],
         ], [
+          // local variables
+        ],
+        [
+          // assumptions
           ["assume", ["maj", "|-", "p", "=>", "q"]],
           ["assume", ["min", "|-", "p"]],
         ],
         [
+          // disjoint requirements
           ["disjoint", ["p", "q"]]
         ],
+        // assertion
         ["assert", ["|-", "q"]],
       ]
       ],
       ["axiom", "we", [
+        [],
         [],
         [],
         [],
@@ -72,9 +80,10 @@ describe("Compiler", () => {
       ],
       ["theorem", "theorem1", [
         [
-          ["let", ["wx", "wff", "x"]],
-          ["let", ["wy", "wff", "y"]],
+          ["param", ["wx", "wff", "x"]],
+          ["param", ["wy", "wff", "y"]],
         ],
+        [],
         [],
         [],
         ["assert", ["|-", "~", "p"]]
@@ -260,22 +269,22 @@ describe("Transpiler", () => {
     
     assertThat(new Transpiler().read(metamath).dump()).equalsTo(`
 axiom w0
-  let wp: wff p
-  let wq: wff q
+  param wp: wff p
+  param wq: wff q
   assume foo: ( p -> q )
   assert wff ( p var q )
 end
 
 axiom w2
-  let wp: wff p
-  let wq: wff q
+  param wp: wff p
+  param wq: wff q
   assert wff ( p -> q )
 end
 
 theorem wnew
-  let wp: wff p
-  let wr: wff r
-  let ws: wff s
+  param wp: wff p
+  param wr: wff r
+  param ws: wff s
 
   disjoint p r
   assert wff ( s -> ( r -> p ) )

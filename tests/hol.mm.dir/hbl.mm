@@ -12,14 +12,14 @@ include "leq.mm"
 include "eqtri.mm"
 
 theorem hbl
-  let hal: type al
-  let hbe: type be
-  let hga: type ga
-  let vx: var x
-  let vy: var y
-  let ta: term A
-  let tb: term B
-  let tr: term R
+  param hal: type al
+  param hbe: type be
+  param hga: type ga
+  param vx: var x
+  param vy: var y
+  param ta: term A
+  param tb: term B
+  param tr: term R
   assume hbl.1: |- A : ga
   assume hbl.2: |- B : al
   assume hbl.3: |- R |= [ ( \ x : al . A B ) = A ]

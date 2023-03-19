@@ -6,7 +6,7 @@ include "ax-r2.mm"
 include "df-le1.mm"
 
 theorem le0
-  let wva: term a
+  param wva: term a
 
 
   assert |- 0 =< a

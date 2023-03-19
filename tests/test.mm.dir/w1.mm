@@ -1,5 +1,5 @@
 
 axiom w1
-  let wx: " x
+  param wx: " x
   assert " x -
 end

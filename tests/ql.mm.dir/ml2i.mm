@@ -7,9 +7,9 @@ include "lor.mm"
 include "3tr2.mm"
 
 theorem ml2i
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume mli.1: |- c =< a
 
 

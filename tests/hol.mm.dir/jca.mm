@@ -1,9 +1,9 @@
 include "ax-jca.mm"
 
 theorem jca
-  let tr: term R
-  let ts: term S
-  let tt: term T
+  param tr: term R
+  param ts: term S
+  param tt: term T
   assume ax-jca.1: |- R |= S
   assume ax-jca.2: |- R |= T
 

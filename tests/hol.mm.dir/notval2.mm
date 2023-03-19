@@ -26,7 +26,7 @@ include "dedi.mm"
 include "eqtri.mm"
 
 theorem notval2
-  let ta: term A
+  param ta: term A
   assume notval2.1: |- A : bool
 
 

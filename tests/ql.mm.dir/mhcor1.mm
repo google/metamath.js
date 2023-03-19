@@ -35,10 +35,10 @@ include "ax-a2.mm"
 include "bi4.mm"
 
 theorem mhcor1
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
 
 
   assert |- ( ( ( ( a ->1 b ) ^ ( b ->2 c ) ) ^ ( c ->1 d ) ) ^ ( d ->2 a ) ) = ( ( ( a == b ) ^ ( b == c ) ) ^ ( c == d ) )

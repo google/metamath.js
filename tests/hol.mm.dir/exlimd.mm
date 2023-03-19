@@ -50,12 +50,12 @@ include "cla4v.mm"
 include "syl.mm"
 
 theorem exlimd
-  let hal: type al
-  let vx: var x
-  let vy: var y
-  let ta: term A
-  let tr: term R
-  let tt: term T
+  param hal: type al
+  param vx: var x
+  param vy: var y
+  param ta: term A
+  param tr: term R
+  param tt: term T
   let vz: var z
   assume exlimd.1: |- ( R , A ) |= T
   assume exlimd.2: |- T. |= [ ( \ x : al . R y : al ) = R ]

@@ -23,8 +23,8 @@ include "an1.mm"
 include "3tr.mm"
 
 theorem gomaex3lem3
-  let wvp: term p
-  let wvq: term q
+  param wvp: term p
+  param wvq: term q
 
 
   assert |- ( ( p ' ->1 q ) ' v ( p ' ^ q ) ) = p '

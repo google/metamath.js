@@ -7,10 +7,10 @@ include "ax-r4.mm"
 include "le3tr1.mm"
 
 theorem gomaex3h6
-  let wvm: term m
-  let wvn: term n
-  let wvp: term p
-  let wvq: term q
+  param wvm: term m
+  param wvn: term n
+  param wvp: term p
+  param wvq: term q
   assume gomaex3h6.17: |- m = ( p ' ->1 q )
   assume gomaex3h6.18: |- n = ( p ' ->1 q ) '
 

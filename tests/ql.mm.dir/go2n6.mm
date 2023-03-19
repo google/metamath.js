@@ -16,18 +16,18 @@ include "le2an.mm"
 include "gon2n.mm"
 
 theorem go2n6
-  let wvg: term g
-  let wvh: term h
-  let wvj: term j
-  let wvk: term k
-  let wvi: term i
-  let wvm: term m
-  let wvn: term n
-  let wvu: term u
-  let wvw: term w
-  let wvx: term x
-  let wvy: term y
-  let wvz: term z
+  param wvg: term g
+  param wvh: term h
+  param wvj: term j
+  param wvk: term k
+  param wvi: term i
+  param wvm: term m
+  param wvn: term n
+  param wvu: term u
+  param wvw: term w
+  param wvx: term x
+  param wvy: term y
+  param wvz: term z
   assume go2n6.1: |- g =< h '
   assume go2n6.2: |- h =< i '
   assume go2n6.3: |- i =< j '

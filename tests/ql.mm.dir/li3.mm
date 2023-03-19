@@ -10,9 +10,9 @@ include "df-i3.mm"
 include "3tr1.mm"
 
 theorem li3
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume li3.1: |- a = b
 
 

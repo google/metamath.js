@@ -30,8 +30,8 @@ include "wr4.mm"
 include "wr5-2v.mm"
 
 theorem woml7
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( ( a ->2 b ) ^ ( b ->2 a ) ) ' v ( a == b ) ) = 1

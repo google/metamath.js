@@ -10,8 +10,8 @@ include "bltr.mm"
 include "df2le2.mm"
 
 theorem ud3lem3a
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->3 b ) ' ^ ( a v b ) ) = ( a ->3 b ) '

@@ -10,9 +10,9 @@ include "ax-r1.mm"
 include "cbtr.mm"
 
 theorem u2lemc2
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume ulemc2.1: |- a C b
   assume ulemc2.2: |- a C c
 

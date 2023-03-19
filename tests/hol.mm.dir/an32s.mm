@@ -9,10 +9,10 @@ include "adantr.mm"
 include "syl2anc.mm"
 
 theorem an32s
-  let ta: term A
-  let tr: term R
-  let ts: term S
-  let tt: term T
+  param ta: term A
+  param tr: term R
+  param ts: term S
+  param tt: term T
   assume an32s.1: |- ( ( R , S ) , T ) |= A
 
 

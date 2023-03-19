@@ -9,7 +9,7 @@ include "lor.mm"
 include "ax-a5.mm"
 
 theorem or0
-  let wva: term a
+  param wva: term a
 
 
   assert |- ( a v 0 ) = a

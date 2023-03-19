@@ -8,12 +8,12 @@ include "le3tr2.mm"
 include "oa6fromdual.mm"
 
 theorem oa6fromdualn
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wve: term e
-  let wvf: term f
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wve: term e
+  param wvf: term f
   assume oa6fromdualn.1: |- ( b ^ ( a v ( c ^ ( ( ( a ^ c ) v ( b ^ d ) ) v ( ( ( a ^ e ) v ( b ^ f ) ) ^ ( ( c ^ e ) v ( d ^ f ) ) ) ) ) ) ) =< ( ( ( a ^ b ) v ( c ^ d ) ) v ( e ^ f ) )
 
 

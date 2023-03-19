@@ -14,8 +14,8 @@ include "sklem.mm"
 include "3tr.mm"
 
 theorem lem3.3.3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ==5 b ) ->0 ( a <->1 b ) ) = 1

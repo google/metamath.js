@@ -8,7 +8,7 @@ include "bi1.mm"
 include "wdf-c1.mm"
 
 theorem wcom1
-  let wva: term a
+  param wva: term a
 
 
   assert |- C ( 1 , a ) = 1

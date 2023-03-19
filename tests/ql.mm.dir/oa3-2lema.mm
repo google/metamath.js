@@ -18,9 +18,9 @@ include "oridm.mm"
 include "ax-r2.mm"
 
 theorem oa3-2lema
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ->1 c ) ^ ( a v ( b ^ ( ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) v ( ( ( a ^ 0 ) v ( ( a ->1 c ) ^ ( 0 ->1 c ) ) ) ^ ( ( b ^ 0 ) v ( ( b ->1 c ) ^ ( 0 ->1 c ) ) ) ) ) ) ) ) = ( ( a ->1 c ) ^ ( a v ( b ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) )

@@ -10,7 +10,7 @@ include "df-t.mm"
 include "3tr1.mm"
 
 theorem biid
-  let wva: term a
+  param wva: term a
 
 
   assert |- ( a == a ) = 1

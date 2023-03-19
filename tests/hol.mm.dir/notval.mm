@@ -23,7 +23,7 @@ include "cl.mm"
 include "eqtri.mm"
 
 theorem notval
-  let ta: term A
+  param ta: term A
   let vf: var f
   let vp: var p
   let vq: var q

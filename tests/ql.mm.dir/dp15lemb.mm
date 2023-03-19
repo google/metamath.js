@@ -2,15 +2,15 @@ include "dp15lema.mm"
 include "ax-arg.mm"
 
 theorem dp15lemb
-  let wvd: term d
-  let wve: term e
-  let wva0: term a0
-  let wva1: term a1
-  let wva2: term a2
-  let wvb0: term b0
-  let wvb1: term b1
-  let wvb2: term b2
-  let wvp0: term p0
+  param wvd: term d
+  param wve: term e
+  param wva0: term a0
+  param wva1: term a1
+  param wva2: term a2
+  param wvb0: term b0
+  param wvb1: term b1
+  param wvb2: term b2
+  param wvp0: term p0
   assume dp15lema.1: |- d = ( a2 v ( a0 ^ ( a1 v b1 ) ) )
   assume dp15lema.2: |- p0 = ( ( a1 v b1 ) ^ ( a2 v b2 ) )
   assume dp15lema.3: |- e = ( b0 ^ ( a0 v p0 ) )

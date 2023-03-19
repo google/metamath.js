@@ -17,10 +17,10 @@ include "mpbi.mm"
 include "ex.mm"
 
 theorem ax14
-  let hal: type al
-  let ta: term A
-  let tb: term B
-  let tc: term C
+  param hal: type al
+  param ta: term A
+  param tb: term B
+  param tc: term C
   assume ax14.1: |- A : ( al -> bool )
   assume ax14.2: |- B : ( al -> bool )
   assume ax14.3: |- C : al

@@ -24,8 +24,8 @@ include "an1.mm"
 include "anor1.mm"
 
 theorem u4lemoa
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->4 b ) v a ) = 1

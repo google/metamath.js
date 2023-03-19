@@ -16,9 +16,9 @@ include "3tr1.mm"
 include "2an.mm"
 
 theorem oa3-2lemb
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ->1 c ) ^ ( a v ( b ^ ( ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) v ( ( ( a ^ c ) v ( ( a ->1 c ) ^ ( c ->1 c ) ) ) ^ ( ( b ^ c ) v ( ( b ->1 c ) ^ ( c ->1 c ) ) ) ) ) ) ) ) = ( ( a ->1 c ) ^ ( a v ( b ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) )

@@ -18,9 +18,9 @@ include "lear.mm"
 include "letr.mm"
 
 theorem oa3-1to5
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume oa3-1to5.1: |- ( ( a ->1 c ) ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) =< ( b ->1 c )
 
 

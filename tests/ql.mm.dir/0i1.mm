@@ -14,7 +14,7 @@ include "or1.mm"
 include "3tr.mm"
 
 theorem 0i1
-  let wva: term a
+  param wva: term a
 
 
   assert |- ( 0 ->1 a ) = 1

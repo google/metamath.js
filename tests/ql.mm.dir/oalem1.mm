@@ -19,9 +19,9 @@ include "lelor.mm"
 include "df-i2.mm"
 
 theorem oalem1
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( b v c ) v ( ( b v c ) ' ^ ( ( a ->2 b ) v ( ( a ->2 c ) ^ ( ( b v c ) ' v ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) ) ) ) =< ( a ->2 ( b v c ) )

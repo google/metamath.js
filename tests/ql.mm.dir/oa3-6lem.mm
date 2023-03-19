@@ -24,9 +24,9 @@ include "ax-a1.mm"
 include "df-i1.mm"
 
 theorem oa3-6lem
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ->1 c ) ^ ( a v ( b ^ ( ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) v ( ( ( a ^ 1 ) v ( ( a ->1 c ) ^ ( 1 ->1 c ) ) ) ^ ( ( b ^ 1 ) v ( ( b ->1 c ) ^ ( 1 ->1 c ) ) ) ) ) ) ) ) = ( ( a ->1 c ) ^ ( a v ( b ^ ( ( ( a ' ->1 c ) ^ ( b ' ->1 c ) ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) )

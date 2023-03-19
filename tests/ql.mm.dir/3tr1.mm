@@ -2,10 +2,10 @@ include "ax-r1.mm"
 include "ax-r2.mm"
 
 theorem 3tr1
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
   assume 3tr1.1: |- a = b
   assume 3tr1.2: |- c = a
   assume 3tr1.3: |- d = b

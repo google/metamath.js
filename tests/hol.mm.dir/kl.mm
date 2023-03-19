@@ -1,8 +1,8 @@
 
 
 axiom kl
-  let hal: type al
-  let vx: var x
-  let tt: term T
+  param hal: type al
+  param vx: var x
+  param tt: term T
   assert term \ x : al . T
 end

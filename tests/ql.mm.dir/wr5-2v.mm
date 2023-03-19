@@ -30,9 +30,9 @@ include "lear.mm"
 include "2vwomlem.mm"
 
 theorem wr5-2v
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume wr5-2v.1: |- ( a == b ) = 1
 
 

@@ -25,7 +25,7 @@ include "ecase.mm"
 include "dedi.mm"
 
 theorem notnot
-  let ta: term A
+  param ta: term A
   let vx: var x
   let vy: var y
   let hal: type al

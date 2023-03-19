@@ -29,11 +29,11 @@ include "or0.mm"
 include "2an.mm"
 
 theorem e2astlem1
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wvr: term r
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wvr: term r
   assume e2ast.1: |- a =< b '
   assume e2ast.2: |- c =< d '
   assume e2ast.3: |- r =< a '

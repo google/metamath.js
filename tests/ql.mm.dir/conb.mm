@@ -11,8 +11,8 @@ include "dfb.mm"
 include "3tr1.mm"
 
 theorem conb
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a == b ) = ( a ' == b ' )

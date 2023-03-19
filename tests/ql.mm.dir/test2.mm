@@ -30,9 +30,9 @@ include "lelor.mm"
 include "bltr.mm"
 
 theorem test2
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( a v b ) =< ( ( a == b ) ' v ( ( c v ( a ^ b ) ) ^ ( c ' v ( a ^ b ) ) ) )

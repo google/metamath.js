@@ -10,8 +10,8 @@ include "anor1.mm"
 include "ax-r1.mm"
 
 theorem u2lemnaa
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->2 b ) ' ^ a ) = ( a ^ b ' )

@@ -19,8 +19,8 @@ include "lel2or.mm"
 include "lebi.mm"
 
 theorem i2bi
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->2 b ) = ( b v ( a == b ) )

@@ -10,9 +10,9 @@ include "wr5-2v.mm"
 include "ax-r2.mm"
 
 theorem wran
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume wran.1: |- ( a == b ) = 1
 
 

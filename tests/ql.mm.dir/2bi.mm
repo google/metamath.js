@@ -4,10 +4,10 @@ include "rbi.mm"
 include "ax-r2.mm"
 
 theorem 2bi
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
   assume 2bi.1: |- a = b
   assume 2bi.2: |- c = d
 

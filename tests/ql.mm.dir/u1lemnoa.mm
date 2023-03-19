@@ -9,8 +9,8 @@ include "ax-r2.mm"
 include "con1.mm"
 
 theorem u1lemnoa
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->1 b ) ' v a ) = a

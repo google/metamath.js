@@ -3,9 +3,9 @@ include "ax-a3.mm"
 include "bi1.mm"
 
 theorem wa3
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( ( a v b ) v c ) == ( a v ( b v c ) ) ) = 1

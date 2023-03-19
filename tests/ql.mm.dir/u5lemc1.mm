@@ -10,8 +10,8 @@ include "ax-r1.mm"
 include "cbtr.mm"
 
 theorem u5lemc1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- a C ( a ->5 b )

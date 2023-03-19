@@ -12,9 +12,9 @@ include "bltr.mm"
 include "lebi.mm"
 
 theorem 3vth2
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ->2 b ) ^ ( b v c ) ' ) = ( ( a ->2 c ) ^ ( b v c ) ' )

@@ -21,8 +21,8 @@ include "df-i3.mm"
 include "df-t.mm"
 
 theorem lei3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume lei3.1: |- a =< b
 
 

@@ -8,9 +8,9 @@ include "3tr1.mm"
 include "df-c1.mm"
 
 theorem bctr
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume bctr.1: |- a = b
   assume bctr.2: |- b C c
 

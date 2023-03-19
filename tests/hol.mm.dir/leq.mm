@@ -9,12 +9,12 @@ include "ax-leq.mm"
 include "dfov2.mm"
 
 theorem leq
-  let hal: type al
-  let hbe: type be
-  let vx: var x
-  let ta: term A
-  let tb: term B
-  let tr: term R
+  param hal: type al
+  param hbe: type be
+  param vx: var x
+  param ta: term A
+  param tb: term B
+  param tr: term R
   assume leq.1: |- A : be
   assume leq.2: |- R |= [ A = B ]
 

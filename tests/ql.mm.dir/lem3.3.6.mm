@@ -15,9 +15,9 @@ include "df-i2.mm"
 include "3tr1.mm"
 
 theorem lem3.3.6
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( a ->2 ( b v c ) ) = ( ( a v c ) ->2 ( b v c ) )

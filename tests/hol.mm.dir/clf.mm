@@ -25,13 +25,13 @@ include "oveq12.mm"
 include "insti.mm"
 
 theorem clf
-  let hal: type al
-  let hbe: type be
-  let vx: var x
-  let vy: var y
-  let ta: term A
-  let tb: term B
-  let tc: term C
+  param hal: type al
+  param hbe: type be
+  param vx: var x
+  param vy: var y
+  param ta: term A
+  param tb: term B
+  param tc: term C
   assume clf.1: |- A : be
   assume clf.2: |- C : al
   assume clf.3: |- [ x : al = C ] |= [ A = B ]

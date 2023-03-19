@@ -22,8 +22,8 @@ include "w3tr2.mm"
 include "wlor.mm"
 
 theorem wlem14
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( ( a ^ b ' ) v a ' ) ' v ( ( a ^ b ' ) v ( ( a ' ^ ( ( a v b ' ) ^ ( a v b ) ) ) v ( a ' ^ ( ( a v b ' ) ^ ( a v b ) ) ' ) ) ) ) = 1

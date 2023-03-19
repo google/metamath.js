@@ -23,8 +23,8 @@ include "3tr2.mm"
 include "df2le1.mm"
 
 theorem u1lemle2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume u1lemle2.1: |- ( a ->1 b ) = 1
 
 

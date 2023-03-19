@@ -5,8 +5,8 @@ include "sklem.mm"
 include "skr0.mm"
 
 theorem id5id0
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume id5id0.1: |- ( a == b ) = 1
 
 

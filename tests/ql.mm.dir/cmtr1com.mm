@@ -18,8 +18,8 @@ include "ax-r1.mm"
 include "df-c1.mm"
 
 theorem cmtr1com
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume cmtr1com.1: |- C ( a , b ) = 1
 
 

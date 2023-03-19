@@ -9,8 +9,8 @@ include "i3id.mm"
 include "ax-r2.mm"
 
 theorem ska14
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ' v b ) ->3 ( a ->3 ( a ->3 b ) ) ) = 1

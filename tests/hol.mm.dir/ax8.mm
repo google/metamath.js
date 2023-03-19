@@ -13,10 +13,10 @@ include "wtru.mm"
 include "adantl.mm"
 
 theorem ax8
-  let hal: type al
-  let ta: term A
-  let tb: term B
-  let tc: term C
+  param hal: type al
+  param ta: term A
+  param tb: term B
+  param tc: term C
   assume ax8.1: |- A : al
   assume ax8.2: |- B : al
   assume ax8.3: |- C : al

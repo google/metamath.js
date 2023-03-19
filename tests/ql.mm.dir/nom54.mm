@@ -20,8 +20,8 @@ include "nomcon4.mm"
 include "i2i1.mm"
 
 theorem nom54
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a v b ) ==4 b ) = ( a ->2 b )

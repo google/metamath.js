@@ -5,9 +5,9 @@ include "le2or.mm"
 include "bltr.mm"
 
 theorem ler2or
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume ler2.1: |- a =< b
   assume ler2.2: |- a =< c
 

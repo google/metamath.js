@@ -10,9 +10,9 @@ include "ax-r1.mm"
 include "cbtr.mm"
 
 theorem com2i3
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume com2i3.1: |- a C b
   assume com2i3.2: |- a C c
 

@@ -1,6 +1,6 @@
 
 axiom wffMMJ2t
-  let hal: type al
-  let ta: term A
+  param hal: type al
+  param ta: term A
   assert wff A : al
 end

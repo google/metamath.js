@@ -24,8 +24,8 @@ include "fh4.mm"
 include "ancom.mm"
 
 theorem u3lemc4
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume ulemc3.1: |- a C b
 
 

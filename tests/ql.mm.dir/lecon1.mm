@@ -4,8 +4,8 @@ include "ax-a1.mm"
 include "le3tr1.mm"
 
 theorem lecon1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume lecon1.1: |- a ' =< b '
 
 

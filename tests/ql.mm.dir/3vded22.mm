@@ -29,9 +29,9 @@ include "lbtr.mm"
 include "3vded21.mm"
 
 theorem 3vded22
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume 3vded22.1: |- c =< ( C ( a , b ) v C ( c , b ) )
   assume 3vded22.2: |- c =< a
   assume 3vded22.3: |- c =< ( a ->0 b )

@@ -1,6 +1,6 @@
 
 axiom df-b3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assert |- ( a <->3 b ) = ( ( a ->3 b ) ^ ( b ->3 a ) )
 end

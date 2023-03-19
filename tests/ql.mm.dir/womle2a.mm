@@ -23,8 +23,8 @@ include "bltr.mm"
 include "lebi.mm"
 
 theorem womle2a
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume womle2a.1: |- ( a ^ ( a ->2 b ) ) =< ( ( a ->2 b ) ' v ( a ->1 b ) )
 
 

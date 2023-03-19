@@ -8,9 +8,9 @@ include "3vth6.mm"
 include "ax-r2.mm"
 
 theorem 3vth8
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( a ->2 ( b v c ) ) = ( ( ( a ->2 b ) ^ ( c ->2 b ) ) v ( ( a ->2 c ) ^ ( b ->2 c ) ) )

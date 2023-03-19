@@ -8,8 +8,8 @@ include "ax-r1.mm"
 include "ax-r2.mm"
 
 theorem wcon2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wcon2.1: |- ( a == b ' ) = 1
 
 

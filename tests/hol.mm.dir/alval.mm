@@ -22,9 +22,9 @@ include "cl.mm"
 include "eqtri.mm"
 
 theorem alval
-  let hal: type al
-  let vx: var x
-  let tf: term F
+  param hal: type al
+  param vx: var x
+  param tf: term F
   let vp: var p
   let vq: var q
   let vy: var y

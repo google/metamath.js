@@ -8,8 +8,8 @@ include "oml.mm"
 include "ax-r2.mm"
 
 theorem omln
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ' v ( a ^ ( a ' v b ) ) ) = ( a ' v b )

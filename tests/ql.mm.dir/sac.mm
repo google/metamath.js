@@ -5,9 +5,9 @@ include "u1lem12.mm"
 include "3tr2.mm"
 
 theorem sac
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume sac.1: |- ( a ->1 c ) = ( b ->1 c )
 
 

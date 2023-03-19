@@ -12,9 +12,9 @@ include "ax-r1.mm"
 include "tr.mm"
 
 theorem k1-2
-  let wvc: term c
-  let wvx: term x
-  let wvy: term y
+  param wvc: term c
+  param wvx: term x
+  param wvy: term y
   assume k1-2.1: |- x = ( ( x ^ c ) v ( x ^ c ' ) )
   assume k1-2.2: |- y = ( ( y ^ c ) v ( y ^ c ' ) )
   assume k1-2.3: |- ( ( x ^ c ) v ( y ^ c ) ) ' = ( ( ( ( x ^ c ) v ( y ^ c ) ) ' ^ c ) v ( ( ( x ^ c ) v ( y ^ c ) ) ' ^ c ' ) )

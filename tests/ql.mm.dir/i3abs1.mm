@@ -17,8 +17,8 @@ include "lor.mm"
 include "3tr1.mm"
 
 theorem i3abs1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->3 ( a ->3 ( a ->3 b ) ) ) = ( a ->3 ( a ->3 b ) )

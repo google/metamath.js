@@ -14,9 +14,9 @@ include "lelor.mm"
 include "lebi.mm"
 
 theorem i3or
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a == b ) ' v ( ( a v c ) ->3 ( b v c ) ) ) = 1

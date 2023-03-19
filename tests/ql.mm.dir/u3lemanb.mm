@@ -30,8 +30,8 @@ include "ancom.mm"
 include "anor1.mm"
 
 theorem u3lemanb
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->3 b ) ^ b ' ) = ( a ' ^ b ' )

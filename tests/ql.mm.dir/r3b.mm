@@ -8,9 +8,9 @@ include "1b.mm"
 include "wed.mm"
 
 theorem r3b
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume r3b.1: |- ( c v c ' ) = ( a == b )
 
 

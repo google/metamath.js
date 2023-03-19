@@ -31,10 +31,10 @@ include "oridm.mm"
 include "le3tr2.mm"
 
 theorem d3oa
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvf: term f
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvf: term f
   assume d3oa.1: |- f = ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) )
 
 

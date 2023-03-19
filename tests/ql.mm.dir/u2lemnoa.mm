@@ -14,8 +14,8 @@ include "3tr2.mm"
 include "con1.mm"
 
 theorem u2lemnoa
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->2 b ) ' v a ) = ( ( a v b ) ^ ( a v b ' ) )

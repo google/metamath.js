@@ -3,7 +3,7 @@ include "or1.mm"
 include "df-le1.mm"
 
 theorem le1
-  let wva: term a
+  param wva: term a
 
 
   assert |- a =< 1

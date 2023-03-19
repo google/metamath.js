@@ -48,8 +48,8 @@ include "oran1.mm"
 include "an1.mm"
 
 theorem u4lem5
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->4 ( a ->4 b ) ) = ( ( a ' ^ b ' ) v b )

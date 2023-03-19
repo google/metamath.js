@@ -8,8 +8,8 @@ include "rbi.mm"
 include "wed.mm"
 
 theorem i3th4
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->3 ( b ->3 b ) ) = 1

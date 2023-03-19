@@ -1,9 +1,9 @@
 
 axiom df-fo
-  let hal: type al
-  let hbe: type be
-  let vx: var x
-  let vy: var y
-  let vf: var f
+  param hal: type al
+  param hbe: type be
+  param vx: var x
+  param vy: var y
+  param vf: var f
   assert |- T. |= [ onto = \ f : ( al -> be ) . ( ! \ y : be . ( ? \ x : al . [ y : be = ( f : ( al -> be ) x : al ) ] ) ) ]
 end

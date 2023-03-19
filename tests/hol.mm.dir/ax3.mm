@@ -31,8 +31,8 @@ include "wtru.mm"
 include "adantl.mm"
 
 theorem ax3
-  let tr: term R
-  let ts: term S
+  param tr: term R
+  param ts: term S
   assume ax3.1: |- R : bool
   assume ax3.2: |- S : bool
 

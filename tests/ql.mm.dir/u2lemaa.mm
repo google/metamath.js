@@ -21,8 +21,8 @@ include "2or.mm"
 include "or0.mm"
 
 theorem u2lemaa
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->2 b ) ^ a ) = ( a ^ b )

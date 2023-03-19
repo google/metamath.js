@@ -13,9 +13,9 @@ include "dfan2.mm"
 include "simprd.mm"
 
 theorem mpd
-  let tr: term R
-  let ts: term S
-  let tt: term T
+  param tr: term R
+  param ts: term S
+  param tt: term T
   assume mp.1: |- T : bool
   assume mp.2: |- R |= S
   assume mp.3: |- R |= [ S ==> T ]

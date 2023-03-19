@@ -7,7 +7,7 @@ include "a1.mm"
 include "mp.mm"
 
 theorem th1
-  let tt: term t
+  param tt: term t
 
 
   assert |- t = t

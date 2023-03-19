@@ -34,11 +34,11 @@ include "imp.mm"
 include "exlimdv2.mm"
 
 theorem exlimdv
-  let hal: type al
-  let vx: var x
-  let ta: term A
-  let tr: term R
-  let tt: term T
+  param hal: type al
+  param vx: var x
+  param ta: term A
+  param tr: term R
+  param tt: term T
   let vy: var y
   let vz: var z
   assume exlimdv.1: |- ( R , A ) |= T

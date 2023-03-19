@@ -27,10 +27,10 @@ include "2or.mm"
 include "or0.mm"
 
 theorem marsdenlem3
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
   assume marsden.1: |- a C b
   assume marsden.2: |- b C c
   assume marsden.3: |- c C d

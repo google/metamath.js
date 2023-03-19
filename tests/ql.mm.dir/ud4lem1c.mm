@@ -46,8 +46,8 @@ include "con2.mm"
 include "3tr1.mm"
 
 theorem ud4lem1c
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->4 b ) ' v ( b ->4 a ) ) = ( a v b ' )

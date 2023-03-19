@@ -22,8 +22,8 @@ include "w3tr1.mm"
 include "wwbmp.mm"
 
 theorem wdid0id1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wdid0id5.1: |- ( a ==0 b ) = 1
 
 

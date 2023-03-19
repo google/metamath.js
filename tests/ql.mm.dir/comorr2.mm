@@ -3,8 +3,8 @@ include "comor2.mm"
 include "comcom.mm"
 
 theorem comorr2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- b C ( a v b )

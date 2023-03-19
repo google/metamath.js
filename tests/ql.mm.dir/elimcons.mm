@@ -35,9 +35,9 @@ include "df-le2.mm"
 include "lecon1.mm"
 
 theorem elimcons
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume elimcons.1: |- ( a ->1 c ) = ( b ->1 c )
   assume elimcons.2: |- ( a ^ c ) =< ( b v c ' )
 

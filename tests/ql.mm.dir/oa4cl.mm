@@ -7,10 +7,10 @@ include "lbtr.mm"
 include "ax-oal4.mm"
 
 theorem oa4cl
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
 
 
   assert |- ( ( a v ( b ^ a ' ) ) ^ ( c v ( d ^ c ' ) ) ) =< ( ( b ^ a ' ) v ( a ^ ( c v ( ( a v c ) ^ ( ( b ^ a ' ) v ( d ^ c ' ) ) ) ) ) )

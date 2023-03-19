@@ -5,9 +5,9 @@ include "bina4.mm"
 include "binr3.mm"
 
 theorem i3ror
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume i3ror.1: |- ( a ->3 b ) = 1
 
 

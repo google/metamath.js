@@ -11,8 +11,8 @@ include "ud4lem3.mm"
 include "ax-r1.mm"
 
 theorem ud4
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a v b ) = ( ( a ->4 b ) ->4 ( ( ( a ->4 b ) ->4 ( b ->4 a ) ) ->4 a ) )

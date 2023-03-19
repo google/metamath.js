@@ -22,9 +22,9 @@ include "imval.mm"
 include "mpbir.mm"
 
 theorem ex
-  let tr: term R
-  let ts: term S
-  let tt: term T
+  param tr: term R
+  param ts: term S
+  param tt: term T
   assume ex.1: |- ( R , S ) |= T
 
 

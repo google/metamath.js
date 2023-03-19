@@ -13,8 +13,8 @@ include "wr2.mm"
 include "w2an.mm"
 
 theorem wcom3ii
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wcomcom.1: |- C ( a , b ) = 1
 
 

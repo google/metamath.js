@@ -12,8 +12,8 @@ include "bltr.mm"
 include "lebi.mm"
 
 theorem wql1lem
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wql1lem.1: |- ( a ->1 b ) = 1
 
 

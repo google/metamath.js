@@ -4,8 +4,8 @@ include "u1lemn1b.mm"
 include "ax-r1.mm"
 
 theorem lem4.6.5
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->1 b ) ' ->1 b ) = ( a ->1 b )

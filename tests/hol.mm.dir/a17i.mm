@@ -6,12 +6,12 @@ include "ax-17.mm"
 include "a1i.mm"
 
 theorem a17i
-  let hal: type al
-  let hbe: type be
-  let vx: var x
-  let ta: term A
-  let tb: term B
-  let tr: term R
+  param hal: type al
+  param hbe: type be
+  param vx: var x
+  param ta: term A
+  param tb: term B
+  param tr: term R
   assume ax-17.1: |- A : be
   assume ax-17.2: |- B : al
   assume a17i.3: |- R : bool

@@ -9,11 +9,11 @@ include "ler2an.mm"
 include "govar.mm"
 
 theorem gon2n
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wve: term e
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wve: term e
   assume govar.1: |- a =< b '
   assume govar.2: |- b =< c '
   assume gon2n.3: |- ( ( c ->2 a ) ^ d ) =< ( a ->2 c )

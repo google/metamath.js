@@ -14,10 +14,10 @@ include "ax-r2.mm"
 include "cbtr.mm"
 
 theorem oacom
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
   assume oacom.1: |- d C ( ( b v c ) ->0 ( ( a ->2 b ) ^ ( a ->2 c ) ) )
   assume oacom.2: |- ( d ^ ( ( b v c ) ->0 ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) C ( a ->2 b )
 

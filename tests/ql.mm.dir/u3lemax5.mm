@@ -21,9 +21,9 @@ include "lelor.mm"
 include "lebi.mm"
 
 theorem u3lemax5
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ->3 b ) ->3 ( ( a ->3 b ) ->3 ( ( b ->3 a ) ->3 ( ( b ->3 a ) ->3 ( ( b ->3 c ) ->3 ( ( b ->3 c ) ->3 ( ( c ->3 b ) ->3 ( ( c ->3 b ) ->3 ( a ->3 c ) ) ) ) ) ) ) ) ) = 1

@@ -5,7 +5,7 @@ include "ax-r1.mm"
 include "ax-r2.mm"
 
 theorem wr3
-  let wva: term a
+  param wva: term a
   assume wr3.1: |- ( 1 == a ) = 1
 
 

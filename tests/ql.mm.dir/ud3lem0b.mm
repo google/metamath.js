@@ -1,9 +1,9 @@
 include "ri3.mm"
 
 theorem ud3lem0b
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume ud3lem0a.1: |- a = b
 
 

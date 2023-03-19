@@ -3,10 +3,10 @@ include "ax-r4.mm"
 include "le3tr1.mm"
 
 theorem gomaex3h12
-  let wva: term a
-  let wvf: term f
-  let wvg: term g
-  let wvz: term z
+  param wva: term a
+  param wvf: term f
+  param wvg: term g
+  param wvz: term z
   assume gomaex3h12.6: |- f =< a '
   assume gomaex3h12.12: |- g = a
   assume gomaex3h12.23: |- z = f

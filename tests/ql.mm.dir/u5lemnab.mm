@@ -15,8 +15,8 @@ include "3tr2.mm"
 include "con1.mm"
 
 theorem u5lemnab
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->5 b ) ' ^ b ) = ( ( ( a v b ' ) ^ ( a ' v b ' ) ) ^ b )

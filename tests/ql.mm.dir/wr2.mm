@@ -15,9 +15,9 @@ include "wlor.mm"
 include "wwbmpr.mm"
 
 theorem wr2
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume wr2.1: |- ( a == b ) = 1
   assume wr2.2: |- ( b == c ) = 1
 

@@ -12,8 +12,8 @@ include "con3.mm"
 include "con2.mm"
 
 theorem ud1lem0c
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->1 b ) ' = ( a ^ ( a ' v b ' ) )

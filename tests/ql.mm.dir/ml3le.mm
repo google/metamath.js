@@ -15,9 +15,9 @@ include "ler2an.mm"
 include "mlduali.mm"
 
 theorem ml3le
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( a v ( b ^ ( c v a ) ) ) =< ( a v ( c ^ ( b v a ) ) )

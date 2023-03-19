@@ -1,7 +1,7 @@
 
 theorem idi
-  let ta: term A
-  let tr: term R
+  param ta: term A
+  param tr: term R
   assume idi.1: |- R |= A
 
 

@@ -12,10 +12,10 @@ include "adantl.mm"
 include "ex.mm"
 
 theorem isfree
-  let hal: type al
-  let vx: var x
-  let vy: var y
-  let ta: term A
+  param hal: type al
+  param vx: var x
+  param vy: var y
+  param ta: term A
   assume alnex1.1: |- A : bool
   assume isfree.2: |- T. |= [ ( \ x : al . A y : al ) = A ]
 

@@ -12,11 +12,11 @@ include "a1i.mm"
 include "mpbi.mm"
 
 theorem cla4v
-  let hal: type al
-  let vx: var x
-  let ta: term A
-  let tb: term B
-  let tc: term C
+  param hal: type al
+  param vx: var x
+  param ta: term A
+  param tb: term B
+  param tc: term C
   assume cla4v.1: |- A : bool
   assume cla4v.2: |- B : al
   assume cla4v.3: |- [ x : al = B ] |= [ A = C ]

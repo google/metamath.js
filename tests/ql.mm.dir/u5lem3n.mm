@@ -13,8 +13,8 @@ include "lor.mm"
 include "con2.mm"
 
 theorem u5lem3n
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->5 ( b ->5 a ) ) ' = ( a ^ ( ( a ' v b ) ^ ( a ' v b ' ) ) )

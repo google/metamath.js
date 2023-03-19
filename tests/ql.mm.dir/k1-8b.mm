@@ -12,9 +12,9 @@ include "ran.mm"
 include "tr.mm"
 
 theorem k1-8b
-  let wvc: term c
-  let wvx: term x
-  let wvy: term y
+  param wvc: term c
+  param wvx: term x
+  param wvy: term y
   assume k1-8b.1: |- y ' = ( ( y ' ^ c ) v ( y ' ^ c ' ) )
   assume k1-8b.2: |- x =< c
   assume k1-8b.3: |- y =< c '

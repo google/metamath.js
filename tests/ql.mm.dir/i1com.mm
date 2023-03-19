@@ -12,8 +12,8 @@ include "df-c1.mm"
 include "comcom.mm"
 
 theorem i1com
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume i1com.1: |- b =< ( a ->1 b )
 
 

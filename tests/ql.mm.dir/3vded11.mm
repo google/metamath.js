@@ -23,9 +23,9 @@ include "lebi.mm"
 include "u1lemle2.mm"
 
 theorem 3vded11
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume 3vded11.1: |- b =< ( c ->1 ( b ->1 a ) )
 
 

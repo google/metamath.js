@@ -15,11 +15,11 @@ include "ax4e.mm"
 include "syl.mm"
 
 theorem cla4ev
-  let hal: type al
-  let vx: var x
-  let ta: term A
-  let tb: term B
-  let tc: term C
+  param hal: type al
+  param vx: var x
+  param ta: term A
+  param tb: term B
+  param tc: term C
   assume cla4ev.1: |- A : bool
   assume cla4ev.2: |- B : al
   assume cla4ev.3: |- [ x : al = B ] |= [ A = C ]

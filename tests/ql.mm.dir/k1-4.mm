@@ -21,8 +21,8 @@ include "3tr2.mm"
 include "con1.mm"
 
 theorem k1-4
-  let wvc: term c
-  let wvx: term x
+  param wvc: term c
+  param wvx: term x
   assume k1-4.1: |- ( x ' ^ ( x v c ' ) ) = ( ( ( x ' ^ ( x v c ' ) ) ^ c ) v ( ( x ' ^ ( x v c ' ) ) ^ c ' ) )
   assume k1-4.2: |- x =< c
 

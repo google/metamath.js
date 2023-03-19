@@ -20,9 +20,9 @@ include "ran.mm"
 include "le3tr1.mm"
 
 theorem 3vth1
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ->2 b ) ^ ( b v c ) ' ) =< ( a ->2 c )

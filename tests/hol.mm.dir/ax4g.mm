@@ -20,9 +20,9 @@ include "eqtri.mm"
 include "mpbir.mm"
 
 theorem ax4g
-  let hal: type al
-  let ta: term A
-  let tf: term F
+  param hal: type al
+  param ta: term A
+  param tf: term F
   let vp: var p
   assume ax4g.1: |- F : ( al -> bool )
   assume ax4g.2: |- A : al

@@ -20,7 +20,7 @@ include "ex.mm"
 include "mpbir.mm"
 
 theorem notnot1
-  let ta: term A
+  param ta: term A
   assume notval2.1: |- A : bool
 
 

@@ -4,9 +4,9 @@ include "wo.mm"
 include "oas.mm"
 
 theorem oa3-2wto2
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume oa3-2wto2.1: |- ( a ' ^ ( a v ( b ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) ) =< c
 
 

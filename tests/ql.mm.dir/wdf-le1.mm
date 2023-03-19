@@ -6,8 +6,8 @@ include "df-le.mm"
 include "ax-r2.mm"
 
 theorem wdf-le1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wdf-le1.1: |- ( ( a v b ) == b ) = 1
 
 

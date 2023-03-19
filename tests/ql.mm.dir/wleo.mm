@@ -3,8 +3,8 @@ include "wa5c.mm"
 include "wdf2le1.mm"
 
 theorem wleo
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a =<2 ( a v b ) ) = 1

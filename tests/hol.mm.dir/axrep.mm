@@ -46,13 +46,13 @@ include "adantl.mm"
 include "ex.mm"
 
 theorem axrep
-  let hal: type al
-  let hbe: type be
-  let vx: var x
-  let vy: var y
-  let vz: var z
-  let ta: term A
-  let tb: term B
+  param hal: type al
+  param hbe: type be
+  param vx: var x
+  param vy: var y
+  param vz: var z
+  param ta: term A
+  param tb: term B
   let vf: var f
   let hga: type ga
   assume axrep.1: |- A : bool

@@ -8,8 +8,8 @@ include "adantr.mm"
 include "ex.mm"
 
 theorem ax1
-  let tr: term R
-  let ts: term S
+  param tr: term R
+  param ts: term S
   assume ax1.1: |- R : bool
   assume ax1.2: |- S : bool
 

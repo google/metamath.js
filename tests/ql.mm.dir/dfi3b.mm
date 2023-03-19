@@ -32,8 +32,8 @@ include "df-i3.mm"
 include "com2or.mm"
 
 theorem dfi3b
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->3 b ) = ( ( a ' v b ) ^ ( ( a v ( a ' ^ b ' ) ) v ( a ' ^ b ) ) )

@@ -50,8 +50,8 @@ include "le2an.mm"
 include "df2le2.mm"
 
 theorem ud4lem1a
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->4 b ) ^ ( b ->4 a ) ) = ( ( a ^ b ) v ( a ' ^ b ' ) )

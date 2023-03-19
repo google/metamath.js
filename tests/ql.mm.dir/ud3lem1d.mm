@@ -31,8 +31,8 @@ include "or0r.mm"
 include "ax-r5.mm"
 
 theorem ud3lem1d
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->3 b ) ^ ( ( a ->3 b ) ' v ( b ->3 a ) ) ) = ( ( a ' ^ b ' ) v ( a ^ ( a ' v b ) ) )

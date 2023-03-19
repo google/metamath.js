@@ -30,8 +30,8 @@ include "ax-a2.mm"
 include "anabs.mm"
 
 theorem u3lemab
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->3 b ) ^ b ) = ( ( a ^ b ) v ( a ' ^ b ) )

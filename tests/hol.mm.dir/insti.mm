@@ -9,13 +9,13 @@ include "eqid.mm"
 include "ax-inst.mm"
 
 theorem insti
-  let hal: type al
-  let vx: var x
-  let vy: var y
-  let ta: term A
-  let tb: term B
-  let tc: term C
-  let tr: term R
+  param hal: type al
+  param vx: var x
+  param vy: var y
+  param ta: term A
+  param tb: term B
+  param tc: term C
+  param tr: term R
   assume insti.1: |- C : al
   assume insti.2: |- B : bool
   assume insti.3: |- R |= A

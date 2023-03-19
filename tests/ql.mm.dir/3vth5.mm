@@ -21,9 +21,9 @@ include "ran.mm"
 include "3tr1.mm"
 
 theorem 3vth5
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ->2 b ) ' ->2 ( b v c ) ) = ( c v ( ( a ->2 b ) ^ ( c ->2 b ) ) )

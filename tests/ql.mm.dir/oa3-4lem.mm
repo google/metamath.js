@@ -16,9 +16,9 @@ include "ax-r1.mm"
 include "lan.mm"
 
 theorem oa3-4lem
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( a ' ^ ( a v ( b ^ ( ( ( a ^ b ) v ( a ' ^ b ' ) ) v ( ( ( a ^ c ) v ( a ' ^ 1 ) ) ^ ( ( b ^ c ) v ( b ' ^ 1 ) ) ) ) ) ) ) = ( a ' ^ ( a v ( b ^ ( ( a == b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) )

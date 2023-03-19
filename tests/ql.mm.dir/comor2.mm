@@ -4,8 +4,8 @@ include "comor1.mm"
 include "bctr.mm"
 
 theorem comor2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a v b ) C b

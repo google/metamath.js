@@ -1,8 +1,8 @@
 
 
 axiom ax-simpl
-  let tr: term R
-  let ts: term S
+  param tr: term R
+  param ts: term S
   assume ax-simpl.1: |- R : bool
   assume ax-simpl.2: |- S : bool
   assert |- ( R , S ) |= R

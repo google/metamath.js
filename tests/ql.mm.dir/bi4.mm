@@ -47,10 +47,10 @@ include "u2lemanb.mm"
 include "an12.mm"
 
 theorem bi4
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
 
 
   assert |- ( ( ( a == b ) ^ ( b == c ) ) ^ ( c == d ) ) = ( ( ( ( a ^ b ) ^ c ) ^ d ) v ( ( ( a ' ^ b ' ) ^ c ' ) ^ d ' ) )

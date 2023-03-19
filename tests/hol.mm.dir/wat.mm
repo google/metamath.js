@@ -1,5 +1,5 @@
 
 axiom wat
-  let hal: type al
+  param hal: type al
   assert |- @ : ( ( al -> bool ) -> al )
 end

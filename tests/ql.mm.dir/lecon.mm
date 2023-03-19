@@ -9,8 +9,8 @@ include "con3.mm"
 include "df2le1.mm"
 
 theorem lecon
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume le.1: |- a =< b
 
 

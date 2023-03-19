@@ -3,10 +3,10 @@ include "jca.mm"
 include "syl.mm"
 
 theorem syl2anc
-  let ta: term A
-  let tr: term R
-  let ts: term S
-  let tt: term T
+  param ta: term A
+  param tr: term R
+  param ts: term S
+  param tt: term T
   assume syl2anc.1: |- R |= S
   assume syl2anc.2: |- R |= T
   assume syl2anc.3: |- ( S , T ) |= A

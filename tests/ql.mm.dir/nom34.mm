@@ -7,8 +7,8 @@ include "nom21.mm"
 include "ax-r2.mm"
 
 theorem nom34
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ^ b ) ==4 a ) = ( a ->1 b )

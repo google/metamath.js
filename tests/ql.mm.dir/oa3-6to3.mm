@@ -22,9 +22,9 @@ include "oa3-6lem.mm"
 include "oa4to6dual.mm"
 
 theorem oa3-6to3
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume oa3-6to3.1: |- ( ( a ->1 c ) ^ ( a v ( b ^ ( ( ( a ' ->1 c ) ^ ( b ' ->1 c ) ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) ) =< c
 
 

@@ -1,6 +1,6 @@
 
 axiom wim
-  let wp: wff P
-  let wq: wff Q
+  param wp: wff P
+  param wq: wff Q
   assert wff ( P -> Q )
 end

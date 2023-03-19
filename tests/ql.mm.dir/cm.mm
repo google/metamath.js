@@ -1,8 +1,8 @@
 include "ax-r1.mm"
 
 theorem cm
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume cm.1: |- a = b
 
 

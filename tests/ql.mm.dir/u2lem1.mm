@@ -17,8 +17,8 @@ include "lor.mm"
 include "or0.mm"
 
 theorem u2lem1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->2 b ) ->2 a ) = a

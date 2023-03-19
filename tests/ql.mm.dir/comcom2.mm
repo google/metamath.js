@@ -10,8 +10,8 @@ include "ax-a2.mm"
 include "df-c1.mm"
 
 theorem comcom2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume comcom2.1: |- a C b
 
 

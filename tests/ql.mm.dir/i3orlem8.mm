@@ -21,9 +21,9 @@ include "ler.mm"
 include "i3orlem6.mm"
 
 theorem i3orlem8
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( ( a v b ) ^ ( a v b ' ) ) ^ a ' ) =< ( ( a ->3 b ) ' v ( ( a v c ) ->3 ( b v c ) ) )

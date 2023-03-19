@@ -11,9 +11,9 @@ include "lan.mm"
 include "3tr2.mm"
 
 theorem modexp
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( a ^ ( b v c ) ) = ( a ^ ( b v ( c ^ ( a v b ) ) ) )

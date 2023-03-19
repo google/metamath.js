@@ -10,13 +10,13 @@ include "syl2anc.mm"
 include "dfov2.mm"
 
 theorem ceq12
-  let hal: type al
-  let hbe: type be
-  let ta: term A
-  let tb: term B
-  let tf: term F
-  let tr: term R
-  let tt: term T
+  param hal: type al
+  param hbe: type be
+  param ta: term A
+  param tb: term B
+  param tf: term F
+  param tr: term R
+  param tt: term T
   assume ceq12.1: |- F : ( al -> be )
   assume ceq12.2: |- A : al
   assume ceq12.3: |- R |= [ F = T ]

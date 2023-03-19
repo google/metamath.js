@@ -17,9 +17,9 @@ include "hbc.mm"
 include "isfree.mm"
 
 theorem ax6
-  let hal: type al
-  let vx: var x
-  let tr: term R
+  param hal: type al
+  param vx: var x
+  param tr: term R
   let vy: var y
   assume ax6.1: |- R : bool
 

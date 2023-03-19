@@ -27,8 +27,8 @@ include "3tr.mm"
 include "df2le2.mm"
 
 theorem u3lem15
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->3 b ) ^ ( a v b ) ) = ( ( a ' v b ) ^ ( a v ( a ' ^ b ) ) )

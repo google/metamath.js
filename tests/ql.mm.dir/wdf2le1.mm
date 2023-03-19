@@ -2,8 +2,8 @@ include "wleao.mm"
 include "wdf-le1.mm"
 
 theorem wdf2le1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wdf2le1.1: |- ( ( a ^ b ) == a ) = 1
 
 

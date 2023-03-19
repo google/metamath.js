@@ -12,9 +12,9 @@ include "wle2or.mm"
 include "oridm.mm"
 
 theorem wledio
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a v ( b ^ c ) ) =<2 ( ( a v b ) ^ ( a v c ) ) ) = 1

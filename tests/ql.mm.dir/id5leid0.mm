@@ -14,8 +14,8 @@ include "df-id0.mm"
 include "le3tr1.mm"
 
 theorem id5leid0
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a == b ) =< ( a ==0 b )

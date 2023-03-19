@@ -10,9 +10,9 @@ include "ax-r1.mm"
 include "lbtr.mm"
 
 theorem govar2
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume govar.1: |- a =< b '
   assume govar.2: |- b =< c '
 

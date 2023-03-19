@@ -12,9 +12,9 @@ include "comcom6.mm"
 include "comcom.mm"
 
 theorem 3vcom
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ->1 c ) v ( b ->1 c ) ) C ( ( a ' ->1 c ) ^ ( b ' ->1 c ) )

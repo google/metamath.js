@@ -33,8 +33,8 @@ include "df-le2.mm"
 include "3tr.mm"
 
 theorem lem4.6.2e1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->1 b ) ^ ( a ' ->1 b ) ) = ( ( a ->1 b ) ^ b )

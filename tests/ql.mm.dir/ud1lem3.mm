@@ -34,8 +34,8 @@ include "oridm.mm"
 include "ax-r5.mm"
 
 theorem ud1lem3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->1 b ) ->1 ( a v b ) ) = ( a v b )

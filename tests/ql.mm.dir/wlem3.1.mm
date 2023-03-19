@@ -13,8 +13,8 @@ include "2or.mm"
 include "ax-a2.mm"
 
 theorem wlem3.1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wlem3.1.1: |- ( a v b ) = b
   assume wlem3.1.2: |- ( b ' v a ) = 1
 

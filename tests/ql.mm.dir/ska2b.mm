@@ -7,9 +7,9 @@ include "2bi.mm"
 include "bi1.mm"
 
 theorem ska2b
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( ( a v c ) == ( b v c ) ) == ( ( a ' ^ c ' ) ' == ( b ' ^ c ' ) ' ) ) = 1

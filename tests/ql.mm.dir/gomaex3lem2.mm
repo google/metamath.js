@@ -23,8 +23,8 @@ include "3tr1.mm"
 include "an1.mm"
 
 theorem gomaex3lem2
-  let wve: term e
-  let wvf: term f
+  param wve: term e
+  param wvf: term f
   assume gomaex3lem2.5: |- e =< f '
 
 

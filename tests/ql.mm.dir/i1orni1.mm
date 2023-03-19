@@ -14,8 +14,8 @@ include "u1lemoa.mm"
 include "or1r.mm"
 
 theorem i1orni1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->1 b ) v ( a ' ->1 b ) ) = 1

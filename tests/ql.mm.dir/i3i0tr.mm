@@ -7,9 +7,9 @@ include "skmp3.mm"
 include "i0i3.mm"
 
 theorem i3i0tr
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume i3i0tr.1: |- ( a ->3 b ) = 1
   assume i3i0tr.2: |- ( b ->3 ( b ->3 c ) ) = 1
 

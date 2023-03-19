@@ -5,8 +5,8 @@ include "df-b.mm"
 include "bi1.mm"
 
 theorem wa6
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a == b ) == ( ( a ' v b ' ) ' v ( a v b ) ' ) ) = 1

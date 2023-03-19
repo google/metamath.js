@@ -20,13 +20,13 @@ include "3tr.mm"
 include "ax-r1.mm"
 
 theorem oa4to4u
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wve: term e
-  let wvf: term f
-  let wvg: term g
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wve: term e
+  param wvf: term f
+  param wvg: term g
   assume oa4to4u.1: |- ( ( e ->1 d ) ^ ( e v ( f ^ ( ( ( e ^ f ) v ( ( e ->1 d ) ^ ( f ->1 d ) ) ) v ( ( ( e ^ g ) v ( ( e ->1 d ) ^ ( g ->1 d ) ) ) ^ ( ( f ^ g ) v ( ( f ->1 d ) ^ ( g ->1 d ) ) ) ) ) ) ) ) =< ( ( ( e ^ d ) v ( f ^ d ) ) v ( g ^ d ) )
   assume oa4to4u.2: |- e = ( a ' ->1 d )
   assume oa4to4u3: |- f = ( b ' ->1 d )

@@ -15,7 +15,7 @@ include "ax-a2.mm"
 include "or0.mm"
 
 theorem 1i1
-  let wva: term a
+  param wva: term a
 
 
   assert |- ( 1 ->1 a ) = a

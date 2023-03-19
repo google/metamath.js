@@ -17,9 +17,9 @@ include "ax-r2.mm"
 include "lbtr.mm"
 
 theorem oat
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume oat.1: |- ( a ' ^ ( a v b ) ) =< c
 
 

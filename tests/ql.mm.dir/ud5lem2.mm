@@ -21,8 +21,8 @@ include "2or.mm"
 include "or0.mm"
 
 theorem ud5lem2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a v b ' ) ->5 a ) = ( a v ( a ' ^ b ) )

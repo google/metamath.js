@@ -1,8 +1,8 @@
 include "ax-r4.mm"
 
 theorem con4
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume con4.1: |- a = b
 
 

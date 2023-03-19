@@ -12,8 +12,8 @@ include "df-t.mm"
 include "3tr1.mm"
 
 theorem comcmtr1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume comcmtr1.1: |- a C b
 
 

@@ -21,8 +21,8 @@ include "fh4.mm"
 include "u5lemona.mm"
 
 theorem u5lem5
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->5 ( a ->5 b ) ) = ( a ' v ( a ^ b ) )

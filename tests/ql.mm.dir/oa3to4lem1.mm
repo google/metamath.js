@@ -28,11 +28,11 @@ include "ud1lem0a.mm"
 include "df-i1.mm"
 
 theorem oa3to4lem1
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wvg: term g
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wvg: term g
   assume oa3to4lem.1: |- a ' =< b
   assume oa3to4lem.2: |- c ' =< d
   assume oa3to4lem.3: |- g = ( ( a ^ b ) v ( c ^ d ) )

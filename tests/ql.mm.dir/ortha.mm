@@ -10,8 +10,8 @@ include "le0.mm"
 include "lebi.mm"
 
 theorem ortha
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume ortha.1: |- a =< b '
 
 

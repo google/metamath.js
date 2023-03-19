@@ -26,10 +26,10 @@ include "adantl.mm"
 include "ex.mm"
 
 theorem axext
-  let hal: type al
-  let vx: var x
-  let ta: term A
-  let tb: term B
+  param hal: type al
+  param vx: var x
+  param ta: term A
+  param tb: term B
   let vy: var y
   assume axext.1: |- A : ( al -> bool )
   assume axext.2: |- B : ( al -> bool )

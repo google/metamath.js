@@ -33,8 +33,8 @@ include "anass.mm"
 include "an0.mm"
 
 theorem ud3lem2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a v ( a ' ^ b ' ) ) ->3 a ) = ( a v b )

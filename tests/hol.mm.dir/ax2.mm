@@ -16,9 +16,9 @@ include "wtru.mm"
 include "adantl.mm"
 
 theorem ax2
-  let tr: term R
-  let ts: term S
-  let tt: term T
+  param tr: term R
+  param ts: term S
+  param tt: term T
   assume ax1.1: |- R : bool
   assume ax1.2: |- S : bool
   assume ax2.3: |- T : bool

@@ -4,9 +4,9 @@ include "wr5.mm"
 include "id5id0.mm"
 
 theorem wdka4o
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume wdid0id5.1: |- ( a ==0 b ) = 1
 
 

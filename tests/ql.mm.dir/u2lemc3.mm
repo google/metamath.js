@@ -1,8 +1,8 @@
 include "u2lemc1.mm"
 
 theorem u2lemc3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume ulemc3.1: |- a C b
 
 

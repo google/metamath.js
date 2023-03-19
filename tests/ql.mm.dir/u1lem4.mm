@@ -28,8 +28,8 @@ include "2an.mm"
 include "an1.mm"
 
 theorem u1lem4
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->1 ( a ->1 ( b ->1 a ) ) ) = ( a ->1 ( b ->1 a ) )

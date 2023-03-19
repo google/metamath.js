@@ -5,9 +5,9 @@ include "eqcomi.mm"
 include "mpbi.mm"
 
 theorem mpbir
-  let ta: term A
-  let tb: term B
-  let tr: term R
+  param ta: term A
+  param tb: term B
+  param tr: term R
   assume mpbir.1: |- R |= A
   assume mpbir.2: |- R |= [ B = A ]
 

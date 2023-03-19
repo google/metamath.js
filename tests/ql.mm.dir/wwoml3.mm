@@ -14,8 +14,8 @@ include "wwoml2.mm"
 include "3tr2.mm"
 
 theorem wwoml3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wwoml3.1: |- a =< b
   assume wwoml3.2: |- ( b ^ a ' ) = 0
 

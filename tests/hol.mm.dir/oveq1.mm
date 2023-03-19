@@ -6,14 +6,14 @@ include "eqid.mm"
 include "oveq123.mm"
 
 theorem oveq1
-  let hal: type al
-  let hbe: type be
-  let hga: type ga
-  let ta: term A
-  let tb: term B
-  let tc: term C
-  let tf: term F
-  let tr: term R
+  param hal: type al
+  param hbe: type be
+  param hga: type ga
+  param ta: term A
+  param tb: term B
+  param tc: term C
+  param tf: term F
+  param tr: term R
   assume oveq.1: |- F : ( al -> ( be -> ga ) )
   assume oveq.2: |- A : al
   assume oveq.3: |- B : be

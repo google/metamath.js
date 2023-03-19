@@ -17,9 +17,9 @@ include "lbtr.mm"
 include "lebi.mm"
 
 theorem k1-8a
-  let wvc: term c
-  let wvx: term x
-  let wvy: term y
+  param wvc: term c
+  param wvx: term x
+  param wvy: term y
   assume k1-8a.1: |- x ' = ( ( x ' ^ c ) v ( x ' ^ c ' ) )
   assume k1-8a.2: |- x =< c
   assume k1-8a.3: |- y =< c '

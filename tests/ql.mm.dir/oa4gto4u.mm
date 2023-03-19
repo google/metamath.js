@@ -13,13 +13,13 @@ include "oaur.mm"
 include "bltr.mm"
 
 theorem oa4gto4u
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wve: term e
-  let wvf: term f
-  let wvg: term g
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wve: term e
+  param wvf: term f
+  param wvg: term g
   assume oa4gto4u.1: |- ( ( e ->1 d ) ^ ( ( ( e ^ f ) v ( ( e ->1 d ) ^ ( f ->1 d ) ) ) v ( ( ( e ^ g ) v ( ( e ->1 d ) ^ ( g ->1 d ) ) ) ^ ( ( f ^ g ) v ( ( f ->1 d ) ^ ( g ->1 d ) ) ) ) ) ) =< ( f ->1 d )
   assume oa4gto4u.2: |- f = ( a ->1 d )
   assume oa4gto4u3: |- e = ( b ->1 d )

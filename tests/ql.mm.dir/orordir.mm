@@ -6,9 +6,9 @@ include "or4.mm"
 include "ax-r2.mm"
 
 theorem orordir
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a v b ) v c ) = ( ( a v c ) v ( b v c ) )

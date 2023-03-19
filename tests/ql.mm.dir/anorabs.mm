@@ -8,8 +8,8 @@ include "lor.mm"
 include "3tr1.mm"
 
 theorem anorabs
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ' ^ ( b v ( a ' ^ ( a v b ) ) ) ) = ( a ' ^ ( a v b ) )

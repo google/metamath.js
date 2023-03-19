@@ -12,8 +12,8 @@ include "df-c1.mm"
 include "comcom5.mm"
 
 theorem df2c1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume df2c1.1: |- a = ( ( a v b ) ^ ( a v b ' ) )
 
 

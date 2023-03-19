@@ -30,9 +30,9 @@ include "leror.mm"
 include "3tr2.mm"
 
 theorem 3vroa
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume 3vroa.1: |- ( ( a ->2 b ) ^ ( ( b v c ) ->0 ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) = 1
 
 

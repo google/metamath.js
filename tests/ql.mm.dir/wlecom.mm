@@ -10,8 +10,8 @@ include "wr2.mm"
 include "wdf-c1.mm"
 
 theorem wlecom
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wlecom.1: |- ( a =<2 b ) = 1
 
 

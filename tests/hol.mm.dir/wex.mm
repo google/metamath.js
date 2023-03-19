@@ -18,7 +18,7 @@ include "df-ex.mm"
 include "eqtypri.mm"
 
 theorem wex
-  let hal: type al
+  param hal: type al
   let vf: var f
   let vp: var p
   let vq: var q

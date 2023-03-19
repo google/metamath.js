@@ -10,9 +10,9 @@ include "le2an.mm"
 include "bltr.mm"
 
 theorem orbile
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a == c ) v ( b == c ) ) =< ( ( ( a ^ b ) ->2 c ) ^ ( c ->1 ( a v b ) ) )

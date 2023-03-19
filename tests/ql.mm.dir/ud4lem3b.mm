@@ -26,8 +26,8 @@ include "df-le2.mm"
 include "ancom.mm"
 
 theorem ud4lem3b
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->4 b ) ' v ( a v b ) ) = ( a v b )

@@ -26,8 +26,8 @@ include "an1.mm"
 include "ancom.mm"
 
 theorem u3lem10
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->3 ( a ' ^ ( a v b ) ) ) = a '

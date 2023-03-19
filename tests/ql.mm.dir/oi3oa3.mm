@@ -15,9 +15,9 @@ include "1bi.mm"
 include "3tr.mm"
 
 theorem oi3oa3
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume oi3oa3.1: |- 1 = ( b == a )
 
 

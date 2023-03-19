@@ -12,8 +12,8 @@ include "df-f.mm"
 include "ax-r1.mm"
 
 theorem u4lemnana
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->4 b ) ' ^ a ' ) = 0

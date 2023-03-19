@@ -12,8 +12,8 @@ include "omln.mm"
 include "ax-r2.mm"
 
 theorem u3lemona
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->3 b ) v a ' ) = ( a ' v b )

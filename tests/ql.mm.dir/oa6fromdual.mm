@@ -12,12 +12,12 @@ include "oran3.mm"
 include "le3tr1.mm"
 
 theorem oa6fromdual
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wve: term e
-  let wvf: term f
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wve: term e
+  param wvf: term f
   assume oa6fromdual.1: |- ( b ' ^ ( a ' v ( c ' ^ ( ( ( a ' ^ c ' ) v ( b ' ^ d ' ) ) v ( ( ( a ' ^ e ' ) v ( b ' ^ f ' ) ) ^ ( ( c ' ^ e ' ) v ( d ' ^ f ' ) ) ) ) ) ) ) =< ( ( ( a ' ^ b ' ) v ( c ' ^ d ' ) ) v ( e ' ^ f ' ) )
 
 

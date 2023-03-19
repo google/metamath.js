@@ -14,14 +14,14 @@ include "adantl.mm"
 include "3eqtr4i.mm"
 
 theorem hbxfrf
-  let hal: type al
-  let hbe: type be
-  let vx: var x
-  let ta: term A
-  let tb: term B
-  let tr: term R
-  let ts: term S
-  let tt: term T
+  param hal: type al
+  param hbe: type be
+  param vx: var x
+  param ta: term A
+  param tb: term B
+  param tr: term R
+  param ts: term S
+  param tt: term T
   assume hbxfr.1: |- T : be
   assume hbxfr.2: |- B : al
   assume hbxfrf.3: |- R |= [ T = A ]

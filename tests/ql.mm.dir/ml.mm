@@ -9,9 +9,9 @@ include "ax-ml.mm"
 include "lebi.mm"
 
 theorem ml
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( a v ( b ^ ( a v c ) ) ) = ( ( a v b ) ^ ( a v c ) )

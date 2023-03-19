@@ -5,7 +5,7 @@ include "bi1.mm"
 include "wdf-le1.mm"
 
 theorem wle1
-  let wva: term a
+  param wva: term a
 
 
   assert |- ( a =<2 1 ) = 1

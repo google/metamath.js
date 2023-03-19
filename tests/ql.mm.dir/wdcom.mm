@@ -17,8 +17,8 @@ include "ax-wdol.mm"
 include "3tr.mm"
 
 theorem wdcom
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- C ( a , b ) = 1

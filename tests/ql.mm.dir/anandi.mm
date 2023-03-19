@@ -6,9 +6,9 @@ include "an4.mm"
 include "ax-r2.mm"
 
 theorem anandi
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( a ^ ( b ^ c ) ) = ( ( a ^ b ) ^ ( a ^ c ) )

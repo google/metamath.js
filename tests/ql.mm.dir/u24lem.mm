@@ -34,8 +34,8 @@ include "lor.mm"
 include "df-i5.mm"
 
 theorem u24lem
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->2 b ) ^ ( a ->4 b ) ) = ( a ->5 b )

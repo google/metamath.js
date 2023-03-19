@@ -43,9 +43,9 @@ include "an0.mm"
 include "le3tr2.mm"
 
 theorem 3vded21
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume 3vded21.1: |- c =< ( ( a ->0 b ) ->0 ( c ->2 b ) )
   assume 3vded21.2: |- c =< ( a ->0 b )
 

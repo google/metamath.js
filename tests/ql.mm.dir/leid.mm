@@ -2,7 +2,7 @@ include "id.mm"
 include "bile.mm"
 
 theorem leid
-  let wva: term a
+  param wva: term a
 
 
   assert |- a =< a

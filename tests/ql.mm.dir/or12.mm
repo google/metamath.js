@@ -5,9 +5,9 @@ include "ax-a3.mm"
 include "3tr2.mm"
 
 theorem or12
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( a v ( b v c ) ) = ( b v ( a v c ) )

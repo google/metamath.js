@@ -16,8 +16,8 @@ include "ax-a2.mm"
 include "ax-r2.mm"
 
 theorem u4lem2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( ( a ->4 b ) ->4 a ) ->4 a ) = ( a v ( ( a ' ^ b ) v ( a ' ^ b ' ) ) )

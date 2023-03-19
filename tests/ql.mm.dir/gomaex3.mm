@@ -18,21 +18,21 @@ include "gomaex3lem10.mm"
 include "bltr.mm"
 
 theorem gomaex3
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wve: term e
-  let wvf: term f
-  let wvg: term g
-  let wvk: term k
-  let wvi: term i
-  let wvn: term n
-  let wvp: term p
-  let wvq: term q
-  let wvr: term r
-  let wvw: term w
-  let wvy: term y
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wve: term e
+  param wvf: term f
+  param wvg: term g
+  param wvk: term k
+  param wvi: term i
+  param wvn: term n
+  param wvp: term p
+  param wvq: term q
+  param wvr: term r
+  param wvw: term w
+  param wvy: term y
   assume gomaex3.1: |- a =< b '
   assume gomaex3.2: |- b =< c '
   assume gomaex3.3: |- c =< d '

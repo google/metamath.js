@@ -13,9 +13,9 @@ include "ax-r1.mm"
 include "df-c1.mm"
 
 theorem com2or
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume fh.1: |- a C b
   assume fh.2: |- a C c
 

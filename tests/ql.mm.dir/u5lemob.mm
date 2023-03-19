@@ -13,8 +13,8 @@ include "df-le2.mm"
 include "ax-r2.mm"
 
 theorem u5lemob
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->5 b ) v b ) = ( ( a ' ^ b ' ) v b )

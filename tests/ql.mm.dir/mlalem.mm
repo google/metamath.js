@@ -39,9 +39,9 @@ include "fh2rc.mm"
 include "le3tr1.mm"
 
 theorem mlalem
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a == b ) ^ ( b ->1 c ) ) =< ( a ->1 c )

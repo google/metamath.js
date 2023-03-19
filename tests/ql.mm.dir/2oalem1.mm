@@ -36,9 +36,9 @@ include "anidm.mm"
 include "3tr2.mm"
 
 theorem 2oalem1
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ->2 b ) ' v ( ( b v c ) v ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) = 1

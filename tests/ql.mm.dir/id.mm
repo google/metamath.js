@@ -4,7 +4,7 @@ include "ax-r1.mm"
 include "ax-r2.mm"
 
 theorem id
-  let wva: term a
+  param wva: term a
 
 
   assert |- a = a

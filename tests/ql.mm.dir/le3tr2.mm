@@ -2,10 +2,10 @@ include "ax-r1.mm"
 include "le3tr1.mm"
 
 theorem le3tr2
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
   assume le3tr2.1: |- a =< b
   assume le3tr2.2: |- a = c
   assume le3tr2.3: |- b = d

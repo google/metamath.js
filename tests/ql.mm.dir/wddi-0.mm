@@ -4,9 +4,9 @@ include "wddi1.mm"
 include "id5id0.mm"
 
 theorem wddi-0
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ^ ( b v c ) ) ==0 ( ( a ^ b ) v ( a ^ c ) ) ) = 1

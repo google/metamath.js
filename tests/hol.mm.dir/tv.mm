@@ -1,7 +1,7 @@
 
 
 axiom tv
-  let hal: type al
-  let vx: var x
+  param hal: type al
+  param vx: var x
   assert term x : al
 end

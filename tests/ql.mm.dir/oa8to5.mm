@@ -13,15 +13,15 @@ include "3tr.mm"
 include "le3tr2.mm"
 
 theorem oa8to5
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wve: term e
-  let wvf: term f
-  let wvg: term g
-  let wvh: term h
-  let wvj: term j
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wve: term e
+  param wvf: term f
+  param wvg: term g
+  param wvh: term h
+  param wvj: term j
   assume oa8to5.1: |- ( ( ( a ' v b ' ) ^ ( c ' v d ' ) ) ^ ( ( e ' v f ' ) ^ ( g ' v h ' ) ) ) =< ( b ' v ( a ' ^ ( c ' v ( ( ( ( a ' v c ' ) ^ ( b ' v d ' ) ) ^ ( ( ( a ' v g ' ) ^ ( b ' v h ' ) ) v ( ( c ' v g ' ) ^ ( d ' v h ' ) ) ) ) ^ ( ( ( ( a ' v e ' ) ^ ( b ' v f ' ) ) ^ ( ( ( a ' v g ' ) ^ ( b ' v h ' ) ) v ( ( e ' v g ' ) ^ ( f ' v h ' ) ) ) ) v ( ( ( c ' v e ' ) ^ ( d ' v f ' ) ) ^ ( ( ( c ' v g ' ) ^ ( d ' v h ' ) ) v ( ( e ' v g ' ) ^ ( f ' v h ' ) ) ) ) ) ) ) ) )
   assume oa8to5.2: |- b ' = ( a ->1 j ) '
   assume oa8to5.3: |- d ' = ( c ->1 j ) '

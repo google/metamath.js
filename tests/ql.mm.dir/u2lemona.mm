@@ -11,8 +11,8 @@ include "df-le2.mm"
 include "ax-r2.mm"
 
 theorem u2lemona
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->2 b ) v a ' ) = ( a ' v b )

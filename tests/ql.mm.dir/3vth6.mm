@@ -20,9 +20,9 @@ include "ler2an.mm"
 include "df-le2.mm"
 
 theorem 3vth6
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ->2 b ) ' ->2 ( b v c ) ) = ( ( ( a ->2 b ) ^ ( c ->2 b ) ) v ( ( a ->2 c ) ^ ( b ->2 c ) ) )

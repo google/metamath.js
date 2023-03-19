@@ -11,8 +11,8 @@ include "df-id0.mm"
 include "3tr1.mm"
 
 theorem nomcon0
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ==0 b ) = ( b ' ==0 a ' )

@@ -17,8 +17,8 @@ include "anabs.mm"
 include "3tr.mm"
 
 theorem k1-6
-  let wvc: term c
-  let wvx: term x
+  param wvc: term c
+  param wvx: term x
   assume k1-6.1: |- x = ( ( x ^ c ) v ( x ^ c ' ) )
 
 

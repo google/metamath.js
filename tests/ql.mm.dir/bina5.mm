@@ -7,8 +7,8 @@ include "lbtr.mm"
 include "lei3.mm"
 
 theorem bina5
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( b ->3 ( a v a ' ) ) = 1

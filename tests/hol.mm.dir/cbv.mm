@@ -7,12 +7,12 @@ include "eqtypi.mm"
 include "cbvf.mm"
 
 theorem cbv
-  let hal: type al
-  let hbe: type be
-  let vx: var x
-  let vy: var y
-  let ta: term A
-  let tb: term B
+  param hal: type al
+  param hbe: type be
+  param vx: var x
+  param vy: var y
+  param ta: term A
+  param tb: term B
   let vz: var z
   assume cbv.1: |- A : be
   assume cbv.2: |- [ x : al = y : al ] |= [ A = B ]

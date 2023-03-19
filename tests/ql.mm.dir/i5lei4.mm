@@ -11,8 +11,8 @@ include "df-i4.mm"
 include "le3tr1.mm"
 
 theorem i5lei4
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->5 b ) =< ( a ->4 b )

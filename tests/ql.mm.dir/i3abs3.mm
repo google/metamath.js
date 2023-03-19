@@ -30,8 +30,8 @@ include "df-i3.mm"
 include "3tr1.mm"
 
 theorem i3abs3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->3 b ) ->3 ( ( a ->3 b ) ->3 a ) ) = ( ( a ->3 b ) ->3 a )

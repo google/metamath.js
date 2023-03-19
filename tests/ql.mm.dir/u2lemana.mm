@@ -16,8 +16,8 @@ include "ancom.mm"
 include "2or.mm"
 
 theorem u2lemana
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->2 b ) ^ a ' ) = ( ( a ' ^ b ) v ( a ' ^ b ' ) )

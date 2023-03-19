@@ -4,9 +4,9 @@ include "weq.mm"
 include "wov.mm"
 
 theorem weqi
-  let hal: type al
-  let ta: term A
-  let tb: term B
+  param hal: type al
+  param ta: term A
+  param tb: term B
   assume weqi.1: |- A : al
   assume weqi.2: |- B : al
 

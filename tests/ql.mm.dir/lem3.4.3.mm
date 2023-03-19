@@ -24,8 +24,8 @@ include "lem3.3.5lem.mm"
 include "2vwomr1a.mm"
 
 theorem lem3.4.3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume lem3.4.3.1: |- ( a ->2 b ) = 1
 
 

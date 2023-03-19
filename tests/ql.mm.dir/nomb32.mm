@@ -12,8 +12,8 @@ include "df-id2.mm"
 include "3tr1.mm"
 
 theorem nomb32
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ==3 b ) = ( b ==2 a )

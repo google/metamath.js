@@ -25,10 +25,10 @@ include "lear.mm"
 include "letr.mm"
 
 theorem oaidlem2
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
   assume oaidlem2.1: |- ( ( d v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ' v ( ( a ->1 c ) ->1 ( b ->1 c ) ) ) = 1
 
 

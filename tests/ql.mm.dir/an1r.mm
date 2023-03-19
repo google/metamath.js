@@ -5,7 +5,7 @@ include "an1.mm"
 include "ax-r2.mm"
 
 theorem an1r
-  let wva: term a
+  param wva: term a
 
 
   assert |- ( 1 ^ a ) = a

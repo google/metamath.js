@@ -8,8 +8,8 @@ include "ax-r1.mm"
 include "lbtr.mm"
 
 theorem u1lem9b
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- a ' =< ( a ->1 b )

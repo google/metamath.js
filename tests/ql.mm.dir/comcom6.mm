@@ -3,8 +3,8 @@ include "comcom2.mm"
 include "comcom5.mm"
 
 theorem comcom6
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume comcom6.1: |- a ' C b
 
 

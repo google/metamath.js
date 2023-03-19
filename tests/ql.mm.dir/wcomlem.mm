@@ -23,8 +23,8 @@ include "wom4.mm"
 include "w3tr2.mm"
 
 theorem wcomlem
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wcomlem.1: |- ( a == ( ( a ^ b ) v ( a ^ b ' ) ) ) = 1
 
 

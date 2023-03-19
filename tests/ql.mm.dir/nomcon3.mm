@@ -9,8 +9,8 @@ include "nomb41.mm"
 include "3tr1.mm"
 
 theorem nomcon3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ==3 b ) = ( b ' ==4 a ' )

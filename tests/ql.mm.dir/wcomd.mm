@@ -12,8 +12,8 @@ include "wr1.mm"
 include "wr2.mm"
 
 theorem wcomd
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wcomcom.1: |- C ( a , b ) = 1
 
 

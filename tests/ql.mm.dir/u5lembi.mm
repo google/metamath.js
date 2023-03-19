@@ -33,8 +33,8 @@ include "dfb.mm"
 include "3tr1.mm"
 
 theorem u5lembi
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->5 b ) ^ ( b ->5 a ) ) = ( a == b )

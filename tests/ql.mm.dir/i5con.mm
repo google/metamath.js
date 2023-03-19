@@ -14,8 +14,8 @@ include "3tr1.mm"
 include "df-i5.mm"
 
 theorem i5con
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->5 b ) = ( b ' ->5 a ' )

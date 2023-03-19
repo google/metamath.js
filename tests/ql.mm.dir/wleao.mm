@@ -8,9 +8,9 @@ include "wlor.mm"
 include "wa5b.mm"
 
 theorem wleao
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume wleao.1: |- ( ( c ^ b ) == a ) = 1
 
 

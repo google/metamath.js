@@ -4,10 +4,10 @@ include "ud1lem0a.mm"
 include "ax-r2.mm"
 
 theorem ud1lem0ab
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
   assume ud1lem0ab.1: |- a = b
   assume ud1lem0ab.2: |- c = d
 

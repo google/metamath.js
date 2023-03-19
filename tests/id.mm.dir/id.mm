@@ -3,7 +3,7 @@ include "ax-1.mm"
 include "mpd.mm"
 
 theorem id
-  let wph: wff ph
+  param wph: wff ph
 
 
   assert |- ( ph -> ph )

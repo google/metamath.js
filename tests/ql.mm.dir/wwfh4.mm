@@ -19,9 +19,9 @@ include "bctr.mm"
 include "wwfh2.mm"
 
 theorem wwfh4
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume wwfh4.1: |- a ' C b
   assume wwfh4.2: |- c C a
 

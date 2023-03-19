@@ -8,9 +8,9 @@ include "ledi.mm"
 include "lebi.mm"
 
 theorem distlem
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume distlem.1: |- ( a ^ ( b v c ) ) =< b
 
 

@@ -6,8 +6,8 @@ include "omlem2.mm"
 include "wlem3.1.mm"
 
 theorem woml
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a v ( a ' ^ ( a v b ) ) ) == ( a v b ) ) = 1

@@ -11,10 +11,10 @@ include "lel2or.mm"
 include "oadist2a.mm"
 
 theorem oadist2b
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
   assume oadist2b.1: |- d =< ( ( b v c ) ->0 ( ( a ->2 b ) ^ ( a ->2 c ) ) )
 
 

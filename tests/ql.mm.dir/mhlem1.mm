@@ -35,9 +35,9 @@ include "ax-r2.mm"
 include "or0r.mm"
 
 theorem mhlem1
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume mhlem1.1: |- a C b
   assume mhlem1.2: |- c C b
 

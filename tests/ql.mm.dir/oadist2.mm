@@ -6,10 +6,10 @@ include "bile.mm"
 include "oadist2a.mm"
 
 theorem oadist2
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
   assume oadist2.1: |- ( d v ( ( b v c ) ->2 ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) = ( ( b v c ) ->0 ( ( a ->2 b ) ^ ( a ->2 c ) ) )
 
 

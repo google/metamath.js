@@ -23,8 +23,8 @@ include "2an.mm"
 include "an1.mm"
 
 theorem u4lemob
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->4 b ) v b ) = ( a ' v b )

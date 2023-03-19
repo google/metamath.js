@@ -28,10 +28,10 @@ include "ex.mm"
 include "wtru.mm"
 
 theorem ax5
-  let hal: type al
-  let vx: var x
-  let tr: term R
-  let ts: term S
+  param hal: type al
+  param vx: var x
+  param tr: term R
+  param ts: term S
   let vy: var y
   assume ax5.1: |- R : bool
   assume ax5.2: |- S : bool

@@ -57,11 +57,11 @@ include "bltr.mm"
 include "letr.mm"
 
 theorem mlaconj4
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wve: term e
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wve: term e
   assume mlaconj4.1: |- ( ( d == e ) ^ ( ( e ' ^ c ' ) v ( d ^ c ) ) ) =< ( d == c )
   assume mlaconj4.2: |- d = ( a v b )
   assume mlaconj4.3: |- e = ( a ^ b )

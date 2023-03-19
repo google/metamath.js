@@ -9,8 +9,8 @@ include "i3i4.mm"
 include "ax-r1.mm"
 
 theorem i4i3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->4 b ) = ( b ' ->3 a ' )

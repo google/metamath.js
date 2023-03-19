@@ -5,7 +5,7 @@ include "or1.mm"
 include "ax-r2.mm"
 
 theorem or1r
-  let wva: term a
+  param wva: term a
 
 
   assert |- ( 1 v a ) = 1

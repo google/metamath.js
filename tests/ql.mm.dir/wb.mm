@@ -1,6 +1,6 @@
 
 axiom wb
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assert wff a = b
 end

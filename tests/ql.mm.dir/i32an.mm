@@ -4,10 +4,10 @@ include "i3lan.mm"
 include "binr2.mm"
 
 theorem i32an
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
   assume i32an.1: |- ( a ->3 b ) = 1
   assume i32an.2: |- ( c ->3 d ) = 1
 

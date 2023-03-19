@@ -10,9 +10,9 @@ include "bltr.mm"
 include "3vded11.mm"
 
 theorem 3vded13
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume 3vded13.1: |- ( b ^ ( c ->1 a ) ) =< ( c ->1 ( b ->1 a ) )
   assume 3vded13.2: |- c =< a
 

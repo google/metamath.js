@@ -3,7 +3,7 @@ include "le1.mm"
 include "lebi.mm"
 
 theorem lem3.3.5lem
-  let wva: term a
+  param wva: term a
   assume lem3.3.5lem.1: |- 1 =< a
 
 

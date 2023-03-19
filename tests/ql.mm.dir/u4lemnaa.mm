@@ -10,8 +10,8 @@ include "ax-r1.mm"
 include "ax-r2.mm"
 
 theorem u4lemnaa
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->4 b ) ' ^ a ) = ( a ^ b ' )

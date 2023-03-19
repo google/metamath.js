@@ -10,13 +10,13 @@ include "ax-distrl.mm"
 include "dfov2.mm"
 
 theorem distrl
-  let hal: type al
-  let hbe: type be
-  let hga: type ga
-  let vx: var x
-  let vy: var y
-  let ta: term A
-  let tb: term B
+  param hal: type al
+  param hbe: type be
+  param hga: type ga
+  param vx: var x
+  param vy: var y
+  param ta: term A
+  param tb: term B
   assume distrl.1: |- A : ga
   assume distrl.2: |- B : al
 

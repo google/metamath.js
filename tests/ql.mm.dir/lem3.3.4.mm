@@ -31,8 +31,8 @@ include "ax-a2.mm"
 include "or0r.mm"
 
 theorem lem3.3.4
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume lem3.3.4.1: |- ( b ->2 a ) = 1
 
 

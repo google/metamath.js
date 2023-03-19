@@ -13,8 +13,8 @@ include "wfh1.mm"
 include "wr2.mm"
 
 theorem wnbdi
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a == b ) ' == ( ( ( a v b ) ^ a ' ) v ( ( a v b ) ^ b ' ) ) ) = 1

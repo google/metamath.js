@@ -12,8 +12,8 @@ include "3tr1.mm"
 include "con1.mm"
 
 theorem omla
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ^ ( a ' v ( a ^ b ) ) ) = ( a ^ b )

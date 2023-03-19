@@ -5,8 +5,8 @@ include "ax-a2.mm"
 include "ax-r2.mm"
 
 theorem lebi
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume lebi.1: |- a =< b
   assume lebi.2: |- b =< a
 

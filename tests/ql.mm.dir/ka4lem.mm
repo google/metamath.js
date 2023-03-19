@@ -13,9 +13,9 @@ include "2or.mm"
 include "ka4lemo.mm"
 
 theorem ka4lem
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ^ b ) ' v ( ( a ^ c ) == ( b ^ c ) ) ) = 1

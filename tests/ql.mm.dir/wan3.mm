@@ -1,6 +1,6 @@
 
 axiom wan3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assert term ( a ^3 b )
 end

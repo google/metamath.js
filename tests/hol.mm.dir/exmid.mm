@@ -55,7 +55,7 @@ include "mpd.mm"
 include "ecase.mm"
 
 theorem exmid
-  let ta: term A
+  param ta: term A
   let vx: var x
   let vy: var y
   let hal: type al

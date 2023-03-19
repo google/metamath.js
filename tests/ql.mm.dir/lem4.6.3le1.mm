@@ -1,8 +1,8 @@
 include "u1lem9a.mm"
 
 theorem lem4.6.3le1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ' ->1 b ) ' =< a '

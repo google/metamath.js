@@ -5,8 +5,8 @@ include "biid.mm"
 include "ax-r2.mm"
 
 theorem bi1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume bi1.1: |- a = b
 
 

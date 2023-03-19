@@ -24,9 +24,9 @@ include "lan.mm"
 include "lor.mm"
 
 theorem oa3-u2lem
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ->1 c ) ^ ( ( a ' ->1 c ) v ( c ^ ( ( ( ( a ' ->1 c ) ^ c ) v ( ( a ->1 c ) ^ 1 ) ) v ( ( ( ( a ' ->1 c ) ^ ( b ' ->1 c ) ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ^ ( ( c ^ ( b ' ->1 c ) ) v ( 1 ^ ( b ->1 c ) ) ) ) ) ) ) ) = ( ( a ->1 c ) ^ ( ( a ' ->1 c ) v ( c ^ ( ( a ->1 c ) v ( ( b ->1 c ) ^ ( ( ( a ->1 c ) ^ ( b ->1 c ) ) v ( ( a ' ->1 c ) ^ ( b ' ->1 c ) ) ) ) ) ) ) )

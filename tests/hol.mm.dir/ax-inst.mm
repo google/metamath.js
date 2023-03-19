@@ -1,14 +1,14 @@
 
 
 axiom ax-inst
-  let hal: type al
-  let vx: var x
-  let vy: var y
-  let ta: term A
-  let tb: term B
-  let tc: term C
-  let tr: term R
-  let ts: term S
+  param hal: type al
+  param vx: var x
+  param vy: var y
+  param ta: term A
+  param tb: term B
+  param tc: term C
+  param tr: term R
+  param ts: term S
   assume ax-inst.1: |- R |= A
   assume ax-inst.2: |- T. |= [ ( \ x : al . B y : al ) = B ]
   assume ax-inst.3: |- T. |= [ ( \ x : al . S y : al ) = S ]

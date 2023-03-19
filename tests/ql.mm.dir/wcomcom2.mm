@@ -11,8 +11,8 @@ include "ax-a2.mm"
 include "wdf-c1.mm"
 
 theorem wcomcom2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wcomcom.1: |- C ( a , b ) = 1
 
 

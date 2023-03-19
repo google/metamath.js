@@ -20,10 +20,10 @@ include "letr.mm"
 include "lebi.mm"
 
 theorem oago3.21x
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
 
 
   assert |- ( ( ( ( a ->5 b ) ^ ( b ->5 c ) ) ^ ( c ->5 d ) ) ^ ( d ->5 a ) ) = ( ( ( a == b ) ^ ( b == c ) ) ^ ( c == d ) )

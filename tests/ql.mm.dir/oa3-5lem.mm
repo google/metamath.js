@@ -17,9 +17,9 @@ include "lan.mm"
 include "2or.mm"
 
 theorem oa3-5lem
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ->1 c ) ^ ( a v ( c ^ ( ( ( a ^ c ) v ( ( a ->1 c ) ^ 1 ) ) v ( ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ^ ( ( c ^ b ) v ( 1 ^ ( b ->1 c ) ) ) ) ) ) ) ) = ( ( a ->1 c ) ^ ( a v ( c ^ ( ( a ->1 c ) v ( ( b ->1 c ) ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) ) ) )

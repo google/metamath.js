@@ -30,9 +30,9 @@ include "letr.mm"
 include "lebi.mm"
 
 theorem ka4lemo
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a v b ) v ( ( a v c ) == ( b v c ) ) ) = 1

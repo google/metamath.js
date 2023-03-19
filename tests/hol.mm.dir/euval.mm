@@ -27,10 +27,10 @@ include "cl.mm"
 include "eqtri.mm"
 
 theorem euval
-  let hal: type al
-  let vx: var x
-  let vy: var y
-  let tf: term F
+  param hal: type al
+  param vx: var x
+  param vy: var y
+  param tf: term F
   let vp: var p
   let vq: var q
   assume alval.1: |- F : ( al -> bool )

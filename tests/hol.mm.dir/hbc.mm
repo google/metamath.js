@@ -13,14 +13,14 @@ include "ceq12.mm"
 include "eqtri.mm"
 
 theorem hbc
-  let hal: type al
-  let hbe: type be
-  let hga: type ga
-  let vx: var x
-  let ta: term A
-  let tb: term B
-  let tf: term F
-  let tr: term R
+  param hal: type al
+  param hbe: type be
+  param hga: type ga
+  param vx: var x
+  param ta: term A
+  param tb: term B
+  param tf: term F
+  param tr: term R
   assume hbc.1: |- F : ( be -> ga )
   assume hbc.2: |- A : be
   assume hbc.3: |- B : al

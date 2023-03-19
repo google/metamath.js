@@ -4,9 +4,9 @@ include "ax-a2.mm"
 include "le3tr1.mm"
 
 theorem lelor
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume lel.1: |- a =< b
 
 

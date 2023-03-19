@@ -30,9 +30,9 @@ include "adantl.mm"
 include "ex.mm"
 
 theorem ax10
-  let hal: type al
-  let vx: var x
-  let vy: var y
+  param hal: type al
+  param vx: var x
+  param vy: var y
   let vz: var z
 
   disjoint x y

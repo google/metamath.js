@@ -12,9 +12,9 @@ include "ax-r2.mm"
 include "le3tr2.mm"
 
 theorem 2oai1u
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ->1 c ) ^ ( ( ( a ->1 c ) ^ ( b ->1 c ) ) ' ->2 ( ( a ' ->1 c ) ^ ( b ' ->1 c ) ) ) ) =< ( b ->1 c )

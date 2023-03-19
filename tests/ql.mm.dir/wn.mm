@@ -1,5 +1,5 @@
 
 axiom wn
-  let wva: term a
+  param wva: term a
   assert term a '
 end

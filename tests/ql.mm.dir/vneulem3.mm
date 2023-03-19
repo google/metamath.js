@@ -7,10 +7,10 @@ include "tr.mm"
 include "ran.mm"
 
 theorem vneulem3
-  let wvu: term u
-  let wvw: term w
-  let wvx: term x
-  let wvy: term y
+  param wvu: term u
+  param wvw: term w
+  param wvx: term x
+  param wvy: term y
   assume vneulem3.1: |- ( ( x v y ) ^ ( u v w ) ) = 0
 
 

@@ -5,8 +5,8 @@ include "ax-r1.mm"
 include "r3a.mm"
 
 theorem lem3.1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume lem3.1.1: |- ( a v b ) = b
   assume lem3.1.2: |- ( b ' v a ) = 1
 

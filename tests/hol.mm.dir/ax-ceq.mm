@@ -1,12 +1,12 @@
 
 
 axiom ax-ceq
-  let hal: type al
-  let hbe: type be
-  let ta: term A
-  let tb: term B
-  let tf: term F
-  let tt: term T
+  param hal: type al
+  param hbe: type be
+  param ta: term A
+  param tb: term B
+  param tf: term F
+  param tt: term T
   assume ax-ceq.1: |- F : ( al -> be )
   assume ax-ceq.2: |- T : ( al -> be )
   assume ax-ceq.3: |- A : al

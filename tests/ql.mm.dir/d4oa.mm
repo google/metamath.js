@@ -21,12 +21,12 @@ include "letr.mm"
 include "lel2or.mm"
 
 theorem d4oa
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wve: term e
-  let wvf: term f
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wve: term e
+  param wvf: term f
   assume d4oa.2: |- e = ( ( a ^ b ) v ( ( a ->1 d ) ^ ( b ->1 d ) ) )
   assume d4oa.1: |- f = ( ( ( a ^ c ) v ( ( a ->1 d ) ^ ( c ->1 d ) ) ) ^ ( ( b ^ c ) v ( ( b ->1 d ) ^ ( c ->1 d ) ) ) )
 

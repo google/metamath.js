@@ -39,8 +39,8 @@ include "ax-cb1.mm"
 include "dedi.mm"
 
 theorem dfan2
-  let ta: term A
-  let tb: term B
+  param ta: term A
+  param tb: term B
   let vf: var f
   let vx: var x
   let vy: var y

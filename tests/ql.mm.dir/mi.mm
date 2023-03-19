@@ -16,8 +16,8 @@ include "anidm.mm"
 include "2or.mm"
 
 theorem mi
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a v b ) == b ) = ( b v ( a ' ^ b ' ) )

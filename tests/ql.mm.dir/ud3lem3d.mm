@@ -33,8 +33,8 @@ include "leo.mm"
 include "lor.mm"
 
 theorem ud3lem3d
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->3 b ) ^ ( ( a ->3 b ) ' v ( a v b ) ) ) = ( ( a ' ^ b ) v ( a ^ ( a ' v b ) ) )

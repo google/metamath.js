@@ -8,8 +8,8 @@ include "bltr.mm"
 include "lei3.mm"
 
 theorem bii3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a == b ) ->3 ( a ->3 b ) ) = 1

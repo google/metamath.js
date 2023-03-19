@@ -15,8 +15,8 @@ include "ax-r2.mm"
 include "an0r.mm"
 
 theorem ud3lem3b
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->3 b ) ' ^ ( a v b ) ' ) = 0

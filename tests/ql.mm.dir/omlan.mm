@@ -8,8 +8,8 @@ include "omla.mm"
 include "ax-r2.mm"
 
 theorem omlan
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ' ^ ( a v ( a ' ^ b ) ) ) = ( a ' ^ b )

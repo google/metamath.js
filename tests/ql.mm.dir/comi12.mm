@@ -17,9 +17,9 @@ include "ax-r1.mm"
 include "bctr.mm"
 
 theorem comi12
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( a ->1 b ) C ( c ->2 a )

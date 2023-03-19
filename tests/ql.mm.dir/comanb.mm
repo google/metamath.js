@@ -17,9 +17,9 @@ include "le3tr1.mm"
 include "i1com.mm"
 
 theorem comanb
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( a ^ b ) C ( ( a == c ) ^ ( b == c ) )

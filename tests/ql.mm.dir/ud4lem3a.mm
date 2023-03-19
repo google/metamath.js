@@ -13,8 +13,8 @@ include "ran.mm"
 include "3tr1.mm"
 
 theorem ud4lem3a
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->4 b ) ' ^ ( a v b ) ) = ( a ->4 b ) '

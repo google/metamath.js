@@ -12,7 +12,7 @@ include "ax-r2.mm"
 include "con2.mm"
 
 theorem an1
-  let wva: term a
+  param wva: term a
 
 
   assert |- ( a ^ 1 ) = a

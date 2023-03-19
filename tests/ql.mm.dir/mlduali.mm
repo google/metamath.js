@@ -9,9 +9,9 @@ include "ror.mm"
 include "orcom.mm"
 
 theorem mlduali
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume mlduali.1: |- a =< c
 
 

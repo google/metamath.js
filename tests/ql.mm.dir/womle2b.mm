@@ -9,8 +9,8 @@ include "ax-r1.mm"
 include "lbtr.mm"
 
 theorem womle2b
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume womle2b.1: |- ( ( a ->2 b ) ' v ( a ->1 b ) ) = 1
 
 

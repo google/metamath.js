@@ -10,8 +10,8 @@ include "3tr1.mm"
 include "df-c1.mm"
 
 theorem comcom5
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume comcom5.1: |- a ' C b '
 
 

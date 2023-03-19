@@ -27,9 +27,9 @@ include "con2d.mm"
 include "trul.mm"
 
 theorem exnal1
-  let hal: type al
-  let vx: var x
-  let ta: term A
+  param hal: type al
+  param vx: var x
+  param ta: term A
   let vy: var y
   assume alnex1.1: |- A : bool
 

@@ -5,8 +5,8 @@ include "ska15.mm"
 include "skr0.mm"
 
 theorem skmp3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume skmp3.1: |- a = 1
   assume skmp3.2: |- ( a ->3 b ) = 1
 

@@ -1,7 +1,7 @@
 
 
 axiom ht
-  let hal: type al
-  let hbe: type be
+  param hal: type al
+  param hbe: type be
   assert type ( al -> be )
 end

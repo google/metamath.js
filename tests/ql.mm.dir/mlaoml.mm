@@ -20,9 +20,9 @@ include "2an.mm"
 include "le3tr2.mm"
 
 theorem mlaoml
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a == b ) ^ ( b == c ) ) =< ( a == c )

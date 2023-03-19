@@ -8,8 +8,8 @@ include "nom23.mm"
 include "ax-r2.mm"
 
 theorem nom32
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ^ b ) ==2 a ) = ( a ->1 b )

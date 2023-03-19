@@ -21,10 +21,10 @@ include "adantl.mm"
 include "ex.mm"
 
 theorem ax7
-  let hal: type al
-  let vx: var x
-  let vy: var y
-  let tr: term R
+  param hal: type al
+  param vx: var x
+  param vy: var y
+  param tr: term R
   let vz: var z
   assume ax7.1: |- R : bool
 

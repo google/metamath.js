@@ -18,16 +18,16 @@ include "hbxfrf.mm"
 include "mpdan.mm"
 
 theorem hbov
-  let hal: type al
-  let hbe: type be
-  let hga: type ga
-  let hde: type de
-  let vx: var x
-  let ta: term A
-  let tb: term B
-  let tc: term C
-  let tf: term F
-  let tr: term R
+  param hal: type al
+  param hbe: type be
+  param hga: type ga
+  param hde: type de
+  param vx: var x
+  param ta: term A
+  param tb: term B
+  param tc: term C
+  param tf: term F
+  param tr: term R
   assume hbov.1: |- F : ( be -> ( ga -> de ) )
   assume hbov.2: |- A : be
   assume hbov.3: |- B : al

@@ -14,11 +14,11 @@ include "ledi.mm"
 include "lebi.mm"
 
 theorem oadistb
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wve: term e
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wve: term e
   assume oadistb.2: |- d =< ( a ->2 b )
   assume oadistb.1: |- e =< ( ( b v c ) ->0 ( ( a ->2 b ) ^ ( a ->2 c ) ) )
 

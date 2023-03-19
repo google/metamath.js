@@ -26,8 +26,8 @@ include "fh1.mm"
 include "anass.mm"
 
 theorem u5lemaa
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->5 b ) ^ a ) = ( a ^ b )

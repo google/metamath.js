@@ -5,9 +5,9 @@ include "2bi.mm"
 include "bi1.mm"
 
 theorem ska2a
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( ( a v c ) == ( b v c ) ) == ( ( c v a ) == ( c v b ) ) ) = 1

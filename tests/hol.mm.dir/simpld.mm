@@ -6,9 +6,9 @@ include "simpl.mm"
 include "syl.mm"
 
 theorem simpld
-  let tr: term R
-  let ts: term S
-  let tt: term T
+  param tr: term R
+  param ts: term S
+  param tt: term T
   assume simpld.1: |- R |= ( S , T )
 
 

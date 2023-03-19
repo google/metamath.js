@@ -28,8 +28,8 @@ include "le3tr1.mm"
 include "lebi.mm"
 
 theorem wdf-c2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wdf-c2.1: |- C ( a , b ) = 1
 
 

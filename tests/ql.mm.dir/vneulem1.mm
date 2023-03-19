@@ -8,10 +8,10 @@ include "lebi.mm"
 include "lan.mm"
 
 theorem vneulem1
-  let wvu: term u
-  let wvw: term w
-  let wvx: term x
-  let wvy: term y
+  param wvu: term u
+  param wvw: term w
+  param wvx: term x
+  param wvy: term y
 
 
   assert |- ( ( ( x v y ) v u ) ^ w ) = ( ( ( x v y ) v u ) ^ ( ( u v w ) ^ w ) )

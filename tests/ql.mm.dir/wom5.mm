@@ -12,8 +12,8 @@ include "wom4.mm"
 include "w3tr2.mm"
 
 theorem wom5
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wom5.1: |- ( a =<2 b ) = 1
   assume wom5.2: |- ( ( b ^ a ' ) == 0 ) = 1
 

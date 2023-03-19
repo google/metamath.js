@@ -14,10 +14,10 @@ include "3tr.mm"
 include "cbtr.mm"
 
 theorem oacom3
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
   assume oacom3.1: |- ( d ^ ( a ->2 b ) ) C ( ( b v c ) ->0 ( ( a ->2 b ) ^ ( a ->2 c ) ) )
   assume oacom3.2: |- d C ( a ->2 b )
 

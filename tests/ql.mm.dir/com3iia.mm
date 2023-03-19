@@ -13,8 +13,8 @@ include "lebi.mm"
 include "ax-r2.mm"
 
 theorem com3iia
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume com3iia.1: |- a C b
 
 

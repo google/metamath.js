@@ -27,11 +27,11 @@ include "anass.mm"
 include "3tr1.mm"
 
 theorem oa3moa3
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wve: term e
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wve: term e
   assume oa3moa3.1: |- a =< b '
   assume oa3moa3.2: |- c =< d '
   assume oa3moa3.3: |- d =< e '

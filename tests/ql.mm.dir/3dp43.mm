@@ -63,18 +63,18 @@ include "an32.mm"
 include "anabs.mm"
 
 theorem 3dp43
-  let wvd: term d
-  let wve: term e
-  let wvp: term p
-  let wva0: term a0
-  let wva1: term a1
-  let wvb0: term b0
-  let wvb1: term b1
-  let wvc0: term c0
-  let wvc1: term c1
-  let wvc2: term c2
-  let wvp0: term p0
-  let wvp2: term p2
+  param wvd: term d
+  param wve: term e
+  param wvp: term p
+  param wva0: term a0
+  param wva1: term a1
+  param wvb0: term b0
+  param wvb1: term b1
+  param wvc0: term c0
+  param wvc1: term c1
+  param wvc2: term c2
+  param wvp0: term p0
+  param wvp2: term p2
   assume 3dp.c0: |- c0 = ( ( a1 v a1 ) ^ ( b1 v b1 ) )
   assume 3dp.c1: |- c1 = ( ( a0 v a1 ) ^ ( b0 v b1 ) )
   assume 3dp.c2: |- c2 = ( ( a0 v a1 ) ^ ( b0 v b1 ) )

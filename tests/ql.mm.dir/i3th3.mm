@@ -8,8 +8,8 @@ include "bina3.mm"
 include "ax-r2.mm"
 
 theorem i3th3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ' ->3 ( a ->3 ( a ->3 b ) ) ) = 1

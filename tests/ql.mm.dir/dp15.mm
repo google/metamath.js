@@ -4,15 +4,15 @@ include "id.mm"
 include "dp15lemh.mm"
 
 theorem dp15
-  let wva0: term a0
-  let wva1: term a1
-  let wva2: term a2
-  let wvb0: term b0
-  let wvb1: term b1
-  let wvb2: term b2
-  let wvc0: term c0
-  let wvc1: term c1
-  let wvp0: term p0
+  param wva0: term a0
+  param wva1: term a1
+  param wva2: term a2
+  param wvb0: term b0
+  param wvb1: term b1
+  param wvb2: term b2
+  param wvc0: term c0
+  param wvc1: term c1
+  param wvp0: term p0
   assume dp15.1: |- c0 = ( ( a1 v a2 ) ^ ( b1 v b2 ) )
   assume dp15.2: |- c1 = ( ( a0 v a2 ) ^ ( b0 v b2 ) )
   assume dp15.3: |- p0 = ( ( a1 v b1 ) ^ ( a2 v b2 ) )

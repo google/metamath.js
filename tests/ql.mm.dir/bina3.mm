@@ -3,8 +3,8 @@ include "leo.mm"
 include "lei3.mm"
 
 theorem bina3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->3 ( a v b ) ) = 1

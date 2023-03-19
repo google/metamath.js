@@ -16,7 +16,7 @@ include "2or.mm"
 include "df-c1.mm"
 
 theorem comm0
-  let wva: term a
+  param wva: term a
 
 
   assert |- a C 0

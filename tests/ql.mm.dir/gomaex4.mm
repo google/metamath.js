@@ -22,14 +22,14 @@ include "le0.mm"
 include "lebi.mm"
 
 theorem gomaex4
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wve: term e
-  let wvf: term f
-  let wvg: term g
-  let wvh: term h
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wve: term e
+  param wvf: term f
+  param wvg: term g
+  param wvh: term h
   assume go2n4.1: |- a =< b '
   assume go2n4.2: |- b =< c '
   assume go2n4.3: |- c =< d '

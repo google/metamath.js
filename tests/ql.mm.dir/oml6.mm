@@ -19,8 +19,8 @@ include "an1.mm"
 include "3tr.mm"
 
 theorem oml6
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a v ( b ^ ( a ' v b ' ) ) ) = ( a v b )

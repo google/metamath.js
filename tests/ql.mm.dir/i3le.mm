@@ -12,8 +12,8 @@ include "df2le1.mm"
 include "lecon1.mm"
 
 theorem i3le
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume i3le.1: |- ( a ->3 b ) = 1
 
 

@@ -27,8 +27,8 @@ include "bltr.mm"
 include "lebi.mm"
 
 theorem wdwom
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wdwom.1: |- ( a ' v ( a ^ b ) ) = 1
 
 

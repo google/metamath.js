@@ -12,7 +12,7 @@ include "3tr1.mm"
 include "ax-r2.mm"
 
 theorem i1id
-  let wva: term a
+  param wva: term a
 
 
   assert |- ( a ->1 a ) = 1

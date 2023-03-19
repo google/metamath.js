@@ -23,8 +23,8 @@ include "dfb.mm"
 include "3tr1.mm"
 
 theorem u21lembi
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->2 b ) ^ ( b ->1 a ) ) = ( a == b )

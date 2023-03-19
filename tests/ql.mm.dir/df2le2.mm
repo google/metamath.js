@@ -2,8 +2,8 @@ include "df-le2.mm"
 include "leoa.mm"
 
 theorem df2le2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume df2le2.1: |- a =< b
 
 

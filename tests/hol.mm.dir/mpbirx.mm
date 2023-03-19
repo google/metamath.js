@@ -4,9 +4,9 @@ include "eqcomx.mm"
 include "ax-eqmp.mm"
 
 theorem mpbirx
-  let ta: term A
-  let tb: term B
-  let tr: term R
+  param ta: term A
+  param tb: term B
+  param tr: term R
   assume mpbirx.1: |- B : bool
   assume mpbirx.2: |- R |= A
   assume mpbirx.3: |- R |= ( ( = B ) A )

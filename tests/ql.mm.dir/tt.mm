@@ -6,8 +6,8 @@ include "ax-a2.mm"
 include "ax-r2.mm"
 
 theorem tt
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a v a ' ) = ( b v b ' )

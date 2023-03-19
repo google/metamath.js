@@ -36,11 +36,11 @@ include "cla4ev.mm"
 include "syl.mm"
 
 theorem axun
-  let hal: type al
-  let vx: var x
-  let vy: var y
-  let vz: var z
-  let ta: term A
+  param hal: type al
+  param vx: var x
+  param vy: var y
+  param vz: var z
+  param ta: term A
   let vp: var p
   assume axun.1: |- A : ( ( al -> bool ) -> bool )
 

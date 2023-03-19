@@ -10,7 +10,7 @@ include "ax-r2.mm"
 include "bi1.mm"
 
 theorem wle0
-  let wva: term a
+  param wva: term a
 
 
   assert |- ( 0 =<2 a ) = 1

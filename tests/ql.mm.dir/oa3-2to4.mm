@@ -20,9 +20,9 @@ include "bltr.mm"
 include "oa4to6dual.mm"
 
 theorem oa3-2to4
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume oa3-2to4.1: |- ( ( a ->1 c ) ^ ( a v ( b ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) ) =< c
 
 

@@ -11,9 +11,9 @@ include "df-i2.mm"
 include "3tr1.mm"
 
 theorem 3vth4
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ->2 b ) ' ->2 ( b v c ) ) = ( ( a ->2 c ) ' ->2 ( b v c ) )

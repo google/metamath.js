@@ -9,7 +9,7 @@ include "ax-r2.mm"
 include "ax-r1.mm"
 
 theorem dff
-  let wva: term a
+  param wva: term a
 
 
   assert |- 0 = ( a ^ a ' )

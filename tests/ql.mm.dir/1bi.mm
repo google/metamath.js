@@ -4,8 +4,8 @@ include "bi1.mm"
 include "ax-r1.mm"
 
 theorem 1bi
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume 1bi.1: |- a = b
 
 

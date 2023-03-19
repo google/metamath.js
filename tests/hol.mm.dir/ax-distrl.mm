@@ -1,12 +1,12 @@
 
 axiom ax-distrl
-  let hal: type al
-  let hbe: type be
-  let hga: type ga
-  let vx: var x
-  let vy: var y
-  let ta: term A
-  let tb: term B
+  param hal: type al
+  param hbe: type be
+  param hga: type ga
+  param vx: var x
+  param vy: var y
+  param ta: term A
+  param tb: term B
   assume ax-distrl.1: |- A : ga
   assume ax-distrl.2: |- B : al
   assert |- T. |= ( ( = ( \ x : al . \ y : be . A B ) ) \ y : be . ( \ x : al . A B ) )

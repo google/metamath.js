@@ -22,9 +22,9 @@ include "le3tr2.mm"
 include "elimcons.mm"
 
 theorem elimcons2
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume elimcons2.1: |- ( a ->1 c ) = ( b ->1 c )
   assume elimcons2.2: |- ( a ^ ( c ^ ( b ->1 c ) ) ) =< ( b v ( c ' v ( a ->1 c ) ' ) )
 

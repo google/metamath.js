@@ -10,9 +10,9 @@ include "3tr1.mm"
 include "ax-r4.mm"
 
 theorem anass
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ^ b ) ^ c ) = ( a ^ ( b ^ c ) )

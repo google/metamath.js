@@ -10,8 +10,8 @@ include "nom20.mm"
 include "ax-r2.mm"
 
 theorem nom30
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ^ b ) ==0 a ) = ( a ->1 b )

@@ -15,9 +15,9 @@ include "ax4e.mm"
 include "syl.mm"
 
 theorem 19.8a
-  let hal: type al
-  let vx: var x
-  let ta: term A
+  param hal: type al
+  param vx: var x
+  param ta: term A
   assume 19.8a.1: |- A : bool
 
 

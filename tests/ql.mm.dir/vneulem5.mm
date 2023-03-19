@@ -7,10 +7,10 @@ include "lor.mm"
 include "3tr.mm"
 
 theorem vneulem5
-  let wvu: term u
-  let wvw: term w
-  let wvx: term x
-  let wvy: term y
+  param wvu: term u
+  param wvw: term w
+  param wvx: term x
+  param wvy: term y
 
 
   assert |- ( ( ( x v y ) v u ) ^ ( ( x v y ) v w ) ) = ( ( x v y ) v ( ( ( x v y ) v u ) ^ w ) )

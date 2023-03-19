@@ -8,8 +8,8 @@ include "u1lemnoa.mm"
 include "ax-r2.mm"
 
 theorem u1lem1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->1 b ) ->1 a ) = a

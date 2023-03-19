@@ -9,8 +9,8 @@ include "ax-r2.mm"
 include "df-c1.mm"
 
 theorem lecom
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume lecom.1: |- a =< b
 
 

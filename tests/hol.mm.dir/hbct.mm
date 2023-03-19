@@ -22,12 +22,12 @@ include "hbxfrf.mm"
 include "mpdan.mm"
 
 theorem hbct
-  let hal: type al
-  let vx: var x
-  let ta: term A
-  let tb: term B
-  let tc: term C
-  let tr: term R
+  param hal: type al
+  param vx: var x
+  param ta: term A
+  param tb: term B
+  param tc: term C
+  param tr: term R
   assume hbct.1: |- A : bool
   assume hbct.2: |- B : al
   assume hbct.3: |- C : bool

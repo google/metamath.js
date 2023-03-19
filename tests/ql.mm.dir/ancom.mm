@@ -7,8 +7,8 @@ include "df-a.mm"
 include "3tr1.mm"
 
 theorem ancom
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ^ b ) = ( b ^ a )

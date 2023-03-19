@@ -22,9 +22,9 @@ include "com2an.mm"
 include "omla.mm"
 
 theorem gsth2
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume gsth2.1: |- b C c
   assume gsth2.2: |- a C ( b ^ c )
 

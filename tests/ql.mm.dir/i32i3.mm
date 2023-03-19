@@ -6,10 +6,10 @@ include "bile.mm"
 include "lei3.mm"
 
 theorem i32i3
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
   assume i32i3.1: |- ( a ->3 b ) = 1
   assume i32i3.2: |- ( b ->3 a ) = 1
   assume i32i3.3: |- ( c ->3 d ) = 1

@@ -36,9 +36,9 @@ include "3tr.mm"
 include "df-le1.mm"
 
 theorem oa23
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume oa23.1: |- ( c ' ^ ( ( a ->2 c ) v ( ( a ->2 b ) ^ ( ( c v b ) ' v ( ( a ->2 c ) ^ ( a ->2 b ) ) ) ) ) ) =< a '
 
 

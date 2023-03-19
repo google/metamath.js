@@ -10,9 +10,9 @@ include "syl.mm"
 include "con2d.mm"
 
 theorem con3d
-  let tr: term R
-  let ts: term S
-  let tt: term T
+  param tr: term R
+  param ts: term S
+  param tt: term T
   assume con3d.1: |- ( R , S ) |= T
 
 

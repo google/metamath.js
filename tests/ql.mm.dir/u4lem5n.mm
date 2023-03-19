@@ -10,8 +10,8 @@ include "oran2.mm"
 include "con2.mm"
 
 theorem u4lem5n
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->4 ( a ->4 b ) ) ' = ( ( a v b ) ^ b ' )

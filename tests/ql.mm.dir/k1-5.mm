@@ -13,8 +13,8 @@ include "3tr2.mm"
 include "k1-4.mm"
 
 theorem k1-5
-  let wvc: term c
-  let wvx: term x
+  param wvc: term c
+  param wvx: term x
   assume k1-5.1: |- ( x ' ^ ( x v c ) ) = ( ( ( x ' ^ ( x v c ) ) ^ c ) v ( ( x ' ^ ( x v c ) ) ^ c ' ) )
   assume k1-5.2: |- x =< c '
 

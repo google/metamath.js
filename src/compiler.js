@@ -14,6 +14,7 @@ class Lexer {
       ["axiom"]: "axiom",
       ["proof"]: "proof",
       ["end"]: "end",
+      ["param"]: "param",
       ["let"]: "let",
       ["step"]: "step",
       ["assume"]: "assume",
@@ -96,6 +97,7 @@ const labels = [
   "proof",
   //"end",
   "let",
+  "param",
   "step",
   "assume",
   "disjoint",
@@ -200,6 +202,12 @@ class Parser {
   
   header() {
     this.ws(true);
+    let params = [];
+    while (this.accepts("param")) {
+      params.push(this.declaration("param", true, false));
+    }
+    
+    this.ws(true);
     let lets = [];
     while (this.accepts("let")) {
       lets.push(this.declaration("let", true, false));
@@ -210,7 +218,7 @@ class Parser {
     while (this.accepts("assume")) {
       ifs.push(this.declaration("assume", true, true));
     }
-    
+
     this.ws(true);
     let disjoints = [];
     while (this.accepts("disjoint")) {
@@ -219,7 +227,8 @@ class Parser {
     
     this.ws(true);
     let then = this.declaration("assert", false, true);
-    return [lets, ifs, disjoints, then];
+
+    return [params, lets, ifs, disjoints, then];
   }
 
   args() {
@@ -408,7 +417,7 @@ class Compiler {
     //console.log(code);
     
     const consts = new Set();
-    for (let [type, label, [vars, assumes, disjoints, [, assert]], proof] of code) {
+    for (let [type, label, [vars, dummies, assumes, disjoints, [, assert]], proof] of code) {
       // All variable types are constants
       for (let type of vars.map(([, [label, type, name]]) => type)) {
         consts.add(type);
@@ -433,9 +442,9 @@ class Compiler {
     let result = [];
     result.push(`$c ${[...consts].join(" ")} $.`);
 
-    for (let [type, label, [vars, assumes, disjoints, [, assert]], proof] of code) {
+    for (let [type, label, [vars, dummies, assumes, disjoints, [, assert]], proof] of code) {
 
-      const names = vars.map(([, [label, type, name]]) => name);
+      const names = [...vars, ...dummies].map(([, [label, type, name]]) => name);
 
       const mandatory = new Set();
 
@@ -451,7 +460,7 @@ class Compiler {
 
       // console.log(mandatory);
       
-      const types = vars.map(([, [label, type, name]]) => `  ${label} $f ${type} ${name} $.`);
+      const types = [...vars, ...dummies].map(([, [label, type, name]]) => `  ${label} $f ${type} ${name} $.`);
       //console.log(assumes);
       const logical = [...JSON.parse(JSON.stringify(assumes))]
             .map(([, assumption]) => [assumption.shift(), assumption.shift(), assumption])
@@ -570,7 +579,7 @@ class Transpiler {
   
   axiom(label) {
     const [, [d, f, e, [type, axiom]]] = this.mm.labels[label];
-    let args = f.map(([type, name, label]) => `  let ${label}: ${type} ${name}`).join("\n");
+    let args = f.map(([type, name, label]) => `  param ${label}: ${type} ${name}`).join("\n");
     if (Object.entries(f).length  > 0) {
       args += "\n";
     }
@@ -599,9 +608,21 @@ end
           .entries(dummy)
           .map(([name, label]) => [labels[label][1][0], name, label]);
 
-    let args = [...f, ...dummies]
-        .map(([type, name, label]) => `  let ${label}: ${type} ${name}`)
-        .join("\n");
+    //let args = [...f, ...dummies]
+    //    .map(([type, name, label]) => )
+    //    .join("\n");
+
+    const varz = [];
+
+    for (const [type, name, label] of f) {
+      varz.push(`  param ${label}: ${type} ${name}`);
+    }
+    
+    for (const [type, name, label] of dummies) {
+      varz.push(`  let ${label}: ${type} ${name}`);
+    }
+
+    const args = varz.join("\n");
     
     const dlabels = dummies.map(([type, name, label]) => label);
 

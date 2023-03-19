@@ -6,8 +6,8 @@ include "oridm.mm"
 include "ax-r2.mm"
 
 theorem lem3a.1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume lem3.1.1: |- ( a v b ) = b
   assume lem3.1.2: |- ( b ' v a ) = 1
 

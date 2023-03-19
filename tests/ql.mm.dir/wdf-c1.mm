@@ -19,8 +19,8 @@ include "wr3.mm"
 include "3tr.mm"
 
 theorem wdf-c1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wdf-c1.1: |- ( a == ( ( a ^ b ) v ( a ^ b ' ) ) ) = 1
 
 

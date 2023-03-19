@@ -19,8 +19,8 @@ include "df-i1.mm"
 include "3tr1.mm"
 
 theorem nom20
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ==0 ( a ^ b ) ) = ( a ->1 b )

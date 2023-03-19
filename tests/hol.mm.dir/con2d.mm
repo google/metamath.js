@@ -19,9 +19,9 @@ include "wctr.mm"
 include "mpbir.mm"
 
 theorem con2d
-  let tr: term R
-  let ts: term S
-  let tt: term T
+  param tr: term R
+  param ts: term S
+  param tt: term T
   assume con2d.1: |- T : bool
   assume con2d.2: |- ( R , S ) |= ( ~ T )
 

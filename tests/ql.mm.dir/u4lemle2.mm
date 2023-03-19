@@ -36,8 +36,8 @@ include "an1.mm"
 include "df2le1.mm"
 
 theorem u4lemle2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume u4lemle2.1: |- ( a ->4 b ) = 1
 
 

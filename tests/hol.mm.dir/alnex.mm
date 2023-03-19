@@ -39,9 +39,9 @@ include "alrimi.mm"
 include "dedi.mm"
 
 theorem alnex
-  let hal: type al
-  let vx: var x
-  let ta: term A
+  param hal: type al
+  param vx: var x
+  param ta: term A
   let vy: var y
   assume alnex1.1: |- A : bool
 

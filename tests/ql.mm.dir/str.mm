@@ -6,9 +6,9 @@ include "ler2an.mm"
 include "letr.mm"
 
 theorem str
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume str.1: |- a =< ( b v c )
   assume str.2: |- ( a ^ ( b v c ) ) =< b
 

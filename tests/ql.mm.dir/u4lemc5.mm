@@ -2,8 +2,8 @@ include "comid.mm"
 include "u4lemc2.mm"
 
 theorem u4lemc5
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume ulemc3.1: |- a C b
 
 

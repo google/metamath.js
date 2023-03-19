@@ -11,8 +11,8 @@ include "ax-r2.mm"
 include "2an.mm"
 
 theorem wwcom3ii
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wwcom3ii.1: |- b ' C a
 
 

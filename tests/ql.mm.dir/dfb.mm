@@ -11,8 +11,8 @@ include "2or.mm"
 include "ax-r2.mm"
 
 theorem dfb
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a == b ) = ( ( a ^ b ) v ( a ' ^ b ' ) )

@@ -1,8 +1,8 @@
 
 
 axiom kbr
-  let ta: term A
-  let tb: term B
-  let tf: term F
+  param ta: term A
+  param tb: term B
+  param tf: term F
   assert term [ A F B ]
 end

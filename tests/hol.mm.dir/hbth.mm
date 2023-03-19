@@ -9,11 +9,11 @@ include "a17i.mm"
 include "hbxfr.mm"
 
 theorem hbth
-  let hal: type al
-  let vx: var x
-  let ta: term A
-  let tb: term B
-  let tr: term R
+  param hal: type al
+  param vx: var x
+  param ta: term A
+  param tb: term B
+  param tr: term R
   assume hbth.1: |- B : al
   assume hbth.2: |- R |= A
 

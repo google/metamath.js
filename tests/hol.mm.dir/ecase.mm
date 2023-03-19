@@ -24,10 +24,10 @@ include "syl.mm"
 include "mpd.mm"
 
 theorem ecase
-  let ta: term A
-  let tb: term B
-  let tr: term R
-  let tt: term T
+  param ta: term A
+  param tb: term B
+  param tr: term R
+  param tt: term T
   let vx: var x
   assume ecase.1: |- A : bool
   assume ecase.2: |- B : bool

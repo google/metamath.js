@@ -22,8 +22,8 @@ include "df-t.mm"
 include "3tr1.mm"
 
 theorem mccune2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a v ( ( a ' ^ ( ( a v b ' ) ^ ( a v b ) ) ) v ( a ' ^ ( ( a ' ^ b ) v ( a ' ^ b ' ) ) ) ) ) = 1

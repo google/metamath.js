@@ -23,8 +23,8 @@ include "2or.mm"
 include "or0.mm"
 
 theorem u4lemab
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->4 b ) ^ b ) = ( ( a ^ b ) v ( a ' ^ b ) )

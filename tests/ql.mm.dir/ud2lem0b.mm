@@ -9,9 +9,9 @@ include "df-i2.mm"
 include "3tr1.mm"
 
 theorem ud2lem0b
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume ud2lem0a.1: |- a = b
 
 

@@ -23,9 +23,9 @@ include "letr.mm"
 include "bltr.mm"
 
 theorem oa3-u1
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume oa3-u1.1: |- ( ( c ->1 c ) ^ ( c v ( ( a ' ->1 c ) ^ ( ( ( c ^ ( a ' ->1 c ) ) v ( ( c ->1 c ) ^ ( ( a ' ->1 c ) ->1 c ) ) ) v ( ( ( c ^ ( b ' ->1 c ) ) v ( ( c ->1 c ) ^ ( ( b ' ->1 c ) ->1 c ) ) ) ^ ( ( ( a ' ->1 c ) ^ ( b ' ->1 c ) ) v ( ( ( a ' ->1 c ) ->1 c ) ^ ( ( b ' ->1 c ) ->1 c ) ) ) ) ) ) ) ) =< c
 
 

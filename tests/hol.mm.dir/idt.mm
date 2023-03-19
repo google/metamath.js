@@ -1,7 +1,7 @@
 
 theorem idt
-  let hal: type al
-  let ta: term A
+  param hal: type al
+  param ta: term A
   assume idt.1: |- A : al
 
 

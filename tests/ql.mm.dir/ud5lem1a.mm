@@ -31,8 +31,8 @@ include "lor.mm"
 include "ran.mm"
 
 theorem ud5lem1a
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->5 b ) ^ ( b ->5 a ) ) = ( ( a ^ b ) v ( a ' ^ b ' ) )

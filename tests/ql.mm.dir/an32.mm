@@ -5,9 +5,9 @@ include "anass.mm"
 include "3tr1.mm"
 
 theorem an32
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ^ b ) ^ c ) = ( ( a ^ c ) ^ b )

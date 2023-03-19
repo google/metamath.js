@@ -10,8 +10,8 @@ include "df-cmtr.mm"
 include "3tr1.mm"
 
 theorem cmtrcom
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- C ( a , b ) = C ( b , a )

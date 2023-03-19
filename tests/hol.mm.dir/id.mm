@@ -1,7 +1,7 @@
 include "ax-id.mm"
 
 theorem id
-  let tr: term R
+  param tr: term R
   assume ax-id.1: |- R : bool
 
 

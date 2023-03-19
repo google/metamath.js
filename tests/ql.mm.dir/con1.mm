@@ -4,8 +4,8 @@ include "ax-a1.mm"
 include "3tr1.mm"
 
 theorem con1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume con1.1: |- a ' = b '
 
 

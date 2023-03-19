@@ -14,8 +14,8 @@ include "oran1.mm"
 include "con2.mm"
 
 theorem u3lem3n
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->3 ( b ->3 a ) ) ' = ( a ' ^ ( ( a v b ) ^ ( a v b ' ) ) )

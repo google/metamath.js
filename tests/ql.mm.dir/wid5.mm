@@ -1,6 +1,6 @@
 
 axiom wid5
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assert term ( a ==5 b )
 end

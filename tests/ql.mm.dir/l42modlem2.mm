@@ -6,11 +6,11 @@ include "leor.mm"
 include "le2an.mm"
 
 theorem l42modlem2
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wve: term e
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wve: term e
 
 
   assert |- ( ( ( ( a v b ) ^ c ) v d ) ^ e ) =< ( ( ( a v b ) v d ) ^ ( ( a v b ) v e ) )

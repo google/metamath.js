@@ -12,14 +12,14 @@ include "anor3.mm"
 include "le3tr1.mm"
 
 theorem oa8todual
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wve: term e
-  let wvf: term f
-  let wvg: term g
-  let wvh: term h
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wve: term e
+  param wvf: term f
+  param wvg: term g
+  param wvh: term h
   assume oa8to5.1: |- ( ( ( a ' v b ' ) ^ ( c ' v d ' ) ) ^ ( ( e ' v f ' ) ^ ( g ' v h ' ) ) ) =< ( b ' v ( a ' ^ ( c ' v ( ( ( ( a ' v c ' ) ^ ( b ' v d ' ) ) ^ ( ( ( a ' v g ' ) ^ ( b ' v h ' ) ) v ( ( c ' v g ' ) ^ ( d ' v h ' ) ) ) ) ^ ( ( ( ( a ' v e ' ) ^ ( b ' v f ' ) ) ^ ( ( ( a ' v g ' ) ^ ( b ' v h ' ) ) v ( ( e ' v g ' ) ^ ( f ' v h ' ) ) ) ) v ( ( ( c ' v e ' ) ^ ( d ' v f ' ) ) ^ ( ( ( c ' v g ' ) ^ ( d ' v h ' ) ) v ( ( e ' v g ' ) ^ ( f ' v h ' ) ) ) ) ) ) ) ) )
 
 

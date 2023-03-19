@@ -10,8 +10,8 @@ include "wcon3.mm"
 include "wdf2le1.mm"
 
 theorem wlecon
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wle.1: |- ( a =<2 b ) = 1
 
 

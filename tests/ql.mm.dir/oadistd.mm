@@ -24,12 +24,12 @@ include "ledi.mm"
 include "lebi.mm"
 
 theorem oadistd
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wve: term e
-  let wvf: term f
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wve: term e
+  param wvf: term f
   assume oadistd.1: |- d =< ( a ->2 b )
   assume oadistd.2: |- e =< ( ( b v c ) ->0 ( ( a ->2 b ) ^ ( a ->2 c ) ) )
   assume oadistd.3: |- f =< ( ( b v c ) ->0 ( ( a ->2 b ) ^ ( a ->2 c ) ) )

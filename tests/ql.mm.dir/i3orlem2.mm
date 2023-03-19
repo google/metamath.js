@@ -10,9 +10,9 @@ include "letr.mm"
 include "i3orlem1.mm"
 
 theorem i3orlem2
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( a ^ b ) =< ( ( a v c ) ->3 ( b v c ) )

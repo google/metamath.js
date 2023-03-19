@@ -3,13 +3,13 @@ include "oa3to4lem6.mm"
 include "oa3to4lem5.mm"
 
 theorem oa3to4
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wve: term e
-  let wvf: term f
-  let wvg: term g
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wve: term e
+  param wvf: term f
+  param wvg: term g
   assume oa3to4.oa4.1: |- a =< b '
   assume oa3to4.oa4.2: |- c =< d '
   assume oa3to4.3: |- g = ( ( b ' ^ a ' ) v ( d ' ^ c ' ) )

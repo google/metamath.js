@@ -11,8 +11,8 @@ include "oml2.mm"
 include "3tr2.mm"
 
 theorem oml3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume oml3.1: |- a =< b
   assume oml3.2: |- ( b ^ a ' ) = 0
 

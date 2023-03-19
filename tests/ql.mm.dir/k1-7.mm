@@ -22,8 +22,8 @@ include "ax-a2.mm"
 include "anabs.mm"
 
 theorem k1-7
-  let wvc: term c
-  let wvx: term x
+  param wvc: term c
+  param wvx: term x
   assume k1-7.1: |- x = ( ( x ^ c ) v ( x ^ c ' ) )
 
 

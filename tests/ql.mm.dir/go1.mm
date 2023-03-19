@@ -17,8 +17,8 @@ include "le0.mm"
 include "lebi.mm"
 
 theorem go1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ^ b ) ^ ( a ->1 b ' ) ) = 0

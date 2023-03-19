@@ -4,7 +4,7 @@ include "ax-r1.mm"
 include "bile.mm"
 
 theorem qlhoml1b
-  let wva: term a
+  param wva: term a
 
 
   assert |- a ' ' =< a

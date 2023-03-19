@@ -30,8 +30,8 @@ include "fh1r.mm"
 include "oran.mm"
 
 theorem ud3lem1b
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->3 b ) ' ^ ( b ->3 a ) ' ) = 0

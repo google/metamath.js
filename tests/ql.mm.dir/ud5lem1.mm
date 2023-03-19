@@ -43,8 +43,8 @@ include "df-a.mm"
 include "an1.mm"
 
 theorem ud5lem1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->5 b ) ->5 ( b ->5 a ) ) = ( a v b ' )

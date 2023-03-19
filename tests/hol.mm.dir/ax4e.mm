@@ -30,9 +30,9 @@ include "a1i.mm"
 include "mpbir.mm"
 
 theorem ax4e
-  let hal: type al
-  let ta: term A
-  let tf: term F
+  param hal: type al
+  param ta: term A
+  param tf: term F
   let vp: var p
   let vx: var x
   assume ax4e.1: |- F : ( al -> bool )

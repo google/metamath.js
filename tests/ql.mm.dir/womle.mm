@@ -11,8 +11,8 @@ include "letr.mm"
 include "womle2a.mm"
 
 theorem womle
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume womle.1: |- ( a ^ ( a ->1 b ) ) = ( a ^ ( a ->2 b ) )
 
 

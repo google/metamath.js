@@ -12,9 +12,9 @@ include "ax-r5.mm"
 include "3tr2.mm"
 
 theorem i3orlem6
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ->3 b ) ' v ( ( a v c ) ->3 ( b v c ) ) ) = ( ( ( a v b ) ^ ( a ' ->3 b ' ) ) v ( ( a v c ) ->3 ( b v c ) ) )

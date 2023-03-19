@@ -2,8 +2,8 @@ include "comid.mm"
 include "com2i3.mm"
 
 theorem comi32
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume comi32.1: |- a C b
 
 

@@ -11,8 +11,8 @@ include "leor.mm"
 include "lebi.mm"
 
 theorem womaon
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ^ ( a ' v ( a ^ ( a ' v b ) ) ) ) = ( a ^ ( a ' v b ) )

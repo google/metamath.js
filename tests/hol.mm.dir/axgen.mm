@@ -2,9 +2,9 @@ include "kt.mm"
 include "alrimiv.mm"
 
 theorem axgen
-  let hal: type al
-  let vx: var x
-  let tr: term R
+  param hal: type al
+  param vx: var x
+  param tr: term R
   assume axgen.1: |- T. |= R
 
   disjoint al x

@@ -49,8 +49,8 @@ include "or1.mm"
 include "an1.mm"
 
 theorem ud3lem3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->3 b ) ->3 ( a v b ) ) = ( a v b )

@@ -11,8 +11,8 @@ include "lor.mm"
 include "ax-r2.mm"
 
 theorem u2lemob
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->2 b ) v b ) = ( ( a ' ^ b ' ) v b )

@@ -13,8 +13,8 @@ include "ud3lem0a.mm"
 include "u3lem11.mm"
 
 theorem u3lem11a
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->3 ( ( b ->3 a ) ->3 ( a ->3 b ) ) ' ) = ( a ->3 b ' )

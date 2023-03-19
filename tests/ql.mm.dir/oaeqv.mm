@@ -10,9 +10,9 @@ include "lear.mm"
 include "letr.mm"
 
 theorem oaeqv
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume oaeqv.1: |- ( ( a ->2 b ) ^ ( ( b v c ) ' v ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) =< ( ( b v c ) ->2 ( ( a ->2 b ) ^ ( a ->2 c ) ) )
 
 

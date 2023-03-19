@@ -6,9 +6,9 @@ include "bile.mm"
 include "lei3.mm"
 
 theorem i3li3
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume i3li3.1: |- ( a ->3 b ) = 1
   assume i3li3.2: |- ( b ->3 a ) = 1
 

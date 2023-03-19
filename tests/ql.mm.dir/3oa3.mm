@@ -9,9 +9,9 @@ include "3oa2.mm"
 include "bltr.mm"
 
 theorem 3oa3
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ->1 c ) ^ ( a == c ==OA b ) ) =< ( b ->1 c )

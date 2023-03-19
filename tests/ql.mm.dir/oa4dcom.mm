@@ -6,10 +6,10 @@ include "2or.mm"
 include "lan.mm"
 
 theorem oa4dcom
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
 
 
   assert |- ( b ^ ( ( ( a ^ b ) v ( ( a ->1 d ) ^ ( b ->1 d ) ) ) v ( ( ( a ^ c ) v ( ( a ->1 d ) ^ ( c ->1 d ) ) ) ^ ( ( b ^ c ) v ( ( b ->1 d ) ^ ( c ->1 d ) ) ) ) ) ) = ( b ^ ( ( ( b ^ a ) v ( ( b ->1 d ) ^ ( a ->1 d ) ) ) v ( ( ( b ^ c ) v ( ( b ->1 d ) ^ ( c ->1 d ) ) ) ^ ( ( a ^ c ) v ( ( a ->1 d ) ^ ( c ->1 d ) ) ) ) ) )

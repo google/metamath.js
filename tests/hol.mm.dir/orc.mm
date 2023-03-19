@@ -30,8 +30,8 @@ include "a1i.mm"
 include "mpbir.mm"
 
 theorem orc
-  let ta: term A
-  let tb: term B
+  param ta: term A
+  param tb: term B
   let vx: var x
   assume olc.1: |- A : bool
   assume olc.2: |- B : bool

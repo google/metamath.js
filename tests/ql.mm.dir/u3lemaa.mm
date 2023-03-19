@@ -26,8 +26,8 @@ include "anidm.mm"
 include "ax-a2.mm"
 
 theorem u3lemaa
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->3 b ) ^ a ) = ( a ^ ( a ' v b ) )

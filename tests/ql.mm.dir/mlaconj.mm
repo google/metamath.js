@@ -19,9 +19,9 @@ include "2an.mm"
 include "lbtr.mm"
 
 theorem mlaconj
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a == b ) ^ ( ( a == c ) v ( b == c ) ) ) =< ( ( ( ( a ->1 ( a ^ b ) ) ^ ( ( a ^ b ) ->1 ( ( a ^ b ) v c ) ) ) ^ ( ( ( ( a ^ b ) v c ) ->1 c ) ^ ( c ->1 ( a v b ) ) ) ) ^ ( ( a v b ) ->1 a ) )

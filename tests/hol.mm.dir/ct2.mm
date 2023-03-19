@@ -5,9 +5,9 @@ include "adantl.mm"
 include "jca.mm"
 
 theorem ct2
-  let tr: term R
-  let ts: term S
-  let tt: term T
+  param tr: term R
+  param ts: term S
+  param tt: term T
   assume ct1.1: |- R |= S
   assume ct1.2: |- T : bool
 

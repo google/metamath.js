@@ -14,8 +14,8 @@ include "le3tr1.mm"
 include "u3lemle1.mm"
 
 theorem u3lem14mp
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->3 b ' ) ' ->3 ( a ->3 ( a ->3 b ) ) ) = 1

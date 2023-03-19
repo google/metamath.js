@@ -8,8 +8,8 @@ include "sklem.mm"
 include "ax-r2.mm"
 
 theorem u3lemle1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume ulemle1.1: |- a =< b
 
 

@@ -10,9 +10,9 @@ include "bctr.mm"
 include "comcom5.mm"
 
 theorem gstho
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume gstho.1: |- b C c
   assume gstho.2: |- a C ( b v c )
 

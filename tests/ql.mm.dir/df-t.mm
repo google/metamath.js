@@ -1,5 +1,5 @@
 
 axiom df-t
-  let wva: term a
+  param wva: term a
   assert |- 1 = ( a v a ' )
 end

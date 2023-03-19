@@ -28,9 +28,9 @@ include "an0.mm"
 include "wwoml3.mm"
 
 theorem wwfh1
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume wwfh.1: |- b C a
   assume wwfh.2: |- c C a
 

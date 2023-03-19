@@ -18,8 +18,8 @@ include "3tr.mm"
 include "3tr2.mm"
 
 theorem gomaex3lem1
-  let wvc: term c
-  let wvd: term d
+  param wvc: term c
+  param wvd: term d
   assume gomaex3lem1.3: |- c =< d '
 
 

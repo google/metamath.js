@@ -4,8 +4,8 @@ include "ax-a1.mm"
 include "i33tr1.mm"
 
 theorem i3con1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume i3con1.1: |- ( a ' ->3 b ' ) = 1
 
 

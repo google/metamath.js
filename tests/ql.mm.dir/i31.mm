@@ -8,7 +8,7 @@ include "bina3.mm"
 include "ax-r2.mm"
 
 theorem i31
-  let wva: term a
+  param wva: term a
 
 
   assert |- ( a ->3 1 ) = 1

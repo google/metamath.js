@@ -7,8 +7,8 @@ include "lem3.4.3.mm"
 include "ax-r2.mm"
 
 theorem lem3.4.4
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume lem3.4.4.1: |- ( a ->2 b ) = 1
   assume lem3.4.4.2: |- ( b ->2 a ) = 1
 

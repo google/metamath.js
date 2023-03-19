@@ -13,8 +13,8 @@ include "wql2lem2.mm"
 include "skr0.mm"
 
 theorem wql2lem4
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume wql2lem4.1: |- ( ( ( a ^ b ' ) v ( a ^ b ) ) ->2 ( a ' v ( a ^ b ) ) ) = 1
   assume wql2lem4.2: |- ( ( a ->1 b ) v ( a ^ b ' ) ) = 1
 

@@ -13,27 +13,27 @@ include "gomaex3lem8.mm"
 include "bltr.mm"
 
 theorem gomaex3lem9
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
-  let wvd: term d
-  let wve: term e
-  let wvf: term f
-  let wvg: term g
-  let wvh: term h
-  let wvj: term j
-  let wvk: term k
-  let wvi: term i
-  let wvm: term m
-  let wvn: term n
-  let wvp: term p
-  let wvq: term q
-  let wvr: term r
-  let wvu: term u
-  let wvw: term w
-  let wvx: term x
-  let wvy: term y
-  let wvz: term z
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
+  param wvd: term d
+  param wve: term e
+  param wvf: term f
+  param wvg: term g
+  param wvh: term h
+  param wvj: term j
+  param wvk: term k
+  param wvi: term i
+  param wvm: term m
+  param wvn: term n
+  param wvp: term p
+  param wvq: term q
+  param wvr: term r
+  param wvu: term u
+  param wvw: term w
+  param wvx: term x
+  param wvy: term y
+  param wvz: term z
   assume gomaex3lem5.1: |- a =< b '
   assume gomaex3lem5.2: |- b =< c '
   assume gomaex3lem5.3: |- c =< d '

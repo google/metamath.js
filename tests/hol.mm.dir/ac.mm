@@ -33,9 +33,9 @@ include "a1i.mm"
 include "mpd.mm"
 
 theorem ac
-  let hal: type al
-  let ta: term A
-  let tf: term F
+  param hal: type al
+  param ta: term A
+  param tf: term F
   let vx: var x
   let vp: var p
   assume ac.1: |- F : ( al -> bool )

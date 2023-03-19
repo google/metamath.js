@@ -4,8 +4,8 @@ include "bicom.mm"
 include "cbtr.mm"
 
 theorem ublemc2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- b C ( a == b )

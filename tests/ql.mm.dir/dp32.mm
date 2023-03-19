@@ -21,16 +21,16 @@ include "3tr.mm"
 include "ror.mm"
 
 theorem dp32
-  let wvp: term p
-  let wva0: term a0
-  let wva1: term a1
-  let wva2: term a2
-  let wvb0: term b0
-  let wvb1: term b1
-  let wvb2: term b2
-  let wvc0: term c0
-  let wvc1: term c1
-  let wvc2: term c2
+  param wvp: term p
+  param wva0: term a0
+  param wva1: term a1
+  param wva2: term a2
+  param wvb0: term b0
+  param wvb1: term b1
+  param wvb2: term b2
+  param wvc0: term c0
+  param wvc1: term c1
+  param wvc2: term c2
   assume dp32.1: |- c0 = ( ( a1 v a2 ) ^ ( b1 v b2 ) )
   assume dp32.2: |- c1 = ( ( a0 v a2 ) ^ ( b0 v b2 ) )
   assume dp32.3: |- c2 = ( ( a0 v a1 ) ^ ( b0 v b1 ) )

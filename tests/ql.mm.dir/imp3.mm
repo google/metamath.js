@@ -21,9 +21,9 @@ include "2or.mm"
 include "3tr.mm"
 
 theorem imp3
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a ->2 b ) ^ ( b ->1 c ) ) = ( ( a ' ^ b ' ) v ( b ^ c ) )

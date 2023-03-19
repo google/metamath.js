@@ -15,9 +15,9 @@ include "ax-a2.mm"
 include "3tr.mm"
 
 theorem wql2lem2
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume wql2lem2.1: |- ( ( a v c ) ->2 ( b v c ) ) = 1
 
 

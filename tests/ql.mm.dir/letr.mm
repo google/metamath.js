@@ -11,9 +11,9 @@ include "ax-r2.mm"
 include "df2le1.mm"
 
 theorem letr
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume letr.1: |- a =< b
   assume letr.2: |- b =< c
 

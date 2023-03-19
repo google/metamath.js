@@ -15,8 +15,8 @@ include "2or.mm"
 include "3tr1.mm"
 
 theorem lem4.6.6i0j3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->0 b ) v ( a ->3 b ) ) = ( a ->0 b )

@@ -12,13 +12,13 @@ include "ax-a1.mm"
 include "le3tr1.mm"
 
 theorem gomaex3h10
-  let wvb: term b
-  let wvc: term c
-  let wve: term e
-  let wvf: term f
-  let wvq: term q
-  let wvx: term x
-  let wvy: term y
+  param wvb: term b
+  param wvc: term c
+  param wve: term e
+  param wvf: term f
+  param wvq: term q
+  param wvx: term x
+  param wvy: term y
   assume gomaex3h10.10: |- q = ( ( e v f ) ->1 ( b v c ) ' ) '
   assume gomaex3h10.21: |- x = q
   assume gomaex3h10.22: |- y = ( e v f ) '

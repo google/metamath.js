@@ -23,8 +23,8 @@ include "df-t.mm"
 include "3tr1.mm"
 
 theorem i3th1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->3 ( a ->3 ( b ->3 a ) ) ) = 1

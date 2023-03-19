@@ -19,7 +19,7 @@ include "df-eu.mm"
 include "eqtypri.mm"
 
 theorem weu
-  let hal: type al
+  param hal: type al
   let vf: var f
   let vp: var p
   let vq: var q

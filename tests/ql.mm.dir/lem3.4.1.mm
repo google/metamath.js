@@ -9,8 +9,8 @@ include "woml6.mm"
 include "ax-r2.mm"
 
 theorem lem3.4.1
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->1 b ) ->0 ( a ->2 b ) ) = 1

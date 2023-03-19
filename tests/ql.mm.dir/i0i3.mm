@@ -6,8 +6,8 @@ include "lem4.mm"
 include "ax-r2.mm"
 
 theorem i0i3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume i0i3.1: |- ( a ' v b ) = 1
 
 

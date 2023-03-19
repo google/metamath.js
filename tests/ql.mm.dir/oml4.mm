@@ -25,8 +25,8 @@ include "lea.mm"
 include "bltr.mm"
 
 theorem oml4
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a == b ) ^ a ) =< b

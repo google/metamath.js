@@ -11,7 +11,7 @@ include "ax-r1.mm"
 include "df-c1.mm"
 
 theorem comm1
-  let wva: term a
+  param wva: term a
 
 
   assert |- 1 C a

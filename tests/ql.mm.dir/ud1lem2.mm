@@ -23,8 +23,8 @@ include "oml.mm"
 include "3tr.mm"
 
 theorem ud1lem2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a v ( a ' ^ b ' ) ) ->1 a ) = ( a v b )

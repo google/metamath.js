@@ -13,8 +13,8 @@ include "ax-r2.mm"
 include "ax-r1.mm"
 
 theorem ud5lem0c
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a ->5 b ) ' = ( ( ( a ' v b ' ) ^ ( a v b ' ) ) ^ ( a v b ) )

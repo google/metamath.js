@@ -4,12 +4,12 @@ include "eqcomi.mm"
 include "eqtri.mm"
 
 theorem 3eqtr4i
-  let hal: type al
-  let ta: term A
-  let tb: term B
-  let tr: term R
-  let ts: term S
-  let tt: term T
+  param hal: type al
+  param ta: term A
+  param tb: term B
+  param tr: term R
+  param ts: term S
+  param tt: term T
   assume 3eqtr4i.1: |- A : al
   assume 3eqtr4i.2: |- R |= [ A = B ]
   assume 3eqtr4i.3: |- R |= [ S = A ]

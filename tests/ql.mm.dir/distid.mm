@@ -13,9 +13,9 @@ include "ledi.mm"
 include "lebi.mm"
 
 theorem distid
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
 
 
   assert |- ( ( a == b ) ^ ( ( a == c ) v ( b == c ) ) ) = ( ( ( a == b ) ^ ( a == c ) ) v ( ( a == b ) ^ ( b == c ) ) )

@@ -16,8 +16,8 @@ include "lan.mm"
 include "3tr1.mm"
 
 theorem i3lem3
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
   assume i3lem.1: |- ( a ->3 b ) = 1
 
 

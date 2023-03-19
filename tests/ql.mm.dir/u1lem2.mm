@@ -15,8 +15,8 @@ include "df-t.mm"
 include "ax-r1.mm"
 
 theorem u1lem2
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( ( a ->1 b ) ->1 a ) ->1 a ) = 1

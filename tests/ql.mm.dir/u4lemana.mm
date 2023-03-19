@@ -32,8 +32,8 @@ include "df2le2.mm"
 include "id.mm"
 
 theorem u4lemana
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->4 b ) ^ a ' ) = ( ( a ' ^ b ) v ( a ' ^ b ' ) )

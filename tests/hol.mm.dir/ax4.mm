@@ -14,9 +14,9 @@ include "a1i.mm"
 include "mpbi.mm"
 
 theorem ax4
-  let hal: type al
-  let vx: var x
-  let ta: term A
+  param hal: type al
+  param vx: var x
+  param ta: term A
   assume ax4.1: |- A : bool
 
 

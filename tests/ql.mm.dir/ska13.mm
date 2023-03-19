@@ -14,8 +14,8 @@ include "le3tr1.mm"
 include "sklem.mm"
 
 theorem ska13
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a == b ) ' v ( a ' v b ) ) = 1

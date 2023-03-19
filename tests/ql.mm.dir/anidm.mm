@@ -7,7 +7,7 @@ include "con2.mm"
 include "ax-r2.mm"
 
 theorem anidm
-  let wva: term a
+  param wva: term a
 
 
   assert |- ( a ^ a ) = a

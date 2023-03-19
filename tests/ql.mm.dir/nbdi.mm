@@ -12,8 +12,8 @@ include "fh1.mm"
 include "ax-r2.mm"
 
 theorem nbdi
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( a == b ) ' = ( ( ( a v b ) ^ a ' ) v ( ( a v b ) ^ b ' ) )

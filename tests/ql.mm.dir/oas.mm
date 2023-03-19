@@ -26,9 +26,9 @@ include "lear.mm"
 include "lel2or.mm"
 
 theorem oas
-  let wva: term a
-  let wvb: term b
-  let wvc: term c
+  param wva: term a
+  param wvb: term b
+  param wvc: term c
   assume oas.1: |- ( a ' ^ ( a v b ) ) =< c
 
 

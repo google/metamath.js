@@ -20,8 +20,8 @@ include "an1.mm"
 include "3tr.mm"
 
 theorem i1abs
-  let wva: term a
-  let wvb: term b
+  param wva: term a
+  param wvb: term b
 
 
   assert |- ( ( a ->1 b ) ' v ( a ^ b ) ) = a
