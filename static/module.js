@@ -2229,10 +2229,35 @@ class Compiler {
   constructor(loader) {
     this.load = loader;
   }
-  async preprocess(dir, file) {
+  async preprocess(dir, file, shallow) {
     const queue = [file];
 
     const files = {};
+
+    if (shallow) {
+      const program = await this.load(`${dir}/${file}`);
+
+      const parser = new Parser();
+      const code = parser.parse(program.toString());
+    
+      files[file] = code;
+
+      // Take all include statements that have never
+      // been seen before and push them into the queue
+      const include = code
+            .filter(([type]) => type == "include")
+            .map(([, name]) => name)
+            .filter((name) => !files[name]);
+
+      for (const file of include) {
+        const program = await this.load(`${dir}/${file}`);
+        const parser = new Parser();
+        const code = parser.parse(program.toString());
+        files[file] = code;
+      }
+
+      return files;
+    }
     
     while (queue.length > 0) {
       const head = queue.shift();
@@ -2257,13 +2282,13 @@ class Compiler {
     return files;
   }
 
-  async compile(dirOrSource, file) {
+  async compile(dirOrSource, file, shallow = false) {
     if (!file) {
       let parser = new Parser();
       let code = parser.parse(dirOrSource);
       return this.transpile(code);
     }
-    const files = await this.preprocess(dirOrSource, file);
+    const files = await this.preprocess(dirOrSource, file, shallow);
     const dump = Object.values(files)
           .flat()
           .filter(([type]) => type != "include");
@@ -2869,9 +2894,15 @@ function process(program) {
 }
 
 class Verifier {
-  verify(program) {
+  verify(program, label) {
     let proofs = 0;
     let mm = process(program);
+
+    if (label) {
+      const [, , proof] = mm.labels[label];
+      return proof();
+    }
+    
     for (const [, [, , proof]] of Object.entries(mm.labels).filter(([, [type]]) => type == "$p")) {
       proof();
       proofs++;

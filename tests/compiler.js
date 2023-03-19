@@ -641,17 +641,28 @@ $\}`);;
     ]);
   });
   
-  for (let [dir, file] of [
-    ["tests/hol.mm.dir", "mpbirx.mm"]
+  for (let [dir, file, label, s, d] of [
+    ["tests/hol.mm.dir", "mpbirx.mm", "mpbirx", [16, 5], [6, 25]],
   ]) {
-    it(`Compile and verify: ${file}`, async function() {
+    it.only(`Compile and verify: ${file}`, async function() {
+      let deps = 0;
       const loader = (async (file) => {
+        deps++;
         return require("fs/promises").readFile(file);
       });
-      
-      const metamath = await new Compiler(loader).compile(dir, file);
-      
-      assertThat(new Verifier().verify(metamath)).equalsTo(6);      
+
+      // Shallow proof
+      const shallow = await new Compiler(loader).compile(dir, file, true);
+      assertThat(new Verifier().verify(shallow, label).length).equalsTo(s[0]);
+      // Loads only 5 files.
+      assertThat(deps).equalsTo(s[1]);
+
+      // Deep proof
+      deps = 0;
+      const deep = await new Compiler(loader).compile(dir, file, false);
+      assertThat(new Verifier().verify(deep)).equalsTo(d[0]);
+      // Loads the transitive dependency, 25 files.
+      assertThat(deps).equalsTo(d[1]);
     });
   }
 

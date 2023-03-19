@@ -278,9 +278,15 @@ function process(program) {
 }
 
 class Verifier {
-  verify(program) {
+  verify(program, label) {
     let proofs = 0;
     let mm = process(program);
+
+    if (label) {
+      const [, , proof] = mm.labels[label];
+      return proof();
+    }
+    
     for (const [, [, , proof]] of Object.entries(mm.labels).filter(([, [type]]) => type == "$p")) {
       proof();
       proofs++;

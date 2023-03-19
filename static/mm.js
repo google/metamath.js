@@ -210,7 +210,7 @@ class Proof extends React.Component {
             <tbody>
             {proof.map((step, i) => {
               const [label, rule = [], args = []] = step;
-              console.log(label);
+              // console.log(label);
               const [type = "", result = []] = rule;
               if (typeof label == "number") {
                 return
@@ -242,7 +242,9 @@ class Proof extends React.Component {
             }
             </tbody>
           </table>
-          <Window mm={mm} open={this.state.open}/>
+          {false &&          
+           <Window mm={mm} open={this.state.open}/>
+          }
           </div>
         </div>
     );
@@ -264,9 +266,33 @@ class Metamath extends React.Component {
 
   async compute() {
     const label = window.location.hash ? window.location.hash.substr(1) : this.props.label;
+
+    console.log(`Recomputing ${label}`);
+    
+    //this.setState({
+    //});
+
+    const compiler = new Compiler(this.loader.bind(this));
+
+    const source = await compiler.compile(
+      this.props.dir, `${label}.mm`, true);
+
+    //console.log(this.props.file);
+    
+    const mm = process(source);
+    
+    //console.log(`Loaded ${source}`);
+    // console.log();
+    // const [, , verifier] = mm.labels[label];
+
+    //console.log(mm.labels["eqtri"]);
+    //verifier();
+
     this.setState({
       label: label,
       open: false,
+      source: source,
+      mm: process(source),
     });
 
     window.scroll({
@@ -278,19 +304,8 @@ class Metamath extends React.Component {
   
   async componentDidMount() {
     window.addEventListener('hashchange', this.compute.bind(this), false);
-
     // console.log(this.props.label);
-    
-    const compiler = new Compiler(this.loader.bind(this));
-
-    const source = await compiler.compile(
-      this.props.dir, this.props.file);
-
-    this.setState({
-      source: source,
-      mm: process(source),
-    });
-
+    this.compute();
   }
 
   async loader(file) {
