@@ -1859,7 +1859,7 @@ if (typeof module !== 'undefined'&& typeof module.exports !== 'undefined') {
 
 },{}],6:[function(require,module,exports){
 const moo = require("moo");
-const {MM} = require("./metamath.js");
+const {MM, Compressor, Decompressor} = require("./metamath.js");
 
 class Lexer {
   constructor() {
@@ -1874,6 +1874,7 @@ class Lexer {
       ["axiom"]: "axiom",
       ["proof"]: "proof",
       ["end"]: "end",
+      ["param"]: "param",
       ["let"]: "let",
       ["step"]: "step",
       ["assume"]: "assume",
@@ -1885,6 +1886,8 @@ class Lexer {
       [":"]: ":",
       [","]: ",",
       [";"]: ";",
+      ["@"]: "@",
+      ["#"]: "#",
       ["label"]: /[A-Za-z0-9-_.]+/,
       ["sequence"]: /[!-#%-~\?]+/,
     };
@@ -1935,6 +1938,8 @@ const symbols = [
   ",",
   ":",
   ";",
+  "@",
+  "#",
   "//",
   // catch all types of sequences
   "sequence",
@@ -1950,8 +1955,9 @@ const labels = [
   "theorem",
   "axiom",
   "proof",
-  "end",
+  //"end",
   "let",
+  "param",
   "step",
   "assume",
   "disjoint",
@@ -2056,6 +2062,12 @@ class Parser {
   
   header() {
     this.ws(true);
+    let params = [];
+    while (this.accepts("param")) {
+      params.push(this.declaration("param", true, false));
+    }
+    
+    this.ws(true);
     let lets = [];
     while (this.accepts("let")) {
       lets.push(this.declaration("let", true, false));
@@ -2066,7 +2078,7 @@ class Parser {
     while (this.accepts("assume")) {
       ifs.push(this.declaration("assume", true, true));
     }
-    
+
     this.ws(true);
     let disjoints = [];
     while (this.accepts("disjoint")) {
@@ -2075,23 +2087,14 @@ class Parser {
     
     this.ws(true);
     let then = this.declaration("assert", false, true);
-    return [lets, ifs, disjoints, then];
+
+    return [params, lets, ifs, disjoints, then];
   }
-  
-  step() {
-    const result = [];
-    this.eat("step");
-    this.eat("ws");
-    result.push(this.label());
-    this.ws(true);
-    this.eat(")");
-    this.ws(true);
-    result.push(this.label());
-    this.ws(true);
+
+  args() {
     this.eat("(");
     this.ws(true);
     let args = [];
-    result.push(args);
     if (this.accepts(...labels)) {
       args.push(this.label());
       this.ws(true);
@@ -2103,6 +2106,31 @@ class Parser {
     }
     this.ws(true);
     this.eat(")");
+    return args;
+  }
+  
+  step() {
+    const result = [];
+    this.eat("step");
+    this.eat("ws");
+    // index
+    result.push(this.label());
+    this.ws(true);
+    this.eat(")");
+    this.ws(true);
+    // a step can either be ...
+    if (this.accepts("#")) {
+      // ... a marker ...
+      result.push(this.eat("#"));
+    } else if (this.accepts("@")) {
+      // ... a recall ...
+      result.push(this.eat("@"));
+      result.push(this.label());
+    } else {
+      // ... or call.
+      result.push(this.label());
+      result.push(this.args());
+    }
     this.ws(true);
     this.eat(":");
     this.ws(true);
@@ -2138,12 +2166,25 @@ class Parser {
     let name = this.label();
     this.ws();
     let head = this.header();
+
+    this.ws(true);
+    this.eat("proof");
+    this.ws(true);
     
     let steps = [];
-    while (this.accepts("step")) {
-      steps.push(this.step());
-    }
-    
+    do {
+      if (this.accepts(...labels)) {
+        steps.push(this.label());
+      } else if (this.accepts("#")) {
+        steps.push(this.eat("#"));
+      } else if (this.accepts("@")) {
+        steps.push(`${this.eat("@")}${this.label()}`);
+      } else {
+        break;
+      }
+      this.ws();
+    } while (true);
+
     this.eat("end");
     this.ws();
 
@@ -2219,7 +2260,7 @@ class Compiler {
   async compile(dirOrSource, file) {
     if (!file) {
       let parser = new Parser();
-      let code = parser.parse(dirOrSource);      
+      let code = parser.parse(dirOrSource);
       return this.transpile(code);
     }
     const files = await this.preprocess(dirOrSource, file);
@@ -2233,10 +2274,10 @@ class Compiler {
     //console.log(code);
     //throw new Error();
 
-    // console.log(code);
+    //console.log(code);
     
     const consts = new Set();
-    for (let [type, label, [vars, assumes, disjoints, [, assert]], proof] of code) {
+    for (let [type, label, [vars, dummies, assumes, disjoints, [, assert]], proof] of code) {
       // All variable types are constants
       for (let type of vars.map(([, [label, type, name]]) => type)) {
         consts.add(type);
@@ -2261,20 +2302,75 @@ class Compiler {
     let result = [];
     result.push(`$c ${[...consts].join(" ")} $.`);
 
-    for (let [type, label, [vars, assumes, disjoints, [, assert]], proof] of code) {
-      const names = vars.map(([, [label, type, name]]) => name);
-      const types = vars.map(([, [label, type, name]]) => `  ${label} $f ${type} ${name} $.`);
-      const logical = [...assumes]
-          .map(([, assumption]) => [assumption.shift(), assumption.shift(), assumption])
-          .map(([label, type, symbols]) => `  ${label} $e ${type} ${symbols.join(" ")} $.`);
+    for (let [type, label, [vars, dummies, assumes, disjoints, [, assert]], proof] of code) {
+
+      const names = [...vars, ...dummies].map(([, [label, type, name]]) => name);
+
+      const mandatory = new Set();
+
+      for (const hyp of [...JSON.parse(JSON.stringify(assumes)).map(([, string]) => string.splice(1)), assert]) {
+        for (const tok of hyp) {
+          if (names.includes(tok)) {
+            mandatory.add(tok);
+          } else if (!consts.has(tok)) {
+            throw new Error(`Undeclared token: "${tok}" is neither a constant nor a variable.`);
+          }
+        }
+      }
+
+      // console.log(mandatory);
+      
+      const types = [...vars, ...dummies].map(([, [label, type, name]]) => `  ${label} $f ${type} ${name} $.`);
+      //console.log(assumes);
+      const logical = [...JSON.parse(JSON.stringify(assumes))]
+            .map(([, assumption]) => [assumption.shift(), assumption.shift(), assumption])
+            .map(([label, type, symbols]) => `  ${label} $e ${type} ${symbols.join(" ")} $.`);
+      //console.log(assumes);
+      //throw new Error("hi");
+      //console.log(assumes);
+      //throw new Error("hi");
       
       const dvis = disjoints.map(([, vars]) => `${vars.join(" ")}`);
+
+      const d = disjoints.map(([, [a, b]]) => `  $d ${a} ${b} $.`).join("\n");
+      //throw new Error();
       
       const v = names.length > 0 ? `  $v ${names.join(" ")} $.` : "";
       const f = types.length > 0 ? `${types.join("\n")}` : "";
       const e = logical.length > 0 ? `${logical.join("\n")}` : "";
-      const d = disjoints.length > 0 ? `  $d ${dvis.join(" ")} $.` : "";
-      const p = proof ? `$= ${proof.map(([step, label]) => label).join(" ")} ` : "";
+      //const d = disjoints.length > 0 ? `  $d ${dvis.join(" ")} $.` : "";
+      
+      let p = "";
+
+      if (proof) {
+        let compress = false;
+        const s = proof.map((label) => {
+          if (label == "#") {
+            compress = true;
+            return -1;
+          } else if (label.startsWith("@")) {
+            return parseInt(label.substr(1));
+          }
+          return label;
+        });
+
+        if (!compress) {
+          p = `$= ${proof.join(" ")} `;
+        } else {
+          const f = vars
+                .filter(([, [, , name]]) => mandatory.has(name))
+                .map(([letty, [label, type, name]]) => label);
+          const e = [...JSON.parse(JSON.stringify(assumes))]
+                .map(([, assumption]) => [assumption.shift(), assumption.shift(), assumption])
+                .map(([label, type, symbols]) => label);
+          //console.log(f);
+          //throw new Error("hi");
+          const compressor = new Compressor([...f, ...e], s);
+          const compressed = compressor.compress();
+          
+          p = `$= ( ${compressor.external().join(" ")} ) ${compressor.compress()} `;
+        }
+      }
       
       result.push(`
 $\{
@@ -2298,6 +2394,8 @@ class Transpiler {
 
   closure(label) {
     const files = this.split();
+    //console.log(files);
+    //throw new Error("hi");
     const queue = [label];
 
     const list = [];
@@ -2310,6 +2408,10 @@ class Transpiler {
         continue;
       }
       list.push(head);
+      if (!files[head]) {
+        console.log(head);
+        throw new Error();
+      }
       let [deps] = files[head];
       queue.push(...deps);
     }
@@ -2318,7 +2420,7 @@ class Transpiler {
       const [deps, content] = files[file];
       result[file] = [deps, content];
     }
-
+    
     return result;
   }
   
@@ -2337,7 +2439,7 @@ class Transpiler {
   
   axiom(label) {
     const [, [d, f, e, [type, axiom]]] = this.mm.labels[label];
-    let args = f.map(([type, name, label]) => `  let ${label}: ${type} ${name}`).join("\n");
+    let args = f.map(([type, name, label]) => `  param ${label}: ${type} ${name}`).join("\n");
     if (Object.entries(f).length  > 0) {
       args += "\n";
     }
@@ -2359,21 +2461,50 @@ end
 
   theorem(label) {
     // const deps = [];
-    const [, [d, f, e, [type, theorem]], func] = this.mm.labels[label];
+    const [, [d, f, e, [type, theorem], ddummy, dummy], func, proof] = this.mm.labels[label];
 
-    let args = f.map(([type, name, label]) => `  let ${label}: ${type} ${name}`).join("\n");
+    const labels = this.mm.labels;
+    const dummies = Object
+          .entries(dummy)
+          .map(([name, label]) => [labels[label][1][0], name, label]);
 
-    //console.log();
-    //throw new Error("hi");
+    //let args = [...f, ...dummies]
+    //    .map(([type, name, label]) => )
+    //    .join("\n");
+
+    const varz = [];
+
+    for (const [type, name, label] of f) {
+      varz.push(`  param ${label}: ${type} ${name}`);
+    }
+    
+    for (const [type, name, label] of dummies) {
+      varz.push(`  let ${label}: ${type} ${name}`);
+    }
+
+    const args = varz.join("\n");
+    
+    const dlabels = dummies.map(([type, name, label]) => label);
+
     const local = [...f.map(([, , label]) => label),
                    ...e.map(([, , label]) => label)];
+
+    //console.log(d);
     
-    const proof = func();
+    //console.log(ddummy);
+    //throw new Error("hi");
     
-    const steps = proof.map(([step]) => step);
+    let steps = proof;
+    if (proof[0] == "(") {
+      const [, external, , compressed] = proof;
+      steps = new Decompressor().decompress(local, external, compressed);
+    }
+
     const deps = [...new Set(steps)]
-          .filter((step) => !local.includes(step));
-    
+          .filter((step) => !local.includes(step))
+          .filter((step) => !dlabels.includes(step))
+          .filter((step) => typeof step != "number");
+
     let conds = "";
     
     let assumptions = e.map(([seq, type, name]) => `  assume ${name}: ${type} ${seq.join(" ")}`).join("\n");
@@ -2383,19 +2514,18 @@ end
     }
     
     let diff = [];
-    if (d.length > 0) {
-      // throw new Error("unsupported distinguished variables operator");
-      // args += " and (";
-    }
     for (let [x, y] of d) {
       diff.push(`  disjoint ${x} ${y}`);
     }
     
-    //if (d.length > 0) {
-    //  args += "" + diff.join(", ") + ")";
-    //}
+    for (let [x, y] of ddummy) {
+      diff.push(`  disjoint ${x} ${y}`);
+    }
     
-    const body = proof.map(([step, [type, sequence], args], i) => `  step ${i}) ${step}(${args}): ${type} ${sequence.join(' ')}`).join("\n");
+    const body = steps.map((step, i) => {
+      const call = typeof step == "number" ? (step == -1 ? `#` : `@${step}`) : `${step}`;
+      return `    ${call}`;
+    }).join("\n");
     
     const code = `
 theorem ${label}
@@ -2404,6 +2534,7 @@ ${assumptions}
 ${d.length > 0 ? diff.join("\n") : ""}
   assert ${type} ${theorem.join(' ')}
 
+  proof
 ${body}
 end
 `;
@@ -2881,8 +3012,6 @@ class Stack {
       throw new Error(`var ${varz} in $f already defined in scope`);
     }
 
-    // console.log(label);
-    
     frame.f.push([varz, kind]);
     frame.f_labels[varz] = label;
   }
@@ -2936,6 +3065,17 @@ class Stack {
     }
   }
 
+  hasF(label) {
+    for (const {f_labels} of [...this.stack].reverse()) {
+      for (const [varz, name] of Object.entries(f_labels)) {
+        if (label == name) {
+          return varz;
+        }
+      }
+    }
+    return false;
+  }
+
   lookupF(varz) {
     for (const frame of [...this.stack].reverse()) {
       if (frame.f_labels[varz]) {
@@ -2957,33 +3097,23 @@ class Stack {
 
   lookupD(a, b) {
     for (const frame of [...this.stack].reverse()) {
-      // console.log();
       const pair = a < b ? [a, b] : [b, a];
-      //console.log(frame.d);
-      // console.log(pair);
-      //console.log(frame.d.has(pair));
       
       for (let [x, y] of frame.d) {
-        // console.log(x);
         if (x == pair[0] && y == pair[1]) {
-          // console.log("hi");
           return true;
         }
       }
-      // console.log(varz);
-      //if (frame.d.has(varz)) {
-      //  return frame.d.get(varz);
-      //}
     }
     throw new Error(`Undeclared disjoint variable "${a}" and "${b}".`);
   }
 
-  assert(type, rule) {
+  assert(type, rule, proof) {
     const frame = this.top();
     const e = this.stack
           .map((frame) => frame.e)
           .flat();
-    
+
     const mandatory = new Set();
 
     for (const [hyp] of [...e, [rule, type]]) {
@@ -2996,8 +3126,10 @@ class Stack {
         }
       }
     }
-
+    
     const dvs = [];
+    const dummies = [];
+    const dummy = {};
     for (const {d} of [...this.stack].reverse()) {
       for (const pair of d) {
         const [x, y] = pair;
@@ -3006,10 +3138,40 @@ class Stack {
         // condition to the assertion.
         if (mandatory.has(x) && mandatory.has(y)) {
           dvs.push(pair);
+        } else {
+          dummies.push(pair);
+          // Capture dummy variables (variables that are
+          // used internally in proofs but don't who up
+          // in the header of the theorem) and their
+          // disjointness requirements.
+
+          // TODO: we should probably store the types
+          // here too, rather than just the label
+          // references, since the labels can be overriden
+          // in different scopes.
+          if (!mandatory.has(x)) {
+            dummy[x] = this.lookupF(x);
+          }
+          if (!mandatory.has(y)) {
+            dummy[y] = this.lookupF(y);
+          }
         }
       }
     }
-      
+
+    if (proof) {
+      // NOTE: this is extremely slow, because it has to
+      // compute wether a label is a $f statement for each
+      // step of the proof, and $f statements can be made
+      // anywhere in the stack.
+      for (const step of proof[0] == "(" ? proof[1] : proof) {
+        const varz = this.hasF(step);
+        if (varz && !mandatory.has(varz)) {
+          dummy[varz] = this.lookupF(varz);
+        }
+      }
+    }
+    
     const f = [];
 
     for (const frame of [...this.stack].reverse()) {
@@ -3021,7 +3183,7 @@ class Stack {
       }
     }
     
-    return [dvs, f, e, [type, rule]];
+    return [dvs, f, e, [type, rule], dummies, dummy];
   }
 }
 
@@ -3076,14 +3238,14 @@ class MM {
         this.labels[label] = [e, [type, rule]];
       } else if (second == "$p") {
         const [label, p, type, theorem, d, proof] = stmt;
-
         let result = {};
+        const assertion = this.frames.assert(type, theorem, proof);
         if (proof[0] != "(") {
           result = (generate = true) => {
             return this.verify(label, type, theorem, proof, generate);
           }
         } else {
-          const [d, f, e] = this.frames.assert(type, theorem);
+          const [d, f, e] = assertion;
           const labels = [];
           const args = f
                 .map(([k, v]) => v)
@@ -3092,9 +3254,19 @@ class MM {
                 .map(([rule, type]) => this.frames.lookupE(rule, type));
           labels.push(...args);
           labels.push(...hyps);
-          result = (generate = true) => {
-            let p = this.decompress(proof, labels);
+          result = (generate = true, markers = true) => {
+            const [, external, , compressed] = proof;
+            let p = markers ?
+                new Decompressor().decompress(labels, external, compressed) :
+                new Decompressor().explode(labels, external, compressed, this.labels);
             return this.verify(label, type, theorem, p, generate);
+          }
+
+          // const labels = this.labels;
+          const that = this;
+          proof.decompress = () => {
+            const [, external, , compressed] = proof;
+            return new Decompressor().explode(labels, external, compressed, that.labels);
           }
         }
         
@@ -3102,7 +3274,8 @@ class MM {
           result(false);
         }
         // console.log(stmt);
-        this.labels[label] = [p, this.frames.assert(type, theorem), result, proof, theorem];
+        // throw new Error("hi");
+        this.labels[label] = [p, assertion, result, proof, theorem];
       } else {
         throw new Error(`Unknown statement type: ${stmt}.`);
       }
@@ -3115,116 +3288,38 @@ class MM {
     return this.frames.pop();
   }
 
-  // Algorithms from:
-  // https://us.metamath.org/downloads/metamath.pdf
-  // https://mm.ivank.net/js/MM.js
-  // https://github.com/david-a-wheeler/mmverify.py/blob/master/mmverify.py
+  print() {
 
-  decompress(proof, labels) {
-    const m = labels.length;
-
-    const [l, local, r, compressed] = proof;
-    
-    const n = local.length;
-
-    let integers = [];
-    let current = 0;
-
-    // removes whitespaces from the compressed proof
-    for (let ch of compressed.replace(/\s/g, "")) {
-      if (ch >= 'A' && ch <= 'T') {
-        // Shift the current integer left by 20 bits.
-        // Add the next 20 bits as the least significant bits.
-        const result = current * 20 + ch.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
-        integers.push(result);
-        // Reset the current integer.
-        current = 0;
-      } else if (ch >= 'U' && ch <= 'Y') {
-        // Shift the current integer left by 5 bits.
-        current = current * 5;
-        // Add the next 5 bits as the last significant bits.
-        current += ch.charCodeAt(0) - 'U'.charCodeAt(0) + 1;
-      } else if (ch == 'Z') {
-        integers.push(-1);
-      } else {
-        throw new Error(`Unexpected character "${ch}" in compressed proof`);
-      }
-    }
-
-    // console.log(integers);
-    
-    const steps = integers.map((integer) => {
-      if (integer == -1) {
-        return -1;
-        return integer;
-      } else if (integer > 0 && integer <= m) {
-        return labels[integer - 1];
-      } else if (integer > m && integer <= (m + n)) {
-        const i = integer - m;
-        return local[i - 1];
-      } else {
-        // A marker.
-        return integer - (m + n + 1);
-      }
-    });
-
-    const statements = this.labels;
-    
-    function tree(i) {
-      if (!statements[steps[i]]) {
-        throw new Error(`Can't find entry ${steps[i]}.`);
-      }
-      const [type, [dvs, f = [], e = []]] = statements[steps[i]];
-      let result = 0;
-      if (type == "$f" || type == "$e") {
-        return 1;
-      } else if (type == "$a" || type == "$p") {
-        for (let j = 0; j < (f.length + e.length); j++) {
-          const offset = tree(i - 1 - result);
-          result += offset;
-        }
-      }
-      return result + 1;
-    }
-
-    const markers = [];
-
-    let i = 0;
-    while (i < steps.length) {
-      const number = steps[i];
-      if (typeof steps[i] == "string") {
-        i++;
-      } else if (number == -1) {
-        // push the subtree to the markers
-        const size = tree(i - 1);
-        const subtree = steps.slice(i - size, i);
-        markers.push(subtree);
-        // delete the marker
-        steps.splice(i, 1);
-      } else if (!markers[number]) {
-        throw new Error(`Marker #${number} not found while unrolling ${proof.join('')}.`);
-      } else {
-        // replace the number with the marked subtree
-        // https://stackoverflow.com/questions/44959025/rangeerror-maximum-call-stack-size-exceeded-caused-by-array-splice-apply
-        if (markers[number].length > 65536) {
-          // console.log(markers[number]);
-          // console.log(compressed);
-          throw new Error("proof too long");
-        }
-        steps.splice(i, 1, ...markers[number]);
-      }
-    }
-
-    return steps;
   }
-
+  
   verify(label, type, theorem, proof, generate) {
     const stack = [];
-
     const steps = [];
+    const markers = [];
 
+    // throw new Error("hi");
+    
     let index = 0;
     for (const step of proof) {
+      if (step == -1) {
+        // Take the top of the stack, which is the result of
+        // a prior computation / verification, and saves that
+        // result so that it can be reused later, without
+        // incurring into the recomputation.
+        const top = stack[stack.length - 1];
+        markers.push(top);
+        steps.push([step, top.slice(1)]);
+        continue;
+      } else if (typeof step == "number") {
+        // Takes a prior computation, which was already
+        // previously verified (since it was at the top of
+        // the stack at some point), and reuses its result
+        // in another computation by pushing it into the stack.
+        stack.push(markers[step]);
+        steps.push([step, markers[step].slice(1)]);
+        continue;
+      }
+      
       if (!this.labels[step]) {
         throw new Error(`Unknown theorem "${step}" in the proof for "${label}".`);
       }
@@ -3251,10 +3346,10 @@ class MM {
           if (top[1] != k) {
             console.log(`Stack at ${sp} because ${mandatory.length} args + ${hyp.length} hypothesis:`);
             for (let [index, type, string] of stack.reverse()) {
-              console.log(`  ${type} ${string.join("")}`);
+              console.log(`  ${type} ${string.flat().join(" ")}`);
             }
-            console.log(mandatory);
-            throw new Error(`Step ${step} of ${label}: argument type of ${v} doesn't match with the top of the stack. Expected ${k} but got ${top[1]}.`);
+            // console.log(mandatory);
+            throw new Error(`Step "${step}" of "${label}": argument type of "${v}" doesn't match with the top of the stack. Expected "${k}" but got "${top[1]}".`);
           }
           subs[v] = top[2];
           args.push(top[0]);
@@ -3270,8 +3365,10 @@ class MM {
           const sub = h
                 .map((tok) => subs[tok] ? subs[tok] : tok);
           if (top[2].flat().join("") != sub.flat().join("")) {
-            // argument value for substitution ${JSON.stringify(subs)} of the hypothesis ${h.join(" ")} doesn't match with the top of the stack. 
-            throw new Error(`Step ${step}: Expected ${sub.flat().join("")} but got ${top[2].join("")}.`);
+            const e = [];
+            e.push(`Substitution ${JSON.stringify(subs)} of the hypothesis ${h.join(" ")} doesn't match with the top of the stack`);
+            e.push(`Step ${step}: Expected ${sub.flat().join("")} but got ${top[2].join("")}.`);
+            throw new Error(e.join("\n"));
           }
           args.push(top[0]);
           sp++;
@@ -3293,9 +3390,9 @@ class MM {
               for (let el2 of b) {
                 // First, the two expressions must have no variables in common.
                 if (el1 == el2) {
-                  throw new Error(`${x} (${a}) and ${y} (${b}) are disjoined variables, and they share ${el}. `);
+                  throw new Error(`${x} (=${a}) and ${y} (=${b}) are disjoined variables and can't carry the same value. `);
                 }
-                
+                // console.log(label);
                 // Second, each possible pair of variables, one from each expression, must exist in
                 // an active $d statement of the $p statement containing the proof.
                 if (!this.frames.lookupD(el1, el2)) {
@@ -3320,7 +3417,12 @@ class MM {
     }
 
     if (stack.length != 1) {
-      throw new Error(`Stack has more than one entry left`);
+      const message = [];
+      message.push(`Stack has more than one entry left:\n`);
+      for (let [index, type, string] of stack.reverse()) {
+        message.push(`  ${type} ${string.flat().join(" ")}`);
+      }
+      throw new Error(message.join("\n"));
     }
     
     const [, kind, last] = stack.pop();
@@ -3330,9 +3432,7 @@ class MM {
     }
     
     if (last.flat().join(" ") != theorem.flat().join(" ")) {
-      console.log(last);
-      console.log(theorem);
-      throw new Error(`Assertion proved doesn't match: expected ${theorem.join("")} but got ${last.join("")}`);
+      throw new Error(`Result of proof doesn't match assertion: expected "${theorem.join(" ")}" but got "${last.join(" ")}".`);
     }
 
     return steps;
@@ -3369,11 +3469,196 @@ class MM {
   }
 }
 
+class Decompressor {
+  decode(compressed) {
+    let integers = [];
+    let current = 0;
+
+    // removes whitespaces from the compressed proof
+    for (let ch of compressed.replace(/\s/g, "")) {
+      if (ch >= 'A' && ch <= 'T') {
+        // Shift the current integer left by 20 bits.
+        // Add the next 20 bits as the least significant bits.
+        const result = current * 20 + ch.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
+        integers.push(result);
+        // Reset the current integer.
+        current = 0;
+      } else if (ch >= 'U' && ch <= 'Y') {
+        // Shift the current integer left by 5 bits.
+        current = current * 5;
+        // Add the next 5 bits as the last significant bits.
+        current += ch.charCodeAt(0) - 'U'.charCodeAt(0) + 1;
+      } else if (ch == 'Z') {
+        integers.push(-1);
+      } else {
+        throw new Error(`Unexpected character "${ch}" in compressed proof`);
+      }
+    }
+
+    return integers;
+  }
+
+
+  // Algorithms from:
+  // https://us.metamath.org/downloads/metamath.pdf
+  // https://mm.ivank.net/js/MM.js
+  // https://github.com/david-a-wheeler/mmverify.py/blob/master/mmverify.py
+
+  steps(labels, local, integers) {
+    const m = labels.length;
+    const n = local.length;
+
+    return integers.map((integer) => {
+      if (integer == -1) {
+        return -1;
+      } else if (integer > 0 && integer <= m) {
+        return labels[integer - 1];
+      } else if (integer > m && integer <= (m + n)) {
+        const i = integer - m;
+        return local[i - 1];
+      } else {
+        // A marker.
+        return integer - (m + n + 1);
+      }
+    });
+  }
+
+  tree(steps, i, other) {
+    // const statements = this.labels;
+    const statements = other;
+
+    if (!statements[steps[i]]) {
+      throw new Error(`Can't find entry ${steps[i]}.`);
+    }
+    const [type, [dvs, f = [], e = []]] = statements[steps[i]];
+    let result = 0;
+    if (type == "$f" || type == "$e") {
+      return 1;
+    } else if (type == "$a" || type == "$p") {
+      for (let j = 0; j < (f.length + e.length); j++) {
+        const offset = this.tree(steps, i - 1 - result, other);
+        result += offset;
+      }
+    }
+    return result + 1;
+  }
+
+  expand(steps, other) {
+    const markers = [];
+
+    let i = 0;
+    while (i < steps.length) {
+      const number = steps[i];
+      if (typeof steps[i] == "string") {
+        i++;
+      } else if (number == -1) {
+        // push the subtree to the markers
+        const size = this.tree(steps, i - 1, other);
+        const subtree = steps.slice(i - size, i);
+        markers.push(subtree);
+        // delete the marker
+        steps.splice(i, 1);
+      } else if (!markers[number]) {
+        // console.log(other);
+        throw new Error(`Marker #${number} not found while unrolling proof.`);
+      } else {
+        // replace the number with the marked subtree
+        // https://stackoverflow.com/questions/44959025/rangeerror-maximum-call-stack-size-exceeded-caused-by-array-splice-apply
+        if (markers[number].length > 65536) {
+          throw new Error("proof too long");
+        }
+        steps.splice(i, 1, ...markers[number]);
+      }
+    }
+
+    return steps;
+  }
+
+  decompress(local, external, compressed) {
+    // We can either choose to decompress the proof using
+    // markers, which substantially speed up the processing
+    // by reusing prior computation.
+    let integers = this.decode(compressed);
+    return this.steps(local, external, integers);
+  }
+  
+  explode(local, external, compressed, other) {
+    // Or we can expand the proof fully, which recomputes
+    // all subproofs.
+    const steps = this.decompress(local, external, compressed);
+    return this.expand(steps, other);
+  }
+
+
+}
+
+class Compressor {
+  constructor(local, steps) {
+    this.steps = steps;
+    this.local = local;
+  }
+  
+  external() {
+    // throw new Error("hi");
+    return this.steps
+      .filter((step) => typeof step != "number")
+      .filter((label) => !this.local.includes(label))
+      .filter((label, i, self) => self.indexOf(label) == i);
+  }
+  
+  integers() {
+    let labels = this.local;
+    let refs = this.external();
+    return this.steps.map((step) => {
+      if (step == -1) {
+        // A marker
+        return step;
+      } else if (labels.includes(step)) {
+        // A hypothesis reference
+        return 1 + labels.indexOf(step);
+      } else if (refs.includes(step)) {
+        // A local array reference
+        return 1 + labels.length + refs.indexOf(step);
+      } else if (typeof step == "number") {
+        // A reference to a marker
+        return 1 + labels.length + refs.length + step;
+      } else {
+        throw new Error(`Invalid ${step}`);
+      }
+    });
+  }
+
+  compress() {
+    return this.integers()
+      .map((number) => number == -1 ? "Z" : Compressor.encode(number))
+      .join("");
+  }
+    
+  static encode(number) {
+    const digits = [];
+      
+    let n = number - 1;
+
+    let msb = Math.floor(n / 20);
+      
+    while (msb > 0) {
+      const ch = String.fromCharCode('U'.charCodeAt(0) + ((msb - 1) % 5));
+      digits.push(ch);
+      msb = Math.floor((msb - 1) / 5);
+    }
+      
+    const remainder = n % 20;
+    digits.push(String.fromCharCode('A'.charCodeAt(0) + remainder));
+    return digits.join("");
+  }
+}
 
 module.exports = {
   Frame: Frame,
   Stack: Stack,
-  MM: MM
+  MM: MM,
+  Compressor: Compressor,
+  Decompressor: Decompressor,
 };
 
 },{}],10:[function(require,module,exports){
