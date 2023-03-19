@@ -584,6 +584,8 @@ $\}`);;
     ["hol.mm", "wal"],
     ["hol.mm", "cl"],
     ["hol.mm", "mpbirx"],
+    // This takes too long, so we avoid running it every time
+    // ["set.mm", "2p2e4"],
   ]) {
     it(`Transpile the closure: ${label}`, async function() {
       this.timeout(50000);
