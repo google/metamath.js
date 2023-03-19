@@ -237,6 +237,10 @@ class Stack {
     }
 
     if (proof) {
+      // NOTE: this is extremely slow, because it has to
+      // compute wether a label is a $f statement for each
+      // step of the proof, and $f statements can be made
+      // anywhere in the stack.
       for (const step of proof[0] == "(" ? proof[1] : proof) {
         const varz = this.hasF(step);
         if (varz && !mandatory.has(varz)) {

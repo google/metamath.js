@@ -410,44 +410,22 @@ describe("Transpile and Parse", () => {
   for (const [file, label, expects] of [
     ["hol.mm", "mpbirx", 6],
     ["hol.mm", "cl", 39],
-    ["ql.mm", "testmod3", 49]
+    ["ql.mm", "testmod3", 49],
+    // 2p2e4 passes but is disabled becaused processing set.mm takes 30 secs
+    // ["set.mm", "2p2e4", 796],
   ]) {
     it(`Transpile, compile and verify: ${file} ${label}`, async function() {
+      this.timeout(50000);
       const program = await require("fs/promises").readFile(`tests/${file}`);
       const files = new Transpiler()
             .read(program.toString())
             .closure(label, true);
       const typogram = Object.values(files).map(([, content]) => content).join("");
-      // console.log(typogram);
       const metamath = await new Compiler().compile(typogram);
-      //console.log(metamath);
       assertThat(new Verifier().verify(metamath)).equalsTo(expects);
     });
   }
   
-  it.skip("2p2e4", async function() {
-    this.timeout(50000);
-    const program = await require("fs/promises").readFile(`tests/set.mm`);
-    
-    //console.log(new Transpiler()
-    //            .read(program.toString()).mm.labels["vx"]);
-    
-    //return;
-    
-    const transpiler = new Transpiler()
-          .read(program.toString());
-    
-    //.theorem("tru");
-    console.log(transpiler.mm.labels["tru"]);
-    
-    //.closure("2p2e4", true);
-    //console.log(files);
-    return;
-    const typogram = Object.values(files).map(([, content]) => content).join("");
-    const metamath = await new Compiler().compile(typogram);
-    assertThat(new Verifier().verify(metamath)).equalsTo(6);
-  });
-
   async function write(dir, file, content) {
     const fs = require("fs/promises");
 
