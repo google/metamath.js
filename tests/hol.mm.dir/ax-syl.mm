@@ -1,5 +1,4 @@
 
-
 axiom ax-syl
   let tr: term R
   let ts: term S

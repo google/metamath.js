@@ -1,5 +1,4 @@
 
-
 axiom eqtypri
   let hal: type al
   let ta: term A

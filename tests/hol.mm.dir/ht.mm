@@ -1,5 +1,4 @@
 
-
 axiom ht
   let hal: type al
   let hbe: type be

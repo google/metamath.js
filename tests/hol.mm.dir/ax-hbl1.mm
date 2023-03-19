@@ -1,5 +1,4 @@
 
-
 axiom ax-hbl1
   let hal: type al
   let hbe: type be

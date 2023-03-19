@@ -1,5 +1,4 @@
 
-
 axiom ax-cb2
   let ta: term A
   let tr: term R

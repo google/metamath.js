@@ -1,5 +1,4 @@
 
-
 axiom ax-17
   let hal: type al
   let hbe: type be

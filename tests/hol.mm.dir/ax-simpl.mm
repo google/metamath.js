@@ -1,5 +1,4 @@
 
-
 axiom ax-simpl
   let tr: term R
   let ts: term S

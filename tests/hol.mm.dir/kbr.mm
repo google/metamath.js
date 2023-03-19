@@ -1,5 +1,4 @@
 
-
 axiom kbr
   let ta: term A
   let tb: term B

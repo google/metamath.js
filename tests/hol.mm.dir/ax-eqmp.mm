@@ -1,5 +1,4 @@
 
-
 axiom ax-eqmp
   let ta: term A
   let tb: term B

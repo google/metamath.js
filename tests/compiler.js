@@ -379,11 +379,20 @@ $\}`);
     assertThat(new Verifier().verify(result)).equalsTo(1);
   });
 
-  it("transpile", async () => {
-    for (let file of ["tq.mm", "pq.mm", "miu.mm", "demo0.mm", "test.mm", "id.mm", "trud.mm"]) {
+  for (let file of [
+    "tq.mm",
+    "pq.mm",
+    "miu.mm",
+    "demo0.mm",
+    "test.mm",
+    "id.mm",
+    "trud.mm",
+    "hol.mm",
+  ]) {
+    it.only(`Transpile ${file}`, async () => {
       await transpile(`tests/${file}`);
-    }
-  });
+    });
+  }
 });
 
 describe("Transpile and Parse", () => {
@@ -496,7 +505,7 @@ $\{
 $\}`);;
   });
 
-  it("compress proof of cl", async function() {
+  it("Compress proof of cl", async function() {
     const src = "hol.mm";
     const label = "cl";
     const program = await require("fs/promises").readFile(`tests/${src}`);
@@ -516,7 +525,7 @@ $\}`);;
     const [, [d, f, e, rule], verifier, proof] = mm.labels[label];
   });
   
-  it("correspondence: hol.mm / cl", async function() {
+  it("Verify the correspondence: hol.mm / cl", async function() {
     const src = "hol.mm";
     const label = "cl";
     const program = await require("fs/promises").readFile(`tests/${src}`);

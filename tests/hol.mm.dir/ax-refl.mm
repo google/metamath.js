@@ -1,5 +1,4 @@
 
-
 axiom ax-refl
   let hal: type al
   let ta: term A

@@ -1,5 +1,4 @@
 
-
 axiom wctl
   let ts: term S
   let tt: term T
