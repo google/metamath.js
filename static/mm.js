@@ -87,7 +87,7 @@ class Theorem extends React.Component {
            </div>
          )}
 
-         {a == "$p" &&
+         {a == "$p" && 
            <Proof mm={mm} proof={proof()}/>
          }
 
@@ -181,6 +181,8 @@ class Proof extends React.Component {
     const mm = this.props.mm;
     const proof = this.props.proof;
 
+    // console.log(proof);
+    
     const style = function (highlight, i, type) {
       const base = type == "|-" ? {} : {display: "none"};
       if (!highlight) {
@@ -206,24 +208,38 @@ class Proof extends React.Component {
               <tr><th>Step</th><th>Rule</th><th>Arguments</th><th>Type</th><th>Expression</th></tr>
             </thead>
             <tbody>
-            {proof.map(([step, [type, result], args], i) =>
+            {proof.map((step, i) => {
+              const [label, rule = [], args = []] = step;
+              console.log(label);
+              const [type = "", result = []] = rule;
+              if (typeof label == "number") {
+                return
+                  <tr key={i}>
+                    <td>${label}</td>
+                    <td><Code mm={mm} src={type}/></td>
+                    <td><Code mm={mm} src={result.flat().join(" ")}/></td>
+                  </tr>
+              }
+              return (
               <tr key={i}
                 style={style(this.state.highlight, i, type)}
-                onMouseEnter={() => this.setState({"highlight": [...args, i], "open": step})}
+                onMouseEnter={() => this.setState({"highlight": [...args, i], "open": label})}
                 onMouseLeave={() => this.setState({"highlight": undefined, "open": undefined})}>
                 <td>{i}</td>
-                <td>{(mm.labels[step][0] == "$a" || mm.labels[step][0] == "$p") && (
-                  <a href={"#" + step} onClick={() => {this.setState({"label": step});}}>{step}</a>
+                <td>{(mm.labels[label][0] == "$a" || mm.labels[label][0] == "$p") && (
+                  <a href={"#" + label} onClick={() => {this.setState({"label": step});}}>{label}</a>
                 )}
-                {(mm.labels[step][0] != "$a" && mm.labels[step][0] != "$p") && (
+                {(mm.labels[label][0] != "$a" && mm.labels[label][0] != "$p") && (
                   step
                 )}
                 </td>
                 <td>{args.join(", ")}</td>
                 <td><Code mm={mm} src={type}/></td>
                 <td><Code mm={mm} src={result.flat().join(" ")}/></td>
-                </tr>
-              )}
+              </tr>
+              )
+              })
+            }
             </tbody>
           </table>
           <Window mm={mm} open={this.state.open}/>
@@ -315,7 +331,7 @@ class Metamath extends React.Component {
             <div className="post-date">2023</div>
           </div>
           <div className="post-body">
-            Verifying {this.state.file}
+            Loading {this.state.file}
           </div>
         </div>
       </div>
