@@ -427,19 +427,21 @@ describe("Transpile and Parse", () => {
   
   it.skip("2p2e4", async function() {
     this.timeout(50000);
-    // Hits "proof too long", probably as one of its dependencies, and so
-    // fails.
     const program = await require("fs/promises").readFile(`tests/set.mm`);
-
+    
     //console.log(new Transpiler()
     //            .read(program.toString()).mm.labels["vx"]);
-
+    
     //return;
     
-    const files = new Transpiler()
-          .read(program.toString())
-          .closure("2p2e4", true);
-    console.log(files);
+    const transpiler = new Transpiler()
+          .read(program.toString());
+    
+    //.theorem("tru");
+    console.log(transpiler.mm.labels["tru"]);
+    
+    //.closure("2p2e4", true);
+    //console.log(files);
     return;
     const typogram = Object.values(files).map(([, content]) => content).join("");
     const metamath = await new Compiler().compile(typogram);

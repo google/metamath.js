@@ -1452,6 +1452,67 @@ describe("Verifier", () => {
     assertThat(proof(false)).equalsTo();
   });
 
+  it("Captures dummy variables only in proof", () => {
+    const mm = process(`
+      $c wff ( ) -> $.
+
+      $\{
+        $v x y $.
+        a1.x $f wff x $.
+        a1.y $f wff y $.
+        a1 $a wff ( x -> y ) $.
+      $\}
+ 
+      $\{
+        $v x y $.
+        a2.x $f wff x $.
+        a2.y $f wff y $.
+        a2.e $e wff y $.
+        a2 $a wff x $.
+      $\}
+ 
+      $\{
+        $v a $.
+        foo.a $f wff a $.
+        $(
+           deliberately construct a dummy variable "x" by explicitly
+           excluding it from the $p and $e statements.
+        $)
+        $v x $.
+        foo.x $f wff x $.
+        foo $p wff ( a -> a ) $= foo.a foo.x foo.x a2 foo.a foo.x foo.x a2 a1 $.
+      $\}
+     `);
+    const [, [d, f, e, p, dd, dummy], verifier] = mm.labels["foo"];
+
+    // "x" isn't a mandatory variable because it doesn't show up in the
+    // $p or $e statements.
+    assertThat(f).equalsTo([["wff", "a", "foo.a"]]);
+
+    // "x" is captured as a dummy variable.
+    assertThat(dummy).equalsTo({
+      "x": "foo.x"
+    });
+    
+    const proof = verifier();
+    const steps = proof
+          .map(([label, [type, top]]) => `${label}: ${type} ${top.join(" ")}`)
+          .join("\n");
+    assertThat(steps).equalsTo(`
+foo.a: wff a
+foo.x: wff x
+foo.x: wff x
+a2: wff a
+foo.a: wff a
+foo.x: wff x
+foo.x: wff x
+a2: wff a
+a1: wff ( a -> a )
+`.trim());
+    
+    
+  });
+  
   it("dummy variables not part of layout", () => {
     const mm = process(`
       $c wff ( ) -> $.

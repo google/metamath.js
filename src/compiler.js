@@ -539,6 +539,10 @@ class Transpiler {
         continue;
       }
       list.push(head);
+      if (!files[head]) {
+        console.log(head);
+        throw new Error();
+      }
       let [deps] = files[head];
       queue.push(...deps);
     }

@@ -89,8 +89,6 @@ class Stack {
       throw new Error(`var ${varz} in $f already defined in scope`);
     }
 
-    // console.log(label);
-    
     frame.f.push([varz, kind]);
     frame.f_labels[varz] = label;
   }
@@ -144,6 +142,17 @@ class Stack {
     }
   }
 
+  hasF(label) {
+    for (const {f_labels} of [...this.stack].reverse()) {
+      for (const [varz, name] of Object.entries(f_labels)) {
+        if (label == name) {
+          return varz;
+        }
+      }
+    }
+    return false;
+  }
+
   lookupF(varz) {
     for (const frame of [...this.stack].reverse()) {
       if (frame.f_labels[varz]) {
@@ -165,35 +174,25 @@ class Stack {
 
   lookupD(a, b) {
     for (const frame of [...this.stack].reverse()) {
-      // console.log();
       const pair = a < b ? [a, b] : [b, a];
-      //console.log(frame.d);
-      // console.log(pair);
-      //console.log(frame.d.has(pair));
       
       for (let [x, y] of frame.d) {
-        // console.log(x);
         if (x == pair[0] && y == pair[1]) {
-          // console.log("hi");
           return true;
         }
       }
-      // console.log(varz);
-      //if (frame.d.has(varz)) {
-      //  return frame.d.get(varz);
-      //}
     }
     throw new Error(`Undeclared disjoint variable "${a}" and "${b}".`);
   }
 
-  assert(type, rule) {
+  assert(type, rule, proof) {
     const frame = this.top();
     const e = this.stack
           .map((frame) => frame.e)
           .flat();
-    
+
     const mandatory = new Set();
-    
+
     for (const [hyp] of [...e, [rule, type]]) {
       for (const tok of hyp) {
         // console.log(hyp);
@@ -204,7 +203,7 @@ class Stack {
         }
       }
     }
-
+    
     const dvs = [];
     const dummies = [];
     const dummy = {};
@@ -233,6 +232,15 @@ class Stack {
           if (!mandatory.has(y)) {
             dummy[y] = this.lookupF(y);
           }
+        }
+      }
+    }
+
+    if (proof) {
+      for (const step of proof[0] == "(" ? proof[1] : proof) {
+        const varz = this.hasF(step);
+        if (varz && !mandatory.has(varz)) {
+          dummy[varz] = this.lookupF(varz);
         }
       }
     }
@@ -304,12 +312,13 @@ class MM {
       } else if (second == "$p") {
         const [label, p, type, theorem, d, proof] = stmt;
         let result = {};
+        const assertion = this.frames.assert(type, theorem, proof);
         if (proof[0] != "(") {
           result = (generate = true) => {
             return this.verify(label, type, theorem, proof, generate);
           }
         } else {
-          const [d, f, e] = this.frames.assert(type, theorem);
+          const [d, f, e] = assertion;
           const labels = [];
           const args = f
                 .map(([k, v]) => v)
@@ -338,7 +347,8 @@ class MM {
           result(false);
         }
         // console.log(stmt);
-        this.labels[label] = [p, this.frames.assert(type, theorem), result, proof, theorem];
+        // throw new Error("hi");
+        this.labels[label] = [p, assertion, result, proof, theorem];
       } else {
         throw new Error(`Unknown statement type: ${stmt}.`);
       }
@@ -351,6 +361,10 @@ class MM {
     return this.frames.pop();
   }
 
+  print() {
+
+  }
+  
   verify(label, type, theorem, proof, generate) {
     const stack = [];
     const steps = [];
@@ -424,8 +438,10 @@ class MM {
           const sub = h
                 .map((tok) => subs[tok] ? subs[tok] : tok);
           if (top[2].flat().join("") != sub.flat().join("")) {
-            // argument value for substitution ${JSON.stringify(subs)} of the hypothesis ${h.join(" ")} doesn't match with the top of the stack. 
-            throw new Error(`Step ${step}: Expected ${sub.flat().join("")} but got ${top[2].join("")}.`);
+            const e = [];
+            e.push(`Substitution ${JSON.stringify(subs)} of the hypothesis ${h.join(" ")} doesn't match with the top of the stack`);
+            e.push(`Step ${step}: Expected ${sub.flat().join("")} but got ${top[2].join("")}.`);
+            throw new Error(e.join("\n"));
           }
           args.push(top[0]);
           sp++;
@@ -474,7 +490,12 @@ class MM {
     }
 
     if (stack.length != 1) {
-      throw new Error(`Stack has more than one entry left`);
+      const message = [];
+      message.push(`Stack has more than one entry left:\n`);
+      for (let [index, type, string] of stack.reverse()) {
+        message.push(`  ${type} ${string.flat().join(" ")}`);
+      }
+      throw new Error(message.join("\n"));
     }
     
     const [, kind, last] = stack.pop();
@@ -484,9 +505,7 @@ class MM {
     }
     
     if (last.flat().join(" ") != theorem.flat().join(" ")) {
-      console.log(last);
-      console.log(theorem);
-      throw new Error(`Assertion proved doesn't match: expected ${theorem.join("")} but got ${last.join("")}`);
+      throw new Error(`Result of proof doesn't match assertion: expected "${theorem.join(" ")}" but got "${last.join(" ")}".`);
     }
 
     return steps;
