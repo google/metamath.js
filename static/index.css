@@ -552,15 +552,18 @@ code {
     font-family: ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
     /** display: inline-block; **/
     vertical-align: text-bottom;
-    max-height: 1.4em;
+    /** max-height: 1.4em; **/
     background-color: #a8d1ff;
     background-color: #fff2a8;
     background-color: #4CAF5080;
     background-color: #e5e5e5;
     background-color: #f2f2f2;
+    display: inline-block;
+    /** line-height: 1.5em; **/
 }
 
 code:empty {
     width: calc(100% - 1em);
     display: inline-block;
+    /** height: 1em; **/
 }
