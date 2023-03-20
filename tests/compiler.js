@@ -644,7 +644,7 @@ $\}`);;
   for (let [dir, file, label, s, d] of [
     ["tests/hol.mm.dir", "mpbirx.mm", "mpbirx", [16, 5], [6, 25]],
   ]) {
-    it.only(`Compile and verify: ${file}`, async function() {
+    it(`Compile and verify: ${file}`, async function() {
       let deps = 0;
       const loader = (async (file) => {
         deps++;
