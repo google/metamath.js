@@ -3,6 +3,12 @@ const {descent: {parse, process}, metamath: {MM}} = module;
 class Code extends React.Component {
   render() {
     const c = this.props.mm.labels["$c"].map(([, c]) => c).flat();
+
+    if (!this.props.src || this.props.src == "") {
+      return (
+          <code style={{padding: "0.3em 0.5em"}}></code>
+      );
+    }
     
     return (
       <code style={{padding: "0.3em 0.5em"}}>
@@ -215,8 +221,19 @@ class Proof extends React.Component {
 
         <div style={{position: "relative", display: "inline-block"}}>
           <table>
+            <colgroup>
+              <col />
+              <col />
+              <col style={{width: "10em"}}/>
+              <col style={{width: "25em"}}/>
+            </colgroup>
             <thead>
-              <tr><th>Step</th><th>Rule</th><th>Arguments</th><th>Type</th><th>Expression</th></tr>
+            <tr>
+              <th>Step</th>
+              <th>Rule</th>
+              <th>Type</th>
+              <th>Expression</th>
+            </tr>
             </thead>
             <tbody>
             {proof.map((step, i) => {
@@ -238,9 +255,8 @@ class Proof extends React.Component {
                 onMouseLeave={() => this.setState({"highlight": undefined, "open": undefined})}>
                 <td>{i}</td>
                 <td>
-                  <a href={"#" + label} onClick={() => {this.setState({"label": step});}}>{label}</a>
+                  <a href={"#" + label} onClick={() => {this.setState({"label": step, "highlight": undefined});}}>{label}</a>
                 </td>
-                <td>{args.join(", ")}</td>
                 <td><Code mm={mm} src={type}/></td>
                 <td><Code mm={mm} src={result.flat().join(" ")}/></td>
               </tr>
@@ -276,6 +292,8 @@ class Metamath extends React.Component {
       });
     }
 
+    // return;
+    
     const compiler = new Compiler(this.loader.bind(this));
 
     const source = await compiler.compile(
@@ -300,7 +318,6 @@ class Metamath extends React.Component {
   
   async componentDidMount() {
     window.addEventListener('hashchange', this.compute.bind(this), false);
-    // console.log(this.props.label);
     this.compute();
   }
 

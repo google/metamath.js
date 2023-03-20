@@ -518,25 +518,6 @@ table tr:nth-child(2n) {
   width: 1px;
 }
 
-code {
-    /**
-    font-family: unset;
-    padding: 2px 6px;
-    **/
-    border-radius: 6px;
-    font-size: 85%;
-    margin: 0;
-    padding: 0.2em 0.4em;
-    font-family: ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
-    /** display: inline-block; **/
-    vertical-align: text-bottom;
-    max-height: 1.4em;
-    background-color: #a8d1ff;
-    background-color: #fff2a8;
-    background-color: #4CAF5080;
-    background-color: #e5e5e5;
-}
-
 .icon:hover::before {
     opacity: 0.1;
     transform: scale(2);
@@ -557,4 +538,29 @@ code {
   opacity: 0;
   transform: scale(1);
   transition: transform 0.15s cubic-bezier(0.17, 0.67, 0.26, 1.04) 0s;
+}
+
+code {
+    /**
+    font-family: unset;
+    padding: 2px 6px;
+    **/
+    border-radius: 6px;
+    font-size: 85%;
+    margin: 0;
+    padding: 0.2em 0.4em;
+    font-family: ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+    /** display: inline-block; **/
+    vertical-align: text-bottom;
+    max-height: 1.4em;
+    background-color: #a8d1ff;
+    background-color: #fff2a8;
+    background-color: #4CAF5080;
+    background-color: #e5e5e5;
+    background-color: #f2f2f2;
+}
+
+code:empty {
+    width: calc(100% - 1em);
+    display: inline-block;
 }
