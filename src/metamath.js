@@ -388,110 +388,117 @@ class MM {
         // result so that it can be reused later, without
         // incurring into the recomputation.
         const top = stack[stack.length - 1];
-        markers.push(top);
-        steps.push([step, top.slice(1)]);
+        markers.push([top, index - 1]);
+        steps.push([step, top.slice(1), index - 1]);
         continue;
       } else if (typeof step == "number") {
         // Takes a prior computation, which was already
         // previously verified (since it was at the top of
         // the stack at some point), and reuses its result
         // in another computation by pushing it into the stack.
-        stack.push(markers[step]);
-        steps.push([step, markers[step].slice(1)]);
-        continue;
-      }
-      
-      if (!this.labels[step]) {
-        throw new Error(`Unknown theorem "${step}" in the proof for "${label}".`);
-      }
-      const [op, data] = this.labels[step];
-      if (op == "$e" || op == "$f") {
-        const [type, varz] = data;
-        stack.push([index, type, [varz]]);
-        const t = stack[stack.length - 1];
-        steps.push([step, [t[1], t[2]], []]);
-      } else if (op == "$a" || op == "$p") {
-        const [dvs, mandatory, hyp, result] = data;
-        const subs = {};
-        const npop = mandatory.length + hyp.length;
-        const base = stack.length - npop;
-        // console.log(`Stack: base=${base}, npop=${npop}, length=${stack.length}`);
-        const args = [];
-        let sp = base;
-        if (sp < 0) {
-          throw new Error(`Empty stack ${sp}.`);
-        }
-        
-        for (const [k, v] of mandatory) {
-          const top = stack[sp];
-          if (top[1] != k) {
-            console.log(`Stack at ${sp} because ${mandatory.length} args + ${hyp.length} hypothesis:`);
-            for (let [index, type, string] of stack.reverse()) {
-              console.log(`  ${type} ${string.flat().join(" ")}`);
-            }
-            // console.log(mandatory);
-            throw new Error(`Step "${step}" of "${label}": argument type of "${v}" doesn't match with the top of the stack. Expected "${k}" but got "${top[1]}".`);
-          }
-          subs[v] = top[2];
-          args.push(top[0]);
-          sp++;
-        }
-        
-        for (const [h, type] of hyp) {
-          const top = stack[sp];
-          if (top[1] != type) {
-            throw new Error(`Step ${step}: argument type doesn't match with the topf of the stack. Expected ${type} but got ${top[0]}.`);
-          }
-          
-          const sub = h
-                .map((tok) => subs[tok] ? subs[tok] : tok);
-          if (top[2].flat().join("") != sub.flat().join("")) {
-            const e = [];
-            e.push(`Substitution ${JSON.stringify(subs)} of the hypothesis ${h.join(" ")} doesn't match with the top of the stack`);
-            e.push(`Step ${step}: Expected ${sub.flat().join("")} but got ${top[2].join("")}.`);
-            throw new Error(e.join("\n"));
-          }
-          args.push(top[0]);
-          sp++;
+        // stack.push(markers[step]);
+        const [[, type, string], i] = markers[step];
+        // Reuse the computation from a previous step, but generate
+        // a new step entry.
+        stack.push([index, type, string]);
+        // throw new Error(step);
+        steps.push([step, [type, string], i]);
+        // continue;
+      } else {
+        if (!this.labels[step]) {
+          throw new Error(`Unknown theorem "${step}" in the proof for "${label}".`);
         }
 
-        // Page 133: Verifying Disjoint Variable Restrictions
-        // https://us.metamath.org/downloads/metamath.pdf
-        // Each substitution made in a proof must be checked to verify that any disjoint
-        // variable restrictions are satisfied, as follows.
-        // If two variables replaced by a substitution exist in a mandatory $d
-        // statement of the assertion referenced, the two expressions resulting from the
-        // substitution must satisfy the following conditions.
-        if (!generate) {
-          // If we are in debug mode, skip this.
-          for (const [x, y] of dvs) {
-            const a = subs[x].filter((v) => this.frames.lookupV(v));
-            const b = subs[y].filter((v) => this.frames.lookupV(v));
-            for (let el1 of a) {
-              for (let el2 of b) {
-                // First, the two expressions must have no variables in common.
-                if (el1 == el2) {
-                  throw new Error(`${x} (=${a}) and ${y} (=${b}) are disjoined variables and can't carry the same value. `);
-                }
-                // console.log(label);
-                // Second, each possible pair of variables, one from each expression, must exist in
-                // an active $d statement of the $p statement containing the proof.
-                if (!this.frames.lookupD(el1, el2)) {
-                  throw new Error(`${el1} of ${x} (${a}) and ${el2} of ${y} (${b}) aren't declared as disjoint.`);
+        const [op, data] = this.labels[step];
+
+        if (op == "$e" || op == "$f") {
+          const [type, varz] = data;
+          stack.push([index, type, [varz]]);
+          const t = stack[stack.length - 1];
+          steps.push([step, [t[1], t[2]], []]);
+        } else if (op == "$a" || op == "$p") {
+          const [dvs, mandatory, hyp, result] = data;
+          const subs = {};
+          const npop = mandatory.length + hyp.length;
+          const base = stack.length - npop;
+          // console.log(`Stack: base=${base}, npop=${npop}, length=${stack.length}`);
+          const args = [];
+          let sp = base;
+          if (sp < 0) {
+            throw new Error(`Empty stack ${sp}.`);
+          }
+        
+          for (const [k, v] of mandatory) {
+            const top = stack[sp];
+            if (top[1] != k) {
+              console.log(`Stack at ${sp} because ${mandatory.length} args + ${hyp.length} hypothesis:`);
+              for (let [index, type, string] of stack.reverse()) {
+                console.log(`  ${type} ${string.flat().join(" ")}`);
+              }
+              // console.log(mandatory);
+              throw new Error(`Step "${step}" of "${label}": argument type of "${v}" doesn't match with the top of the stack. Expected "${k}" but got "${top[1]}".`);
+            }
+            subs[v] = top[2];
+            args.push(top[0]);
+            sp++;
+          }
+        
+          for (const [h, type] of hyp) {
+            const top = stack[sp];
+            if (top[1] != type) {
+              throw new Error(`Step ${step}: argument type doesn't match with the topf of the stack. Expected ${type} but got ${top[0]}.`);
+            }
+          
+            const sub = h
+                  .map((tok) => subs[tok] ? subs[tok] : tok);
+            if (top[2].flat().join("") != sub.flat().join("")) {
+              const e = [];
+              e.push(`Substitution ${JSON.stringify(subs)} of the hypothesis ${h.join(" ")} doesn't match with the top of the stack`);
+              e.push(`Step ${step}: Expected ${sub.flat().join("")} but got ${top[2].join("")}.`);
+              throw new Error(e.join("\n"));
+            }
+            args.push(top[0]);
+            sp++;
+          }
+
+          // Page 133: Verifying Disjoint Variable Restrictions
+          // https://us.metamath.org/downloads/metamath.pdf
+          // Each substitution made in a proof must be checked to verify that any disjoint
+          // variable restrictions are satisfied, as follows.
+          // If two variables replaced by a substitution exist in a mandatory $d
+          // statement of the assertion referenced, the two expressions resulting from the
+          // substitution must satisfy the following conditions.
+          if (!generate) {
+            // If we are in debug mode, skip this.
+            for (const [x, y] of dvs) {
+              const a = subs[x].filter((v) => this.frames.lookupV(v));
+              const b = subs[y].filter((v) => this.frames.lookupV(v));
+              for (let el1 of a) {
+                for (let el2 of b) {
+                  // First, the two expressions must have no variables in common.
+                  if (el1 == el2) {
+                    throw new Error(`${x} (=${a}) and ${y} (=${b}) are disjoined variables and can't carry the same value. `);
+                  }
+                  // console.log(label);
+                  // Second, each possible pair of variables, one from each expression, must exist in
+                  // an active $d statement of the $p statement containing the proof.
+                  if (!this.frames.lookupD(el1, el2)) {
+                    throw new Error(`${el1} of ${x} (${a}) and ${el2} of ${y} (${b}) aren't declared as disjoint.`);
+                  }
                 }
               }
             }
           }
-        }
+          
+          stack.splice(base, npop);
         
-        stack.splice(base, npop);
-        
-        const el = result[1]
-              .map((tok) => subs[tok] ? subs[tok] : tok);
+          const el = result[1]
+                .map((tok) => subs[tok] ? subs[tok] : tok);
 
-        stack.push([index, result[0], el.flat()]);
-        const t = stack[stack.length - 1];
-        steps.push([step, [t[1], t[2]], args]);
+          stack.push([index, result[0], el.flat()]);
+          const t = stack[stack.length - 1];
+          steps.push([step, [t[1], t[2]], args]);
+        }
       }
 
       index++;

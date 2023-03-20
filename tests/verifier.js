@@ -790,36 +790,38 @@ describe("Verifier", () => {
     ]);
 
     const markers = proof(true, true);
+
+    // console.log(markers);
     
-    assertThat(markers.map(([step]) => step)).equalsTo([
-      'wph',
-      'wph',
-      'wph',
-      'wi',
-      -1, // marker
-      'wi',
-      -1, // marker
-      0,
-      'wph',
-      'wph',
-      'ax-1',
-      'wph',
-      0,
-      'wph',
-      'wi',
-      'wi',
-      1,
-      0,
-      'wi',
-      'wph',
-      0,
-      'ax-1',
-      'wph',
-      0,
-      'wph',
-      'ax-2',
-      'ax-mp',
-      'ax-mp'
+    assertThat(markers.map(([step, top, args]) => [step, top.flat().join(" "), args])).equalsTo([
+      /** 0 */ ['wph', "wff ph", []],
+      /** 1 */ ['wph', "wff ph", []],
+      /** 2 */ ['wph', "wff ph", []],
+      /** 3 */ ['wi', "wff ( ph -> ph )", [1, 2]],
+      /** - */ [-1, "wff ( ph -> ph )", 3], // marker
+      /** 4 */ ['wi', "wff ( ph -> ( ph -> ph ) )", [0, 3]],
+      /** - */ [-1, "wff ( ph -> ( ph -> ph ) )", 4], // marker
+      /** 5 */ [0, "wff ( ph -> ph )", 3], // call
+      /** 6 */ ['wph', "wff ph", []],
+      /** 7 */ ['wph', "wff ph", []],
+      /** 8 */ ['ax-1', "|- ( ph -> ( ph -> ph ) )", [6, 7]],
+      /** 9 */ ['wph', "wff ph", []],
+      /** 10 */ [0, "wff ( ph -> ph )", 3], // call
+      /** 11 */ ['wph', "wff ph", []],
+      /** 12 */ ['wi', "wff ( ( ph -> ph ) -> ph )", [10, 11]],
+      /** 13 */ ['wi', "wff ( ph -> ( ( ph -> ph ) -> ph ) )", [9, 12]],
+      /** 14 */ [1, "wff ( ph -> ( ph -> ph ) )", 4], // call
+      /** 15 */ [0, "wff ( ph -> ph )", 3], // call
+      /** 16 */ ['wi', "wff ( ( ph -> ( ph -> ph ) ) -> ( ph -> ph ) )", [14, 15]],
+      /** 17 */ ['wph', "wff ph", []],
+      /** 18 */ [0, "wff ( ph -> ph )", 3], // call
+      /** 19 */ ['ax-1', "|- ( ph -> ( ( ph -> ph ) -> ph ) )", [17, 18]],
+      /** 20 */ ['wph', "wff ph", []],
+      /** 21 */ [0, "wff ( ph -> ph )", 3], // call
+      /** 22 */ ['wph', "wff ph", []],
+      /** 23 */ ['ax-2', "|- ( ( ph -> ( ( ph -> ph ) -> ph ) ) -> ( ( ph -> ( ph -> ph ) ) -> ( ph -> ph ) ) )", [20, 21, 22]],
+      /** 24 */ ['ax-mp', "|- ( ( ph -> ( ph -> ph ) ) -> ( ph -> ph ) )", [13, 16, 19, 23]],
+      /** 25 */ ['ax-mp', "|- ( ph -> ph )", [4, 5, 8, 24]]
     ]);
   });
   
