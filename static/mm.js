@@ -83,7 +83,7 @@ class Theorem extends React.Component {
            </div>
          )}
 
-         {false && args.length > 0 && (
+         {args.length > 0 && (
            <div>     
              <h2>Arguments</h2>  
              <table>
@@ -209,6 +209,7 @@ class Proof extends React.Component {
         return base;
       }
       return Object.assign(base, {
+        // display: none,
         opacity: 0.1,
         backgroundColor: "none"
       });
@@ -236,31 +237,36 @@ class Proof extends React.Component {
             </tr>
             </thead>
             <tbody>
-            {proof.map((step, i) => {
+              {proof.filter((step) => step != -1).map((step, i) => {
               const [label, rule = [], args = []] = step;
               const [type = "", result = []] = rule;
-              if (typeof label == "number") {
-                return
-                  <tr key={i}>
-                    <td>${label}</td>
+              if (label == -1) {
+                return null;
+              } else if (typeof label == "number") {
+                return (
+                  <tr key={i}
+                    style={style(this.state.highlight, i, type)}>
+                    <td>{i}</td>
+                    <td>Replay {label}</td>
                     <td><Code mm={mm} src={type}/></td>
                     <td><Code mm={mm} src={result.flat().join(" ")}/></td>
                   </tr>
+                );
+              } else {
+                return (
+                <tr key={i}
+                  style={style(this.state.highlight, i, type)}
+                  onMouseEnter={() => this.setState({"highlight": [...args, i], "open": label})}
+                  onMouseLeave={() => this.setState({"highlight": undefined, "open": undefined})}>
+                  <td>{i}</td>
+                  <td>
+                    <a href={"#" + label} onClick={() => {this.setState({"label": step, "highlight": undefined});}}>{label}</a>
+                  </td>
+                  <td><Code mm={mm} src={type}/></td>
+                  <td><Code mm={mm} src={result.flat().join(" ")}/></td>
+                </tr>
+              );
               }
-              //console.log(label);
-              return (
-              <tr key={i}
-                style={style(this.state.highlight, i, type)}
-                onMouseEnter={() => this.setState({"highlight": [...args, i], "open": label})}
-                onMouseLeave={() => this.setState({"highlight": undefined, "open": undefined})}>
-                <td>{i}</td>
-                <td>
-                  <a href={"#" + label} onClick={() => {this.setState({"label": step, "highlight": undefined});}}>{label}</a>
-                </td>
-                <td><Code mm={mm} src={type}/></td>
-                <td><Code mm={mm} src={result.flat().join(" ")}/></td>
-              </tr>
-              )
               })
             }
             </tbody>
