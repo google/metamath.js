@@ -343,6 +343,10 @@ class MM {
           const that = this;
           proof.decompress = () => {
             const [, external, , compressed] = proof;
+            return new Decompressor().decompress(labels, external, compressed);
+          }
+          proof.explode = () => {
+            const [, external, , compressed] = proof;
             return new Decompressor().explode(labels, external, compressed, that.labels);
           }
         }

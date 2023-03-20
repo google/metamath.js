@@ -483,6 +483,16 @@ describe("Transpile and Parse", () => {
     });
   }
 
+  it("compile() empty string", async () => {
+    assertThat(await new Compiler().compile(``))
+      .equalsTo("$c  $.");
+  });
+
+  it("compile() ignores pre-processing directives", async () => {
+    assertThat(await new Compiler().compile(`
+      include "file.mm"
+    `)).equalsTo("$c  $.");
+  });
 
   it("$d: hol.mm / cl", async function() {
     const src = "hol.mm";
@@ -578,6 +588,7 @@ $\}`);;
     assertThat(compressed1).equalsTo(compressed2);
     
     assertThat(proof1.decompress()).equalsTo(proof2.decompress());
+    assertThat(proof1.explode()).equalsTo(proof2.explode());
   });
   
   for (let [src, label] of [

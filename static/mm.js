@@ -19,8 +19,18 @@ class Theorem extends React.Component {
   render() {
     const mm = this.props.mm;
     const statement = mm.labels[this.props.label];
-    let [a, [d = [], args = [], hyp = [], [type = "", theorem = []] = []], proof = () => []] = statement;
+    let [a, [d = [], args = [], hyp = [], [type = "", theorem = []] = []],  verifier = () => [], proof = []] = statement;
 
+    let steps = [];
+
+    if (this.props.loaded) {
+      steps = verifier();
+    } else if (proof.decompress) {
+      steps = proof.decompress().map((step) => [step]);
+    } else {
+      steps = proof.map((step) => [step]);
+    }
+    
     return (
       <div>
         {false &&
@@ -88,7 +98,7 @@ class Theorem extends React.Component {
          )}
 
          {a == "$p" && 
-           <Proof mm={mm} proof={proof()}/>
+           <Proof mm={mm} proof={steps}/>
          }
 
         </div>
@@ -184,7 +194,8 @@ class Proof extends React.Component {
     // console.log(proof);
     
     const style = function (highlight, i, type) {
-      const base = type == "|-" ? {} : {display: "none"};
+      // const base = type == "|-" ? {} : {display: "none"};
+      const base = {};
       if (!highlight) {
         return base;
       }
@@ -210,7 +221,6 @@ class Proof extends React.Component {
             <tbody>
             {proof.map((step, i) => {
               const [label, rule = [], args = []] = step;
-              // console.log(label);
               const [type = "", result = []] = rule;
               if (typeof label == "number") {
                 return
@@ -220,18 +230,15 @@ class Proof extends React.Component {
                     <td><Code mm={mm} src={result.flat().join(" ")}/></td>
                   </tr>
               }
+              //console.log(label);
               return (
               <tr key={i}
                 style={style(this.state.highlight, i, type)}
                 onMouseEnter={() => this.setState({"highlight": [...args, i], "open": label})}
                 onMouseLeave={() => this.setState({"highlight": undefined, "open": undefined})}>
                 <td>{i}</td>
-                <td>{(mm.labels[label][0] == "$a" || mm.labels[label][0] == "$p") && (
+                <td>
                   <a href={"#" + label} onClick={() => {this.setState({"label": step});}}>{label}</a>
-                )}
-                {(mm.labels[label][0] != "$a" && mm.labels[label][0] != "$p") && (
-                  step
-                )}
                 </td>
                 <td>{args.join(", ")}</td>
                 <td><Code mm={mm} src={type}/></td>
@@ -252,45 +259,34 @@ class Proof extends React.Component {
 }
 
 class Metamath extends React.Component {
-  constructor(props) {
-    super(props);
-    const source = this.props.children;
-    const label = window.location.hash ? window.location.hash.substr(1) : this.props.label;
-
-    this.state = {
-      label: label,
-      file: this.props.file,
-      open: false,
-    };
-  }
-
   async compute() {
     const label = window.location.hash ? window.location.hash.substr(1) : this.props.label;
+    const response = await fetch(`${this.props.dir}/${label}.mm`);
+    const body = await response.text();
 
-    console.log(`Recomputing ${label}`);
-    
-    //this.setState({
-    //});
+    {
+      const metamath = await new Compiler().compile(body);
+      const mm = process(metamath);
+      const [, , verifier, proof] = mm.labels[label];
+      this.setState({
+        label: label,
+        open: false,
+        loaded: false,
+        mm: mm,
+      });
+    }
 
     const compiler = new Compiler(this.loader.bind(this));
 
     const source = await compiler.compile(
       this.props.dir, `${label}.mm`, true);
-
-    //console.log(this.props.file);
     
     const mm = process(source);
-    
-    //console.log(`Loaded ${source}`);
-    // console.log();
-    // const [, , verifier] = mm.labels[label];
-
-    //console.log(mm.labels["eqtri"]);
-    //verifier();
 
     this.setState({
       label: label,
       open: false,
+      loaded: true,
       source: source,
       mm: process(source),
     });
@@ -312,49 +308,25 @@ class Metamath extends React.Component {
     const response = await fetch(file);
     const body = await response.text();
     
-    // resolve(body);
-    // return body;
-
     const that = this;
     return new Promise((resolve, reject) => {
       // Waits 100 ms arbitrarily to simulate slow
       // networks
-      // console.log(`Loading ${file}`);
-      // console.log(that);
       that.setState({
         file: file
       });
       setTimeout(() => {
         resolve(body);
-      }, 0);
+      });
     });
-    
-    // return body;
   }  
 
   render() {
-
-    if (!this.state.mm) {
-      return (
-      <div className="doc">
-        <div className="post">
-          <div className="post-title">
-          <h1>Loading {this.state.label}</h1>
-          </div>
-          <div className="post-info">
-            <div>metamath</div>
-            <div className="post-date">2023</div>
-          </div>
-          <div className="post-body">
-            Loading {this.state.file}
-          </div>
-        </div>
-      </div>
-      );
+    if (!this.state) {
+      return null;
     }
     
     const statement = this.state.mm.labels[this.state.label];
-    // let [a, [d = [], args = [], hyp = [], [type, theorem] = []], proof = () => []] = statement;
     const [a] = statement;
 
     const hash = window.location.hash;
@@ -371,7 +343,7 @@ class Metamath extends React.Component {
             <div className="post-date">2023</div>
           </div>
           <div className="post-body">
-            <Theorem mm={mm} label={this.state.label} />
+          <Theorem mm={mm} label={this.state.label} loaded={this.state.loaded} />
           </div>
         </div>
       </div>
@@ -384,7 +356,6 @@ const {compiler: {Compiler}, descent: {Verifier}} = module;
 class MetaMath extends HTMLElement {
   // connect component
   async connectedCallback() {
-
     const dir = this.getAttribute("dir");
     const file = this.getAttribute("file");
     const label = this.getAttribute("label");

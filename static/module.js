@@ -2215,6 +2215,8 @@ class Parser {
         result.push(this.theorem());
       } else if (this.accepts("_include_")) {
         result.push(this.include());
+      } else if (!this.lexer.head) {
+        continue;
       } else {
         this.error();
       }
@@ -2296,13 +2298,11 @@ class Compiler {
   }
 
   transpile(code) {
-    //console.log(code);
-    //throw new Error();
-
-    //console.log(code);
-    
     const consts = new Set();
-    for (let [type, label, [vars, dummies, assumes, disjoints, [, assert]], proof] of code) {
+
+    const statements = code.filter(([type]) => type != "include");
+    
+    for (let [type, label, [vars, dummies, assumes, disjoints, [, assert]], proof] of statements) {
       // All variable types are constants
       for (let type of vars.map(([, [label, type, name]]) => type)) {
         consts.add(type);
@@ -2327,7 +2327,7 @@ class Compiler {
     let result = [];
     result.push(`$c ${[...consts].join(" ")} $.`);
 
-    for (let [type, label, [vars, dummies, assumes, disjoints, [, assert]], proof] of code) {
+    for (let [type, label, [vars, dummies, assumes, disjoints, [, assert]], proof] of statements) {
 
       const names = [...vars, ...dummies].map(([, [label, type, name]]) => name);
 
@@ -3296,6 +3296,10 @@ class MM {
           // const labels = this.labels;
           const that = this;
           proof.decompress = () => {
+            const [, external, , compressed] = proof;
+            return new Decompressor().decompress(labels, external, compressed);
+          }
+          proof.explode = () => {
             const [, external, , compressed] = proof;
             return new Decompressor().explode(labels, external, compressed, that.labels);
           }
