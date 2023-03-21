@@ -188,7 +188,9 @@ class Window extends React.Component {
 class Proof extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      step: 0
+    };
   }
   render() {
     if (!this.props.proof) {
@@ -198,10 +200,12 @@ class Proof extends React.Component {
     const proof = this.props.proof;
 
     // console.log(proof);
+
+    let step = this.state.step;
     
     const style = function (highlight, i, type) {
       // const base = type == "|-" ? {} : {display: "none"};
-      const base = {};
+      const base = i < step ? {} : {display: "none"};
       if (!highlight) {
         return base;
       }
@@ -214,11 +218,50 @@ class Proof extends React.Component {
         backgroundColor: "none"
       });
     };
+
+    const clone = (obj) => JSON.parse(JSON.stringify(obj));
+    
+    const steps = clone(proof.filter(([step]) => step != -1));
+
+    for (let i = 0; i < step; i++) {
+      const [label, rule = [], args = []] = steps[i];
+      if (typeof label == "number") {
+        continue;
+      }
+      //console.log(args);
+      for (let arg of args) {
+        // console.log(arg);
+        steps[arg] = [-1];
+      }
+    }
     
     return (
       <div>
 
         <h2>Proof</h2>
+
+        <input type="range" min={0} max={steps.length - 1} value={step}
+          onChange={() => {}}
+          style={{
+          "width": "100%",
+          "height": "15px",
+          "borderRadius": "5px",
+          "background": "#d3d3d3",
+          "outline": "none",
+          "opacity": "0.7",
+          "WebkitTransition": ".2s",
+          "transition": "opacity .2s",
+          }}
+        />
+
+        <br/>
+        <br/>
+
+        <button disabled={this.state.step <= 0} onClick={() => this.setState({step: step - 1})} >Back</button>
+        <button disabled={this.state.step >= steps.length} onClick={() => this.setState({step: step + 1})} >Next</button>
+
+        <br/>
+        <br/>
 
         <div style={{position: "relative", display: "inline-block"}}>
           <table>
@@ -237,7 +280,7 @@ class Proof extends React.Component {
             </tr>
             </thead>
             <tbody>
-              {proof.filter(([step]) => step != -1).map((step, i) => {
+              {steps.map((step, i) => {
               const [label, rule = [], args = []] = step;
               const [type = "", result = []] = rule;
               if (label == -1) {
@@ -278,7 +321,11 @@ class Proof extends React.Component {
            <Window mm={mm} open={this.state.open}/>
           }
           </div>
+
         </div>
+
+      
+
     );
   }
 }
