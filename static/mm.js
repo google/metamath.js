@@ -237,7 +237,7 @@ class Proof extends React.Component {
             </tr>
             </thead>
             <tbody>
-              {proof.filter((step) => step != -1).map((step, i) => {
+              {proof.filter(([step]) => step != -1).map((step, i) => {
               const [label, rule = [], args = []] = step;
               const [type = "", result = []] = rule;
               if (label == -1) {

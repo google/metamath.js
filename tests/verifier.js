@@ -762,6 +762,23 @@ describe("Verifier", () => {
     const [code] = parse(file.toString());
     const mm = new MM();
     mm.read(code);
+    const [, , proof] = mm.labels["id"];
+    const steps = proof(true, true);
+    assertThat(steps.map(([label, top, args]) => [label, top.flat().join(" "), args])).equalsTo([
+      /**  0 */ [ 'wph', "wff ph", [] ],
+      /**  1 */ [ 'wph', "wff ph", [] ],
+      /**  2 */ [ 'wph', "wff ph", [] ],
+      /**  3 */ [ 'wi', "wff ( ph -> ph )", [ 1, 2 ] ],
+      /** -- */ [ -1, "wff ( ph -> ph )", 3 ],
+      /**  4 */ [ 'wph', "wff ph", [] ],
+      /**  5 */ [ 'wph', "wff ph", [] ],
+      /**  6 */ [ 'wph', "wff ph", [] ],
+      /**  7 */ [ 'ax-1', "|- ( ph -> ( ph -> ph ) )", [ 5, 6 ] ],
+      /**  8 */ [ 'wph', "wff ph", [] ],
+      /**  9 */ [ 0, "wff ( ph -> ph )", 3 ],
+      /** 10 */ [ 'ax-1', "|- ( ph -> ( ( ph -> ph ) -> ph ) )", [ 8, 9 ] ],
+      /** 11 */ [ 'mpd', "|- ( ph -> ph )", [ 0, 3, 4, 7, 10 ] ]
+    ]);
   });
 
   it("idALT's proof", async () => {
