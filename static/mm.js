@@ -245,9 +245,12 @@ class Proof extends React.Component {
               } else if (typeof label == "number") {
                 return (
                   <tr key={i}
-                    style={style(this.state.highlight, i, type)}>
+                    style={style(this.state.highlight, i, type)}
+                    onMouseEnter={() => this.setState({"highlight": [args, i]})}
+                    onMouseLeave={() => this.setState({"highlight": undefined})}
+                    >
                     <td>{i}</td>
-                    <td>Replay {label}</td>
+                    <td>#{args}</td>
                     <td><Code mm={mm} src={type}/></td>
                     <td><Code mm={mm} src={result.flat().join(" ")}/></td>
                   </tr>
@@ -256,8 +259,8 @@ class Proof extends React.Component {
                 return (
                 <tr key={i}
                   style={style(this.state.highlight, i, type)}
-                  onMouseEnter={() => this.setState({"highlight": [...args, i], "open": label})}
-                  onMouseLeave={() => this.setState({"highlight": undefined, "open": undefined})}>
+                  onMouseEnter={() => this.setState({"highlight": [...args, i]})}
+                  onMouseLeave={() => this.setState({"highlight": undefined})}>
                   <td>{i}</td>
                   <td>
                     <a href={"#" + label} onClick={() => {this.setState({"label": step, "highlight": undefined});}}>{label}</a>
