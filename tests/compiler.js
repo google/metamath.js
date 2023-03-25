@@ -697,6 +697,117 @@ $\}`);;
       assertThat(new Verifier().verify(metamath)).equalsTo(theorems);
     });
   }
+
+  it.skip("Empty Program", async () => {
+    const metamath = await new Compiler().compile("");
+    assertThat(new Verifier().verify(metamath)).equalsTo(0);
+  });
+
+  it("S and K", async () => {
+    const src = `
+axiom wff1
+  let wff1.1: wff p
+  let wff1.2: wff q
+  assert wff p [ q ]
+end
+
+theorem t0
+  let t0.1: wff f
+  let t0.2: wff g
+  assert wff f [ g ]
+  proof
+    t0.1
+    t0.2
+    wff1
+end
+
+theorem t1
+  let t1.1: wff f
+  let t1.2: wff g
+  let t1.3: wff h
+  assert wff f [ g ] [ h ]
+  proof
+    t1.1
+    t1.2
+    wff1
+    t1.3
+    wff1
+end
+
+theorem t2
+  let t2.1: wff f
+  let t2.2: wff g
+  let t2.3: wff h
+  let t2.4: wff i
+  assert wff f [ g ] [ h ] [ i ]
+  proof
+    t2.1
+    t2.2
+    wff1
+    t2.3
+    wff1
+    t2.4
+    wff1
+end
+
+axiom wffk
+  assert wff K
+end
+
+axiom wffs
+  assert wff S
+end
+
+axiom ax-k
+  let k.1: wff x
+  let k.2: wff y
+  let k.3: wff t
+  assume k.1: |- K [ x ] [ y ] t
+  assert |- x t
+end
+
+axiom ax-s
+  let s.1: wff x
+  let s.2: wff y
+  let s.3: wff z
+  let s.4: wff t
+  assume ax-s.1: |- S [ x ] [ y ] [ z ] t
+  assert |- x [ z ] [ y [ z ] ] t
+end
+
+theorem sksk
+  let wfft: wff t
+  assume sksk.1: |- S [ K ] [ S ] [ K ] t
+  assert |- K t
+  proof
+
+    wffk     /** wff K */
+
+    wffs     /** wff S */
+    wffk     /** wff K */
+    wff1     /** wff S [ k ] */
+
+    wfft     /** wff t **/
+
+      wffk     /** wff K */
+      wffs     /** wff S */
+      wffk     /** wff K */
+      wfft     /** wff t */ 
+      sksk.1   /** |- S [ K ] [ S ] [ K ] t */
+      ax-s     /** |- K [ K ] [ S [ K ] ] t */
+
+    ax-k    
+end
+
+    `;
+    
+    const metamath = await new Compiler().compile(src);
+
+    // console.log(metamath);
+    
+    assertThat(new Verifier().verify(metamath)).equalsTo(4);
+    
+  });
   
 });
 

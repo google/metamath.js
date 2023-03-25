@@ -199,13 +199,13 @@ class Proof extends React.Component {
     const mm = this.props.mm;
     const proof = this.props.proof;
 
-    // console.log(proof);
-
-    let step = this.state.step;
+    const step = this.state.step;
     
-    const style = function (highlight, i, type) {
-      // const base = type == "|-" ? {} : {display: "none"};
+    const style = function (highlight, i, type, match) {
       const base = i < step ? {} : {display: "none"};
+      if (pops && !match) {
+        base["opacity"] = 0.1;
+      }
       if (!highlight) {
         return base;
       }
@@ -213,7 +213,6 @@ class Proof extends React.Component {
         return base;
       }
       return Object.assign(base, {
-        // display: none,
         opacity: 0.1,
         backgroundColor: "none"
       });
@@ -223,45 +222,39 @@ class Proof extends React.Component {
     
     const steps = clone(proof.filter(([step]) => step != -1));
 
+    // this.state.step = 17;
+    
     for (let i = 0; i < step; i++) {
       const [label, rule = [], args = []] = steps[i];
       if (typeof label == "number") {
         continue;
       }
-      //console.log(args);
       for (let arg of args) {
-        // console.log(arg);
         steps[arg] = [-1];
       }
     }
+
+    const next = steps[this.state.step];
+
+    let pops = false;
     
+    if (mm && next && mm.labels[next[0]]) {
+      const [, , args] = next;
+      const [, [d, f, e]] = mm.labels[next[0]];
+      for (let i = 0; i < f.length; i++) {
+        steps[args[i]].push(f[i][1]);
+        pops = true;
+      }
+      for (let i = 0; i < e.length; i++) {
+        steps[args[f.length + i]].push(e[i][0].join(" "));
+        pops = true;
+      }
+    }
+
     return (
       <div>
 
         <h2>Proof</h2>
-
-        <input type="range" min={0} max={steps.length - 1} value={step}
-          onChange={() => {}}
-          style={{
-          "width": "100%",
-          "height": "15px",
-          "borderRadius": "5px",
-          "background": "#d3d3d3",
-          "outline": "none",
-          "opacity": "0.7",
-          "WebkitTransition": ".2s",
-          "transition": "opacity .2s",
-          }}
-        />
-
-        <br/>
-        <br/>
-
-        <button disabled={this.state.step <= 0} onClick={() => this.setState({step: step - 1})} >Back</button>
-        <button disabled={this.state.step >= steps.length} onClick={() => this.setState({step: step + 1})} >Next</button>
-
-        <br/>
-        <br/>
 
         <div style={{position: "relative", display: "inline-block"}}>
           <table>
@@ -281,46 +274,107 @@ class Proof extends React.Component {
             </thead>
             <tbody>
               {steps.map((step, i) => {
-              const [label, rule = [], args = []] = step;
-              const [type = "", result = []] = rule;
-              if (label == -1) {
-                return null;
-              } else if (typeof label == "number") {
-                return (
+                const [label, rule = [], args = [], match] = step;
+                const [type = "", result = []] = rule;
+                // console.log(match);
+                if (label == -1) {
+                  return null;
+                } else if (typeof label == "number") {
+                  return (
                   <tr key={i}
-                    style={style(this.state.highlight, i, type)}
+                    style={style(this.state.highlight, i, type, match)}
                     onMouseEnter={() => this.setState({"highlight": [args, i]})}
                     onMouseLeave={() => this.setState({"highlight": undefined})}
                     >
                     <td>{i}</td>
                     <td>#{args}</td>
                     <td><Code mm={mm} src={type}/></td>
-                    <td><Code mm={mm} src={result.flat().join(" ")}/></td>
+                    <td>
+                      <Code mm={mm} src={result.flat().join(" ")}/>
+                      {match &&
+                        <span> = <Code mm={mm} src={match} /></span>
+                      }
+                    </td>
+                  </tr>
+                  );
+                } else {
+                  return (
+                  <tr key={i}
+                    style={style(this.state.highlight, i, type, match)}
+                    onMouseEnter={() => this.setState({"highlight": [...args, i]})}
+                    onMouseLeave={() => this.setState({"highlight": undefined})}>
+                    <td>{i}</td>
+                    <td>
+                      <a href={"#" + label} onClick={() => {this.setState({"label": step, "highlight": undefined});}}>{label}</a>
+                    </td>
+                    <td>
+                      <Code mm={mm} src={type}/>
+                      {false && match &&
+                        <span> = <Code mm={mm} src={match} /></span>
+                      }
+
+                    </td>
+                    <td>
+                      <Code mm={mm} src={result.flat().join(" ")}/>
+                      {match &&
+                        <span> = <Code mm={mm} src={match} /></span>
+                      }
+                    </td>
                   </tr>
                 );
-              } else {
-                return (
-                <tr key={i}
-                  style={style(this.state.highlight, i, type)}
-                  onMouseEnter={() => this.setState({"highlight": [...args, i]})}
-                  onMouseLeave={() => this.setState({"highlight": undefined})}>
-                  <td>{i}</td>
-                  <td>
-                    <a href={"#" + label} onClick={() => {this.setState({"label": step, "highlight": undefined});}}>{label}</a>
-                  </td>
-                  <td><Code mm={mm} src={type}/></td>
-                  <td><Code mm={mm} src={result.flat().join(" ")}/></td>
-                </tr>
-              );
-              }
+                }
               })
             }
             </tbody>
           </table>
-          {false &&          
-           <Window mm={mm} open={this.state.open}/>
-          }
-          </div>
+
+          <br/>
+      
+          {(() => {
+            if (!mm || !next || !mm.labels[next[0]]) {
+              return null;
+            }
+
+            // return null;
+            //console.log();
+
+            const [t, [d, f, e, [type, rule]]] = mm.labels[next[0]];
+            //console.log(next[1]);
+            return (
+              <div>
+                <h2>Step {step} : {t == "$a" ? "Axiom" : "Theorem"} {next[0]}</h2>
+                <p><Code mm={mm} src={type} /> <Code mm={mm} src={rule.join(" ")}/>
+                {pops &&
+                 <span>
+                   = <Code mm={mm} src={next[1][0]} /> <Code mm={mm} src={next[1][1].join(" ")} />
+                 </span>
+                }
+                </p>
+              </div>
+            );
+          })()}
+ 
+        <input type="range" min={0} max={steps.length - 1} value={this.state.step}
+          onChange={() => {}}
+          style={{
+          "width": "100%",
+          "height": "15px",
+          "borderRadius": "5px",
+          "background": "#d3d3d3",
+          "outline": "none",
+          "opacity": "0.7",
+          "WebkitTransition": ".2s",
+          "transition": "opacity .2s",
+          }}
+        />
+
+        <br/>
+        <br/>
+
+        <button disabled={this.state.step <= 0} onClick={() => this.setState({step: step - 1})} >Back</button>
+        <button disabled={this.state.step >= steps.length} onClick={() => this.setState({step: step + 1})} >Next</button>
+
+        </div>
 
         </div>
 
