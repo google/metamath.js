@@ -705,98 +705,117 @@ $\}`);;
 
   it("S and K", async () => {
     const src = `
-axiom wff1
-  let wff1.1: wff p
-  let wff1.2: wff q
-  assert wff p [ q ]
+axiom term-k
+  assert term K
 end
 
-theorem t0
-  let t0.1: wff f
-  let t0.2: wff g
-  assert wff f [ g ]
-  proof
-    t0.1
-    t0.2
-    wff1
+axiom term-s
+  assert term S
 end
 
-theorem t1
-  let t1.1: wff f
-  let t1.2: wff g
-  let t1.3: wff h
-  assert wff f [ g ] [ h ]
-  proof
-    t1.1
-    t1.2
-    wff1
-    t1.3
-    wff1
-end
-
-theorem t2
-  let t2.1: wff f
-  let t2.2: wff g
-  let t2.3: wff h
-  let t2.4: wff i
-  assert wff f [ g ] [ h ] [ i ]
-  proof
-    t2.1
-    t2.2
-    wff1
-    t2.3
-    wff1
-    t2.4
-    wff1
-end
-
-axiom wffk
-  assert wff K
-end
-
-axiom wffs
-  assert wff S
+axiom term-c
+  let call.1: term p
+  let call.2: term q
+  assert term p [ q ]
 end
 
 axiom ax-k
-  let k.1: wff x
-  let k.2: wff y
-  let k.3: wff t
-  assume k.1: |- K [ x ] [ y ] t
-  assert |- x t
+  let k.1: term x
+  let k.2: term y
+  assume k.1: |- K [ x ] [ y ]
+  assert |- x
 end
 
 axiom ax-s
-  let s.1: wff x
-  let s.2: wff y
-  let s.3: wff z
-  let s.4: wff t
-  assume ax-s.1: |- S [ x ] [ y ] [ z ] t
-  assert |- x [ z ] [ y [ z ] ] t
+  let s.1: term x
+  let s.2: term y
+  let s.3: term z
+  assume ax-s.1: |- S [ x ] [ y ] [ z ]
+  assert |- x [ z ] [ y [ z ] ]
 end
 
 theorem sksk
-  let wfft: wff t
-  assume sksk.1: |- S [ K ] [ S ] [ K ] t
-  assert |- K t
+  assume sksk.1: |- S [ K ] [ S ] [ K ]
+  assert |- K
   proof
 
-    wffk     /** wff K */
+    term-k     /** wff K */
 
-    wffs     /** wff S */
-    wffk     /** wff K */
-    wff1     /** wff S [ k ] */
+    term-s     /** wff S */
+    term-k     /** wff K */
+    term-c     /** wff S [ k ] */
 
-    wfft     /** wff t **/
-
-      wffk     /** wff K */
-      wffs     /** wff S */
-      wffk     /** wff K */
-      wfft     /** wff t */ 
+      term-k     /** wff K */
+      term-s     /** wff S */
+      term-k     /** wff K */
       sksk.1   /** |- S [ K ] [ S ] [ K ] t */
       ax-s     /** |- K [ K ] [ S [ K ] ] t */
 
-    ax-k    
+    ax-k     /** | K */
+end
+
+axiom df-true
+  let t.1: term x
+  let t.2: term y
+  assume t.1: |- T [ x ] [ y ] 
+  assert |- K [ x ] [ y ]
+end
+
+axiom df-false
+  let t.1: term x
+  let t.2: term y
+  assume t.1: |- F [ x ] [ y ] 
+  assert |- S [ K ] [ x ] [ y ]
+end
+
+theorem true
+  let termx: term x
+  let termy: term y
+  assume true-e: |- T [ x ] [ y ] 
+  assert |- x
+  proof
+
+    termx
+    termy
+
+      termx
+      termy
+      true-e
+      df-true
+
+    ax-k
+end
+
+theorem false
+  let termx: term x
+  let termy: term y
+  assume false-e: |- F [ x ] [ y ] 
+  assert |- y
+  proof
+
+    termy
+      termx
+      termy
+    term-c
+
+      term-k
+      termx
+      termy
+
+        termx
+        termy
+        false-e
+        df-false
+
+      ax-s
+
+    ax-k
+end
+
+axiom df-not
+  let termx: term x
+  assume e: |- NOT [ x ]
+  assert |- S [ S [ I ] [ K [ F ] ] ] [ K [ T ] ] [ x ]
 end
 
     `;
@@ -805,7 +824,7 @@ end
 
     // console.log(metamath);
     
-    assertThat(new Verifier().verify(metamath)).equalsTo(4);
+    assertThat(new Verifier().verify(metamath)).equalsTo(3);
     
   });
   
