@@ -436,7 +436,7 @@ class MM {
                 console.log(`  ${type} ${string.flat().join(" ")}`);
               }
               // console.log(mandatory);
-              throw new Error(`Step "${step}" of "${label}": argument type of "${v}" doesn't match with the top of the stack. Expected "${k}" but got "${top[1]}".`);
+              throw new Error(`Step "${step}" of "${label}": argument type of "${v}" doesn't match with the top of the stack. Expected "${k}" but got "${top[1]}" (${top[2].flat().join(" ")}).`);
             }
             subs[v] = top[2];
             args.push(top[0]);
@@ -446,7 +446,7 @@ class MM {
           for (const [h, type] of hyp) {
             const top = stack[sp];
             if (top[1] != type) {
-              throw new Error(`Step ${step}: argument type doesn't match with the topf of the stack. Expected ${type} but got ${top[0]}.`);
+              throw new Error(`Step ${step}: argument type doesn't match with the top of the stack. Expected ${type} but got ${top[1]}.`);
             }
           
             const sub = h
@@ -454,7 +454,7 @@ class MM {
             if (top[2].flat().join("") != sub.flat().join("")) {
               const e = [];
               e.push(`Substitution ${JSON.stringify(subs)} of the hypothesis ${h.join(" ")} doesn't match with the top of the stack`);
-              e.push(`Step ${step}: Expected ${sub.flat().join("")} but got ${top[2].join("")}.`);
+              e.push(`Step ${step}: Expected ${sub.flat().join(" ")} but got ${top[2].flat().join(" ")}.`);
               throw new Error(e.join("\n"));
             }
             args.push(top[0]);
