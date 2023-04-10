@@ -13,7 +13,6 @@ class Lexer {
       ["axiom"]: "axiom",
       ["do"]: "do",
       ["let"]: "let",
-      ["step"]: "step",
       ["assume"]: "assume",
       ["disjoint"]: "disjoint",
       ["return"]: "return",
@@ -123,8 +122,6 @@ class Parser {
   error() {
     const {head} = this.lexer;
     const {line, col, buffer} = this.lexer.lexer;
-    // console.log(this.lexer.lexer.buf);
-    // console.log(buffer);
     throw new Error(`Unexpected token "${head[1]}" (${head[0]}) on line ${line} column ${col}.`);
   }
   
@@ -142,9 +139,7 @@ class Parser {
   
   ws(optional = false) {
     const sp = ["ws", "comment", "comment-expr"];
-    // const sp = ["ws"];
     if (this.accepts(...sp)) {
-      // console.log(this.lexer.head);
       this.eat(...sp);
       // allows multiple whitespace types intermingled
       while (this.accepts(...sp)) {
@@ -174,7 +169,6 @@ class Parser {
       return [type, result];
     }
     let second = this.symbol();
-    //console.log(second);
     result.push(second);
     this.ws(false);
     if (multiple) {
@@ -198,11 +192,6 @@ class Parser {
     const f = [];
     // parameters
     while (this.accepts(...labels, "string")) {
-      //console.log(label);
-      //console.log(first);
-      //console.log(this.lexer.head);
-      //console.log(this.quote());
-      //throw new Error("hi");
       let first = this.accepts(...labels) ? this.label() : this.quote();
       this.ws(true);
 
@@ -236,7 +225,6 @@ class Parser {
 
     this.ws(true);
     
-    // this.ws(true);
     return f;
   }
 
@@ -320,12 +308,8 @@ class Parser {
     
     this.eat("return");
     this.ws();
-    //console.log(this.lexer.head);
-    //throw new Error("hi");
     const str = this.str();
-    //console.log(str);
     this.ws(true);
-    //console.log(this.lexer.head);
     this.eat(";");
     this.ws(true);
     return [e, d, l, str, proof];
@@ -362,7 +346,6 @@ class Parser {
     this.ws(true);
     this.eat("{");
     this.ws(true);
-    //try {
     const [e, d, l, [t, str], p] = this.body(extras);
     this.eat("}");
     this.ws(true);
@@ -373,11 +356,6 @@ class Parser {
       d.map((varz) => ["disjoint", varz]),
       ["assert", [t, ...str]],
     ], p];
-    //} catch (e) {
-    //  console.log(name);
-    //  console.log(e);
-    //  throw new Error(e);
-    //}
   }
   
   header() {
@@ -463,14 +441,6 @@ class Parser {
     return result;
   }
 
-  symbol2() {
-    let name = this.eat(...symbols);
-    while (this.accepts(...symbols)) {
-      name += this.eat(...symbols);
-    }
-    return name;
-  }
-  
   label() {
     let name = this.eat(...labels);
     while (this.accepts(...labels)) {
@@ -479,30 +449,11 @@ class Parser {
     return name;
   }
   
-  theorem2() {
-    this.eat("theorem");
-    this.ws();
-    let name = this.label();
-    this.ws(true);
-    const params  = this.head(true);
-    this.ws(true);
-    this.eat("{");
-    this.ws(true);
-    const body = this.body(true);
-    this.eat("}");
-    this.ws(true);
-    return ["theorem", name, params, body];
-  }
-  
   include() {
     this.eat("_include_");
     this.ws();
     this.eat('"');
-    //console.log(this.lexer.head);
     const name = this.label();
-    //console.log("include");
-    //console.log(name);
-    //throw new Error("hi");
     this.eat('"');
     this.ws(true);
     this.eat(";");
@@ -529,9 +480,7 @@ class Parser {
       } else {
         this.error();
       }
-      // console.log(this.lexer.head);
     } while (this.lexer.head);
-    // throw new Error("hi");
     return result;
   }
 }
