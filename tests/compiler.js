@@ -1290,496 +1290,263 @@ $\}`);;
     assertThat(new Verifier().verify(metamath)).equalsTo(0);
   });
 
-  it.skip("S and K", async () => {
+  it("S and K", async () => {
     const src = `
-axiom term-k
-  assert term K
-end
+axiom term-k() {
+  return $term K$;
+}
 
-axiom term-s
-  assert term S
-end
+axiom term-s() {
+  return $term S$;
+}
 
-axiom term-c
-  let call.1: term p
-  let call.2: term q
-  assert term p [ q ]
-end
-
-axiom ax-k
-  let k.h: word head
-  let k.1: term x
-  let k.2: term y
-  let k.t: word tail
-  assume k.1: |- head K [ x ] [ y ] tail
-  assert |- head x tail
-end
-
-axiom word-str
-  let word1: word w
-  let word2: word c
-  assert word w c
-end
-
-axiom word-null
-  assert word
-end
-
-axiom word-k
-  assert word K
-end
-
-axiom word-s
-  assert word S
-end
-
-axiom word-l
-  assert word [
-end
-
-axiom word-r
-  assert word ]
-end
-
-theorem kkk
-  assume kkk.1: |- S [ K [ K ] [ K ] ] [ S ]
-  assert |- S [ K ] [ S ]
-  proof
-
-    word-s
-    word-l
-    word-str
-
-    term-k
-
-    term-k
-
-    word-r
-    word-l
-    word-str
-
-    word-s
-    word-str
-
-    word-r
-    word-str
-    
-    kkk.1
-    ax-k
-end
-
-
-    `;
-    const metamath = await new Compiler().compile(src);
-
-    assertThat(new Verifier().verify(metamath)).equalsTo(1);
-    
-  });
-
-  it.skip("S and K", async () => {
-    const src = `
-axiom term-k
-  assert term K
-end
-
-axiom term-s
-  assert term S
-end
-
-axiom term-c
-  let call.1: term p
-  let call.2: term q
-  assert term p [ q ]
-end
+axiom term-c() {
+  let call.1: term p;
+  let call.2: term q;
+  return $term p [ q ]$;
+}
 
 // If Δ is a derivation ending in an expression of the form α((Kβ)γ)ι,
 // then Δ followed by the term αβι is a derivation.
-axiom ax-k
-  let k.h: word head
-  let k.1: term x
-  let k.2: term y
-  let k.t: word tail
-  assume k.1: |- head K [ x ] [ y ] tail
-  assert |- head x tail
-end
+axiom ax-k(
+  k.h: word head,
+  k.1: term x,
+  k.2: term y,
+  k.t: word tail) {
+  assume k.1: $|- head K [ x ] [ y ] tail$;
+  return $|- head x tail$;
+}
 
-axiom word-c
-  let word1: word w
-  let word2: word c
-  assert word w c
-end
+axiom word-c(word1: word w, word2: word c) {
+  return $word w c$;
+}
 
-axiom word-null
-  assert word
-end
+axiom word-null() {
+  return $word $;
+}
 
-axiom word-t
-  let word-t.0: term x
-  assert word x
-end
+axiom word-t(word-t.0: term x) {
+  return $word x$;
+}
 
-axiom word-l
-  assert word [
-end
+axiom word-l() {
+  return $word [$;
+}
 
-axiom word-r
-  assert word ]
-end
+axiom word-r() {
+  return $word ]$;
+}
 
 // If Δ is a derivation ending in an expression of the form α(((Sβ)γ)δ)ι,
 // then Δ followed by the term α((βδ)(γδ))ι is a derivation.
-axiom ax-s
-  let s.0: word head
-  let s.1: term x
-  let s.2: term y
-  let s.3: term z
-  let s.4: word tail
-  assume ax-s.1: |- head S [ x ] [ y ] [ z ] tail
-  assert |- head x [ z ] [ y [ z ] ] tail
-end
+axiom ax-s(
+  s.0: word head,
+  s.1: term x,
+  s.2: term y,
+  s.3: term z,
+  s.4: word tail) {
+  assume ax-s.1: $|- head S [ x ] [ y ] [ z ] tail$;
+  return $|- head x [ z ] [ y [ z ] ] tail$;
+}
 
-theorem s
-  let s.1: term x
-  let s.2: term y
-  let s.3: term z
-  assume s.e1: |- S [ x ] [ y ] [ z ]
-  assert |- x [ z ] [ y [ z ] ]
+theorem s(s.1: term x, s.2: term y, s.3: term z) {
+  assume s.e1: $|- S [ x ] [ y ] [ z ]$;
+  do {
+    word-null;
 
-  proof
-    word-null
+    s.1;
+    s.2;
+    s.3;
 
-    s.1
-    s.2
-    s.3
+    word-null;
 
-    word-null
+    s.e1;
 
-    s.e1
+    ax-s;
+  };
 
-    ax-s
-end
+  return $|- x [ z ] [ y [ z ] ]$;
+}
 
-theorem k
-  let k.1: term x
-  let k.2: term y
-  assume k.e1: |- K [ x ] [ y ]
-  assert |- x
+theorem k(k.1: term x, k.2: term y) {
+  assume k.e1: $|- K [ x ] [ y ]$;
+  do {
+    word-null;
 
-  proof
-    word-null
+    k.1;
+    k.2;
 
-    k.1
-    k.2
+    word-null;
 
-    word-null
+    k.e1;
 
-    k.e1
+    ax-k;
+  };
+  return $|- x$;
+}
 
-    ax-k
-end
+axiom df-eq(
+  eq.f0: word head,
+  eq.f1: term x,
+  eq.f2: term y,
+  eq.f3: word tail) {
+  assume eq.e0: $|- x = y$;
+  assume eq.e1: $|- head x tail$;
+  return $|- head y tail$;
+}
 
-axiom df-eq
-  let eq.f0: word head
-  let eq.f1: term x
-  let eq.f2: term y
-  let eq.f3: word tail
-  assume eq.e0: |- x = y
-  assume eq.e1: |- head x tail
-  assert |- head y tail
-end
+axiom df-id() {
+  return $|- I = S [ K ] [ K ]$;
+}
 
-axiom df-id
-  assert |- I = S [ K ] [ K ]
-end
+axiom term-i() {
+  return $term I$;
+}
 
-axiom term-i
-  assert term I
-end
+theorem id(
+  id.fh: word head,
+  id.f0: term x,
+  id.ft: word tail) {
+  assume id.e0: $|- head I [ x ] tail$;
+  do {
+    id.fh;
+    id.f0;
+    term-k;
+    id.f0;
+    term-c;
+    id.ft;
 
-theorem id
-  let id.fh: word head
-  let id.f0: term x
-  let id.ft: word tail
-  assume id.e0: |- head I [ x ] tail
-  assert |- head x tail
+      id.fh;
+      term-k;
+      term-k;
+      id.f0;
+      id.ft;
 
-  proof
+          id.fh;
 
-  id.fh
-  id.f0
-  term-k
-  id.f0
-  term-c
-  id.ft
+          term-i;
 
-    id.fh
-    term-k
-    term-k
-    id.f0
-    id.ft
+          term-s;
+          term-k;
+          term-c;
+          term-k;
+          term-c;
 
-        id.fh
+          word-l;
 
-        term-i
+          id.f0;
+          word-t;
+          word-c;
 
-        term-s
-        term-k
-        term-c
-        term-k
-        term-c
+          word-r;
+          word-c;
 
-        word-l
+          id.ft;
+          word-c;
 
-        id.f0
-        word-t
-        word-c
+          df-id;
 
-        word-r
-        word-c
+          id.e0;
 
-        id.ft
-        word-c
+          df-eq;
 
-        df-id
+      ax-s;
 
-        id.e0
+    ax-k;
+  };
 
-        df-eq
+  return $|- head x tail$;
+}
 
-    ax-s
+axiom term-f() {
+  return $term F$;
+}
 
-  ax-k
+axiom term-t() {
+  return $term T$;
+}
 
-end
+axiom df-true() {
+  return $|- T = K$;
+}
 
-axiom term-f
-  assert term F
-end
+theorem true(
+  true.h: word head,
+  termx: term x,
+  termy: term y,
+  true.t: word tail) {
+  assume true-e: $|- head T [ x ] [ y ] tail$;
+  do {
+    true.h;
 
-axiom term-t
-  assert term T
-end
+    termx;
 
-axiom df-true
-  assert |- T = K
-end
+    termy;
 
-theorem true
-  let true.h: word head
-  let termx: term x
-  let termy: term y
-  let true.t: word tail
-  assume true-e: |- head T [ x ] [ y ] tail
-  assert |- head x tail
-  proof
+    true.t;    
 
-    true.h
+      true.h;
 
-    termx
+      term-t;
 
-    termy
+      term-k;
 
-    true.t    
+      word-l;
 
-      true.h
+      termx;
+      word-t;
+      word-c;
 
-      term-t
+      word-r;
+      word-c;
 
-      term-k
+      word-l;
+      word-c;
 
-      word-l
+      termy;
+      word-t;
+      word-c;
 
-      termx
-      word-t
-      word-c
+      word-r;
+      word-c;
 
-      word-r
-      word-c
+      true.t;
+      word-c;
 
-      word-l
-      word-c
+      df-true;
 
-      termy
-      word-t
-      word-c
+      true-e;
 
-      word-r
-      word-c
-
-      true.t
-      word-c
-
-      df-true
-
-      true-e
-
-      df-eq    
+      df-eq;  
     
-   ax-k    
+   ax-k;
+  };
+  return $|- head x tail$;
+}
 
-end
+theorem sksk() {
+  assume sksk.1: $|- S [ K ] [ S ] [ K ]$;
+  do {
+    term-k;     // wff K
 
+    term-s;     // wff S
+    term-k;     // wff K
+    term-c;     // wff S [ k ]
+
+      term-k;     // wff K
+      term-s;     // wff S
+      term-k;     // wff K
+
+      sksk.1;   // |- S [ K ] [ S ] [ K ] t
+
+      s;        // |- K [ K ] [ S [ K ] ] t
+
+    k;     // | K
+  };
+  return $|- K$;
+}
 
     `;
-    
-    /**
-
-theorem sksk
-  assume sksk.1: |- S [ K ] [ S ] [ K ]
-  assert |- K
-  proof
-
-    term-k     // wff K
-
-    term-s     // wff S
-    term-k     // wff K
-    term-c     // wff S [ k ]
-
-      term-k     // wff K
-      term-s     // wff S
-      term-k     // wff K
-
-      sksk.1   // |- S [ K ] [ S ] [ K ] t
-
-      s        // |- K [ K ] [ S [ K ] ] t
-
-    k     // | K
-end
-
-axiom df-true
-  let t.1: term x
-  let t.2: term y
-  assume t.1: |- T [ x ] [ y ] 
-  assert |- K [ x ] [ y ]
-end
-
-axiom df-false
-  let t.1: term x
-  let t.2: term y
-  assume t.1: |- F [ x ] [ y ] 
-  assert |- S [ K ] [ x ] [ y ]
-end
-
-
-theorem false
-  let termx: term x
-  let termy: term y
-  assume false-e: |- F [ x ] [ y ] 
-  assert |- y
-  proof
-
-    termy
-      termx
-      termy
-    term-c
-
-      term-k
-      termx
-      termy
-
-      tail-n
-
-      termx
-      termy
-      false-e
-      df-false
-
-      ax-s
-
-    ax-k
-end
-
-theorem id
-  let termx: term x
-  assume e: |- I [ x ]
-  assert |- x
-  proof
-
-    termx
-
-    term-k
-    termx
-    term-c
-
-      term-k
-      term-k
-      termx
-
-      tail-n
-
-      termx
-      e
-      df-id
-
-      ax-s
-
-    ax-k
-end
-
-axiom df-not
-  let termx: term x
-  assume df-not-e: |- NOT [ x ]
-  assert |- S [ S [ I ] [ K [ F ] ] ] [ K [ T ] ] [ x ]
-end
-
-axiom term-i
-  assert term I
-end
-
-theorem not
-  let termx: term x
-  assume not-e: |- NOT [ x ]
-  assert |- x [ F ] [ T ]
-  proof
-
-    // I
-    term-i
-
-    // K[F]
-    term-k
-      term-f
-    term-c
-
-    // x
-    termx
-
-      // S[I][K[F]]
-
-      term-s
-        term-i
-      term-c
-
-      term-k
-        term-f
-      term-c
-
-      term-c
-
-      // K[T]
-      term-k
-        term-t
-      term-c
-
-      // x
-      termx
-
-      //  |- S [ S [ I ] [ K [ F ] ] ] [ K [ T ] ] [ x ]
-      termx
-      not-e
-      df-not
-
-      // S [ I ] [ K [ F ] ] [ x ] [ K [ T ] [ x ] ]
-      ax-s
-    
-    ax-s 
-
-
-end
-
-       
-       **/
-
-
     const metamath = await new Compiler().compile(src);
 
     assertThat(new Verifier().verify(metamath) > 0).equalsTo(true);
