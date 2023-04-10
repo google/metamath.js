@@ -172,10 +172,7 @@ class Parser {
         type = this.symbol();
         this.ws();
       } else {
-        // let r = (Math.random() + 1).toString(36).substring(7);
-        // label = "";
         label = `${this.id()}`;
-        // throw new Error(label);
         type = first;
       }
 
@@ -211,6 +208,8 @@ class Parser {
         this.ws(true);
         this.eat(":");
         this.ws(true);
+      } else {
+        label = `${this.id()}`;
       }
       const [type, ...str] = this.str();
       e.push([label, type, str]);

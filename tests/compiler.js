@@ -229,7 +229,7 @@ describe("Compiler", () => {
       ["axiom", "foo", [
         [["param", ["0", "wff", "x"]], ["param", ["1", "wff", "y"]]],
         [],
-        [["assume", ["", "|-", "x"]]],
+        [["assume", ["2", "|-", "x"]]],
         [["disjoint", ["x", "y"]]],
         ["assert", ["|-", "x", "[", "y", "]"]],
       ], [
@@ -269,7 +269,7 @@ describe("Compiler", () => {
         [],
         [],
         [
-          ["assume", ["", "|-", "x"]],
+          ["assume", ["0", "|-", "x"]],
         ],
         [],
         ["assert", ["|-", "bar"]],
@@ -291,8 +291,8 @@ describe("Compiler", () => {
         [],
         [],
         [
-          ["assume", ["", "|-", "x"]],
-          ["assume", ["", "|-", "y"]]
+          ["assume", ["0", "|-", "x"]],
+          ["assume", ["1", "|-", "y"]]
         ],
         [],
         ["assert", ["|-", "bar"]],
