@@ -1,21 +1,23 @@
-include "wo.mm"
-include "comor2.mm"
-include "comcom.mm"
+include "wo.mm";
+include "comor2.mm";
+include "comcom.mm";
 
-theorem comorr2
-  param wva: term a
-  param wvb: term b
+theorem comorr2(wva: $term$ a, wvb: $term$ b) {
 
 
-  assert |- b C ( a v b )
 
-  proof
-    wva
-    wvb
-    wo
-    wvb
-    wva
-    wvb
-    comor2
-    comcom
-end
+
+
+  do {
+    wva;
+    wvb;
+    wo;
+    wvb;
+    wva;
+    wvb;
+    comor2;
+    comcom;
+  };
+
+  return $|- b C ( a v b )$;
+}

@@ -1,8 +1,7 @@
 
 
-axiom ax-cb1
-  param ta: term A
-  param tr: term R
-  assume ax-cb.1: |- R |= A
-  assert |- R : bool
-end
+axiom ax-cb1(ta: $term$ A, tr: $term$ R) {
+  assume ax-cb.1: $|- R |= A$;
+
+  return $|- R : bool$;
+}

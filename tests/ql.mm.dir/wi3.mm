@@ -1,6 +1,5 @@
 
-axiom wi3
-  param wva: term a
-  param wvb: term b
-  assert term ( a ->3 b )
-end
+axiom wi3(wva: $term$ a, wvb: $term$ b) {
+
+  return $term ( a ->3 b )$;
+}

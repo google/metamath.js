@@ -1,7 +1,5 @@
 
-axiom a1
-  param tt: term t
-  param tr: term r
-  param ts: term s
-  assert |- ( t = r -> ( t = s -> r = s ) )
-end
+axiom a1(tt: $term$ t, tr: $term$ r, ts: $term$ s) {
+
+  return $|- ( t = r -> ( t = s -> r = s ) )$;
+}

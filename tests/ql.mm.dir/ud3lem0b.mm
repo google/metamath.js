@@ -1,18 +1,19 @@
-include "ri3.mm"
+include "ri3.mm";
 
-theorem ud3lem0b
-  param wva: term a
-  param wvb: term b
-  param wvc: term c
-  assume ud3lem0a.1: |- a = b
+theorem ud3lem0b(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
+  assume ud3lem0a.1: $|- a = b$;
 
 
-  assert |- ( a ->3 c ) = ( b ->3 c )
 
-  proof
-    wva
-    wvb
-    wvc
-    ud3lem0a.1
-    ri3
-end
+
+
+  do {
+    wva;
+    wvb;
+    wvc;
+    ud3lem0a.1;
+    ri3;
+  };
+
+  return $|- ( a ->3 c ) = ( b ->3 c )$;
+}

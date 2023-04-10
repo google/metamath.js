@@ -1,34 +1,36 @@
-include "wn.mm"
-include "wo.mm"
-include "wa.mm"
-include "anor1.mm"
-include "ax-r1.mm"
-include "con3.mm"
+include "wn.mm";
+include "wo.mm";
+include "wa.mm";
+include "anor1.mm";
+include "ax-r1.mm";
+include "con3.mm";
 
-theorem oran2
-  param wva: term a
-  param wvb: term b
+theorem oran2(wva: $term$ a, wvb: $term$ b) {
 
 
-  assert |- ( a ' v b ) = ( a ^ b ' ) '
 
-  proof
-    wva
-    wn
-    wvb
-    wo
-    #
-    wva
-    wvb
-    wn
-    wa
-    #
-    @1
-    @0
-    wn
-    wva
-    wvb
-    anor1
-    ax-r1
-    con3
-end
+
+
+  do {
+    wva;
+    wn;
+    wvb;
+    wo;
+    #;
+    wva;
+    wvb;
+    wn;
+    wa;
+    #;
+    @1;
+    @0;
+    wn;
+    wva;
+    wvb;
+    anor1;
+    ax-r1;
+    con3;
+  };
+
+  return $|- ( a ' v b ) = ( a ^ b ' ) '$;
+}

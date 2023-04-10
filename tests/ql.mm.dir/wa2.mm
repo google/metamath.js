@@ -1,23 +1,25 @@
-include "wo.mm"
-include "ax-a2.mm"
-include "bi1.mm"
+include "wo.mm";
+include "ax-a2.mm";
+include "bi1.mm";
 
-theorem wa2
-  param wva: term a
-  param wvb: term b
+theorem wa2(wva: $term$ a, wvb: $term$ b) {
 
 
-  assert |- ( ( a v b ) == ( b v a ) ) = 1
 
-  proof
-    wva
-    wvb
-    wo
-    wvb
-    wva
-    wo
-    wva
-    wvb
-    ax-a2
-    bi1
-end
+
+
+  do {
+    wva;
+    wvb;
+    wo;
+    wvb;
+    wva;
+    wo;
+    wva;
+    wvb;
+    ax-a2;
+    bi1;
+  };
+
+  return $|- ( ( a v b ) == ( b v a ) ) = 1$;
+}

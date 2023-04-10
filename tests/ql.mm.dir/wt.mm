@@ -1,4 +1,5 @@
 
-axiom wt
-  assert term 1
-end
+axiom wt() {
+
+  return $term 1$;
+}

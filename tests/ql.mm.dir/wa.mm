@@ -1,6 +1,5 @@
 
-axiom wa
-  param wva: term a
-  param wvb: term b
-  assert term ( a ^ b )
-end
+axiom wa(wva: $term$ a, wvb: $term$ b) {
+
+  return $term ( a ^ b )$;
+}

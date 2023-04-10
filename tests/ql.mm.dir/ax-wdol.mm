@@ -1,6 +1,5 @@
 
-axiom ax-wdol
-  param wva: term a
-  param wvb: term b
-  assert |- ( ( a == b ) v ( a == b ' ) ) = 1
-end
+axiom ax-wdol(wva: $term$ a, wvb: $term$ b) {
+
+  return $|- ( ( a == b ) v ( a == b ' ) ) = 1$;
+}

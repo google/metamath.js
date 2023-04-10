@@ -1,19 +1,22 @@
-include "wn.mm"
-include "ax-a1.mm"
-include "bi1.mm"
+include "wn.mm";
+include "ax-a1.mm";
+include "bi1.mm";
 
-theorem wa1
-  param wva: term a
+theorem wa1(wva: $term$ a) {
 
 
-  assert |- ( a == a ' ' ) = 1
 
-  proof
-    wva
-    wva
-    wn
-    wn
-    wva
-    ax-a1
-    bi1
-end
+
+
+  do {
+    wva;
+    wva;
+    wn;
+    wn;
+    wva;
+    ax-a1;
+    bi1;
+  };
+
+  return $|- ( a == a ' ' ) = 1$;
+}

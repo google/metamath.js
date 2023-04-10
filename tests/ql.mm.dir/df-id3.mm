@@ -1,6 +1,5 @@
 
-axiom df-id3
-  param wva: term a
-  param wvb: term b
-  assert |- ( a ==3 b ) = ( ( a ' v b ) ^ ( a v ( a ' ^ b ' ) ) )
-end
+axiom df-id3(wva: $term$ a, wvb: $term$ b) {
+
+  return $|- ( a ==3 b ) = ( ( a ' v b ) ^ ( a v ( a ' ^ b ' ) ) )$;
+}

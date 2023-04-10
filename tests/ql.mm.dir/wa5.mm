@@ -1,28 +1,30 @@
-include "wn.mm"
-include "wo.mm"
-include "ax-a5.mm"
-include "bi1.mm"
+include "wn.mm";
+include "wo.mm";
+include "ax-a5.mm";
+include "bi1.mm";
 
-theorem wa5
-  param wva: term a
-  param wvb: term b
+theorem wa5(wva: $term$ a, wvb: $term$ b) {
 
 
-  assert |- ( ( a v ( a ' v b ' ) ' ) == a ) = 1
 
-  proof
-    wva
-    wva
-    wn
-    wvb
-    wn
-    #
-    wo
-    wn
-    wo
-    wva
-    wva
-    @0
-    ax-a5
-    bi1
-end
+
+
+  do {
+    wva;
+    wva;
+    wn;
+    wvb;
+    wn;
+    #;
+    wo;
+    wn;
+    wo;
+    wva;
+    wva;
+    @0;
+    ax-a5;
+    bi1;
+  };
+
+  return $|- ( ( a v ( a ' v b ' ) ' ) == a ) = 1$;
+}

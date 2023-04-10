@@ -1,5 +1,5 @@
 
-axiom wat
-  param hal: type al
-  assert |- @ : ( ( al -> bool ) -> al )
-end
+axiom wat(hal: $type$ al) {
+
+  return $|- @ : ( ( al -> bool ) -> al )$;
+}

@@ -1,21 +1,23 @@
-include "wo.mm"
-include "leo.mm"
-include "lei3.mm"
+include "wo.mm";
+include "leo.mm";
+include "lei3.mm";
 
-theorem bina3
-  param wva: term a
-  param wvb: term b
+theorem bina3(wva: $term$ a, wvb: $term$ b) {
 
 
-  assert |- ( a ->3 ( a v b ) ) = 1
 
-  proof
-    wva
-    wva
-    wvb
-    wo
-    wva
-    wvb
-    leo
-    lei3
-end
+
+
+  do {
+    wva;
+    wva;
+    wvb;
+    wo;
+    wva;
+    wvb;
+    leo;
+    lei3;
+  };
+
+  return $|- ( a ->3 ( a v b ) ) = 1$;
+}

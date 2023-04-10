@@ -1,7 +1,6 @@
 
-axiom ax4
-  param wx: wff x
-  param wy: wff y
-  assume ax4.1: |- x DND y
-  assert |- x DND x y
-end
+axiom ax4(wx: $wff$ x, wy: $wff$ y) {
+  assume ax4.1: $|- x DND y$;
+
+  return $|- x DND x y$;
+}

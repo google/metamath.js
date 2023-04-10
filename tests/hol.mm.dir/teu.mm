@@ -1,4 +1,5 @@
 
-axiom teu
-  assert term ?!
-end
+axiom teu() {
+
+  return $term ?!$;
+}

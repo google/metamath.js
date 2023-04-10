@@ -1,9 +1,5 @@
 
-axiom df-fo
-  param hal: type al
-  param hbe: type be
-  param vx: var x
-  param vy: var y
-  param vf: var f
-  assert |- T. |= [ onto = \ f : ( al -> be ) . ( ! \ y : be . ( ? \ x : al . [ y : be = ( f : ( al -> be ) x : al ) ] ) ) ]
-end
+axiom df-fo(hal: $type$ al, hbe: $type$ be, vx: $var$ x, vy: $var$ y, vf: $var$ f) {
+
+  return $|- T. |= [ onto = \ f : ( al -> be ) . ( ! \ y : be . ( ? \ x : al . [ y : be = ( f : ( al -> be ) x : al ) ] ) ) ]$;
+}

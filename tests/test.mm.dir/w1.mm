@@ -1,5 +1,5 @@
 
-axiom w1
-  param wx: " x
-  assert " x -
-end
+axiom w1(wx: $"$ x) {
+
+  return $" x -$;
+}

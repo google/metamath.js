@@ -1,7 +1,6 @@
 
 
-axiom kc
-  param tf: term F
-  param tt: term T
-  assert term ( F T )
-end
+axiom kc(tf: $term$ F, tt: $term$ T) {
+
+  return $term ( F T )$;
+}

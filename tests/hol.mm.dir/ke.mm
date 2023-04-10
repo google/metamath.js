@@ -1,5 +1,6 @@
 
 
-axiom ke
-  assert term =
-end
+axiom ke() {
+
+  return $term =$;
+}

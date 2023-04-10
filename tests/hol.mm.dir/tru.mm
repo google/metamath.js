@@ -1,15 +1,18 @@
-include "kt.mm"
-include "wtru.mm"
-include "id.mm"
+include "kt.mm";
+include "wtru.mm";
+include "id.mm";
 
-theorem tru
+theorem tru() {
 
 
 
-  assert |- T. |= T.
 
-  proof
-    kt
-    wtru
-    id
-end
+
+  do {
+    kt;
+    wtru;
+    id;
+  };
+
+  return $|- T. |= T.$;
+}

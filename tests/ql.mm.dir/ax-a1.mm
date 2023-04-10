@@ -1,5 +1,5 @@
 
-axiom ax-a1
-  param wva: term a
-  assert |- a = a ' '
-end
+axiom ax-a1(wva: $term$ a) {
+
+  return $|- a = a ' '$;
+}

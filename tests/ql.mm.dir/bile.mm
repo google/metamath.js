@@ -1,34 +1,36 @@
-include "wo.mm"
-include "ax-r5.mm"
-include "oridm.mm"
-include "ax-r2.mm"
-include "df-le1.mm"
+include "wo.mm";
+include "ax-r5.mm";
+include "oridm.mm";
+include "ax-r2.mm";
+include "df-le1.mm";
 
-theorem bile
-  param wva: term a
-  param wvb: term b
-  assume bile.1: |- a = b
+theorem bile(wva: $term$ a, wvb: $term$ b) {
+  assume bile.1: $|- a = b$;
 
 
-  assert |- a =< b
 
-  proof
-    wva
-    wvb
-    wva
-    wvb
-    wo
-    wvb
-    wvb
-    wo
-    wvb
-    wva
-    wvb
-    wvb
-    bile.1
-    ax-r5
-    wvb
-    oridm
-    ax-r2
-    df-le1
-end
+
+
+  do {
+    wva;
+    wvb;
+    wva;
+    wvb;
+    wo;
+    wvb;
+    wvb;
+    wo;
+    wvb;
+    wva;
+    wvb;
+    wvb;
+    bile.1;
+    ax-r5;
+    wvb;
+    oridm;
+    ax-r2;
+    df-le1;
+  };
+
+  return $|- a =< b$;
+}

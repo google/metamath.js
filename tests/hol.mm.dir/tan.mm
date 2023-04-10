@@ -1,4 +1,5 @@
 
-axiom tan
-  assert term /\
-end
+axiom tan() {
+
+  return $term /\$;
+}

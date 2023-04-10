@@ -1,7 +1,6 @@
 
-axiom IV
-  param wx: wff x
-  param wy: wff y
-  assume IVa: |- x U U y
-  assert |- x y
-end
+axiom IV(wx: $wff$ x, wy: $wff$ y) {
+  assume IVa: $|- x U U y$;
+
+  return $|- x y$;
+}

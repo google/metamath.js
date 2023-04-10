@@ -1,4 +1,5 @@
 
-axiom tex
-  assert term ?
-end
+axiom tex() {
+
+  return $term ?$;
+}

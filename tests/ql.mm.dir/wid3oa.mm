@@ -1,7 +1,5 @@
 
-axiom wid3oa
-  param wva: term a
-  param wvb: term b
-  param wvc: term c
-  assert term ( a == c ==OA b )
-end
+axiom wid3oa(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
+
+  return $term ( a == c ==OA b )$;
+}

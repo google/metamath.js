@@ -1,7 +1,6 @@
 
-axiom III
-  param wx: wff x
-  param wy: wff y
-  assume IIIa: |- x I I I y
-  assert |- x U y
-end
+axiom III(wx: $wff$ x, wy: $wff$ y) {
+  assume IIIa: $|- x I I I y$;
+
+  return $|- x U y$;
+}

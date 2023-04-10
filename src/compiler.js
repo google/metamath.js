@@ -8,20 +8,19 @@ class Lexer {
       ["comment"]: {match: /\/\/.*\n/, lineBreaks: true},
       ["ws"]: {match: /[\s]+/, lineBreaks: true},
       ["_include_"]: "include",
-      //["const"]: "const",
-      //["var"]: "var",
+      ["string"]: /\$[!-#%-~]+(?:\s+[!-#%-~]+)*\s?\$/,
       ["theorem"]: "theorem",
       ["axiom"]: "axiom",
-      ["proof"]: "proof",
-      ["end"]: "end",
-      ["param"]: "param",
+      ["do"]: "do",
       ["let"]: "let",
       ["step"]: "step",
       ["assume"]: "assume",
       ["disjoint"]: "disjoint",
-      ["assert"]: "assert",
+      ["return"]: "return",
       ["("]: "(",
       [")"]: ")",
+      ["{"]: "{",
+      ["}"]: "}",
       ['"']: '"',
       [":"]: ":",
       [","]: ",",
@@ -29,12 +28,13 @@ class Lexer {
       ["@"]: "@",
       ["#"]: "#",
       ["label"]: /[A-Za-z0-9-_.]+/,
-      ["sequence"]: /[!-#%-~\?]+/,
+      ["sequence"]: /[!#%-~\?]+/,
     };
     this.lexer = moo.compile(lexicon);
   }
   parse(code) {
     this.lexer.reset(code);
+    return this;
   }
   next() {
     let next = this.lexer.next();
@@ -54,6 +54,7 @@ class Lexer {
   }
   eat(type, value) {
     assertThat(this.next()).equalsTo([type, value ? value : type]);
+    return this;
   };
 }
 
@@ -66,7 +67,6 @@ function assertThat(a) {
     }
   };
 }
-
 
 const symbols = [
   // a subset of possible symbols
@@ -90,18 +90,12 @@ const labels = [
   "label",
   // reserved keywords that can also be labels
   "_include_",
-  // "const",
-  // "var",
   "theorem",
   "axiom",
-  "proof",
-  //"end",
   "let",
-  "param",
-  "step",
   "assume",
   "disjoint",
-  "assert",
+  "return",
   // catch all types of sequences
 ];
 
@@ -128,7 +122,9 @@ class Parser {
   }
   error() {
     const {head} = this.lexer;
-    const {line, col} = this.lexer.lexer;
+    const {line, col, buffer} = this.lexer.lexer;
+    // console.log(this.lexer.lexer.buf);
+    // console.log(buffer);
     throw new Error(`Unexpected token "${head[1]}" (${head[0]}) on line ${line} column ${col}.`);
   }
   
@@ -148,6 +144,7 @@ class Parser {
     const sp = ["ws", "comment", "comment-expr"];
     // const sp = ["ws"];
     if (this.accepts(...sp)) {
+      // console.log(this.lexer.head);
       this.eat(...sp);
       // allows multiple whitespace types intermingled
       while (this.accepts(...sp)) {
@@ -189,15 +186,198 @@ class Parser {
     return [type, result];
   }
 
+  quote() {
+    const str = this.eat("string");
+    return str.slice(1, str.length - 1).replace('\\"', '"');
+  }
+  
+  head(extras = false) {
+    this.eat("(");
+    this.ws(true);
+
+    const f = [];
+    // parameters
+    while (this.accepts(...labels, "string")) {
+      //console.log(label);
+      //console.log(first);
+      //console.log(this.lexer.head);
+      //console.log(this.quote());
+      //throw new Error("hi");
+      let first = this.accepts(...labels) ? this.label() : this.quote();
+      this.ws(true);
+
+      let label;
+      let type;
+
+      if (this.accepts(":")) {
+        this.eat(":");
+        this.ws();
+        label = first;
+        type = this.accepts(...labels) ? this.label() : this.quote();
+        this.ws();
+      } else {
+        label = "";
+        type = first;
+      }
+
+      const varz = this.label();
+      f.push([label, type, varz]);
+      this.ws(true);
+
+      if (!this.accepts(",")) {
+        break;
+      }
+      
+      this.eat(",");
+      this.ws(true);
+    }
+
+    this.eat(")");
+
+    this.ws(true);
+    
+    // this.ws(true);
+    return f;
+  }
+
+  body(extras = false) {
+
+    const e = [];
+    
+    while (this.accepts("assume")) {
+      this.eat("assume");
+      this.ws();
+      let label = "";
+      if (this.accepts(...labels)) {
+        label = this.label();
+        this.ws(true);
+        this.eat(":");
+        this.ws(true);
+      }
+      const [type, str] = this.str();
+      e.push([label, type, str]);
+      this.ws(true);
+      this.eat(";");
+      this.ws(true);
+    };
+
+    const d = [];
+    while (this.accepts("disjoint")) {
+      this.eat("disjoint");
+      this.ws();
+      const varzs = [];
+      do {
+        varzs.push(this.label());
+        this.ws(true);
+      } while (this.accepts(...labels));
+      d.push(varzs);
+      this.ws(true);
+      this.eat(";");
+      this.ws(true);
+    };
+
+    const l = [];
+    
+    while (this.accepts("let")) {
+      this.eat("let");
+      this.ws();
+      const label = this.label();
+      this.ws(true);
+      this.eat(":");
+      this.ws(true);
+      const type = this.accepts(...labels) ? this.label() : this.quote();
+      this.ws();
+      const name = this.label();
+      l.push([label, type, name]);
+      this.ws(true);
+      this.eat(";");
+      this.ws(true);
+    };
+    
+    const proof = [];
+    if (extras) {
+      this.eat("do");
+      this.ws(true);
+      this.eat("{");
+      this.ws(true);
+      while (this.accepts(...labels, "@", "#")) {
+        if (this.accepts("@")) {
+          proof.push(`${this.eat("@")}${this.eat("label")}`);
+        } else if (this.accepts("#")) {
+          proof.push(this.eat("#"));
+        } else {
+          proof.push(this.label());
+        }
+        this.ws(true);
+        this.eat(";");
+        this.ws(true);
+      }
+      this.eat("}");
+      this.ws(true);
+      this.eat(";");
+      this.ws(true);
+    }
+    
+    this.eat("return");
+    this.ws();
+    //console.log(this.lexer.head);
+    //throw new Error("hi");
+    const str = this.str();
+    //console.log(str);
+    this.ws(true);
+    //console.log(this.lexer.head);
+    this.eat(";");
+    this.ws(true);
+    return [e, d, l, str, proof];
+  }
+
+  symbol() {
+    const str = [];
+    while (this.accepts("sequence", "label")) {
+      str.push(this.eat("sequence", "label"));
+    }
+    return str.join("");
+  }
+  
+  str() {
+    const str = this.eat("string");
+    const [head, ...tail] = str.slice(1, str.length - 1).split(" ");
+    return [head.replace('\\"', '"'), tail.map((s) => s.replace('\\"', '"'))];
+  }
+
   axiom() {
-    this.eat("axiom");
+    return this.func("axiom", false);
+  }
+
+  theorem() {
+    return this.func("theorem", true);
+  }
+  
+  func(type, extras) {
+    this.eat(type);
     this.ws();
     let name = this.label();
-    this.ws();
-    let h = this.header();
-    this.eat("end");
-    this.ws();
-    return ["axiom", name, h];
+    this.ws(true);
+    const f  = this.head(extras);
+    this.ws(true);
+    this.eat("{");
+    this.ws(true);
+    //try {
+    const [e, d, l, [t, str], p] = this.body(extras);
+    this.eat("}");
+    this.ws(true);
+    return [type, name, [
+      f.map((p) => ["param", p]),
+      l.map((v) => ["let", v]),
+      e.map(([label, type, str]) => ["assume", [label, type, ...str]]),
+      d.map((varz) => ["disjoint", varz]),
+      ["assert", [t, ...str]],
+    ], p];
+    //} catch (e) {
+    //  console.log(name);
+    //  console.log(e);
+    //  throw new Error(e);
+    //}
   }
   
   header() {
@@ -283,7 +463,7 @@ class Parser {
     return result;
   }
 
-  symbol() {
+  symbol2() {
     let name = this.eat(...symbols);
     while (this.accepts(...symbols)) {
       name += this.eat(...symbols);
@@ -299,44 +479,33 @@ class Parser {
     return name;
   }
   
-  theorem() {
+  theorem2() {
     this.eat("theorem");
     this.ws();
-
     let name = this.label();
-    this.ws();
-    let head = this.header();
-
     this.ws(true);
-    this.eat("proof");
+    const params  = this.head(true);
     this.ws(true);
-    
-    let steps = [];
-    do {
-      if (this.accepts(...labels)) {
-        steps.push(this.label());
-      } else if (this.accepts("#")) {
-        steps.push(this.eat("#"));
-      } else if (this.accepts("@")) {
-        steps.push(`${this.eat("@")}${this.label()}`);
-      } else {
-        break;
-      }
-      this.ws();
-    } while (true);
-
-    this.eat("end");
-    this.ws();
-
-    return ["theorem", name, head, steps];
+    this.eat("{");
+    this.ws(true);
+    const body = this.body(true);
+    this.eat("}");
+    this.ws(true);
+    return ["theorem", name, params, body];
   }
   
   include() {
     this.eat("_include_");
     this.ws();
     this.eat('"');
-    const name = this.eat("label");
+    //console.log(this.lexer.head);
+    const name = this.label();
+    //console.log("include");
+    //console.log(name);
+    //throw new Error("hi");
     this.eat('"');
+    this.ws(true);
+    this.eat(";");
     this.ws();
     return ["include", name];
   }
@@ -543,7 +712,7 @@ ${v}
 ${f}
 ${e}
 ${d}
-  ${label} $${type == "axiom" ? "a" : "p"} ${assert.join(" ")} ${p}$.
+  ${label} $${type == "axiom" ? "a" : "p"} ${assert.join(" ")} ${type == "theorem" ? p : ""}$.
 $\}`);
     }
 
@@ -604,26 +773,29 @@ class Transpiler {
   
   axiom(label) {
     const [, [d, f, e, [type, axiom]]] = this.mm.labels[label];
-    let args = f.map(([type, name, label]) => `  param ${label}: ${type} ${name}`).join("\n");
-    if (Object.entries(f).length  > 0) {
-      args += "\n";
-    }
+    let args = f.map(([type, name, label]) => `${label}: $${this.escape(type)}$ ${name}`).join(", ");
     
-    let assumptions = e.map(([seq, type, name]) => `  assume ${name}: ${type} ${seq.join(" ")}`).join("\n");
+    let assumptions = e.map(([seq, type, name]) => `  assume ${name}: $${this.escape(type)} ${this.escape(seq.join(' '))}$;`).join("\n");
 
     if (Object.entries(e).length > 0) {
       assumptions += "\n";
     }
 
     const result = `
-axiom ${label}
-${args}${assumptions}  assert ${type} ${axiom.join(' ')}
-end
+axiom ${label}(${args}) {
+${assumptions}
+  return $${this.escape(type)} ${this.escape(axiom.join(' '))}$;
+}
 `;
 
     return [[], result];
   }
 
+  escape(str) {
+    return str;
+    // return str.replace('"', '\\"');
+  }
+  
   theorem(label) {
     // const deps = [];
     const [, [d, f, e, [type, theorem], ddummy, dummy], func, proof] = this.mm.labels[label];
@@ -637,17 +809,17 @@ end
     //    .map(([type, name, label]) => )
     //    .join("\n");
 
-    const varz = [];
+    //const varz = [];
 
-    for (const [type, name, label] of f) {
-      varz.push(`  param ${label}: ${type} ${name}`);
-    }
+    //for (const [type, name, label] of f) {
+    //  varz.push(`  param ${label}: ${type} ${name}`);
+    //}
     
-    for (const [type, name, label] of dummies) {
-      varz.push(`  let ${label}: ${type} ${name}`);
-    }
+    //for (const [type, name, label] of dummies) {
+    //  varz.push(`  let ${label}: ${type} ${name}`);
+    //}
 
-    const args = varz.join("\n");
+    const args = f.map(([type, name, label]) => `${label}: $${this.escape(type)}$ ${name}`).join(", ");
     
     const dlabels = dummies.map(([type, name, label]) => label);
 
@@ -672,7 +844,7 @@ end
 
     let conds = "";
     
-    let assumptions = e.map(([seq, type, name]) => `  assume ${name}: ${type} ${seq.join(" ")}`).join("\n");
+    let assumptions = e.map(([seq, type, name]) => `  assume ${name}: $${type} ${this.escape(seq.join(' '))}$;`).join("\n");
 
     if (Object.entries(e).length > 0) {
       assumptions += "\n";
@@ -680,28 +852,36 @@ end
     
     let diff = [];
     for (let [x, y] of d) {
-      diff.push(`  disjoint ${x} ${y}`);
+      diff.push(`  disjoint ${x} ${y};`);
     }
     
     for (let [x, y] of ddummy) {
-      diff.push(`  disjoint ${x} ${y}`);
+      diff.push(`  disjoint ${x} ${y};`);
     }
+
+    // console.log();
+    //throw new Error("hi");
     
     const body = steps.map((step, i) => {
       const call = typeof step == "number" ? (step == -1 ? `#` : `@${step}`) : `${step}`;
-      return `    ${call}`;
+      return `    ${call};`;
     }).join("\n");
+
+    const l = dummies.map(([type, name, label]) => `  let ${label}: $${this.escape(type)}$ ${name};`).join("\n");
     
     const code = `
-theorem ${label}
-${args}
+theorem ${label}(${args}) {
 ${assumptions}
 ${d.length > 0 ? diff.join("\n") : ""}
-  assert ${type} ${theorem.join(' ')}
 
-  proof
+${l}
+
+  do {
 ${body}
-end
+  };
+
+  return $${this.escape(type)} ${this.escape(theorem.join(' '))}$;
+}
 `;
 
     return [deps, code];

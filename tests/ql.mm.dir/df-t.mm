@@ -1,5 +1,5 @@
 
-axiom df-t
-  param wva: term a
-  assert |- 1 = ( a v a ' )
-end
+axiom df-t(wva: $term$ a) {
+
+  return $|- 1 = ( a v a ' )$;
+}

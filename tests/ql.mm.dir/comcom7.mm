@@ -1,22 +1,24 @@
-include "wn.mm"
-include "comcom3.mm"
-include "comcom5.mm"
+include "wn.mm";
+include "comcom3.mm";
+include "comcom5.mm";
 
-theorem comcom7
-  param wva: term a
-  param wvb: term b
-  assume comcom7.1: |- a C b '
+theorem comcom7(wva: $term$ a, wvb: $term$ b) {
+  assume comcom7.1: $|- a C b '$;
 
 
-  assert |- a C b
 
-  proof
-    wva
-    wvb
-    wva
-    wvb
-    wn
-    comcom7.1
-    comcom3
-    comcom5
-end
+
+
+  do {
+    wva;
+    wvb;
+    wva;
+    wvb;
+    wn;
+    comcom7.1;
+    comcom3;
+    comcom5;
+  };
+
+  return $|- a C b$;
+}

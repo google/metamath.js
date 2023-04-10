@@ -1,4 +1,5 @@
 
-axiom tat
-  assert term @
-end
+axiom tat() {
+
+  return $term @$;
+}

@@ -1,6 +1,5 @@
 
-axiom tpl
-  param tt: term t
-  param tr: term r
-  assert term ( t + r )
-end
+axiom tpl(tt: $term$ t, tr: $term$ r) {
+
+  return $term ( t + r )$;
+}

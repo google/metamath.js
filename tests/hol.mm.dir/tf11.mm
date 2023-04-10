@@ -1,4 +1,5 @@
 
-axiom tf11
-  assert term 1-1
-end
+axiom tf11() {
+
+  return $term 1-1$;
+}

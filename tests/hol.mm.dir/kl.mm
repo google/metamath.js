@@ -1,8 +1,6 @@
 
 
-axiom kl
-  param hal: type al
-  param vx: var x
-  param tt: term T
-  assert term \ x : al . T
-end
+axiom kl(hal: $type$ al, vx: $var$ x, tt: $term$ T) {
+
+  return $term \ x : al . T$;
+}

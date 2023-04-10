@@ -1,6 +1,5 @@
 
-axiom wim
-  param wp: wff P
-  param wq: wff Q
-  assert wff ( P -> Q )
-end
+axiom wim(wp: $wff$ P, wq: $wff$ Q) {
+
+  return $wff ( P -> Q )$;
+}

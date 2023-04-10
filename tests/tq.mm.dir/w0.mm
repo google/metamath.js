@@ -1,4 +1,5 @@
 
-axiom w0
-  assert wff -
-end
+axiom w0() {
+
+  return $wff -$;
+}

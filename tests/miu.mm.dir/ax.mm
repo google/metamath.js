@@ -1,4 +1,5 @@
 
-axiom ax
-  assert |- M I
-end
+axiom ax() {
+
+  return $|- M I$;
+}

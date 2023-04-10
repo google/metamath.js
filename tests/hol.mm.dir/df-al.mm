@@ -1,8 +1,6 @@
 
 
-axiom df-al
-  param hal: type al
-  param vx: var x
-  param vp: var p
-  assert |- T. |= [ ! = \ p : ( al -> bool ) . [ p : ( al -> bool ) = \ x : al . T. ] ]
-end
+axiom df-al(hal: $type$ al, vx: $var$ x, vp: $var$ p) {
+
+  return $|- T. |= [ ! = \ p : ( al -> bool ) . [ p : ( al -> bool ) = \ x : al . T. ] ]$;
+}

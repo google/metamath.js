@@ -1,6 +1,5 @@
 
-axiom wi
-  param wph: wff ph
-  param wps: wff ps
-  assert wff ( ph -> ps )
-end
+axiom wi(wph: $wff$ ph, wps: $wff$ ps) {
+
+  return $wff ( ph -> ps )$;
+}

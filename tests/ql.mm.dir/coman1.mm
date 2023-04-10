@@ -1,21 +1,23 @@
-include "wa.mm"
-include "lea.mm"
-include "lecom.mm"
+include "wa.mm";
+include "lea.mm";
+include "lecom.mm";
 
-theorem coman1
-  param wva: term a
-  param wvb: term b
+theorem coman1(wva: $term$ a, wvb: $term$ b) {
 
 
-  assert |- ( a ^ b ) C a
 
-  proof
-    wva
-    wvb
-    wa
-    wva
-    wva
-    wvb
-    lea
-    lecom
-end
+
+
+  do {
+    wva;
+    wvb;
+    wa;
+    wva;
+    wva;
+    wvb;
+    lea;
+    lecom;
+  };
+
+  return $|- ( a ^ b ) C a$;
+}

@@ -1,42 +1,43 @@
-include "wa.mm"
-include "wr1.mm"
-include "wlan.mm"
-include "wdf2le2.mm"
-include "wr2.mm"
-include "wdf2le1.mm"
+include "wa.mm";
+include "wr1.mm";
+include "wlan.mm";
+include "wdf2le2.mm";
+include "wr2.mm";
+include "wdf2le1.mm";
 
-theorem wlbtr
-  param wva: term a
-  param wvb: term b
-  param wvc: term c
-  assume wlbtr.1: |- ( a =<2 b ) = 1
-  assume wlbtr.2: |- ( b == c ) = 1
+theorem wlbtr(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
+  assume wlbtr.1: $|- ( a =<2 b ) = 1$;
+  assume wlbtr.2: $|- ( b == c ) = 1$;
 
 
-  assert |- ( a =<2 c ) = 1
 
-  proof
-    wva
-    wvc
-    wva
-    wvc
-    wa
-    wva
-    wvb
-    wa
-    wva
-    wvc
-    wvb
-    wva
-    wvb
-    wvc
-    wlbtr.2
-    wr1
-    wlan
-    wva
-    wvb
-    wlbtr.1
-    wdf2le2
-    wr2
-    wdf2le1
-end
+
+
+  do {
+    wva;
+    wvc;
+    wva;
+    wvc;
+    wa;
+    wva;
+    wvb;
+    wa;
+    wva;
+    wvc;
+    wvb;
+    wva;
+    wvb;
+    wvc;
+    wlbtr.2;
+    wr1;
+    wlan;
+    wva;
+    wvb;
+    wlbtr.1;
+    wdf2le2;
+    wr2;
+    wdf2le1;
+  };
+
+  return $|- ( a =<2 c ) = 1$;
+}

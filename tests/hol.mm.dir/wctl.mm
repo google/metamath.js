@@ -1,8 +1,7 @@
 
 
-axiom wctl
-  param ts: term S
-  param tt: term T
-  assume wctl.1: |- ( S , T ) : bool
-  assert |- S : bool
-end
+axiom wctl(ts: $term$ S, tt: $term$ T) {
+  assume wctl.1: $|- ( S , T ) : bool$;
+
+  return $|- S : bool$;
+}

@@ -1,21 +1,23 @@
-include "wo.mm"
-include "wa5c.mm"
-include "wdf2le1.mm"
+include "wo.mm";
+include "wa5c.mm";
+include "wdf2le1.mm";
 
-theorem wleo
-  param wva: term a
-  param wvb: term b
+theorem wleo(wva: $term$ a, wvb: $term$ b) {
 
 
-  assert |- ( a =<2 ( a v b ) ) = 1
 
-  proof
-    wva
-    wva
-    wvb
-    wo
-    wva
-    wvb
-    wa5c
-    wdf2le1
-end
+
+
+  do {
+    wva;
+    wva;
+    wvb;
+    wo;
+    wva;
+    wvb;
+    wa5c;
+    wdf2le1;
+  };
+
+  return $|- ( a =<2 ( a v b ) ) = 1$;
+}

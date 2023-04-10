@@ -1,6 +1,5 @@
 
-axiom df-id5
-  param wva: term a
-  param wvb: term b
-  assert |- ( a ==5 b ) = ( ( a ^ b ) v ( a ' ^ b ' ) )
-end
+axiom df-id5(wva: $term$ a, wvb: $term$ b) {
+
+  return $|- ( a ==5 b ) = ( ( a ^ b ) v ( a ' ^ b ' ) )$;
+}

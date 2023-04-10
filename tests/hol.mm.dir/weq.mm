@@ -1,6 +1,6 @@
 
 
-axiom weq
-  param hal: type al
-  assert |- = : ( al -> ( al -> bool ) )
-end
+axiom weq(hal: $type$ al) {
+
+  return $|- = : ( al -> ( al -> bool ) )$;
+}

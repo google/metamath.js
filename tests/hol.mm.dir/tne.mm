@@ -1,4 +1,5 @@
 
-axiom tne
-  assert term ~
-end
+axiom tne() {
+
+  return $term ~$;
+}

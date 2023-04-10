@@ -1,5 +1,5 @@
 
-axiom wM
-  param wx: wff x
-  assert wff x M
-end
+axiom wM(wx: $wff$ x) {
+
+  return $wff x M$;
+}

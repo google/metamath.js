@@ -1,6 +1,5 @@
 
-axiom wxy
-  param wx: wff x
-  param wy: wff y
-  assert wff x y
-end
+axiom wxy(wx: $wff$ x, wy: $wff$ y) {
+
+  return $wff x y$;
+}

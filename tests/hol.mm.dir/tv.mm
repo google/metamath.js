@@ -1,7 +1,6 @@
 
 
-axiom tv
-  param hal: type al
-  param vx: var x
-  assert term x : al
-end
+axiom tv(hal: $type$ al, vx: $var$ x) {
+
+  return $term x : al$;
+}

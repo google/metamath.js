@@ -1,33 +1,35 @@
-include "wo.mm"
-include "leo.mm"
-include "ax-a2.mm"
-include "lbtr.mm"
-include "lei3.mm"
+include "wo.mm";
+include "leo.mm";
+include "ax-a2.mm";
+include "lbtr.mm";
+include "lei3.mm";
 
-theorem bina4
-  param wva: term a
-  param wvb: term b
+theorem bina4(wva: $term$ a, wvb: $term$ b) {
 
 
-  assert |- ( b ->3 ( a v b ) ) = 1
 
-  proof
-    wvb
-    wva
-    wvb
-    wo
-    #
-    wvb
-    wvb
-    wva
-    wo
-    @0
-    wvb
-    wva
-    leo
-    wvb
-    wva
-    ax-a2
-    lbtr
-    lei3
-end
+
+
+  do {
+    wvb;
+    wva;
+    wvb;
+    wo;
+    #;
+    wvb;
+    wvb;
+    wva;
+    wo;
+    @0;
+    wvb;
+    wva;
+    leo;
+    wvb;
+    wva;
+    ax-a2;
+    lbtr;
+    lei3;
+  };
+
+  return $|- ( b ->3 ( a v b ) ) = 1$;
+}

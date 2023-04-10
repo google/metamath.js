@@ -1,14 +1,16 @@
-include "ax-a2.mm"
+include "ax-a2.mm";
 
-theorem orcom
-  param wva: term a
-  param wvb: term b
+theorem orcom(wva: $term$ a, wvb: $term$ b) {
 
 
-  assert |- ( a v b ) = ( b v a )
 
-  proof
-    wva
-    wvb
-    ax-a2
-end
+
+
+  do {
+    wva;
+    wvb;
+    ax-a2;
+  };
+
+  return $|- ( a v b ) = ( b v a )$;
+}

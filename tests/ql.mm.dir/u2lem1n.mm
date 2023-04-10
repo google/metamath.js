@@ -1,23 +1,25 @@
-include "wi2.mm"
-include "u2lem1.mm"
-include "ax-r4.mm"
+include "wi2.mm";
+include "u2lem1.mm";
+include "ax-r4.mm";
 
-theorem u2lem1n
-  param wva: term a
-  param wvb: term b
+theorem u2lem1n(wva: $term$ a, wvb: $term$ b) {
 
 
-  assert |- ( ( a ->2 b ) ->2 a ) ' = a '
 
-  proof
-    wva
-    wvb
-    wi2
-    wva
-    wi2
-    wva
-    wva
-    wvb
-    u2lem1
-    ax-r4
-end
+
+
+  do {
+    wva;
+    wvb;
+    wi2;
+    wva;
+    wi2;
+    wva;
+    wva;
+    wvb;
+    u2lem1;
+    ax-r4;
+  };
+
+  return $|- ( ( a ->2 b ) ->2 a ) ' = a '$;
+}

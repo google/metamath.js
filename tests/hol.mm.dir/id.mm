@@ -1,14 +1,17 @@
-include "ax-id.mm"
+include "ax-id.mm";
 
-theorem id
-  param tr: term R
-  assume ax-id.1: |- R : bool
+theorem id(tr: $term$ R) {
+  assume ax-id.1: $|- R : bool$;
 
 
-  assert |- R |= R
 
-  proof
-    tr
-    ax-id.1
-    ax-id
-end
+
+
+  do {
+    tr;
+    ax-id.1;
+    ax-id;
+  };
+
+  return $|- R |= R$;
+}

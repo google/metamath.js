@@ -1,4 +1,5 @@
 
-axiom tim
-  assert term ==>
-end
+axiom tim() {
+
+  return $term ==>$;
+}

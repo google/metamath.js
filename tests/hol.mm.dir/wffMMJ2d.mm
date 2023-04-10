@@ -1,8 +1,5 @@
 
-axiom wffMMJ2d
-  param hal: type al
-  param ta: term A
-  param tb: term B
-  param tc: term C
-  assert wff typedef al ( A , B ) C
-end
+axiom wffMMJ2d(hal: $type$ al, ta: $term$ A, tb: $term$ B, tc: $term$ C) {
+
+  return $wff typedef al ( A , B ) C$;
+}

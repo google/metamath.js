@@ -1,12 +1,15 @@
-include "biid.mm"
+include "biid.mm";
 
-theorem ska1
-  param wva: term a
+theorem ska1(wva: $term$ a) {
 
 
-  assert |- ( a == a ) = 1
 
-  proof
-    wva
-    biid
-end
+
+
+  do {
+    wva;
+    biid;
+  };
+
+  return $|- ( a == a ) = 1$;
+}

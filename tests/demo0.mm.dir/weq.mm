@@ -1,6 +1,5 @@
 
-axiom weq
-  param tt: term t
-  param tr: term r
-  assert wff t = r
-end
+axiom weq(tt: $term$ t, tr: $term$ r) {
+
+  return $wff t = r$;
+}

@@ -1,7 +1,6 @@
 
 
-axiom ht
-  param hal: type al
-  param hbe: type be
-  assert type ( al -> be )
-end
+axiom ht(hal: $type$ al, hbe: $type$ be) {
+
+  return $type ( al -> be )$;
+}

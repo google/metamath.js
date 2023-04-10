@@ -1,5 +1,6 @@
 
 
-axiom kt
-  assert term T.
-end
+axiom kt() {
+
+  return $term T.$;
+}

@@ -1,24 +1,27 @@
-include "wo.mm"
-include "comorr.mm"
-include "oridm.mm"
-include "cbtr.mm"
+include "wo.mm";
+include "comorr.mm";
+include "oridm.mm";
+include "cbtr.mm";
 
-theorem comid
-  param wva: term a
+theorem comid(wva: $term$ a) {
 
 
-  assert |- a C a
 
-  proof
-    wva
-    wva
-    wva
-    wo
-    wva
-    wva
-    wva
-    comorr
-    wva
-    oridm
-    cbtr
-end
+
+
+  do {
+    wva;
+    wva;
+    wva;
+    wo;
+    wva;
+    wva;
+    wva;
+    comorr;
+    wva;
+    oridm;
+    cbtr;
+  };
+
+  return $|- a C a$;
+}

@@ -1,4 +1,5 @@
 
-axiom tor
-  assert term \/
-end
+axiom tor() {
+
+  return $term \/$;
+}

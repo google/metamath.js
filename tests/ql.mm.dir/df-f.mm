@@ -1,4 +1,5 @@
 
-axiom df-f
-  assert |- 0 = 1 '
-end
+axiom df-f() {
+
+  return $|- 0 = 1 '$;
+}

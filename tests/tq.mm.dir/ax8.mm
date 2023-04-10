@@ -1,4 +1,5 @@
 
-axiom ax8
-  assert |- P - -
-end
+axiom ax8() {
+
+  return $|- P - -$;
+}

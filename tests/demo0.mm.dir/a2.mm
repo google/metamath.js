@@ -1,5 +1,5 @@
 
-axiom a2
-  param tt: term t
-  assert |- ( t + 0 ) = t
-end
+axiom a2(tt: $term$ t) {
+
+  return $|- ( t + 0 ) = t$;
+}

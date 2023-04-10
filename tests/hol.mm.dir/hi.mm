@@ -1,4 +1,5 @@
 
-axiom hi
-  assert type ind
-end
+axiom hi() {
+
+  return $type ind$;
+}

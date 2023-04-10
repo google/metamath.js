@@ -1,16 +1,17 @@
-include "ax-a3.mm"
+include "ax-a3.mm";
 
-theorem orass
-  param wva: term a
-  param wvb: term b
-  param wvc: term c
+theorem orass(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
 
 
-  assert |- ( ( a v b ) v c ) = ( a v ( b v c ) )
 
-  proof
-    wva
-    wvb
-    wvc
-    ax-a3
-end
+
+
+  do {
+    wva;
+    wvb;
+    wvc;
+    ax-a3;
+  };
+
+  return $|- ( ( a v b ) v c ) = ( a v ( b v c ) )$;
+}

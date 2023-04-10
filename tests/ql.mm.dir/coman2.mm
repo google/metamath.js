@@ -1,28 +1,30 @@
-include "wa.mm"
-include "ancom.mm"
-include "coman1.mm"
-include "bctr.mm"
+include "wa.mm";
+include "ancom.mm";
+include "coman1.mm";
+include "bctr.mm";
 
-theorem coman2
-  param wva: term a
-  param wvb: term b
+theorem coman2(wva: $term$ a, wvb: $term$ b) {
 
 
-  assert |- ( a ^ b ) C b
 
-  proof
-    wva
-    wvb
-    wa
-    wvb
-    wva
-    wa
-    wvb
-    wva
-    wvb
-    ancom
-    wvb
-    wva
-    coman1
-    bctr
-end
+
+
+  do {
+    wva;
+    wvb;
+    wa;
+    wvb;
+    wva;
+    wa;
+    wvb;
+    wva;
+    wvb;
+    ancom;
+    wvb;
+    wva;
+    coman1;
+    bctr;
+  };
+
+  return $|- ( a ^ b ) C b$;
+}

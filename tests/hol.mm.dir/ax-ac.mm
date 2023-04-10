@@ -1,7 +1,5 @@
 
-axiom ax-ac
-  param hal: type al
-  param vx: var x
-  param vp: var p
-  assert |- T. |= ( ! \ p : ( al -> bool ) . ( ! \ x : al . [ ( p : ( al -> bool ) x : al ) ==> ( p : ( al -> bool ) ( @ p : ( al -> bool ) ) ) ] ) )
-end
+axiom ax-ac(hal: $type$ al, vx: $var$ x, vp: $var$ p) {
+
+  return $|- T. |= ( ! \ p : ( al -> bool ) . ( ! \ x : al . [ ( p : ( al -> bool ) x : al ) ==> ( p : ( al -> bool ) ( @ p : ( al -> bool ) ) ) ] ) )$;
+}

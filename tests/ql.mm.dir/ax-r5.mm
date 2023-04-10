@@ -1,8 +1,6 @@
 
-axiom ax-r5
-  param wva: term a
-  param wvb: term b
-  param wvc: term c
-  assume r5.1: |- a = b
-  assert |- ( a v c ) = ( b v c )
-end
+axiom ax-r5(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
+  assume r5.1: $|- a = b$;
+
+  return $|- ( a v c ) = ( b v c )$;
+}

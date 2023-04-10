@@ -1,8 +1,7 @@
 
 
-axiom ax-refl
-  param hal: type al
-  param ta: term A
-  assume ax-refl.1: |- A : al
-  assert |- T. |= ( ( = A ) A )
-end
+axiom ax-refl(hal: $type$ al, ta: $term$ A) {
+  assume ax-refl.1: $|- A : al$;
+
+  return $|- T. |= ( ( = A ) A )$;
+}

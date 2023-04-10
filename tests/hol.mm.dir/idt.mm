@@ -1,12 +1,14 @@
 
-theorem idt
-  param hal: type al
-  param ta: term A
-  assume idt.1: |- A : al
+theorem idt(hal: $type$ al, ta: $term$ A) {
+  assume idt.1: $|- A : al$;
 
 
-  assert |- A : al
 
-  proof
-    idt.1
-end
+
+
+  do {
+    idt.1;
+  };
+
+  return $|- A : al$;
+}

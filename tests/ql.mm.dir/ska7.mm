@@ -1,24 +1,26 @@
-include "wo.mm"
-include "wa.mm"
-include "anabs.mm"
-include "bi1.mm"
+include "wo.mm";
+include "wa.mm";
+include "anabs.mm";
+include "bi1.mm";
 
-theorem ska7
-  param wva: term a
-  param wvb: term b
+theorem ska7(wva: $term$ a, wvb: $term$ b) {
 
 
-  assert |- ( ( a ^ ( a v b ) ) == a ) = 1
 
-  proof
-    wva
-    wva
-    wvb
-    wo
-    wa
-    wva
-    wva
-    wvb
-    anabs
-    bi1
-end
+
+
+  do {
+    wva;
+    wva;
+    wvb;
+    wo;
+    wa;
+    wva;
+    wva;
+    wvb;
+    anabs;
+    bi1;
+  };
+
+  return $|- ( ( a ^ ( a v b ) ) == a ) = 1$;
+}

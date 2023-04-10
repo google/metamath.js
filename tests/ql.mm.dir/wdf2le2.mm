@@ -1,21 +1,23 @@
-include "wdf-le2.mm"
-include "wleoa.mm"
+include "wdf-le2.mm";
+include "wleoa.mm";
 
-theorem wdf2le2
-  param wva: term a
-  param wvb: term b
-  assume wdf2le2.1: |- ( a =<2 b ) = 1
+theorem wdf2le2(wva: $term$ a, wvb: $term$ b) {
+  assume wdf2le2.1: $|- ( a =<2 b ) = 1$;
 
 
-  assert |- ( ( a ^ b ) == a ) = 1
 
-  proof
-    wva
-    wvb
-    wvb
-    wva
-    wvb
-    wdf2le2.1
-    wdf-le2
-    wleoa
-end
+
+
+  do {
+    wva;
+    wvb;
+    wvb;
+    wva;
+    wvb;
+    wdf2le2.1;
+    wdf-le2;
+    wleoa;
+  };
+
+  return $|- ( ( a ^ b ) == a ) = 1$;
+}

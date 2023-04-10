@@ -1,5 +1,6 @@
 
 
-axiom hb
-  assert type bool
-end
+axiom hb() {
+
+  return $type bool$;
+}

@@ -1,19 +1,22 @@
-include "wn.mm"
-include "ax-a1.mm"
-include "bile.mm"
+include "wn.mm";
+include "ax-a1.mm";
+include "bile.mm";
 
-theorem qlhoml1a
-  param wva: term a
+theorem qlhoml1a(wva: $term$ a) {
 
 
-  assert |- a =< a ' '
 
-  proof
-    wva
-    wva
-    wn
-    wn
-    wva
-    ax-a1
-    bile
-end
+
+
+  do {
+    wva;
+    wva;
+    wn;
+    wn;
+    wva;
+    ax-a1;
+    bile;
+  };
+
+  return $|- a =< a ' '$;
+}

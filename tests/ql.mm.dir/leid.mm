@@ -1,16 +1,19 @@
-include "id.mm"
-include "bile.mm"
+include "id.mm";
+include "bile.mm";
 
-theorem leid
-  param wva: term a
+theorem leid(wva: $term$ a) {
 
 
-  assert |- a =< a
 
-  proof
-    wva
-    wva
-    wva
-    id
-    bile
-end
+
+
+  do {
+    wva;
+    wva;
+    wva;
+    id;
+    bile;
+  };
+
+  return $|- a =< a$;
+}

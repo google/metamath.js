@@ -1,27 +1,30 @@
-include "wf.mm"
-include "wa.mm"
-include "ancom.mm"
-include "an0.mm"
-include "ax-r2.mm"
+include "wf.mm";
+include "wa.mm";
+include "ancom.mm";
+include "an0.mm";
+include "ax-r2.mm";
 
-theorem an0r
-  param wva: term a
+theorem an0r(wva: $term$ a) {
 
 
-  assert |- ( 0 ^ a ) = 0
 
-  proof
-    wf
-    wva
-    wa
-    wva
-    wf
-    wa
-    wf
-    wf
-    wva
-    ancom
-    wva
-    an0
-    ax-r2
-end
+
+
+  do {
+    wf;
+    wva;
+    wa;
+    wva;
+    wf;
+    wa;
+    wf;
+    wf;
+    wva;
+    ancom;
+    wva;
+    an0;
+    ax-r2;
+  };
+
+  return $|- ( 0 ^ a ) = 0$;
+}

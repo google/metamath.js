@@ -1,55 +1,55 @@
-include "wa.mm"
-include "wi1.mm"
-include "wo.mm"
-include "oas.mm"
+include "wa.mm";
+include "wi1.mm";
+include "wo.mm";
+include "oas.mm";
 
-theorem oa4ctob
-  param wva: term a
-  param wvc: term c
-  param wve: term e
-  param wvg: term g
-  assume oa4ctob.1: |- ( a ' ^ ( a v ( c ^ ( ( ( a ^ c ) v ( ( a ->1 g ) ^ ( c ->1 g ) ) ) v ( ( ( a ^ e ) v ( ( a ->1 g ) ^ ( e ->1 g ) ) ) ^ ( ( c ^ e ) v ( ( c ->1 g ) ^ ( e ->1 g ) ) ) ) ) ) ) ) =< g
+theorem oa4ctob(wva: $term$ a, wvc: $term$ c, wve: $term$ e, wvg: $term$ g) {
+  assume oa4ctob.1: $|- ( a ' ^ ( a v ( c ^ ( ( ( a ^ c ) v ( ( a ->1 g ) ^ ( c ->1 g ) ) ) v ( ( ( a ^ e ) v ( ( a ->1 g ) ^ ( e ->1 g ) ) ) ^ ( ( c ^ e ) v ( ( c ->1 g ) ^ ( e ->1 g ) ) ) ) ) ) ) ) =< g$;
 
 
-  assert |- ( ( a ->1 g ) ^ ( a v ( c ^ ( ( ( a ^ c ) v ( ( a ->1 g ) ^ ( c ->1 g ) ) ) v ( ( ( a ^ e ) v ( ( a ->1 g ) ^ ( e ->1 g ) ) ) ^ ( ( c ^ e ) v ( ( c ->1 g ) ^ ( e ->1 g ) ) ) ) ) ) ) ) =< g
 
-  proof
-    wva
-    wvc
-    wva
-    wvc
-    wa
-    wva
-    wvg
-    wi1
-    #
-    wvc
-    wvg
-    wi1
-    #
-    wa
-    wo
-    wva
-    wve
-    wa
-    @0
-    wve
-    wvg
-    wi1
-    #
-    wa
-    wo
-    wvc
-    wve
-    wa
-    @1
-    @2
-    wa
-    wo
-    wa
-    wo
-    wa
-    wvg
-    oa4ctob.1
-    oas
-end
+
+
+  do {
+    wva;
+    wvc;
+    wva;
+    wvc;
+    wa;
+    wva;
+    wvg;
+    wi1;
+    #;
+    wvc;
+    wvg;
+    wi1;
+    #;
+    wa;
+    wo;
+    wva;
+    wve;
+    wa;
+    @0;
+    wve;
+    wvg;
+    wi1;
+    #;
+    wa;
+    wo;
+    wvc;
+    wve;
+    wa;
+    @1;
+    @2;
+    wa;
+    wo;
+    wa;
+    wo;
+    wa;
+    wvg;
+    oa4ctob.1;
+    oas;
+  };
+
+  return $|- ( ( a ->1 g ) ^ ( a v ( c ^ ( ( ( a ^ c ) v ( ( a ->1 g ) ^ ( c ->1 g ) ) ) v ( ( ( a ^ e ) v ( ( a ->1 g ) ^ ( e ->1 g ) ) ) ^ ( ( c ^ e ) v ( ( c ->1 g ) ^ ( e ->1 g ) ) ) ) ) ) ) ) =< g$;
+}

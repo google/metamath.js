@@ -1,6 +1,5 @@
 
-axiom df-i1
-  param wva: term a
-  param wvb: term b
-  assert |- ( a ->1 b ) = ( a ' v ( a ^ b ) )
-end
+axiom df-i1(wva: $term$ a, wvb: $term$ b) {
+
+  return $|- ( a ->1 b ) = ( a ' v ( a ^ b ) )$;
+}

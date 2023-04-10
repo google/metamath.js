@@ -1,13 +1,16 @@
-include "w0.mm"
-include "w1.mm"
+include "w0.mm";
+include "w1.mm";
 
-theorem t0
+theorem t0() {
 
 
 
-  assert wff - -
 
-  proof
-    w0
-    w1
-end
+
+  do {
+    w0;
+    w1;
+  };
+
+  return $wff - -$;
+}

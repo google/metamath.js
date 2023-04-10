@@ -1,6 +1,5 @@
 
-axiom wid5
-  param wva: term a
-  param wvb: term b
-  assert term ( a ==5 b )
-end
+axiom wid5(wva: $term$ a, wvb: $term$ b) {
+
+  return $term ( a ==5 b )$;
+}

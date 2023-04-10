@@ -1,5 +1,6 @@
 
 
-axiom tal
-  assert term !
-end
+axiom tal() {
+
+  return $term !$;
+}

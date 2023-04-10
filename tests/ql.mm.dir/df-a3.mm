@@ -1,6 +1,5 @@
 
-axiom df-a3
-  param wva: term a
-  param wvb: term b
-  assert |- ( a ^3 b ) = ( a ' u3 b ' ) '
-end
+axiom df-a3(wva: $term$ a, wvb: $term$ b) {
+
+  return $|- ( a ^3 b ) = ( a ' u3 b ' ) '$;
+}

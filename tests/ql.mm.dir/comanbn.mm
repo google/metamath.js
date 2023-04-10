@@ -1,67 +1,68 @@
-include "wn.mm"
-include "wa.mm"
-include "tb.mm"
-include "comanb.mm"
-include "conb.mm"
-include "2an.mm"
-include "ax-r1.mm"
-include "cbtr.mm"
+include "wn.mm";
+include "wa.mm";
+include "tb.mm";
+include "comanb.mm";
+include "conb.mm";
+include "2an.mm";
+include "ax-r1.mm";
+include "cbtr.mm";
 
-theorem comanbn
-  param wva: term a
-  param wvb: term b
-  param wvc: term c
+theorem comanbn(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
 
 
-  assert |- ( a ' ^ b ' ) C ( ( a == c ) ^ ( b == c ) )
 
-  proof
-    wva
-    wn
-    #
-    wvb
-    wn
-    #
-    wa
-    @0
-    wvc
-    wn
-    #
-    tb
-    #
-    @1
-    @2
-    tb
-    #
-    wa
-    #
-    wva
-    wvc
-    tb
-    #
-    wvb
-    wvc
-    tb
-    #
-    wa
-    #
-    @0
-    @1
-    @2
-    comanb
-    @8
-    @5
-    @6
-    @3
-    @7
-    @4
-    wva
-    wvc
-    conb
-    wvb
-    wvc
-    conb
-    2an
-    ax-r1
-    cbtr
-end
+
+
+  do {
+    wva;
+    wn;
+    #;
+    wvb;
+    wn;
+    #;
+    wa;
+    @0;
+    wvc;
+    wn;
+    #;
+    tb;
+    #;
+    @1;
+    @2;
+    tb;
+    #;
+    wa;
+    #;
+    wva;
+    wvc;
+    tb;
+    #;
+    wvb;
+    wvc;
+    tb;
+    #;
+    wa;
+    #;
+    @0;
+    @1;
+    @2;
+    comanb;
+    @8;
+    @5;
+    @6;
+    @3;
+    @7;
+    @4;
+    wva;
+    wvc;
+    conb;
+    wvb;
+    wvc;
+    conb;
+    2an;
+    ax-r1;
+    cbtr;
+  };
+
+  return $|- ( a ' ^ b ' ) C ( ( a == c ) ^ ( b == c ) )$;
+}

@@ -1,6 +1,5 @@
 
-axiom wcmtr
-  param wva: term a
-  param wvb: term b
-  assert term C ( a , b )
-end
+axiom wcmtr(wva: $term$ a, wvb: $term$ b) {
+
+  return $term C ( a , b )$;
+}

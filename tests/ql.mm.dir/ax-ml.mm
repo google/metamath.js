@@ -1,7 +1,5 @@
 
-axiom ax-ml
-  param wva: term a
-  param wvb: term b
-  param wvc: term c
-  assert |- ( ( a v b ) ^ ( a v c ) ) =< ( a v ( b ^ ( a v c ) ) )
-end
+axiom ax-ml(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
+
+  return $|- ( ( a v b ) ^ ( a v c ) ) =< ( a v ( b ^ ( a v c ) ) )$;
+}

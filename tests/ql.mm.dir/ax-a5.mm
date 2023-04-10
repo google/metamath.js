@@ -1,6 +1,5 @@
 
-axiom ax-a5
-  param wva: term a
-  param wvb: term b
-  assert |- ( a v ( a ' v b ) ' ) = a
-end
+axiom ax-a5(wva: $term$ a, wvb: $term$ b) {
+
+  return $|- ( a v ( a ' v b ) ' ) = a$;
+}

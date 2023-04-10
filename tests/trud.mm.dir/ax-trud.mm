@@ -1,6 +1,6 @@
 
-axiom ax-trud
-  param tr: term R
-  assume ax-trud.1: |- R : bool
-  assert |- R |= T.
-end
+axiom ax-trud(tr: $term$ R) {
+  assume ax-trud.1: $|- R : bool$;
+
+  return $|- R |= T.$;
+}

@@ -1,5 +1,5 @@
 
-axiom df-fal
-  param vp: var p
-  assert |- T. |= [ F. = ( ! \ p : bool . p : bool ) ]
-end
+axiom df-fal(vp: $var$ p) {
+
+  return $|- T. |= [ F. = ( ! \ p : bool . p : bool ) ]$;
+}

@@ -1,40 +1,40 @@
-include "hb.mm"
-include "tv.mm"
-include "wv.mm"
-include "ax-17.mm"
-include "isfree.mm"
+include "hb.mm";
+include "tv.mm";
+include "wv.mm";
+include "ax-17.mm";
+include "isfree.mm";
 
-theorem ax17
-  param hal: type al
-  param vx: var x
-  param ta: term A
-  let vy: var y
-  assume ax17.1: |- A : bool
+theorem ax17(hal: $type$ al, vx: $var$ x, ta: $term$ A) {
+  assume ax17.1: $|- A : bool$;
 
-  disjoint A x
-  disjoint al x
-  disjoint x y
-  disjoint A y
-  disjoint al y
-  assert |- T. |= [ A ==> ( ! \ x : al . A ) ]
+  disjoint A x;
+  disjoint al x;
+  disjoint x y;
+  disjoint A y;
+  disjoint al y;
 
-  proof
-    hal
-    vx
-    vy
-    ta
-    ax17.1
-    hal
-    hb
-    vx
-    ta
-    hal
-    vy
-    tv
-    ax17.1
-    hal
-    vy
-    wv
-    ax-17
-    isfree
-end
+  let vy: $var$ y;
+
+  do {
+    hal;
+    vx;
+    vy;
+    ta;
+    ax17.1;
+    hal;
+    hb;
+    vx;
+    ta;
+    hal;
+    vy;
+    tv;
+    ax17.1;
+    hal;
+    vy;
+    wv;
+    ax-17;
+    isfree;
+  };
+
+  return $|- T. |= [ A ==> ( ! \ x : al . A ) ]$;
+}

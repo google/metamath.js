@@ -1,8 +1,6 @@
 
 
-axiom kbr
-  param ta: term A
-  param tb: term B
-  param tf: term F
-  assert term [ A F B ]
-end
+axiom kbr(ta: $term$ A, tb: $term$ B, tf: $term$ F) {
+
+  return $term [ A F B ]$;
+}

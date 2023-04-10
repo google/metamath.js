@@ -1,5 +1,5 @@
 
-axiom wn
-  param wva: term a
-  assert term a '
-end
+axiom wn(wva: $term$ a) {
+
+  return $term a '$;
+}

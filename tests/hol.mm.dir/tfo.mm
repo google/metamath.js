@@ -1,4 +1,5 @@
 
-axiom tfo
-  assert term onto
-end
+axiom tfo() {
+
+  return $term onto$;
+}

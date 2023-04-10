@@ -1,6 +1,5 @@
 
-axiom df-b
-  param wva: term a
-  param wvb: term b
-  assert |- ( a == b ) = ( ( a ' v b ' ) ' v ( a v b ) ' )
-end
+axiom df-b(wva: $term$ a, wvb: $term$ b) {
+
+  return $|- ( a == b ) = ( ( a ' v b ' ) ' v ( a v b ) ' )$;
+}

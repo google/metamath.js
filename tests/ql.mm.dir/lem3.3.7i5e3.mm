@@ -1,14 +1,16 @@
-include "nom15.mm"
+include "nom15.mm";
 
-theorem lem3.3.7i5e3
-  param wva: term a
-  param wvb: term b
+theorem lem3.3.7i5e3(wva: $term$ a, wvb: $term$ b) {
 
 
-  assert |- ( a ->5 ( a ^ b ) ) = ( a ->1 b )
 
-  proof
-    wva
-    wvb
-    nom15
-end
+
+
+  do {
+    wva;
+    wvb;
+    nom15;
+  };
+
+  return $|- ( a ->5 ( a ^ b ) ) = ( a ->1 b )$;
+}

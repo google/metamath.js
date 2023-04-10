@@ -1,18 +1,19 @@
-include "ax-r5.mm"
+include "ax-r5.mm";
 
-theorem ror
-  param wva: term a
-  param wvb: term b
-  param wvc: term c
-  assume lor.1: |- a = b
+theorem ror(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
+  assume lor.1: $|- a = b$;
 
 
-  assert |- ( a v c ) = ( b v c )
 
-  proof
-    wva
-    wvb
-    wvc
-    lor.1
-    ax-r5
-end
+
+
+  do {
+    wva;
+    wvb;
+    wvc;
+    lor.1;
+    ax-r5;
+  };
+
+  return $|- ( a v c ) = ( b v c )$;
+}

@@ -1,29 +1,30 @@
-include "wa.mm"
-include "anass.mm"
-include "bi1.mm"
+include "wa.mm";
+include "anass.mm";
+include "bi1.mm";
 
-theorem wanass
-  param wva: term a
-  param wvb: term b
-  param wvc: term c
+theorem wanass(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
 
 
-  assert |- ( ( ( a ^ b ) ^ c ) == ( a ^ ( b ^ c ) ) ) = 1
 
-  proof
-    wva
-    wvb
-    wa
-    wvc
-    wa
-    wva
-    wvb
-    wvc
-    wa
-    wa
-    wva
-    wvb
-    wvc
-    anass
-    bi1
-end
+
+
+  do {
+    wva;
+    wvb;
+    wa;
+    wvc;
+    wa;
+    wva;
+    wvb;
+    wvc;
+    wa;
+    wa;
+    wva;
+    wvb;
+    wvc;
+    anass;
+    bi1;
+  };
+
+  return $|- ( ( ( a ^ b ) ^ c ) == ( a ^ ( b ^ c ) ) ) = 1$;
+}

@@ -1,21 +1,23 @@
-include "wa.mm"
-include "wlea.mm"
-include "wlecom.mm"
+include "wa.mm";
+include "wlea.mm";
+include "wlecom.mm";
 
-theorem wcoman1
-  param wva: term a
-  param wvb: term b
+theorem wcoman1(wva: $term$ a, wvb: $term$ b) {
 
 
-  assert |- C ( ( a ^ b ) , a ) = 1
 
-  proof
-    wva
-    wvb
-    wa
-    wva
-    wva
-    wvb
-    wlea
-    wlecom
-end
+
+
+  do {
+    wva;
+    wvb;
+    wa;
+    wva;
+    wva;
+    wvb;
+    wlea;
+    wlecom;
+  };
+
+  return $|- C ( ( a ^ b ) , a ) = 1$;
+}

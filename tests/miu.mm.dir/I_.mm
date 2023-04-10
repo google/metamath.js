@@ -1,6 +1,6 @@
 
-axiom I_
-  param wx: wff x
-  assume Ia: |- x I
-  assert |- x I U
-end
+axiom I_(wx: $wff$ x) {
+  assume Ia: $|- x I$;
+
+  return $|- x I U$;
+}

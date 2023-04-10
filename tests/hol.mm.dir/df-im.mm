@@ -1,6 +1,5 @@
 
-axiom df-im
-  param vp: var p
-  param vq: var q
-  assert |- T. |= [ ==> = \ p : bool . \ q : bool . [ [ p : bool /\ q : bool ] = p : bool ] ]
-end
+axiom df-im(vp: $var$ p, vq: $var$ q) {
+
+  return $|- T. |= [ ==> = \ p : bool . \ q : bool . [ [ p : bool /\ q : bool ] = p : bool ] ]$;
+}

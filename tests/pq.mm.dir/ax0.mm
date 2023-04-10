@@ -1,5 +1,5 @@
 
-axiom ax0
-  param wx: wff x
-  assert |- x p - q x -
-end
+axiom ax0(wx: $wff$ x) {
+
+  return $|- x p - q x -$;
+}

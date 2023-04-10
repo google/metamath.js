@@ -1,4 +1,5 @@
 
-axiom tze
-  assert term 0
-end
+axiom tze() {
+
+  return $term 0$;
+}

@@ -1,14 +1,16 @@
-include "combi.mm"
+include "combi.mm";
 
-theorem ublemc1
-  param wva: term a
-  param wvb: term b
+theorem ublemc1(wva: $term$ a, wvb: $term$ b) {
 
 
-  assert |- a C ( a == b )
 
-  proof
-    wva
-    wvb
-    combi
-end
+
+
+  do {
+    wva;
+    wvb;
+    combi;
+  };
+
+  return $|- a C ( a == b )$;
+}

@@ -1,26 +1,28 @@
-include "wi1.mm"
-include "wn.mm"
-include "u1lemn1b.mm"
-include "ax-r1.mm"
+include "wi1.mm";
+include "wn.mm";
+include "u1lemn1b.mm";
+include "ax-r1.mm";
 
-theorem lem4.6.5
-  param wva: term a
-  param wvb: term b
+theorem lem4.6.5(wva: $term$ a, wvb: $term$ b) {
 
 
-  assert |- ( ( a ->1 b ) ' ->1 b ) = ( a ->1 b )
 
-  proof
-    wva
-    wvb
-    wi1
-    #
-    @0
-    wn
-    wvb
-    wi1
-    wva
-    wvb
-    u1lemn1b
-    ax-r1
-end
+
+
+  do {
+    wva;
+    wvb;
+    wi1;
+    #;
+    @0;
+    wn;
+    wvb;
+    wi1;
+    wva;
+    wvb;
+    u1lemn1b;
+    ax-r1;
+  };
+
+  return $|- ( ( a ->1 b ) ' ->1 b ) = ( a ->1 b )$;
+}

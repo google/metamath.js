@@ -1,4 +1,5 @@
 
-axiom tfal
-  assert term F.
-end
+axiom tfal() {
+
+  return $term F.$;
+}
