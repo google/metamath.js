@@ -1246,16 +1246,14 @@ axiom term-s() {
   return $term$ $S$;
 }
 
-axiom term-c() {
-  let call.1: term p;
-  let call.2: term q;
+axiom term-c(term p, term q) {
   return $term$ $p [ q ]$;
 }
 
 // If Δ is a derivation ending in an expression of the form α((Kβ)γ)ι,
 // then Δ followed by the term αβι is a derivation.
 axiom ax-k(word head, term x, term y, word tail) {
-  assume k.1: $|- head K [ x ] [ y ] tail$;
+  assume $|- head K [ x ] [ y ] tail$;
   return $|-$ $head x tail$;
 }
 
@@ -1282,7 +1280,7 @@ axiom word-r() {
 // If Δ is a derivation ending in an expression of the form α(((Sβ)γ)δ)ι,
 // then Δ followed by the term α((βδ)(γδ))ι is a derivation.
 axiom ax-s(word head, term x, term y, term z, word tail) {
-  assume ax-s.1: $|- head S [ x ] [ y ] [ z ] tail$;
+  assume $|- head S [ x ] [ y ] [ z ] tail$;
   return $|-$ $head x [ z ] [ y [ z ] ] tail$;
 }
 
@@ -1323,8 +1321,8 @@ theorem k(k.1: term x, k.2: term y) {
 }
 
 axiom df-eq(word head, term x, term y, word tail) {
-  assume eq.e0: $|- x = y$;
-  assume eq.e1: $|- head x tail$;
+  assume $|- x = y$;
+  assume $|- head x tail$;
   return $|-$ $head y tail$;
 }
 
