@@ -1,8 +1,7 @@
 const Assert = require("assert");
 
 describe("S and K", async () => {
-
-  it.only("S and K", async () => {
+  it("S and K", async () => {
     const src = `
 axiom term-k() {
   return term K;
@@ -290,6 +289,146 @@ theorem false(
 
   return |- head y tail;
 }
+
+axiom term-not() {
+  return term NOT;
+}
+
+axiom df-not() {
+  return |- NOT = S [ S [ I ] [ K [ F ] ] ] [ K [ T ] ];
+}
+
+theorem not(
+  not.h: word head,
+  termx: term x,
+  not.t: word tail) {
+  assume not-e: |- head NOT [ x ] tail;
+
+  do {
+
+    not.h;
+
+    term-i; // x''' = I
+
+    term-k;
+    term-f;
+    term-c; // y''' = K [ F ]
+
+    termx; // z''' = x
+
+    // constructing the tail [ K [ T ] [ x ] ] 
+
+    word-l;  // [
+
+    term-k;  // [ K
+    word-t;  // [ K
+    word-c;  // [ K
+
+    word-l;  // [ K [
+    word-c;  // [ K [
+
+    term-t;  // [ K [ T
+    word-t;  // [ K [ T
+    word-c;  // [ K [ T
+
+    word-r;  // [ K [ T ]
+    word-c;  // [ K [ T ]
+
+    word-l;  // [ K [ T ] [
+    word-c;  // [ K [ T ] [
+
+    termx;  // [ K [ T ] [ x
+    word-t; // [ K [ T ] [ x
+    word-c; // [ K [ T ] [ x
+
+    word-r;  // [ K [ T ] [ x ]
+    word-c;  // [ K [ T ] [ x ]
+
+    word-r;  // [ K [ T ] [ x ] ]
+    word-c;  // [ K [ T ] [ x ] ]
+
+    not.t; // tail
+    word-c;  // tail' = [ K [ T ] [ x ] ] tail
+
+      not.h;
+
+      // S [ I ] [ K [ F ] ]
+      term-s; // S
+      term-i; // I
+      term-c; // S [ I ]
+
+      term-k; // K
+      term-f; // F
+      term-c; // K [ F ]
+
+      term-c; // x'' = S [ I ] [ K [ F ] ]
+
+      //  K [ T ]
+      term-k; // K
+      term-t; // T
+      term-c; // y'' = K [ T ]
+
+      // x
+      termx; // z'' = x
+
+      not.t;
+
+        not.h; // head'
+
+        term-not; // x' = NOT
+
+        term-s; // S
+
+        term-s;
+        term-i;
+        term-c; // S [ I ]
+
+        term-k; 
+        term-f;
+        term-c; // K [ F ]
+
+        term-c; // S [ I ] [ K [ F ] ]
+
+        term-c; // S [ S [ I ] [ K [ F ] ] ]
+
+        term-k;
+        term-t;
+        term-c; // K [ T ]
+
+        term-c; // y' = S [ S [ I ] [ K [ F ] ] ] [ K [ T ] ]
+
+        // constructing the tail
+        word-l;  // [
+
+        termx;   // [ x
+        word-t;  // [ x
+        word-c;  // [ x
+
+        word-r;  // [ x ]
+        word-c;  // [ x ]
+
+        not.t; // tail
+        word-c;  // tail' = [ x ] tail
+
+        df-not; // NOT = S [ S [ I ] [ K [ F ] ] ] [ K [ T ] ]
+
+        not-e;  // head NOT [ x ] tail
+
+        // |- head S [ S [ I ] [ K [ F ] ] ] [ K [ T ] ] [ x ] tail
+        df-eq;  // head' y' tail' = head S [ K ] [ x' ] [ y' ] tail
+
+      ax-s; // head S [ I ] [ K [ F ] ] [ x ] [ K [ T ] [ x ] ] tail
+
+    ax-s; // head I [ x ] [ K [ F ] [ x ] ] [ K [ T ] [ x ] ] tail
+
+  };
+
+  return |- head I [ x ] [ K [ F ] [ x ] ] [ K [ T ] [ x ] ] tail;
+  // TODO: continue the proof to get to the final form.
+  // return |- head x [ F ] [ T ] tail;
+}
+
+
 
 theorem sksk() {
   assume sksk.1: |- S [ K ] [ S ] [ K ];
