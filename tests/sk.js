@@ -2,7 +2,7 @@ const Assert = require("assert");
 
 describe("S and K", async () => {
 
-  it("S and K", async () => {
+  it.only("S and K", async () => {
     const src = `
 axiom term-k() {
   return term K;
@@ -184,14 +184,14 @@ theorem true(
 
       true.h;
 
-      term-t;
+      term-t; // T
 
-      term-k;
+      term-k; // T K
 
-      word-l;
+      word-l; // T K [
 
-      termx;
-      word-t;
+      termx;  // T K [ x
+      word-t; // T K [ x 
       word-c;
 
       word-r;
@@ -219,6 +219,76 @@ theorem true(
    ax-k;
   };
   return |- head x tail;
+}
+
+axiom df-false() {
+  return |- F = S [ K ];
+}
+
+theorem false(
+  false.h: word head,
+  termx: term x,
+  termy: term y,
+  false.t: word tail) {
+  assume false-e: |- head F [ x ] [ y ] tail;
+
+  do {
+
+    false.h;
+    termy;
+    termx;
+    termy;
+    term-c;
+    false.t;
+
+      false.h;
+      term-k;
+      termx;
+      termy;
+      false.t;
+
+        false.h; // head'
+
+        term-f;  // x' = F
+
+        term-s;  // S
+        term-k;  // K
+        term-c;  // y' = S [ K ]
+
+        word-l;  // [
+
+        termx;   // [ x
+        word-t;  // [ x
+        word-c;  // [ x
+
+        word-r;  // [ x ]
+        word-c;  // [ x ]
+
+        word-l;  // [ x ] [
+        word-c;  // [ x ] [
+
+        termy;   // [ x ] [ y
+        word-t;  // [ x ] [ y
+        word-c;  // [ x ] [ y
+
+        word-r;  // [ x ] [ y ]
+        word-c;  // [ x ] [ y ]
+
+        false.t; // tail
+        word-c;  // tail' = [ x ] [ y ] tail
+
+        df-false; // F = S [ K ]
+
+        false-e;  // head F [ x ] [ y ] tail
+
+        df-eq;  // head' y' tail' = head S [ K ] [ x ] [ y ] tail
+
+      ax-s;
+
+    ax-k;
+  };
+
+  return |- head y tail;
 }
 
 theorem sksk() {
