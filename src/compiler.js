@@ -99,6 +99,10 @@ const symbols = [
 class Parser {
   constructor() {
     this.lexer = new Lexer();
+    this.__id = 0;
+  }
+  id() {
+    return this.__id++;
   }
   parse(code) {
     this.lexer.parse(code);
@@ -168,7 +172,10 @@ class Parser {
         type = this.symbol();
         this.ws();
       } else {
-        label = "";
+        // let r = (Math.random() + 1).toString(36).substring(7);
+        // label = "";
+        label = `${this.id()}`;
+        // throw new Error(label);
         type = first;
       }
 

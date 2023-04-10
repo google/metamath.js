@@ -39,7 +39,8 @@ describe("Compiler", () => {
       ]]
     ]);
   });
-  
+
+
   it(`axiom foo() { return $|-$ $$; }`, () => {
     let result = new Parser().parse(`
     axiom foo() {
@@ -111,7 +112,7 @@ describe("Compiler", () => {
     `);
     assertThat(result).equalsTo([
       ["axiom", "foo", [
-        [["param", ["", "wff", "x"]]],
+        [["param", ["0", "wff", "x"]]],
         [],
         [],
         [],
@@ -129,7 +130,7 @@ describe("Compiler", () => {
     `);
     assertThat(result).equalsTo([
       ["axiom", "foo", [
-        [["param", ["", "alet", "x"]]],
+        [["param", ["0", "alet", "x"]]],
         [],
         [],
         [],
@@ -147,7 +148,7 @@ describe("Compiler", () => {
     `);
     assertThat(result).equalsTo([
       ["axiom", "foo", [
-        [["param", ["", "let", "x"]]],
+        [["param", ["0", "let", "x"]]],
         [],
         [],
         [],
@@ -166,9 +167,9 @@ describe("Compiler", () => {
     assertThat(result).equalsTo([
       ["axiom", "foo", [
         [
-          ["param", ["", '|-', "x"]],
-          ["param", ["", 'foo', "y"]],
-          ["param", ["", '\\"', "z"]],
+          ["param", ["0", '|-', "x"]],
+          ["param", ["1", 'foo', "y"]],
+          ["param", ["2", '\\"', "z"]],
         ],
         [],
         [],
@@ -226,7 +227,7 @@ describe("Compiler", () => {
 
     assertThat(result).equalsTo([
       ["axiom", "foo", [
-        [["param", ["", "wff", "x"]], ["param", ["", "wff", "y"]]],
+        [["param", ["0", "wff", "x"]], ["param", ["1", "wff", "y"]]],
         [],
         [["assume", ["", "|-", "x"]]],
         [["disjoint", ["x", "y"]]],
@@ -1254,10 +1255,10 @@ axiom term-c() {
 // If Δ is a derivation ending in an expression of the form α((Kβ)γ)ι,
 // then Δ followed by the term αβι is a derivation.
 axiom ax-k(
-  k.h: word head,
-  k.1: term x,
-  k.2: term y,
-  k.t: word tail) {
+  word head,
+  term x,
+  term y,
+  word tail) {
   assume k.1: $|- head K [ x ] [ y ] tail$;
   return $|-$ $head x tail$;
 }
