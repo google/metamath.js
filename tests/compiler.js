@@ -658,23 +658,6 @@ describe("Compiler", () => {
     lexer.eat(";");
   });
   
-  it("lexer: const", async () => {
-    let lexer = new Lexer();
-    lexer.parse(`
-      const => + -
-    `);
-    lexer.ws("ws");
-    lexer.eat("label", "const");
-    lexer.ws();
-    lexer.eat("sequence", "=>");
-    lexer.ws();
-    lexer.eat("sequence", "+");
-    lexer.ws();
-    lexer.eat("label", "-");
-    lexer.ws();
-    lexer.done();
-  });
-  
   it("lexer: let", async () => {
     let lexer = new Lexer();
     lexer.parse(`
@@ -719,62 +702,6 @@ describe("Compiler", () => {
     lexer.done();
   });
 
-  
-  it("lexer: axiom", async () => {
-    let lexer = new Lexer();
-
-    lexer.parse(`
-      axiom foobar
-        let wff p
-        let wff q
-        assume p => q
-        assume |- p
-        assert |- q
-      end
-    `);
-
-    lexer.ws();
-    assertThat(lexer.next()).equalsTo(["axiom", "axiom"]);
-    lexer.ws();
-    assertThat(lexer.next()).equalsTo(["label", "foobar"]);
-    lexer.ws();
-    assertThat(lexer.next()).equalsTo(["let", "let"]);
-    lexer.ws();
-    assertThat(lexer.next()).equalsTo(["label", "wff"]);
-    lexer.ws();
-    assertThat(lexer.next()).equalsTo(["label", "p"]);
-    lexer.ws();
-    assertThat(lexer.next()).equalsTo(["let", "let"]);
-    lexer.ws();
-    assertThat(lexer.next()).equalsTo(["label", "wff"]);
-    lexer.ws();
-    assertThat(lexer.next()).equalsTo(["label", "q"]);
-    // assertThat(next()).equalsTo([":", ":"]);
-    lexer.ws();
-    assertThat(lexer.next()).equalsTo(["assume", "assume"]);
-    lexer.ws();
-    assertThat(lexer.next()).equalsTo(["label", "p"]);
-    lexer.ws();
-    assertThat(lexer.next()).equalsTo(["sequence", "=>"]);
-    lexer.ws();
-    assertThat(lexer.next()).equalsTo(["label", "q"]);
-    lexer.ws();
-    assertThat(lexer.next()).equalsTo(["assume", "assume"]);
-    lexer.ws();
-    assertThat(lexer.next()).equalsTo(["sequence", "|-"]);
-    lexer.ws();
-    assertThat(lexer.next()).equalsTo(["label", "p"]);
-    lexer.ws();
-    assertThat(lexer.next()).equalsTo(["label", "assert"]);
-    lexer.ws();
-    assertThat(lexer.next()).equalsTo(["sequence", "|-"]);
-    lexer.ws();
-    assertThat(lexer.next()).equalsTo(["label", "q"]);
-    lexer.ws();
-    assertThat(lexer.next()).equalsTo(["label", "end"]);
-    lexer.ws();
-    lexer.done();
-  });
 });
 
 describe("Transpiler", () => {

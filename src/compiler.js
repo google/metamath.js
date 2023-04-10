@@ -27,7 +27,6 @@ class Lexer {
       ["@"]: "@",
       ["#"]: "#",
       ["label"]: /[A-Za-z0-9-_.]+/,
-      ["sequence"]: /[!#%-~\?]+/,
     };
     this.lexer = moo.compile(lexicon);
   }
@@ -80,8 +79,6 @@ const symbols = [
   "@",
   "#",
   "//",
-  // catch all types of sequences
-  "sequence",
 ];
 
 const labels = [
@@ -148,36 +145,6 @@ class Parser {
     } else if (!optional) {
       this.error();
     }
-  }
-
-  declaration(type, label = true, multiple = true, empty = true) {
-    const result = [];
-    this.eat(type);
-    this.ws();
-    if (label) {
-      result.push(this. label());
-      this.ws(true);
-      this.eat(":");
-      this.ws(true);
-    }
-    let first = this.symbol();
-    result.push(first);
-    this.ws(false);
-    if (!this.accepts(...symbols) && empty) {
-      // If empty symbols are allowed
-      result.push("");
-      return [type, result];
-    }
-    let second = this.symbol();
-    result.push(second);
-    this.ws(false);
-    if (multiple) {
-      while (this.accepts(...symbols)) {
-        result.push(this.symbol());
-        this.ws(false);
-      };
-    }
-    return [type, result];
   }
 
   quote() {
@@ -315,14 +282,6 @@ class Parser {
     return [e, d, l, str, proof];
   }
 
-  symbol() {
-    const str = [];
-    while (this.accepts("sequence", "label")) {
-      str.push(this.eat("sequence", "label"));
-    }
-    return str.join("");
-  }
-  
   str() {
     const str = this.eat("string");
     const [head, ...tail] = str.slice(1, str.length - 1).split(" ");
@@ -358,37 +317,6 @@ class Parser {
     ], p];
   }
   
-  header() {
-    this.ws(true);
-    let params = [];
-    while (this.accepts("param")) {
-      params.push(this.declaration("param", true, false));
-    }
-    
-    this.ws(true);
-    let lets = [];
-    while (this.accepts("let")) {
-      lets.push(this.declaration("let", true, false));
-    }
-    
-    this.ws(true);
-    let ifs = [];
-    while (this.accepts("assume")) {
-      ifs.push(this.declaration("assume", true, true));
-    }
-
-    this.ws(true);
-    let disjoints = [];
-    while (this.accepts("disjoint")) {
-      disjoints.push(this.declaration("disjoint", false, true));
-    }
-    
-    this.ws(true);
-    let then = this.declaration("assert", false, true);
-
-    return [params, lets, ifs, disjoints, then];
-  }
-
   args() {
     this.eat("(");
     this.ws(true);
@@ -407,40 +335,6 @@ class Parser {
     return args;
   }
   
-  step() {
-    const result = [];
-    this.eat("step");
-    this.eat("ws");
-    // index
-    result.push(this.label());
-    this.ws(true);
-    this.eat(")");
-    this.ws(true);
-    // a step can either be ...
-    if (this.accepts("#")) {
-      // ... a marker ...
-      result.push(this.eat("#"));
-    } else if (this.accepts("@")) {
-      // ... a recall ...
-      result.push(this.eat("@"));
-      result.push(this.label());
-    } else {
-      // ... or call.
-      result.push(this.label());
-      result.push(this.args());
-    }
-    this.ws(true);
-    this.eat(":");
-    this.ws(true);
-    let sequence = [];
-    result.push(sequence);
-    while (this.accepts(...symbols)) {
-      sequence.push(this.symbol());
-      this.ws(true);
-    }
-    return result;
-  }
-
   label() {
     let name = this.eat(...labels);
     while (this.accepts(...labels)) {
