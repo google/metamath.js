@@ -149,5 +149,5 @@ theorem wor() {
     eqtypri;
   };
 
-  return $|- \/ : ( bool -> ( bool -> bool ) )$;
+  return $|-$ $\/ : ( bool -> ( bool -> bool ) )$;
 }

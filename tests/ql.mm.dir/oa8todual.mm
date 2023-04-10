@@ -680,5 +680,5 @@ theorem oa8todual(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wv
     le3tr1;
   };
 
-  return $|- ( b ^ ( a v ( c ^ ( ( ( ( a ^ c ) v ( b ^ d ) ) v ( ( ( a ^ g ) v ( b ^ h ) ) ^ ( ( c ^ g ) v ( d ^ h ) ) ) ) v ( ( ( ( a ^ e ) v ( b ^ f ) ) v ( ( ( a ^ g ) v ( b ^ h ) ) ^ ( ( e ^ g ) v ( f ^ h ) ) ) ) ^ ( ( ( c ^ e ) v ( d ^ f ) ) v ( ( ( c ^ g ) v ( d ^ h ) ) ^ ( ( e ^ g ) v ( f ^ h ) ) ) ) ) ) ) ) ) =< ( ( ( a ^ b ) v ( c ^ d ) ) v ( ( e ^ f ) v ( g ^ h ) ) )$;
+  return $|-$ $( b ^ ( a v ( c ^ ( ( ( ( a ^ c ) v ( b ^ d ) ) v ( ( ( a ^ g ) v ( b ^ h ) ) ^ ( ( c ^ g ) v ( d ^ h ) ) ) ) v ( ( ( ( a ^ e ) v ( b ^ f ) ) v ( ( ( a ^ g ) v ( b ^ h ) ) ^ ( ( e ^ g ) v ( f ^ h ) ) ) ) ^ ( ( ( c ^ e ) v ( d ^ f ) ) v ( ( ( c ^ g ) v ( d ^ h ) ) ^ ( ( e ^ g ) v ( f ^ h ) ) ) ) ) ) ) ) ) =< ( ( ( a ^ b ) v ( c ^ d ) ) v ( ( e ^ f ) v ( g ^ h ) ) )$;
 }

@@ -18,5 +18,5 @@ theorem wa1(wva: $term$ a) {
     bi1;
   };
 
-  return $|- ( a == a ' ' ) = 1$;
+  return $|-$ $( a == a ' ' ) = 1$;
 }

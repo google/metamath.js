@@ -76,5 +76,5 @@ theorem u1lem3var1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr1;
   };
 
-  return $|- ( ( ( a ->1 c ) ^ ( b ->1 c ) ) ' v ( ( ( a ->1 c ) ' ->1 c ) ^ ( ( b ->1 c ) ' ->1 c ) ) ) = 1$;
+  return $|-$ $( ( ( a ->1 c ) ^ ( b ->1 c ) ) ' v ( ( ( a ->1 c ) ' ->1 c ) ^ ( ( b ->1 c ) ' ->1 c ) ) ) = 1$;
 }

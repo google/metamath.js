@@ -115,5 +115,5 @@ theorem u5lem3n(wva: $term$ a, wvb: $term$ b) {
     con2;
   };
 
-  return $|- ( a ->5 ( b ->5 a ) ) ' = ( a ^ ( ( a ' v b ) ^ ( a ' v b ' ) ) )$;
+  return $|-$ $( a ->5 ( b ->5 a ) ) ' = ( a ^ ( ( a ' v b ) ^ ( a ' v b ' ) ) )$;
 }

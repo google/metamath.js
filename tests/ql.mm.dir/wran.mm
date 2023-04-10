@@ -71,5 +71,5 @@ theorem wran(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- ( ( a ^ c ) == ( b ^ c ) ) = 1$;
+  return $|-$ $( ( a ^ c ) == ( b ^ c ) ) = 1$;
 }

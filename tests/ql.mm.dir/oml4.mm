@@ -195,5 +195,5 @@ theorem oml4(wva: $term$ a, wvb: $term$ b) {
     bltr;
   };
 
-  return $|- ( ( a == b ) ^ a ) =< b$;
+  return $|-$ $( ( a == b ) ^ a ) =< b$;
 }

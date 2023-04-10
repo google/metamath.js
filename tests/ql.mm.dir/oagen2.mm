@@ -61,5 +61,5 @@ theorem oagen2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     letr;
   };
 
-  return $|- ( ( a ->2 b ) ^ d ) =< ( a ->2 c )$;
+  return $|-$ $( ( a ->2 b ) ^ d ) =< ( a ->2 c )$;
 }

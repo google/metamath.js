@@ -748,5 +748,5 @@ theorem ud3lem1a(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->3 b ) ' ^ ( b ->3 a ) ) = ( a ^ b ' )$;
+  return $|-$ $( ( a ->3 b ) ' ^ ( b ->3 a ) ) = ( a ^ b ' )$;
 }

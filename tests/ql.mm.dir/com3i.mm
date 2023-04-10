@@ -94,5 +94,5 @@ theorem com3i(wva: $term$ a, wvb: $term$ b) {
     df-c1;
   };
 
-  return $|- a C b$;
+  return $|-$ $a C b$;
 }

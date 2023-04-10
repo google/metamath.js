@@ -60,5 +60,5 @@ theorem 3oa3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     bltr;
   };
 
-  return $|- ( ( a ->1 c ) ^ ( a == c ==OA b ) ) =< ( b ->1 c )$;
+  return $|-$ $( ( a ->1 c ) ^ ( a == c ==OA b ) ) =< ( b ->1 c )$;
 }

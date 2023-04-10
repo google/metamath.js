@@ -379,5 +379,5 @@ theorem wr5-2v(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     2vwomlem;
   };
 
-  return $|- ( ( a v c ) == ( b v c ) ) = 1$;
+  return $|-$ $( ( a v c ) == ( b v c ) ) = 1$;
 }

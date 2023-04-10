@@ -94,5 +94,5 @@ theorem comdr(wva: $term$ a, wvb: $term$ b) {
     comcom5;
   };
 
-  return $|- a C b$;
+  return $|-$ $a C b$;
 }

@@ -43,5 +43,5 @@ theorem orabs(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a v ( a ^ b ) ) = a$;
+  return $|-$ $( a v ( a ^ b ) ) = a$;
 }

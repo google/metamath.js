@@ -111,5 +111,5 @@ theorem 2oai1u(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     le3tr2;
   };
 
-  return $|- ( ( a ->1 c ) ^ ( ( ( a ->1 c ) ^ ( b ->1 c ) ) ' ->2 ( ( a ' ->1 c ) ^ ( b ' ->1 c ) ) ) ) =< ( b ->1 c )$;
+  return $|-$ $( ( a ->1 c ) ^ ( ( ( a ->1 c ) ^ ( b ->1 c ) ) ' ->2 ( ( a ' ->1 c ) ^ ( b ' ->1 c ) ) ) ) =< ( b ->1 c )$;
 }

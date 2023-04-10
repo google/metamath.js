@@ -40,5 +40,5 @@ theorem nom62(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( b ==2 ( a v b ) ) = ( a ->2 b )$;
+  return $|-$ $( b ==2 ( a v b ) ) = ( a ->2 b )$;
 }

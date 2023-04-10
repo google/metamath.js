@@ -55,5 +55,5 @@ theorem hbth(hal: $type$ al, vx: $var$ x, ta: $term$ A, tb: $term$ B, tr: $term$
     hbxfr;
   };
 
-  return $|- R |= [ ( \ x : al . A B ) = A ]$;
+  return $|-$ $R |= [ ( \ x : al . A B ) = A ]$;
 }

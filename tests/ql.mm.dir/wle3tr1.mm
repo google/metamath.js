@@ -28,5 +28,5 @@ theorem wle3tr1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     wlbtr;
   };
 
-  return $|- ( c =<2 d ) = 1$;
+  return $|-$ $( c =<2 d ) = 1$;
 }

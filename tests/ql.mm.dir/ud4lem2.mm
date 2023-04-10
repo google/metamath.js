@@ -344,5 +344,5 @@ theorem ud4lem2(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a v ( a ' ^ b ' ) ) ->4 a ) = ( a v b )$;
+  return $|-$ $( ( a v ( a ' ^ b ' ) ) ->4 a ) = ( a v b )$;
 }

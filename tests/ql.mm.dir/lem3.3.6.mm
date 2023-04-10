@@ -120,5 +120,5 @@ theorem lem3.3.6(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr1;
   };
 
-  return $|- ( a ->2 ( b v c ) ) = ( ( a v c ) ->2 ( b v c ) )$;
+  return $|-$ $( a ->2 ( b v c ) ) = ( ( a v c ) ->2 ( b v c ) )$;
 }

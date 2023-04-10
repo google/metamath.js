@@ -44,5 +44,5 @@ theorem mpbi(ta: $term$ A, tb: $term$ B, tr: $term$ R) {
     ax-eqmp;
   };
 
-  return $|- R |= B$;
+  return $|-$ $R |= B$;
 }

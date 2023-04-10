@@ -36,5 +36,5 @@ theorem ax17(hal: $type$ al, vx: $var$ x, ta: $term$ A) {
     isfree;
   };
 
-  return $|- T. |= [ A ==> ( ! \ x : al . A ) ]$;
+  return $|-$ $T. |= [ A ==> ( ! \ x : al . A ) ]$;
 }

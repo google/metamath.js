@@ -29,5 +29,5 @@ theorem wddi-3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     wdid0id3;
   };
 
-  return $|- ( ( a ^ ( b v c ) ) ==3 ( ( a ^ b ) v ( a ^ c ) ) ) = 1$;
+  return $|-$ $( ( a ^ ( b v c ) ) ==3 ( ( a ^ b ) v ( a ^ c ) ) ) = 1$;
 }

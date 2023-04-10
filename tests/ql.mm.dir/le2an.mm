@@ -34,5 +34,5 @@ theorem le2an(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     letr;
   };
 
-  return $|- ( a ^ c ) =< ( b ^ d )$;
+  return $|-$ $( a ^ c ) =< ( b ^ d )$;
 }

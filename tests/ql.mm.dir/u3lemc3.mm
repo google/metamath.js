@@ -14,5 +14,5 @@ theorem u3lemc3(wva: $term$ a, wvb: $term$ b) {
     comi32;
   };
 
-  return $|- a C ( b ->3 a )$;
+  return $|-$ $a C ( b ->3 a )$;
 }

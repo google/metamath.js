@@ -53,5 +53,5 @@ theorem u5lemnob(wva: $term$ a, wvb: $term$ b) {
     con1;
   };
 
-  return $|- ( ( a ->5 b ) ' v b ) = ( a v b )$;
+  return $|-$ $( ( a ->5 b ) ' v b ) = ( a v b )$;
 }

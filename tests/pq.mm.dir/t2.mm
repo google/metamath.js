@@ -12,5 +12,5 @@ theorem t2() {
     ax0;
   };
 
-  return $|- - p - q - -$;
+  return $|-$ $- p - q - -$;
 }

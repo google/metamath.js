@@ -40,5 +40,5 @@ theorem oa64v(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     oa6v4v;
   };
 
-  return $|- ( ( a v b ) ^ ( c v d ) ) =< ( b v ( a ^ ( c v ( ( a v c ) ^ ( b v d ) ) ) ) )$;
+  return $|-$ $( ( a v b ) ^ ( c v d ) ) =< ( b v ( a ^ ( c v ( ( a v c ) ^ ( b v d ) ) ) ) )$;
 }

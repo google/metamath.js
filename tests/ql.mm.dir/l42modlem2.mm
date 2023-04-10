@@ -41,5 +41,5 @@ theorem l42modlem2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, w
     le2an;
   };
 
-  return $|- ( ( ( ( a v b ) ^ c ) v d ) ^ e ) =< ( ( ( a v b ) v d ) ^ ( ( a v b ) v e ) )$;
+  return $|-$ $( ( ( ( a v b ) ^ c ) v d ) ^ e ) =< ( ( ( a v b ) v d ) ^ ( ( a v b ) v e ) )$;
 }

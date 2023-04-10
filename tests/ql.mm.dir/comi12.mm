@@ -94,5 +94,5 @@ theorem comi12(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     bctr;
   };
 
-  return $|- ( a ->1 b ) C ( c ->2 a )$;
+  return $|-$ $( a ->1 b ) C ( c ->2 a )$;
 }

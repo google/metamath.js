@@ -67,5 +67,5 @@ theorem anorabs2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lebi;
   };
 
-  return $|- ( a ^ ( b v ( a ^ ( b v c ) ) ) ) = ( a ^ ( b v c ) )$;
+  return $|-$ $( a ^ ( b v ( a ^ ( b v c ) ) ) ) = ( a ^ ( b v c ) )$;
 }

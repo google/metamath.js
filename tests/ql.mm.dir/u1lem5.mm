@@ -70,5 +70,5 @@ theorem u1lem5(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ->1 ( a ->1 b ) ) = ( a ->1 b )$;
+  return $|-$ $( a ->1 ( a ->1 b ) ) = ( a ->1 b )$;
 }

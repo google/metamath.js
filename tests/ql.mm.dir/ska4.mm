@@ -423,5 +423,5 @@ theorem ska4(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr;
   };
 
-  return $|- ( ( a == b ) ' v ( ( a ^ c ) == ( b ^ c ) ) ) = 1$;
+  return $|-$ $( ( a == b ) ' v ( ( a ^ c ) == ( b ^ c ) ) ) = 1$;
 }

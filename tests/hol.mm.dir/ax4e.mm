@@ -209,5 +209,5 @@ theorem ax4e(hal: $type$ al, ta: $term$ A, tf: $term$ F) {
     mpbir;
   };
 
-  return $|- ( F A ) |= ( ? F )$;
+  return $|-$ $( F A ) |= ( ? F )$;
 }

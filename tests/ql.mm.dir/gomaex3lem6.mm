@@ -247,5 +247,5 @@ theorem gomaex3lem6(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, 
     le3tr2;
   };
 
-  return $|- ( ( ( a v b ) ^ ( c v ( c v d ) ' ) ) ^ ( ( ( r v ( p ' ->1 q ) ) ^ ( ( p ' ->1 q ) ' v ( p ' ^ q ) ) ) ^ ( ( q ' v q ) ^ ( ( e v f ) ' v f ) ) ) ) =< ( b v c )$;
+  return $|-$ $( ( ( a v b ) ^ ( c v ( c v d ) ' ) ) ^ ( ( ( r v ( p ' ->1 q ) ) ^ ( ( p ' ->1 q ) ' v ( p ' ^ q ) ) ) ^ ( ( q ' v q ) ^ ( ( e v f ) ' v f ) ) ) ) =< ( b v c )$;
 }

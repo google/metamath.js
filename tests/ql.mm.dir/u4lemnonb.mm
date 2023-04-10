@@ -103,5 +103,5 @@ theorem u4lemnonb(wva: $term$ a, wvb: $term$ b) {
     con1;
   };
 
-  return $|- ( ( a ->4 b ) ' v b ' ) = ( ( a v b ' ) ^ ( a ' v b ' ) )$;
+  return $|-$ $( ( a ->4 b ) ' v b ' ) = ( ( a v b ' ) ^ ( a ' v b ' ) )$;
 }

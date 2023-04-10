@@ -73,5 +73,5 @@ theorem u5lemc1(wva: $term$ a, wvb: $term$ b) {
     cbtr;
   };
 
-  return $|- a C ( a ->5 b )$;
+  return $|-$ $a C ( a ->5 b )$;
 }

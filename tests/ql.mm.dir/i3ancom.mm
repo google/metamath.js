@@ -42,5 +42,5 @@ theorem i3ancom(wva: $term$ a, wvb: $term$ b) {
     wwbmp;
   };
 
-  return $|- ( ( a ^ b ) ->3 ( b ^ a ) ) = 1$;
+  return $|-$ $( ( a ^ b ) ->3 ( b ^ a ) ) = 1$;
 }

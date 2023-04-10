@@ -185,5 +185,5 @@ theorem i3orlem7(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lbtr;
   };
 
-  return $|- ( a ^ b ' ) =< ( ( a ->3 b ) ' v ( ( a v c ) ->3 ( b v c ) ) )$;
+  return $|-$ $( a ^ b ' ) =< ( ( a ->3 b ) ' v ( ( a v c ) ->3 ( b v c ) ) )$;
 }

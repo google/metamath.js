@@ -133,5 +133,5 @@ theorem lem3.4.6(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lem3.4.4;
   };
 
-  return $|- ( ( a v c ) ==5 ( b v c ) ) = 1$;
+  return $|-$ $( ( a v c ) ==5 ( b v c ) ) = 1$;
 }

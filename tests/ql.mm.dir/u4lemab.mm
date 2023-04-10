@@ -176,5 +176,5 @@ theorem u4lemab(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->4 b ) ^ b ) = ( ( a ^ b ) v ( a ' ^ b ) )$;
+  return $|-$ $( ( a ->4 b ) ^ b ) = ( ( a ^ b ) v ( a ' ^ b ) )$;
 }

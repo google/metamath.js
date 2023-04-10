@@ -63,5 +63,5 @@ theorem wleao(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     wr2;
   };
 
-  return $|- ( ( a v b ) == b ) = 1$;
+  return $|-$ $( ( a v b ) == b ) = 1$;
 }

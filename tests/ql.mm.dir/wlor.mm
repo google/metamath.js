@@ -52,5 +52,5 @@ theorem wlor(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- ( ( c v a ) == ( c v b ) ) = 1$;
+  return $|-$ $( ( c v a ) == ( c v b ) ) = 1$;
 }

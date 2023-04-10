@@ -228,5 +228,5 @@ theorem govar(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     bltr;
   };
 
-  return $|- ( ( a v b ) ^ ( a ->2 c ) ) =< ( b v c )$;
+  return $|-$ $( ( a v b ) ^ ( a ->2 c ) ) =< ( b v c )$;
 }

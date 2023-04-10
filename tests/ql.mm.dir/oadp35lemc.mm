@@ -138,5 +138,5 @@ theorem oadp35lemc(wvp: $term$ p, wva0: $term$ a0, wva1: $term$ a1, wva2: $term$
     lan;
   };
 
-  return $|- ( b0 ^ ( ( ( a0 ^ b0 ) v b1 ) v ( c2 ^ ( c0 v c1 ) ) ) ) = ( b0 ^ ( b1 v ( c2 ^ ( c0 v c1 ) ) ) )$;
+  return $|-$ $( b0 ^ ( ( ( a0 ^ b0 ) v b1 ) v ( c2 ^ ( c0 v c1 ) ) ) ) = ( b0 ^ ( b1 v ( c2 ^ ( c0 v c1 ) ) ) )$;
 }

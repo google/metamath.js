@@ -78,5 +78,5 @@ theorem wwoml3(wva: $term$ a, wvb: $term$ b) {
     3tr2;
   };
 
-  return $|- ( a == b ) = 1$;
+  return $|-$ $( a == b ) = 1$;
 }

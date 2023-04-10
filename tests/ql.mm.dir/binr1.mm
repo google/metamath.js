@@ -25,5 +25,5 @@ theorem binr1(wva: $term$ a, wvb: $term$ b) {
     lei3;
   };
 
-  return $|- ( b ' ->3 a ' ) = 1$;
+  return $|-$ $( b ' ->3 a ' ) = 1$;
 }

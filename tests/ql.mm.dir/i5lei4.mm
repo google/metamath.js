@@ -69,5 +69,5 @@ theorem i5lei4(wva: $term$ a, wvb: $term$ b) {
     le3tr1;
   };
 
-  return $|- ( a ->5 b ) =< ( a ->4 b )$;
+  return $|-$ $( a ->5 b ) =< ( a ->4 b )$;
 }

@@ -92,5 +92,5 @@ theorem 4oa(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve: $te
     bltr;
   };
 
-  return $|- ( ( a ->1 d ) ^ f ) =< ( b ->1 d )$;
+  return $|-$ $( ( a ->1 d ) ^ f ) =< ( b ->1 d )$;
 }

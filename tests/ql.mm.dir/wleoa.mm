@@ -37,5 +37,5 @@ theorem wleoa(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     wr2;
   };
 
-  return $|- ( ( a ^ b ) == a ) = 1$;
+  return $|-$ $( ( a ^ b ) == a ) = 1$;
 }

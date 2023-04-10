@@ -154,5 +154,5 @@ theorem nom15(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ->5 ( a ^ b ) ) = ( a ->1 b )$;
+  return $|-$ $( a ->5 ( a ^ b ) ) = ( a ->1 b )$;
 }

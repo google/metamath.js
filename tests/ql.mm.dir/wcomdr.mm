@@ -107,5 +107,5 @@ theorem wcomdr(wva: $term$ a, wvb: $term$ b) {
     wcomcom5;
   };
 
-  return $|- C ( a , b ) = 1$;
+  return $|-$ $C ( a , b ) = 1$;
 }

@@ -26,5 +26,5 @@ theorem lear(wva: $term$ a, wvb: $term$ b) {
     bltr;
   };
 
-  return $|- ( a ^ b ) =< b$;
+  return $|-$ $( a ^ b ) =< b$;
 }

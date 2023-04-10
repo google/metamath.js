@@ -72,5 +72,5 @@ theorem oa4lem3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     letr;
   };
 
-  return $|- ( ( a v b ) ^ ( c v d ) ) =< ( ( b v d ) ' v ( ( ( a v c ) ' ->2 b ) ^ ( ( a v c ) ' ->2 d ) ) )$;
+  return $|-$ $( ( a v b ) ^ ( c v d ) ) =< ( ( b v d ) ' v ( ( ( a v c ) ' ->2 b ) ^ ( ( a v c ) ' ->2 d ) ) )$;
 }

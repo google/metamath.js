@@ -230,5 +230,5 @@ theorem i3abs3(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( ( a ->3 b ) ->3 ( ( a ->3 b ) ->3 a ) ) = ( ( a ->3 b ) ->3 a )$;
+  return $|-$ $( ( a ->3 b ) ->3 ( ( a ->3 b ) ->3 a ) ) = ( ( a ->3 b ) ->3 a )$;
 }

@@ -34,5 +34,5 @@ theorem wcom1(wva: $term$ a) {
     wdf-c1;
   };
 
-  return $|- C ( 1 , a ) = 1$;
+  return $|-$ $C ( 1 , a ) = 1$;
 }

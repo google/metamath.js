@@ -59,5 +59,5 @@ theorem an0(wva: $term$ a) {
     ax-r2;
   };
 
-  return $|- ( a ^ 0 ) = 0$;
+  return $|-$ $( a ^ 0 ) = 0$;
 }

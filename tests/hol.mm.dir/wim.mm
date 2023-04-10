@@ -92,5 +92,5 @@ theorem wim() {
     eqtypri;
   };
 
-  return $|- ==> : ( bool -> ( bool -> bool ) )$;
+  return $|-$ $==> : ( bool -> ( bool -> bool ) )$;
 }

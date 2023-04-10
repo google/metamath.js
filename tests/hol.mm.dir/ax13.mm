@@ -101,5 +101,5 @@ theorem ax13(hal: $type$ al, ta: $term$ A, tb: $term$ B, tc: $term$ C) {
     ex;
   };
 
-  return $|- T. |= [ [ A = B ] ==> [ ( C A ) ==> ( C B ) ] ]$;
+  return $|-$ $T. |= [ [ A = B ] ==> [ ( C A ) ==> ( C B ) ] ]$;
 }

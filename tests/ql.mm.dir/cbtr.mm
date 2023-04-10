@@ -68,5 +68,5 @@ theorem cbtr(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     df-c1;
   };
 
-  return $|- a C c$;
+  return $|-$ $a C c$;
 }

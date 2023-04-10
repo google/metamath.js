@@ -223,5 +223,5 @@ theorem ax9(hal: $type$ al, vx: $var$ x, ta: $term$ A) {
     mpbir;
   };
 
-  return $|- T. |= ( ~ ( ! \ x : al . ( ~ [ x : al = A ] ) ) )$;
+  return $|-$ $T. |= ( ~ ( ! \ x : al . ( ~ [ x : al = A ] ) ) )$;
 }

@@ -100,5 +100,5 @@ theorem wwcomd(wva: $term$ a, wvb: $term$ b) {
     con1;
   };
 
-  return $|- a = ( ( a v b ) ^ ( a v b ' ) )$;
+  return $|-$ $a = ( ( a v b ) ^ ( a v b ' ) )$;
 }

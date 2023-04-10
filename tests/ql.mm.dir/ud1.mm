@@ -75,5 +75,5 @@ theorem ud1(wva: $term$ a, wvb: $term$ b) {
     ax-r1;
   };
 
-  return $|- ( a v b ) = ( ( a ->1 b ) ->1 ( ( ( a ->1 b ) ->1 ( b ->1 a ) ) ->1 a ) )$;
+  return $|-$ $( a v b ) = ( ( a ->1 b ) ->1 ( ( ( a ->1 b ) ->1 ( b ->1 a ) ) ->1 a ) )$;
 }

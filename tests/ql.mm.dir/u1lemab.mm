@@ -119,5 +119,5 @@ theorem u1lemab(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->1 b ) ^ b ) = ( ( a ^ b ) v ( a ' ^ b ) )$;
+  return $|-$ $( ( a ->1 b ) ^ b ) = ( ( a ^ b ) v ( a ' ^ b ) )$;
 }

@@ -37,5 +37,5 @@ theorem ran(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr1;
   };
 
-  return $|- ( a ^ c ) = ( b ^ c )$;
+  return $|-$ $( a ^ c ) = ( b ^ c )$;
 }

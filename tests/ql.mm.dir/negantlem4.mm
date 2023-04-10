@@ -76,5 +76,5 @@ theorem negantlem4(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     bltr;
   };
 
-  return $|- ( a ' ->1 c ) =< ( b ' ->1 c )$;
+  return $|-$ $( a ' ->1 c ) =< ( b ' ->1 c )$;
 }

@@ -43,5 +43,5 @@ theorem oveq2(hal: $type$ al, hbe: $type$ be, hga: $type$ ga, ta: $term$ A, tb: 
     oveq12;
   };
 
-  return $|- R |= [ [ A F B ] = [ A F T ] ]$;
+  return $|-$ $R |= [ [ A F B ] = [ A F T ] ]$;
 }

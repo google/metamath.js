@@ -693,5 +693,5 @@ theorem u3lem13b(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->3 b ' ) ->3 a ' ) = ( a ->1 b )$;
+  return $|-$ $( ( a ->3 b ' ) ->3 a ' ) = ( a ->1 b )$;
 }

@@ -187,5 +187,5 @@ theorem oa4to4u2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve
     letr;
   };
 
-  return $|- ( ( a ->1 d ) ^ ( ( a ' ->1 d ) v ( ( b ' ->1 d ) ^ ( ( ( ( a ->1 d ) ^ ( b ->1 d ) ) v ( ( a ' ->1 d ) ^ ( b ' ->1 d ) ) ) v ( ( ( ( a ->1 d ) ^ ( c ->1 d ) ) v ( ( a ' ->1 d ) ^ ( c ' ->1 d ) ) ) ^ ( ( ( b ->1 d ) ^ ( c ->1 d ) ) v ( ( b ' ->1 d ) ^ ( c ' ->1 d ) ) ) ) ) ) ) ) =< d$;
+  return $|-$ $( ( a ->1 d ) ^ ( ( a ' ->1 d ) v ( ( b ' ->1 d ) ^ ( ( ( ( a ->1 d ) ^ ( b ->1 d ) ) v ( ( a ' ->1 d ) ^ ( b ' ->1 d ) ) ) v ( ( ( ( a ->1 d ) ^ ( c ->1 d ) ) v ( ( a ' ->1 d ) ^ ( c ' ->1 d ) ) ) ^ ( ( ( b ->1 d ) ^ ( c ->1 d ) ) v ( ( b ' ->1 d ) ^ ( c ' ->1 d ) ) ) ) ) ) ) ) =< d$;
 }

@@ -58,5 +58,5 @@ theorem or4(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     3tr1;
   };
 
-  return $|- ( ( a v b ) v ( c v d ) ) = ( ( a v c ) v ( b v d ) )$;
+  return $|-$ $( ( a v b ) v ( c v d ) ) = ( ( a v c ) v ( b v d ) )$;
 }

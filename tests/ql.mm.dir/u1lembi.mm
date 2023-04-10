@@ -135,5 +135,5 @@ theorem u1lembi(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( ( a ->1 b ) ^ ( b ->1 a ) ) = ( a == b )$;
+  return $|-$ $( ( a ->1 b ) ^ ( b ->1 a ) ) = ( a == b )$;
 }

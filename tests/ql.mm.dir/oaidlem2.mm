@@ -169,5 +169,5 @@ theorem oaidlem2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     letr;
   };
 
-  return $|- ( ( a ->1 c ) ^ ( d v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) =< ( b ->1 c )$;
+  return $|-$ $( ( a ->1 c ) ^ ( d v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) =< ( b ->1 c )$;
 }

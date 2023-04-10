@@ -44,5 +44,5 @@ theorem ded(tr: $term$ R, ts: $term$ S, tt: $term$ T) {
     dfov2;
   };
 
-  return $|- R |= [ S = T ]$;
+  return $|-$ $R |= [ S = T ]$;
 }

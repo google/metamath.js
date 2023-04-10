@@ -53,5 +53,5 @@ theorem leran(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     df2le1;
   };
 
-  return $|- ( a ^ c ) =< ( b ^ c )$;
+  return $|-$ $( a ^ c ) =< ( b ^ c )$;
 }

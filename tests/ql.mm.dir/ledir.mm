@@ -60,5 +60,5 @@ theorem ledir(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     le3tr1;
   };
 
-  return $|- ( ( b ^ a ) v ( c ^ a ) ) =< ( ( b v c ) ^ a )$;
+  return $|-$ $( ( b ^ a ) v ( c ^ a ) ) =< ( ( b v c ) ^ a )$;
 }

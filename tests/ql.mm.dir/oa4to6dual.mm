@@ -97,5 +97,5 @@ theorem oa4to6dual(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, w
     letr;
   };
 
-  return $|- ( b ^ ( a v ( c ^ ( ( ( a ^ c ) v ( b ^ d ) ) v ( ( ( a ^ e ) v ( b ^ f ) ) ^ ( ( c ^ e ) v ( d ^ f ) ) ) ) ) ) ) =< g$;
+  return $|-$ $( b ^ ( a v ( c ^ ( ( ( a ^ c ) v ( b ^ d ) ) v ( ( ( a ^ e ) v ( b ^ f ) ) ^ ( ( c ^ e ) v ( d ^ f ) ) ) ) ) ) ) =< g$;
 }

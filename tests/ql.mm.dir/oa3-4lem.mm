@@ -154,5 +154,5 @@ theorem oa3-4lem(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lan;
   };
 
-  return $|- ( a ' ^ ( a v ( b ^ ( ( ( a ^ b ) v ( a ' ^ b ' ) ) v ( ( ( a ^ c ) v ( a ' ^ 1 ) ) ^ ( ( b ^ c ) v ( b ' ^ 1 ) ) ) ) ) ) ) = ( a ' ^ ( a v ( b ^ ( ( a == b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) )$;
+  return $|-$ $( a ' ^ ( a v ( b ^ ( ( ( a ^ b ) v ( a ' ^ b ' ) ) v ( ( ( a ^ c ) v ( a ' ^ 1 ) ) ^ ( ( b ^ c ) v ( b ' ^ 1 ) ) ) ) ) ) ) = ( a ' ^ ( a v ( b ^ ( ( a == b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) )$;
 }

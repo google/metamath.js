@@ -36,5 +36,5 @@ theorem str(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     letr;
   };
 
-  return $|- a =< b$;
+  return $|-$ $a =< b$;
 }

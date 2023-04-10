@@ -54,5 +54,5 @@ theorem distlem(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lebi;
   };
 
-  return $|- ( a ^ ( b v c ) ) = ( ( a ^ b ) v ( a ^ c ) )$;
+  return $|-$ $( a ^ ( b v c ) ) = ( ( a ^ b ) v ( a ^ c ) )$;
 }

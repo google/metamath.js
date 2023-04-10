@@ -172,5 +172,5 @@ theorem u4lemob(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->4 b ) v b ) = ( a ' v b )$;
+  return $|-$ $( ( a ->4 b ) v b ) = ( a ' v b )$;
 }

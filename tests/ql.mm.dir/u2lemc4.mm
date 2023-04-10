@@ -91,5 +91,5 @@ theorem u2lemc4(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ->2 b ) = ( a ' v b )$;
+  return $|-$ $( a ->2 b ) = ( a ' v b )$;
 }

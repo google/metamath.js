@@ -280,5 +280,5 @@ theorem u1lem4(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ->1 ( a ->1 ( b ->1 a ) ) ) = ( a ->1 ( b ->1 a ) )$;
+  return $|-$ $( a ->1 ( a ->1 ( b ->1 a ) ) ) = ( a ->1 ( b ->1 a ) )$;
 }

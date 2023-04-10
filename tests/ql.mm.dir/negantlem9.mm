@@ -258,5 +258,5 @@ theorem negantlem9(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     le3tr1;
   };
 
-  return $|- ( a ->3 c ) =< ( b ->3 c )$;
+  return $|-$ $( a ->3 c ) =< ( b ->3 c )$;
 }

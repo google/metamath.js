@@ -52,5 +52,5 @@ theorem u5lemnona(wva: $term$ a, wvb: $term$ b) {
     con1;
   };
 
-  return $|- ( ( a ->5 b ) ' v a ' ) = ( a ' v b ' )$;
+  return $|-$ $( ( a ->5 b ) ' v a ' ) = ( a ' v b ' )$;
 }

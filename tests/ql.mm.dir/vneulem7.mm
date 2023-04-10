@@ -71,5 +71,5 @@ theorem vneulem7(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     tr;
   };
 
-  return $|- ( ( c ^ a ) v ( b v d ) ) = ( b v d )$;
+  return $|-$ $( ( c ^ a ) v ( b v d ) ) = ( b v d )$;
 }

@@ -79,5 +79,5 @@ theorem u2lemnanb(wva: $term$ a, wvb: $term$ b) {
     con1;
   };
 
-  return $|- ( ( a ->2 b ) ' ^ b ' ) = ( ( a v b ) ^ b ' )$;
+  return $|-$ $( ( a ->2 b ) ' ^ b ' ) = ( ( a v b ) ^ b ' )$;
 }

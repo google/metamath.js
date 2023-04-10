@@ -34,5 +34,5 @@ theorem ud1lem0ab(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     ax-r2;
   };
 
-  return $|- ( a ->1 c ) = ( b ->1 d )$;
+  return $|-$ $( a ->1 c ) = ( b ->1 d )$;
 }

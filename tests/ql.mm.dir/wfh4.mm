@@ -161,5 +161,5 @@ theorem wfh4(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     wcon1;
   };
 
-  return $|- ( ( b v ( a ^ c ) ) == ( ( b v a ) ^ ( b v c ) ) ) = 1$;
+  return $|-$ $( ( b v ( a ^ c ) ) == ( ( b v a ) ^ ( b v c ) ) ) = 1$;
 }

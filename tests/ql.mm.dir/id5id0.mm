@@ -30,5 +30,5 @@ theorem id5id0(wva: $term$ a, wvb: $term$ b) {
     skr0;
   };
 
-  return $|- ( a ==0 b ) = 1$;
+  return $|-$ $( a ==0 b ) = 1$;
 }

@@ -221,5 +221,5 @@ theorem 3vroa(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- ( a ->2 c ) = 1$;
+  return $|-$ $( a ->2 c ) = 1$;
 }

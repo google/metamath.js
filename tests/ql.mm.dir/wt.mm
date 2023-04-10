@@ -1,5 +1,5 @@
 
 axiom wt() {
 
-  return $term 1$;
+  return $term$ $1$;
 }

@@ -255,5 +255,5 @@ theorem u4lemanb(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->4 b ) ^ b ' ) = ( ( a ' v b ) ^ b ' )$;
+  return $|-$ $( ( a ->4 b ) ^ b ' ) = ( ( a ' v b ) ^ b ' )$;
 }

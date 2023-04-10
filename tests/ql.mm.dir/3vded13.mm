@@ -62,5 +62,5 @@ theorem 3vded13(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3vded11;
   };
 
-  return $|- c =< ( b ->1 a )$;
+  return $|-$ $c =< ( b ->1 a )$;
 }

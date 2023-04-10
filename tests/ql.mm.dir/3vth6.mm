@@ -274,5 +274,5 @@ theorem 3vth6(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- ( ( a ->2 b ) ' ->2 ( b v c ) ) = ( ( ( a ->2 b ) ^ ( c ->2 b ) ) v ( ( a ->2 c ) ^ ( b ->2 c ) ) )$;
+  return $|-$ $( ( a ->2 b ) ' ->2 ( b v c ) ) = ( ( ( a ->2 b ) ^ ( c ->2 b ) ) v ( ( a ->2 c ) ^ ( b ->2 c ) ) )$;
 }

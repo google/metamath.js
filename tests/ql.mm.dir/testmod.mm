@@ -174,5 +174,5 @@ theorem testmod(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     cm;
   };
 
-  return $|- ( ( ( c v a ) v ( ( b v c ) ^ ( d v a ) ) ) ^ ( a v ( b ^ ( d v ( ( a v c ) ^ ( b v d ) ) ) ) ) ) = ( ( b ^ ( ( ( ( a v c ) v ( ( b v c ) ^ ( d v a ) ) ) ^ d ) v ( ( a v c ) ^ ( b v d ) ) ) ) v a )$;
+  return $|-$ $( ( ( c v a ) v ( ( b v c ) ^ ( d v a ) ) ) ^ ( a v ( b ^ ( d v ( ( a v c ) ^ ( b v d ) ) ) ) ) ) = ( ( b ^ ( ( ( ( a v c ) v ( ( b v c ) ^ ( d v a ) ) ) ^ d ) v ( ( a v c ) ^ ( b v d ) ) ) ) v a )$;
 }

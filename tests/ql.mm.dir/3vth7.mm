@@ -229,5 +229,5 @@ theorem 3vth7(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr1;
   };
 
-  return $|- ( ( a ->2 b ) ' ->2 ( b v c ) ) = ( a ->2 ( b v c ) )$;
+  return $|-$ $( ( a ->2 b ) ' ->2 ( b v c ) ) = ( a ->2 ( b v c ) )$;
 }

@@ -63,5 +63,5 @@ theorem leao(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- ( a v b ) = b$;
+  return $|-$ $( a v b ) = b$;
 }

@@ -626,5 +626,5 @@ theorem bi3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- ( ( a == b ) ^ ( b == c ) ) = ( ( ( a ^ b ) ^ c ) v ( ( a ' ^ b ' ) ^ c ' ) )$;
+  return $|-$ $( ( a == b ) ^ ( b == c ) ) = ( ( ( a ^ b ) ^ c ) v ( ( a ' ^ b ' ) ^ c ' ) )$;
 }

@@ -53,5 +53,5 @@ theorem wcon2(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ' == b ) = 1$;
+  return $|-$ $( a ' == b ) = 1$;
 }

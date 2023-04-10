@@ -323,5 +323,5 @@ theorem go2n6(wvg: $term$ g, wvh: $term$ h, wvj: $term$ j, wvk: $term$ k, wvi: $
     bltr;
   };
 
-  return $|- ( ( ( g v h ) ^ ( i v j ) ) ^ ( ( ( k v m ) ^ ( n v u ) ) ^ ( ( w v x ) ^ ( y v z ) ) ) ) =< ( h v i )$;
+  return $|-$ $( ( ( g v h ) ^ ( i v j ) ) ^ ( ( ( k v m ) ^ ( n v u ) ) ^ ( ( w v x ) ^ ( y v z ) ) ) ) =< ( h v i )$;
 }

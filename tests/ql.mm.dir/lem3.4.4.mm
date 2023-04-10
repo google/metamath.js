@@ -38,5 +38,5 @@ theorem lem3.4.4(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ==5 b ) = 1$;
+  return $|-$ $( a ==5 b ) = 1$;
 }

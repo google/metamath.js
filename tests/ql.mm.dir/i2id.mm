@@ -54,5 +54,5 @@ theorem i2id(wva: $term$ a) {
     ax-r2;
   };
 
-  return $|- ( a ->2 a ) = 1$;
+  return $|-$ $( a ->2 a ) = 1$;
 }

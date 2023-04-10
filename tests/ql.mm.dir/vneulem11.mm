@@ -119,5 +119,5 @@ theorem vneulem11(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     3tr;
   };
 
-  return $|- ( ( ( b v c ) v d ) ^ ( ( a v c ) v d ) ) = ( ( c v d ) v ( a ^ b ) )$;
+  return $|-$ $( ( ( b v c ) v d ) ^ ( ( a v c ) v d ) ) = ( ( c v d ) v ( a ^ b ) )$;
 }

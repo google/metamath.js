@@ -61,5 +61,5 @@ theorem wql1lem(wva: $term$ a, wvb: $term$ b) {
     lebi;
   };
 
-  return $|- ( a ' v b ) = 1$;
+  return $|-$ $( a ' v b ) = 1$;
 }

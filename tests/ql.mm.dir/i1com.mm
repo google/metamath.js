@@ -84,5 +84,5 @@ theorem i1com(wva: $term$ a, wvb: $term$ b) {
     comcom;
   };
 
-  return $|- a C b$;
+  return $|-$ $a C b$;
 }

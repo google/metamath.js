@@ -287,5 +287,5 @@ theorem oa6to4(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve: 
     le3tr2;
   };
 
-  return $|- ( ( a ->1 g ) ^ ( a v ( c ^ ( ( ( a ^ c ) v ( ( a ->1 g ) ^ ( c ->1 g ) ) ) v ( ( ( a ^ e ) v ( ( a ->1 g ) ^ ( e ->1 g ) ) ) ^ ( ( c ^ e ) v ( ( c ->1 g ) ^ ( e ->1 g ) ) ) ) ) ) ) ) =< ( ( ( a ^ g ) v ( c ^ g ) ) v ( e ^ g ) )$;
+  return $|-$ $( ( a ->1 g ) ^ ( a v ( c ^ ( ( ( a ^ c ) v ( ( a ->1 g ) ^ ( c ->1 g ) ) ) v ( ( ( a ^ e ) v ( ( a ->1 g ) ^ ( e ->1 g ) ) ) ^ ( ( c ^ e ) v ( ( c ->1 g ) ^ ( e ->1 g ) ) ) ) ) ) ) ) =< ( ( ( a ^ g ) v ( c ^ g ) ) v ( e ^ g ) )$;
 }

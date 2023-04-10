@@ -66,5 +66,5 @@ theorem anabs(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ^ ( a v b ) ) = a$;
+  return $|-$ $( a ^ ( a v b ) ) = a$;
 }

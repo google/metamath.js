@@ -13,5 +13,5 @@ theorem u4lemc3(wva: $term$ a, wvb: $term$ b) {
     u4lemc1;
   };
 
-  return $|- a C ( b ->4 a )$;
+  return $|-$ $a C ( b ->4 a )$;
 }

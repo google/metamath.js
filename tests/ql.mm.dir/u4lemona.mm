@@ -247,5 +247,5 @@ theorem u4lemona(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->4 b ) v a ' ) = ( a ' v b )$;
+  return $|-$ $( ( a ->4 b ) v a ' ) = ( a ' v b )$;
 }

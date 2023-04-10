@@ -166,5 +166,5 @@ theorem u1lem8(wva: $term$ a, wvb: $term$ b) {
     3tr;
   };
 
-  return $|- ( ( a ->1 b ) ^ ( a ' ->1 b ) ) = ( ( a ^ b ) v ( a ' ^ b ) )$;
+  return $|-$ $( ( a ->1 b ) ^ ( a ' ->1 b ) ) = ( ( a ^ b ) v ( a ' ^ b ) )$;
 }

@@ -66,5 +66,5 @@ theorem dfov2(hal: $type$ al, hbe: $type$ be, ta: $term$ A, tb: $term$ B, tf: $t
     mpbirx;
   };
 
-  return $|- R |= [ A F B ]$;
+  return $|-$ $R |= [ A F B ]$;
 }

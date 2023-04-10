@@ -73,5 +73,5 @@ theorem orbile(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     bltr;
   };
 
-  return $|- ( ( a == c ) v ( b == c ) ) =< ( ( ( a ^ b ) ->2 c ) ^ ( c ->1 ( a v b ) ) )$;
+  return $|-$ $( ( a == c ) v ( b == c ) ) =< ( ( ( a ^ b ) ->2 c ) ^ ( c ->1 ( a v b ) ) )$;
 }

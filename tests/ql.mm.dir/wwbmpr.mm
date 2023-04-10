@@ -20,5 +20,5 @@ theorem wwbmpr(wva: $term$ a, wvb: $term$ b) {
     wwbmp;
   };
 
-  return $|- a = 1$;
+  return $|-$ $a = 1$;
 }

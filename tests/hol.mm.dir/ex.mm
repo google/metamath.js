@@ -142,5 +142,5 @@ theorem ex(tr: $term$ R, ts: $term$ S, tt: $term$ T) {
     mpbir;
   };
 
-  return $|- R |= [ S ==> T ]$;
+  return $|-$ $R |= [ S ==> T ]$;
 }

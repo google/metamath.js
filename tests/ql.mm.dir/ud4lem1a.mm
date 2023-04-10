@@ -920,5 +920,5 @@ theorem ud4lem1a(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->4 b ) ^ ( b ->4 a ) ) = ( ( a ^ b ) v ( a ' ^ b ' ) )$;
+  return $|-$ $( ( a ->4 b ) ^ ( b ->4 a ) ) = ( ( a ^ b ) v ( a ' ^ b ' ) )$;
 }

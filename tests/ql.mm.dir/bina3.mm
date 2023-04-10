@@ -19,5 +19,5 @@ theorem bina3(wva: $term$ a, wvb: $term$ b) {
     lei3;
   };
 
-  return $|- ( a ->3 ( a v b ) ) = 1$;
+  return $|-$ $( a ->3 ( a v b ) ) = 1$;
 }

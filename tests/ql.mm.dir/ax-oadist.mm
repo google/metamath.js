@@ -7,5 +7,5 @@ axiom ax-oadist(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve:
   assume oad.5: $|- k =< f$;
   assume oad.6: $|- ( h ^ ( b ->1 d ) ) =< k$;
 
-  return $|- ( h ^ ( j v k ) ) = ( ( h ^ j ) v ( h ^ k ) )$;
+  return $|-$ $( h ^ ( j v k ) ) = ( ( h ^ j ) v ( h ^ k ) )$;
 }

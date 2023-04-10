@@ -726,5 +726,5 @@ theorem ud5lem1(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->5 b ) ->5 ( b ->5 a ) ) = ( a v b ' )$;
+  return $|-$ $( ( a ->5 b ) ->5 ( b ->5 a ) ) = ( a v b ' )$;
 }

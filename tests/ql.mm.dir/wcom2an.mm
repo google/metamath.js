@@ -66,5 +66,5 @@ theorem wcom2an(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     wcomcom5;
   };
 
-  return $|- C ( a , ( b ^ c ) ) = 1$;
+  return $|-$ $C ( a , ( b ^ c ) ) = 1$;
 }

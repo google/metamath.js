@@ -317,5 +317,5 @@ theorem axpow(hal: $type$ al, vx: $var$ x, vy: $var$ y, vz: $var$ z, ta: $term$ 
     syl;
   };
 
-  return $|- T. |= ( ? \ y : ( ( al -> bool ) -> bool ) . ( ! \ z : ( al -> bool ) . [ ( ! \ x : al . [ ( z : ( al -> bool ) x : al ) ==> ( A x : al ) ] ) ==> ( y : ( ( al -> bool ) -> bool ) z : ( al -> bool ) ) ] ) )$;
+  return $|-$ $T. |= ( ? \ y : ( ( al -> bool ) -> bool ) . ( ! \ z : ( al -> bool ) . [ ( ! \ x : al . [ ( z : ( al -> bool ) x : al ) ==> ( A x : al ) ] ) ==> ( y : ( ( al -> bool ) -> bool ) z : ( al -> bool ) ) ] ) )$;
 }

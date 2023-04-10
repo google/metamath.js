@@ -79,5 +79,5 @@ theorem u5lemnanb(wva: $term$ a, wvb: $term$ b) {
     con1;
   };
 
-  return $|- ( ( a ->5 b ) ' ^ b ' ) = ( ( a v b ) ^ b ' )$;
+  return $|-$ $( ( a ->5 b ) ' ^ b ' ) = ( ( a v b ) ^ b ' )$;
 }

@@ -233,5 +233,5 @@ theorem woml7(wva: $term$ a, wvb: $term$ b) {
     3tr;
   };
 
-  return $|- ( ( ( a ->2 b ) ^ ( b ->2 a ) ) ' v ( a == b ) ) = 1$;
+  return $|-$ $( ( ( a ->2 b ) ^ ( b ->2 a ) ) ' v ( a == b ) ) = 1$;
 }

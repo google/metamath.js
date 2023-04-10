@@ -139,5 +139,5 @@ theorem oadistc0(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     lebi;
   };
 
-  return $|- ( ( a ->2 b ) ^ ( ( b v c ) ' v d ) ) = ( ( ( a ->2 b ) ^ ( b v c ) ' ) v d )$;
+  return $|-$ $( ( a ->2 b ) ^ ( ( b v c ) ' v d ) ) = ( ( ( a ->2 b ) ^ ( b v c ) ' ) v d )$;
 }

@@ -51,5 +51,5 @@ theorem oveq(hal: $type$ al, hbe: $type$ be, hga: $type$ ga, ta: $term$ A, tb: $
     oveq123;
   };
 
-  return $|- R |= [ [ A F B ] = [ A S B ] ]$;
+  return $|-$ $R |= [ [ A F B ] = [ A S B ] ]$;
 }

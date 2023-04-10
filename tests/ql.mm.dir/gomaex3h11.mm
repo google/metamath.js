@@ -38,5 +38,5 @@ theorem gomaex3h11(wve: $term$ e, wvf: $term$ f, wvy: $term$ y, wvz: $term$ z) {
     le3tr1;
   };
 
-  return $|- y =< z '$;
+  return $|-$ $y =< z '$;
 }

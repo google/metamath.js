@@ -92,5 +92,5 @@ theorem ska15(wva: $term$ a, wvb: $term$ b) {
     sklem;
   };
 
-  return $|- ( ( a ->3 b ) ' v ( a ' v b ) ) = 1$;
+  return $|-$ $( ( a ->3 b ) ' v ( a ' v b ) ) = 1$;
 }

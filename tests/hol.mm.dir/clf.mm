@@ -226,5 +226,5 @@ theorem clf(hal: $type$ al, hbe: $type$ be, vx: $var$ x, vy: $var$ y, ta: $term$
     insti;
   };
 
-  return $|- T. |= [ ( \ x : al . A C ) = B ]$;
+  return $|-$ $T. |= [ ( \ x : al . A C ) = B ]$;
 }

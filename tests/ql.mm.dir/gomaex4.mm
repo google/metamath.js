@@ -266,5 +266,5 @@ theorem gomaex4(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve:
     lebi;
   };
 
-  return $|- ( ( ( ( a v b ) ^ ( c v d ) ) ^ ( ( e v f ) ^ ( g v h ) ) ) ^ ( ( a v h ) ->1 ( d v e ) ' ) ) = 0$;
+  return $|-$ $( ( ( ( a v b ) ^ ( c v d ) ) ^ ( ( e v f ) ^ ( g v h ) ) ) ^ ( ( a v h ) ->1 ( d v e ) ' ) ) = 0$;
 }

@@ -79,5 +79,5 @@ theorem conb(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a == b ) = ( a ' == b ' )$;
+  return $|-$ $( a == b ) = ( a ' == b ' )$;
 }

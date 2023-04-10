@@ -57,5 +57,5 @@ theorem wleror(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     wdf-le1;
   };
 
-  return $|- ( ( a v c ) =<2 ( b v c ) ) = 1$;
+  return $|-$ $( ( a v c ) =<2 ( b v c ) ) = 1$;
 }

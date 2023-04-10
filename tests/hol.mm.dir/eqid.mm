@@ -39,5 +39,5 @@ theorem eqid(hal: $type$ al, ta: $term$ A, tr: $term$ R) {
     dfov2;
   };
 
-  return $|- R |= [ A = A ]$;
+  return $|-$ $R |= [ A = A ]$;
 }

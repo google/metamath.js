@@ -38,5 +38,5 @@ theorem bina2(wva: $term$ a) {
     wwbmp;
   };
 
-  return $|- ( a ' ' ->3 a ) = 1$;
+  return $|-$ $( a ' ' ->3 a ) = 1$;
 }

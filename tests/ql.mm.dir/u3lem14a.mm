@@ -218,5 +218,5 @@ theorem u3lem14a(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ->3 ( ( b ->3 a ' ) ->3 b ' ) ) = ( a ->3 ( b ->3 a ) )$;
+  return $|-$ $( a ->3 ( ( b ->3 a ' ) ->3 b ' ) ) = ( a ->3 ( b ->3 a ) )$;
 }

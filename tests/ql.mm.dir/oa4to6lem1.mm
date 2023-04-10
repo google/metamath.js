@@ -224,5 +224,5 @@ theorem oa4to6lem1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, w
     lbtr;
   };
 
-  return $|- b =< ( a ->1 g )$;
+  return $|-$ $b =< ( a ->1 g )$;
 }

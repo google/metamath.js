@@ -109,5 +109,5 @@ theorem gomaex3lem10(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d,
     letr;
   };
 
-  return $|- ( ( ( a v b ) ^ ( d v e ) ' ) ^ ( r v ( p ' ->1 q ) ) ) =< ( ( b v c ) v ( e v f ) ' )$;
+  return $|-$ $( ( ( a v b ) ^ ( d v e ) ' ) ^ ( r v ( p ' ->1 q ) ) ) =< ( ( b v c ) v ( e v f ) ' )$;
 }

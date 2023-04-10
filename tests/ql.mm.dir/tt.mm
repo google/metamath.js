@@ -48,5 +48,5 @@ theorem tt(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a v a ' ) = ( b v b ' )$;
+  return $|-$ $( a v a ' ) = ( b v b ' )$;
 }

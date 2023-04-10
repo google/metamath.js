@@ -213,5 +213,5 @@ theorem 4oadist(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve:
     lebi;
   };
 
-  return $|- ( h ^ ( j v k ) ) = ( ( h ^ j ) v ( h ^ k ) )$;
+  return $|-$ $( h ^ ( j v k ) ) = ( ( h ^ j ) v ( h ^ k ) )$;
 }

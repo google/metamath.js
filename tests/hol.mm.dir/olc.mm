@@ -208,5 +208,5 @@ theorem olc(ta: $term$ A, tb: $term$ B) {
     mpbir;
   };
 
-  return $|- B |= [ A \/ B ]$;
+  return $|-$ $B |= [ A \/ B ]$;
 }

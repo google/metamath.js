@@ -42,5 +42,5 @@ theorem hbl1(hal: $type$ al, hbe: $type$ be, hga: $type$ ga, vx: $var$ x, ta: $t
     a1i;
   };
 
-  return $|- R |= [ ( \ x : al . \ x : be . A B ) = \ x : be . A ]$;
+  return $|-$ $R |= [ ( \ x : al . \ x : be . A B ) = \ x : be . A ]$;
 }

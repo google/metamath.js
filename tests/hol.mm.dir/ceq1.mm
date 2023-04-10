@@ -39,5 +39,5 @@ theorem ceq1(hal: $type$ al, hbe: $type$ be, ta: $term$ A, tf: $term$ F, tr: $te
     ceq12;
   };
 
-  return $|- R |= [ ( F A ) = ( T A ) ]$;
+  return $|-$ $R |= [ ( F A ) = ( T A ) ]$;
 }

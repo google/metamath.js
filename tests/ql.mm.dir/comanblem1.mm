@@ -450,5 +450,5 @@ theorem comanblem1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr2;
   };
 
-  return $|- ( ( a == c ) ^ ( b == c ) ) = ( ( ( a v c ) ' v ( ( a ^ b ) ^ c ) ) ^ ( b ->1 c ) )$;
+  return $|-$ $( ( a == c ) ^ ( b == c ) ) = ( ( ( a v c ) ' v ( ( a ^ b ) ^ c ) ) ^ ( b ->1 c ) )$;
 }

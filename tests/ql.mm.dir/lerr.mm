@@ -29,5 +29,5 @@ theorem lerr(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lbtr;
   };
 
-  return $|- a =< ( c v b )$;
+  return $|-$ $a =< ( c v b )$;
 }

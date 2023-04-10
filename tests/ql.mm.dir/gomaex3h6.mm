@@ -44,5 +44,5 @@ theorem gomaex3h6(wvm: $term$ m, wvn: $term$ n, wvp: $term$ p, wvq: $term$ q) {
     le3tr1;
   };
 
-  return $|- m =< n '$;
+  return $|-$ $m =< n '$;
 }

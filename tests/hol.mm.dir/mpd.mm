@@ -89,5 +89,5 @@ theorem mpd(tr: $term$ R, ts: $term$ S, tt: $term$ T) {
     simprd;
   };
 
-  return $|- R |= T$;
+  return $|-$ $R |= T$;
 }

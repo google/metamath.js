@@ -866,5 +866,5 @@ theorem u4lem6(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ->4 ( a ->4 ( a ->4 b ) ) ) = ( a ->4 b )$;
+  return $|-$ $( a ->4 ( a ->4 ( a ->4 b ) ) ) = ( a ->4 b )$;
 }

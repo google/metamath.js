@@ -120,5 +120,5 @@ theorem wcom3ii(wva: $term$ a, wvb: $term$ b) {
     wr1;
   };
 
-  return $|- ( ( a ^ ( a ' v b ) ) == ( a ^ b ) ) = 1$;
+  return $|-$ $( ( a ^ ( a ' v b ) ) == ( a ^ b ) ) = 1$;
 }

@@ -806,5 +806,5 @@ theorem i3con(wva: $term$ a, wvb: $term$ b) {
     i0i3;
   };
 
-  return $|- ( ( a ->3 b ) ->3 ( ( a ->3 b ) ->3 ( b ' ->3 a ' ) ) ) = 1$;
+  return $|-$ $( ( a ->3 b ) ->3 ( ( a ->3 b ) ->3 ( b ' ->3 a ' ) ) ) = 1$;
 }

@@ -46,5 +46,5 @@ theorem eqtru(ta: $term$ A, tr: $term$ R) {
     ded;
   };
 
-  return $|- R |= [ T. = A ]$;
+  return $|-$ $R |= [ T. = A ]$;
 }

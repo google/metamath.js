@@ -506,5 +506,5 @@ theorem orbi(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr;
   };
 
-  return $|- ( ( a == c ) v ( b == c ) ) = ( ( ( a ->2 c ) v ( b ->2 c ) ) ^ ( ( c ->1 a ) v ( c ->1 b ) ) )$;
+  return $|-$ $( ( a == c ) v ( b == c ) ) = ( ( ( a ->2 c ) v ( b ->2 c ) ) ^ ( ( c ->1 a ) v ( c ->1 b ) ) )$;
 }

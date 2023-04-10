@@ -253,5 +253,5 @@ theorem mloa(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     le3tr2;
   };
 
-  return $|- ( ( a == b ) ^ ( ( b == c ) v ( ( b v ( a == b ) ) ^ ( c v ( a == c ) ) ) ) ) =< ( c v ( a == c ) )$;
+  return $|-$ $( ( a == b ) ^ ( ( b == c ) v ( ( b v ( a == b ) ) ^ ( c v ( a == c ) ) ) ) ) =< ( c v ( a == c ) )$;
 }

@@ -59,5 +59,5 @@ theorem ml(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lebi;
   };
 
-  return $|- ( a v ( b ^ ( a v c ) ) ) = ( ( a v b ) ^ ( a v c ) )$;
+  return $|-$ $( a v ( b ^ ( a v c ) ) ) = ( ( a v b ) ^ ( a v c ) )$;
 }

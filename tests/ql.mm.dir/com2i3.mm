@@ -93,5 +93,5 @@ theorem com2i3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     cbtr;
   };
 
-  return $|- a C ( b ->3 c )$;
+  return $|-$ $a C ( b ->3 c )$;
 }

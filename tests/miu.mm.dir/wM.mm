@@ -1,5 +1,5 @@
 
 axiom wM(wx: $wff$ x) {
 
-  return $wff x M$;
+  return $wff$ $x M$;
 }

@@ -90,5 +90,5 @@ theorem comd(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- a = ( ( a v b ) ^ ( a v b ' ) )$;
+  return $|-$ $a = ( ( a v b ) ^ ( a v b ' ) )$;
 }

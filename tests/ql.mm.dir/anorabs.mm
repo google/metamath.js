@@ -66,5 +66,5 @@ theorem anorabs(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ' ^ ( b v ( a ' ^ ( a v b ) ) ) ) = ( a ' ^ ( a v b ) )$;
+  return $|-$ $( a ' ^ ( b v ( a ' ^ ( a v b ) ) ) ) = ( a ' ^ ( a v b ) )$;
 }

@@ -64,5 +64,5 @@ theorem dp23(wvp: $term$ p, wva0: $term$ a0, wva1: $term$ a1, wva2: $term$ a2, w
     letr;
   };
 
-  return $|- p =< ( a0 v ( b0 ^ ( b1 v ( c2 ^ ( c0 v c1 ) ) ) ) )$;
+  return $|-$ $p =< ( a0 v ( b0 ^ ( b1 v ( c2 ^ ( c0 v c1 ) ) ) ) )$;
 }

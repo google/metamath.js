@@ -30,5 +30,5 @@ theorem oa3-2wto2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     oas;
   };
 
-  return $|- ( ( a ->1 c ) ^ ( a v ( b ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) ) =< c$;
+  return $|-$ $( ( a ->1 c ) ^ ( a v ( b ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) ) =< c$;
 }

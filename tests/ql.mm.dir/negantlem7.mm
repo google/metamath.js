@@ -51,5 +51,5 @@ theorem negantlem7(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     con1;
   };
 
-  return $|- ( a v c ) = ( b v c )$;
+  return $|-$ $( a v c ) = ( b v c )$;
 }

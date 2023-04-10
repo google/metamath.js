@@ -19,5 +19,5 @@ theorem distoah1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve
     bile;
   };
 
-  return $|- d =< ( a ->2 b )$;
+  return $|-$ $d =< ( a ->2 b )$;
 }

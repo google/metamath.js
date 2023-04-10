@@ -20,5 +20,5 @@ theorem comcom4(wva: $term$ a, wvb: $term$ b) {
     comcom2;
   };
 
-  return $|- a ' C b '$;
+  return $|-$ $a ' C b '$;
 }

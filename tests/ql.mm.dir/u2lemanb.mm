@@ -129,5 +129,5 @@ theorem u2lemanb(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->2 b ) ^ b ' ) = ( a ' ^ b ' )$;
+  return $|-$ $( ( a ->2 b ) ^ b ' ) = ( a ' ^ b ' )$;
 }

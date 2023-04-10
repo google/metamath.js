@@ -32,5 +32,5 @@ theorem i3ror(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     binr3;
   };
 
-  return $|- ( ( a v c ) ->3 ( b v c ) ) = 1$;
+  return $|-$ $( ( a v c ) ->3 ( b v c ) ) = 1$;
 }

@@ -78,5 +78,5 @@ theorem mli(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr;
   };
 
-  return $|- ( ( a ^ b ) v c ) = ( a ^ ( b v c ) )$;
+  return $|-$ $( ( a ^ b ) v c ) = ( a ^ ( b v c ) )$;
 }

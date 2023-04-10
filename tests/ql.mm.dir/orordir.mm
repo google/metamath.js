@@ -48,5 +48,5 @@ theorem orordir(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- ( ( a v b ) v c ) = ( ( a v c ) v ( b v c ) )$;
+  return $|-$ $( ( a v b ) v c ) = ( ( a v c ) v ( b v c ) )$;
 }

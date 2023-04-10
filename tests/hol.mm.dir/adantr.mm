@@ -29,5 +29,5 @@ theorem adantr(tr: $term$ R, ts: $term$ S, tt: $term$ T) {
     syl;
   };
 
-  return $|- ( R , S ) |= T$;
+  return $|-$ $( R , S ) |= T$;
 }

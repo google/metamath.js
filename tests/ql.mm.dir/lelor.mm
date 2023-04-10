@@ -37,5 +37,5 @@ theorem lelor(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     le3tr1;
   };
 
-  return $|- ( c v a ) =< ( c v b )$;
+  return $|-$ $( c v a ) =< ( c v b )$;
 }

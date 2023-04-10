@@ -31,5 +31,5 @@ theorem wa6(wva: $term$ a, wvb: $term$ b) {
     bi1;
   };
 
-  return $|- ( ( a == b ) == ( ( a ' v b ' ) ' v ( a v b ) ' ) ) = 1$;
+  return $|-$ $( ( a == b ) == ( ( a ' v b ' ) ' v ( a v b ) ' ) ) = 1$;
 }

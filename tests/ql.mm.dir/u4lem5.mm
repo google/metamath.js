@@ -669,5 +669,5 @@ theorem u4lem5(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ->4 ( a ->4 b ) ) = ( ( a ' ^ b ' ) v b )$;
+  return $|-$ $( a ->4 ( a ->4 b ) ) = ( ( a ' ^ b ' ) v b )$;
 }

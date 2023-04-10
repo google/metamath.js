@@ -689,5 +689,5 @@ theorem axrep(hal: $type$ al, hbe: $type$ be, vx: $var$ x, vy: $var$ y, vz: $var
     ex;
   };
 
-  return $|- T. |= [ ( ! \ x : al . ( ? \ y : be . ( ! \ z : be . [ ( ! \ y : be . A ) ==> [ z : be = y : be ] ] ) ) ) ==> ( ? \ y : ( be -> bool ) . ( ! \ z : be . [ ( y : ( be -> bool ) z : be ) = ( ? \ x : al . [ ( B x : al ) /\ ( ! \ y : be . A ) ] ) ] ) ) ]$;
+  return $|-$ $T. |= [ ( ! \ x : al . ( ? \ y : be . ( ! \ z : be . [ ( ! \ y : be . A ) ==> [ z : be = y : be ] ] ) ) ) ==> ( ? \ y : ( be -> bool ) . ( ! \ z : be . [ ( y : ( be -> bool ) z : be ) = ( ? \ x : al . [ ( B x : al ) /\ ( ! \ y : be . A ) ] ) ] ) ) ]$;
 }

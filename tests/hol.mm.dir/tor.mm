@@ -1,5 +1,5 @@
 
 axiom tor() {
 
-  return $term \/$;
+  return $term$ $\/$;
 }

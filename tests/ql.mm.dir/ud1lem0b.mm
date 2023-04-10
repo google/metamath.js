@@ -61,5 +61,5 @@ theorem ud1lem0b(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr1;
   };
 
-  return $|- ( a ->1 c ) = ( b ->1 c )$;
+  return $|-$ $( a ->1 c ) = ( b ->1 c )$;
 }

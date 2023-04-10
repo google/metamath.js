@@ -12,5 +12,5 @@ theorem ud3lem0c(wva: $term$ a, wvb: $term$ b) {
     ni31;
   };
 
-  return $|- ( a ->3 b ) ' = ( ( ( a v b ' ) ^ ( a v b ) ) ^ ( a ' v ( a ^ b ' ) ) )$;
+  return $|-$ $( a ->3 b ) ' = ( ( ( a v b ' ) ^ ( a v b ) ) ^ ( a ' v ( a ^ b ' ) ) )$;
 }

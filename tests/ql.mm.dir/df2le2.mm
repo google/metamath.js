@@ -19,5 +19,5 @@ theorem df2le2(wva: $term$ a, wvb: $term$ b) {
     leoa;
   };
 
-  return $|- ( a ^ b ) = a$;
+  return $|-$ $( a ^ b ) = a$;
 }

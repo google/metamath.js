@@ -19,5 +19,5 @@ theorem wdf2le1(wva: $term$ a, wvb: $term$ b) {
     wdf-le1;
   };
 
-  return $|- ( a =<2 b ) = 1$;
+  return $|-$ $( a =<2 b ) = 1$;
 }

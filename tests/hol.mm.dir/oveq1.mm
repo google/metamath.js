@@ -56,5 +56,5 @@ theorem oveq1(hal: $type$ al, hbe: $type$ be, hga: $type$ ga, ta: $term$ A, tb: 
     oveq123;
   };
 
-  return $|- R |= [ [ A F B ] = [ C F B ] ]$;
+  return $|-$ $R |= [ [ A F B ] = [ C F B ] ]$;
 }

@@ -248,5 +248,5 @@ theorem elimcons(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lecon1;
   };
 
-  return $|- a =< b$;
+  return $|-$ $a =< b$;
 }

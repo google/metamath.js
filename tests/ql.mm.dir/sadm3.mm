@@ -230,5 +230,5 @@ theorem sadm3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     le3tr1;
   };
 
-  return $|- ( ( ( a ' ->1 c ) ^ ( b ' ->1 c ) ) ->1 c ) =< ( ( a ->1 c ) v ( b ->1 c ) )$;
+  return $|-$ $( ( ( a ' ->1 c ) ^ ( b ' ->1 c ) ) ->1 c ) =< ( ( a ->1 c ) v ( b ->1 c ) )$;
 }

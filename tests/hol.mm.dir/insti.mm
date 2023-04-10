@@ -71,5 +71,5 @@ theorem insti(hal: $type$ al, vx: $var$ x, vy: $var$ y, ta: $term$ A, tb: $term$
     ax-inst;
   };
 
-  return $|- R |= B$;
+  return $|-$ $R |= B$;
 }

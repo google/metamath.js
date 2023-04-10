@@ -69,5 +69,5 @@ theorem negant5(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr2;
   };
 
-  return $|- ( a ' ->5 c ) = ( b ' ->5 c )$;
+  return $|-$ $( a ' ->5 c ) = ( b ' ->5 c )$;
 }

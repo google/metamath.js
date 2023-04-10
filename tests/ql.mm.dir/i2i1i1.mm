@@ -159,5 +159,5 @@ theorem i2i1i1(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ->2 b ) = ( ( a ->1 ( a v b ) ) ^ ( ( a v b ) ->1 b ) )$;
+  return $|-$ $( a ->2 b ) = ( ( a ->1 ( a v b ) ) ^ ( ( a v b ) ->1 b ) )$;
 }

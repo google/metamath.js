@@ -18,5 +18,5 @@ theorem lem3.3.5lem(wva: $term$ a) {
     lebi;
   };
 
-  return $|- a = 1$;
+  return $|-$ $a = 1$;
 }

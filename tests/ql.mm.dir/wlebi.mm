@@ -47,5 +47,5 @@ theorem wlebi(wva: $term$ a, wvb: $term$ b) {
     wr2;
   };
 
-  return $|- ( a == b ) = 1$;
+  return $|-$ $( a == b ) = 1$;
 }

@@ -15,5 +15,5 @@ theorem t4() {
     ax0;
   };
 
-  return $|- - - - p - q - - - -$;
+  return $|-$ $- - - p - q - - - -$;
 }

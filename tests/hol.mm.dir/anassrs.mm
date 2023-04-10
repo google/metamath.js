@@ -74,5 +74,5 @@ theorem anassrs(ta: $term$ A, tr: $term$ R, ts: $term$ S, tt: $term$ T) {
     syl2anc;
   };
 
-  return $|- ( ( R , S ) , T ) |= A$;
+  return $|-$ $( ( R , S ) , T ) |= A$;
 }

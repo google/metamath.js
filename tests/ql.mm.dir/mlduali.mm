@@ -79,5 +79,5 @@ theorem mlduali(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr;
   };
 
-  return $|- ( ( a v b ) ^ c ) = ( a v ( b ^ c ) )$;
+  return $|-$ $( ( a v b ) ^ c ) = ( a v ( b ^ c ) )$;
 }

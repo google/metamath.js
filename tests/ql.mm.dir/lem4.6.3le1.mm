@@ -12,5 +12,5 @@ theorem lem4.6.3le1(wva: $term$ a, wvb: $term$ b) {
     u1lem9a;
   };
 
-  return $|- ( a ' ->1 b ) ' =< a '$;
+  return $|-$ $( a ' ->1 b ) ' =< a '$;
 }

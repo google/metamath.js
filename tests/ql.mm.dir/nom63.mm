@@ -34,5 +34,5 @@ theorem nom63(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( b ==3 ( a v b ) ) = ( a ->2 b )$;
+  return $|-$ $( b ==3 ( a v b ) ) = ( a ->2 b )$;
 }

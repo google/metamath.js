@@ -47,5 +47,5 @@ theorem dff(wva: $term$ a) {
     ax-r2;
   };
 
-  return $|- 0 = ( a ^ a ' )$;
+  return $|-$ $0 = ( a ^ a ' )$;
 }

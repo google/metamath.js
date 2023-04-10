@@ -75,5 +75,5 @@ theorem ud3(wva: $term$ a, wvb: $term$ b) {
     ax-r1;
   };
 
-  return $|- ( a v b ) = ( ( a ->3 b ) ->3 ( ( ( a ->3 b ) ->3 ( b ->3 a ) ) ->3 a ) )$;
+  return $|-$ $( a v b ) = ( ( a ->3 b ) ->3 ( ( ( a ->3 b ) ->3 ( b ->3 a ) ) ->3 a ) )$;
 }

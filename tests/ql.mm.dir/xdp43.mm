@@ -2307,5 +2307,5 @@ theorem xdp43(wvd: $term$ d, wve: $term$ e, wvp: $term$ p, wva0: $term$ a0, wva1
     letr;
   };
 
-  return $|- p =< ( a0 v ( b0 ^ ( b1 v ( c2 ^ ( c0 v c1 ) ) ) ) )$;
+  return $|-$ $p =< ( a0 v ( b0 ^ ( b1 v ( c2 ^ ( c0 v c1 ) ) ) ) )$;
 }

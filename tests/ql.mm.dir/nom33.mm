@@ -34,5 +34,5 @@ theorem nom33(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ^ b ) ==3 a ) = ( a ->1 b )$;
+  return $|-$ $( ( a ^ b ) ==3 a ) = ( a ->1 b )$;
 }

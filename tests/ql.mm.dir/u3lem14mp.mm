@@ -93,5 +93,5 @@ theorem u3lem14mp(wva: $term$ a, wvb: $term$ b) {
     u3lemle1;
   };
 
-  return $|- ( ( a ->3 b ' ) ' ->3 ( a ->3 ( a ->3 b ) ) ) = 1$;
+  return $|-$ $( ( a ->3 b ' ) ' ->3 ( a ->3 ( a ->3 b ) ) ) = 1$;
 }

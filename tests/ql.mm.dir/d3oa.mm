@@ -287,5 +287,5 @@ theorem d3oa(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvf: $term$ f) {
     le3tr2;
   };
 
-  return $|- ( ( a ->1 c ) ^ f ) =< ( b ->1 c )$;
+  return $|-$ $( ( a ->1 c ) ^ f ) =< ( b ->1 c )$;
 }

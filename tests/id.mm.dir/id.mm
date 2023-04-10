@@ -24,5 +24,5 @@ theorem id(wph: $wff$ ph) {
     mpd;
   };
 
-  return $|- ( ph -> ph )$;
+  return $|-$ $( ph -> ph )$;
 }

@@ -18,5 +18,5 @@ theorem comi32(wva: $term$ a, wvb: $term$ b) {
     com2i3;
   };
 
-  return $|- a C ( b ->3 a )$;
+  return $|-$ $a C ( b ->3 a )$;
 }

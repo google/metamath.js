@@ -93,5 +93,5 @@ theorem alrimi(hal: $type$ al, vx: $var$ x, vy: $var$ y, ta: $term$ A, tr: $term
     mpbir;
   };
 
-  return $|- R |= ( ! \ x : al . A )$;
+  return $|-$ $R |= ( ! \ x : al . A )$;
 }

@@ -120,5 +120,5 @@ theorem i1abs(wva: $term$ a, wvb: $term$ b) {
     3tr;
   };
 
-  return $|- ( ( a ->1 b ) ' v ( a ^ b ) ) = a$;
+  return $|-$ $( ( a ->1 b ) ' v ( a ^ b ) ) = a$;
 }

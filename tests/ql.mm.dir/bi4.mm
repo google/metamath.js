@@ -601,5 +601,5 @@ theorem bi4(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     ax-r2;
   };
 
-  return $|- ( ( ( a == b ) ^ ( b == c ) ) ^ ( c == d ) ) = ( ( ( ( a ^ b ) ^ c ) ^ d ) v ( ( ( a ' ^ b ' ) ^ c ' ) ^ d ' ) )$;
+  return $|-$ $( ( ( a == b ) ^ ( b == c ) ) ^ ( c == d ) ) = ( ( ( ( a ^ b ) ^ c ) ^ d ) v ( ( ( a ' ^ b ' ) ^ c ' ) ^ d ' ) )$;
 }

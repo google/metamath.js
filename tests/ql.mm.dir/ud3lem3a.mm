@@ -62,5 +62,5 @@ theorem ud3lem3a(wva: $term$ a, wvb: $term$ b) {
     df2le2;
   };
 
-  return $|- ( ( a ->3 b ) ' ^ ( a v b ) ) = ( a ->3 b ) '$;
+  return $|-$ $( ( a ->3 b ) ' ^ ( a v b ) ) = ( a ->3 b ) '$;
 }

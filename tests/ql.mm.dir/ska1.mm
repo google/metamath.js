@@ -11,5 +11,5 @@ theorem ska1(wva: $term$ a) {
     biid;
   };
 
-  return $|- ( a == a ) = 1$;
+  return $|-$ $( a == a ) = 1$;
 }

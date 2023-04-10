@@ -383,5 +383,5 @@ theorem leqf(hal: $type$ al, hbe: $type$ be, vx: $var$ x, vy: $var$ y, ta: $term
     3eqtr3i;
   };
 
-  return $|- R |= [ \ x : al . A = \ x : al . B ]$;
+  return $|-$ $R |= [ \ x : al . A = \ x : al . B ]$;
 }

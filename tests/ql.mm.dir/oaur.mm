@@ -70,5 +70,5 @@ theorem oaur(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     letr;
   };
 
-  return $|- ( a ^ ( ( a ->1 c ) v b ) ) =< c$;
+  return $|-$ $( a ^ ( ( a ->1 c ) v b ) ) =< c$;
 }

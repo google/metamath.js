@@ -158,5 +158,5 @@ theorem wlem1(wva: $term$ a, wvb: $term$ b) {
     lebi;
   };
 
-  return $|- ( ( a == b ) ' v ( ( a ->1 b ) ^ ( b ->1 a ) ) ) = 1$;
+  return $|-$ $( ( a == b ) ' v ( ( a ->1 b ) ^ ( b ->1 a ) ) ) = 1$;
 }

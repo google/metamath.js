@@ -142,5 +142,5 @@ theorem 4oagen1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve:
     lebi;
   };
 
-  return $|- ( ( a ->1 d ) ^ ( g v ( ( a ->1 d ) ^ ( b ->1 d ) ) ) ) = ( ( a ->1 d ) ^ ( b ->1 d ) )$;
+  return $|-$ $( ( a ->1 d ) ^ ( g v ( ( a ->1 d ) ^ ( b ->1 d ) ) ) ) = ( ( a ->1 d ) ^ ( b ->1 d ) )$;
 }

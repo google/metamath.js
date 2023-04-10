@@ -65,5 +65,5 @@ theorem distoah4(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve
     le3tr1;
   };
 
-  return $|- ( d ^ ( a ->2 c ) ) =< f$;
+  return $|-$ $( d ^ ( a ->2 c ) ) =< f$;
 }

@@ -32,5 +32,5 @@ theorem ska10(wva: $term$ a, wvb: $term$ b) {
     bi1;
   };
 
-  return $|- ( ( a v b ) ' == ( a ' ^ b ' ) ) = 1$;
+  return $|-$ $( ( a v b ) ' == ( a ' ^ b ' ) ) = 1$;
 }

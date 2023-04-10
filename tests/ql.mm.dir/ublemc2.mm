@@ -26,5 +26,5 @@ theorem ublemc2(wva: $term$ a, wvb: $term$ b) {
     cbtr;
   };
 
-  return $|- b C ( a == b )$;
+  return $|-$ $b C ( a == b )$;
 }

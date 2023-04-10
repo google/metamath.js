@@ -13,5 +13,5 @@ theorem u2lemc3(wva: $term$ a, wvb: $term$ b) {
     u2lemc1;
   };
 
-  return $|- a C ( b ->2 a )$;
+  return $|-$ $a C ( b ->2 a )$;
 }

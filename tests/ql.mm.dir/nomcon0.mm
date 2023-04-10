@@ -93,5 +93,5 @@ theorem nomcon0(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ==0 b ) = ( b ' ==0 a ' )$;
+  return $|-$ $( a ==0 b ) = ( b ' ==0 a ' )$;
 }

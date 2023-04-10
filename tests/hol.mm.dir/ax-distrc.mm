@@ -5,5 +5,5 @@ axiom ax-distrc(hal: $type$ al, hbe: $type$ be, hga: $type$ ga, vx: $var$ x, ta:
   assume ax-distrc.2: $|- B : al$;
   assume ax-distrc.3: $|- F : ( be -> ga )$;
 
-  return $|- T. |= ( ( = ( \ x : al . ( F A ) B ) ) ( ( \ x : al . F B ) ( \ x : al . A B ) ) )$;
+  return $|-$ $T. |= ( ( = ( \ x : al . ( F A ) B ) ) ( ( \ x : al . F B ) ( \ x : al . A B ) ) )$;
 }

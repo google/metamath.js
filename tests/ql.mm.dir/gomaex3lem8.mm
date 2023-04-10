@@ -160,5 +160,5 @@ theorem gomaex3lem8(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, 
     bltr;
   };
 
-  return $|- ( ( ( a v b ) ^ ( d v e ) ' ) ^ ( ( r v ( p ' ->1 q ) ) ^ p ' ) ) =< ( b v c )$;
+  return $|-$ $( ( ( a v b ) ^ ( d v e ) ' ) ^ ( ( r v ( p ' ->1 q ) ) ^ p ' ) ) =< ( b v c )$;
 }

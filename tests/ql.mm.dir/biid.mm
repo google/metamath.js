@@ -51,5 +51,5 @@ theorem biid(wva: $term$ a) {
     3tr1;
   };
 
-  return $|- ( a == a ) = 1$;
+  return $|-$ $( a == a ) = 1$;
 }

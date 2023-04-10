@@ -207,5 +207,5 @@ theorem oa3-1lem(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr;
   };
 
-  return $|- ( 1 ^ ( 0 v ( a ^ ( ( ( 0 ^ a ) v ( 1 ^ ( a ->1 c ) ) ) v ( ( ( 0 ^ b ) v ( 1 ^ ( b ->1 c ) ) ) ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) ) ) ) = ( a ^ ( ( a ->1 c ) v ( ( b ->1 c ) ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) )$;
+  return $|-$ $( 1 ^ ( 0 v ( a ^ ( ( ( 0 ^ a ) v ( 1 ^ ( a ->1 c ) ) ) v ( ( ( 0 ^ b ) v ( 1 ^ ( b ->1 c ) ) ) ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) ) ) ) = ( a ^ ( ( a ->1 c ) v ( ( b ->1 c ) ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) )$;
 }

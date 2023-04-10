@@ -75,5 +75,5 @@ theorem mldual2i(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr2;
   };
 
-  return $|- ( c ^ ( b v a ) ) = ( ( c ^ b ) v a )$;
+  return $|-$ $( c ^ ( b v a ) ) = ( ( c ^ b ) v a )$;
 }

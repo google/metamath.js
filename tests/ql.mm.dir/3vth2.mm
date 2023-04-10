@@ -83,5 +83,5 @@ theorem 3vth2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lebi;
   };
 
-  return $|- ( ( a ->2 b ) ^ ( b v c ) ' ) = ( ( a ->2 c ) ^ ( b v c ) ' )$;
+  return $|-$ $( ( a ->2 b ) ^ ( b v c ) ' ) = ( ( a ->2 c ) ^ ( b v c ) ' )$;
 }

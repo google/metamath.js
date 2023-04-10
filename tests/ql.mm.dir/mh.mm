@@ -428,5 +428,5 @@ theorem mh(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     ax-r1;
   };
 
-  return $|- ( ( a v c ) ^ ( b v d ) ) = ( ( ( a ^ b ) v ( a ^ d ) ) v ( ( c ^ b ) v ( c ^ d ) ) )$;
+  return $|-$ $( ( a v c ) ^ ( b v d ) ) = ( ( ( a ^ b ) v ( a ^ d ) ) v ( ( c ^ b ) v ( c ^ d ) ) )$;
 }

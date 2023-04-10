@@ -71,5 +71,5 @@ theorem cla4v(hal: $type$ al, vx: $var$ x, ta: $term$ A, tb: $term$ B, tc: $term
     mpbi;
   };
 
-  return $|- ( ! \ x : al . A ) |= C$;
+  return $|-$ $( ! \ x : al . A ) |= C$;
 }

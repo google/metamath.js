@@ -115,5 +115,5 @@ theorem u4lem3n(wva: $term$ a, wvb: $term$ b) {
     con2;
   };
 
-  return $|- ( a ->4 ( b ->4 a ) ) ' = ( a ^ ( ( a ' v b ) ^ ( a ' v b ' ) ) )$;
+  return $|-$ $( a ->4 ( b ->4 a ) ) ' = ( a ^ ( ( a ' v b ) ^ ( a ' v b ' ) ) )$;
 }

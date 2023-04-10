@@ -32,5 +32,5 @@ theorem dff2(wva: $term$ a) {
     ax-r2;
   };
 
-  return $|- 0 = ( a v a ' ) '$;
+  return $|-$ $0 = ( a v a ' ) '$;
 }

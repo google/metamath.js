@@ -67,5 +67,5 @@ theorem gomaex3lem4(wva: $term$ a, wvb: $term$ b, wvd: $term$ d, wve: $term$ e, 
     lbtr;
   };
 
-  return $|- ( ( a v b ) ^ ( d v e ) ' ) =< p '$;
+  return $|-$ $( ( a v b ) ^ ( d v e ) ' ) =< p '$;
 }

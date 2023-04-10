@@ -143,5 +143,5 @@ theorem fh4(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     con1;
   };
 
-  return $|- ( b v ( a ^ c ) ) = ( ( b v a ) ^ ( b v c ) )$;
+  return $|-$ $( b v ( a ^ c ) ) = ( ( b v a ) ^ ( b v c ) )$;
 }

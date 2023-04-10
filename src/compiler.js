@@ -8,7 +8,6 @@ class Lexer {
       ["comment"]: {match: /\/\/.*\n/, lineBreaks: true},
       ["ws"]: {match: /[\s]+/, lineBreaks: true},
       ["_include_"]: "include",
-      ["string"]: /\$[!-#%-~]+(?:\s+[!-#%-~]+)*\s?\$/,
       ["theorem"]: "theorem",
       ["axiom"]: "axiom",
       ["do"]: "do",
@@ -26,7 +25,10 @@ class Lexer {
       [";"]: ";",
       ["@"]: "@",
       ["#"]: "#",
+      // ["$"]: "$",
       ["label"]: /[A-Za-z0-9-_.]+/,
+      ["quote"]: /\$[!-#%-~]+\$/,
+      ["string"]: /\$(?:[!-#%-~]+(?:\s+[!-#%-~]+)*\s?)?\$/,
     };
     this.lexer = moo.compile(lexicon);
   }
@@ -77,6 +79,21 @@ const labels = [
   "assume",
   "disjoint",
   "return",
+];
+
+const symbols = [
+  "(",
+  ")",
+  "{",
+  "}",
+  '"',
+  ":",
+  ",",
+  ";",
+  "@",
+  "#",
+  ...labels,
+  "symbol"
 ];
 
 class Parser {
@@ -130,11 +147,6 @@ class Parser {
       this.error();
     }
   }
-
-  quote() {
-    const str = this.eat("string");
-    return str.slice(1, str.length - 1).replace('\\"', '"');
-  }
   
   head(extras = false) {
     this.eat("(");
@@ -142,8 +154,8 @@ class Parser {
 
     const f = [];
     // parameters
-    while (this.accepts(...labels, "string")) {
-      let first = this.accepts("label") ? this.label() : this.quote();
+    while (this.accepts(...labels, "quote")) {
+      let first = this.symbol();
       this.ws(true);
 
       let label;
@@ -153,7 +165,7 @@ class Parser {
         this.eat(":");
         this.ws();
         label = first;
-        type = this.accepts(...labels) ? this.label() : this.quote();
+        type = this.symbol();
         this.ws();
       } else {
         label = "";
@@ -172,8 +184,6 @@ class Parser {
       this.ws(true);
     }
 
-    //console.log(this.lexer.head);
-    //throw new Error("hi");
     this.eat(")");
 
     this.ws(true);
@@ -195,7 +205,7 @@ class Parser {
         this.eat(":");
         this.ws(true);
       }
-      const [type, str] = this.str();
+      const [type, ...str] = this.str();
       e.push([label, type, str]);
       this.ws(true);
       this.eat(";");
@@ -226,7 +236,7 @@ class Parser {
       this.ws(true);
       this.eat(":");
       this.ws(true);
-      const type = this.accepts(...labels) ? this.label() : this.quote();
+      const type = this.accepts(...labels) ? this.label() : this.symbol();
       this.ws();
       const name = this.label();
       l.push([label, type, name]);
@@ -261,17 +271,36 @@ class Parser {
     
     this.eat("return");
     this.ws();
+    const type = this.symbol();
+    //console.log(type);
+    //console.log(this.lexer.head);
+    //throw new Error("hi");
+    this.ws();
     const str = this.str();
     this.ws(true);
     this.eat(";");
     this.ws(true);
-    return [e, d, l, str, proof];
+    return [e, d, l, [type, str], proof];
   }
 
+  symbol() {
+    if (this.accepts("label")) {
+      return this.label();
+    }
+    //this.eat("$");
+    // console.log(this.lexer.head);
+    const quote = this.eat("quote");
+    return quote.slice(1, quote.length - 1);
+    //this.eat("$");
+    // return symbol;
+  }
+  
   str() {
-    const str = this.eat("string");
-    const [head, ...tail] = str.slice(1, str.length - 1).split(" ");
-    return [head.replace('\\"', '"'), tail.map((s) => s.replace('\\"', '"'))];
+    const result = this.eat("quote", "string");
+    const symbols = result.slice(1, result.length - 1);
+    //console.log(symbols.split(/[\s]+/));
+    //throw new Error("hi");
+    return symbols.split(/[\s]+/);
   }
 
   axiom() {
@@ -613,7 +642,7 @@ class Transpiler {
     const result = `
 axiom ${label}(${args}) {
 ${assumptions}
-  return $${this.escape(type)} ${this.escape(axiom.join(' '))}$;
+  return $${this.escape(type)}$ $${this.escape(axiom.join(' '))}$;
 }
 `;
 
@@ -709,7 +738,7 @@ ${l}
 ${body}
   };
 
-  return $${this.escape(type)} ${this.escape(theorem.join(' '))}$;
+  return $${this.escape(type)}$ $${this.escape(theorem.join(' '))}$;
 }
 `;
 

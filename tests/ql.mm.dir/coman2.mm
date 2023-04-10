@@ -26,5 +26,5 @@ theorem coman2(wva: $term$ a, wvb: $term$ b) {
     bctr;
   };
 
-  return $|- ( a ^ b ) C b$;
+  return $|-$ $( a ^ b ) C b$;
 }

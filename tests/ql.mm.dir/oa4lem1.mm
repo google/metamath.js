@@ -71,5 +71,5 @@ theorem oa4lem1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     le3tr1;
   };
 
-  return $|- ( a v b ) =< ( ( a v c ) ' ->2 b )$;
+  return $|-$ $( a v b ) =< ( ( a v c ) ' ->2 b )$;
 }

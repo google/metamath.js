@@ -36,5 +36,5 @@ theorem ler2or(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     bltr;
   };
 
-  return $|- a =< ( b v c )$;
+  return $|-$ $a =< ( b v c )$;
 }

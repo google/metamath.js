@@ -104,5 +104,5 @@ theorem go1(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ^ b ) ^ ( a ->1 b ' ) ) = 0$;
+  return $|-$ $( ( a ^ b ) ^ ( a ->1 b ' ) ) = 0$;
 }

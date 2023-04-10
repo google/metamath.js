@@ -382,5 +382,5 @@ theorem mlaconjo(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     letr;
   };
 
-  return $|- ( ( a == b ) ^ ( ( a == c ) v ( b == c ) ) ) =< ( a == c )$;
+  return $|-$ $( ( a == b ) ^ ( ( a == c ) v ( b == c ) ) ) =< ( a == c )$;
 }

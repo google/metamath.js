@@ -99,5 +99,5 @@ theorem dp41lemd(wvp: $term$ p, wva0: $term$ a0, wva1: $term$ a1, wva2: $term$ a
     3tr;
   };
 
-  return $|- ( c2 ^ ( ( a0 v b1 ) v ( c2 ^ ( c0 v c1 ) ) ) ) = ( c2 ^ ( ( c0 v c1 ) v ( c2 ^ ( a0 v b1 ) ) ) )$;
+  return $|-$ $( c2 ^ ( ( a0 v b1 ) v ( c2 ^ ( c0 v c1 ) ) ) ) = ( c2 ^ ( ( c0 v c1 ) v ( c2 ^ ( a0 v b1 ) ) ) )$;
 }

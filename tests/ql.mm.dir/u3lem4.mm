@@ -47,5 +47,5 @@ theorem u3lem4(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ->3 ( a ->3 ( b ->3 a ) ) ) = 1$;
+  return $|-$ $( a ->3 ( a ->3 ( b ->3 a ) ) ) = 1$;
 }

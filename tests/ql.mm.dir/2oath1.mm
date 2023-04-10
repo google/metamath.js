@@ -191,5 +191,5 @@ theorem 2oath1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr;
   };
 
-  return $|- ( ( a ->2 b ) ^ ( ( b v c ) ->2 ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) = ( ( a ->2 b ) ^ ( a ->2 c ) )$;
+  return $|-$ $( ( a ->2 b ) ^ ( ( b v c ) ->2 ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) = ( ( a ->2 b ) ^ ( a ->2 c ) )$;
 }

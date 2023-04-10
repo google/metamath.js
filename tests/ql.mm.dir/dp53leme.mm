@@ -130,5 +130,5 @@ theorem dp53leme(wvp: $term$ p, wva0: $term$ a0, wva1: $term$ a1, wva2: $term$ a
     letr;
   };
 
-  return $|- ( b0 ^ ( a0 v p0 ) ) =< ( a0 v ( b0 ^ ( b1 v ( c2 ^ ( c0 v c1 ) ) ) ) )$;
+  return $|-$ $( b0 ^ ( a0 v p0 ) ) =< ( a0 v ( b0 ^ ( b1 v ( c2 ^ ( c0 v c1 ) ) ) ) )$;
 }

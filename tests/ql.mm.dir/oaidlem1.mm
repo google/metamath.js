@@ -92,5 +92,5 @@ theorem oaidlem1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- ( a ' v ( b ->1 c ) ) = 1$;
+  return $|-$ $( a ' v ( b ->1 c ) ) = 1$;
 }

@@ -95,5 +95,5 @@ theorem mhlemlem2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     ax-r2;
   };
 
-  return $|- ( ( ( a v b ) v d ) ^ ( b v ( c v d ) ) ) = ( b v d )$;
+  return $|-$ $( ( ( a v b ) v d ) ^ ( b v ( c v d ) ) ) = ( b v d )$;
 }

@@ -31,5 +31,5 @@ theorem wed(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     r3a;
   };
 
-  return $|- c = d$;
+  return $|-$ $c = d$;
 }

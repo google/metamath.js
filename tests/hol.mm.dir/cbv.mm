@@ -72,5 +72,5 @@ theorem cbv(hal: $type$ al, hbe: $type$ be, vx: $var$ x, vy: $var$ y, ta: $term$
     cbvf;
   };
 
-  return $|- T. |= [ \ x : al . A = \ y : al . B ]$;
+  return $|-$ $T. |= [ \ x : al . A = \ y : al . B ]$;
 }

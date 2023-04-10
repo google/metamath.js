@@ -88,5 +88,5 @@ theorem comi1(wva: $term$ a, wvb: $term$ b) {
     le3tr1;
   };
 
-  return $|- b =< ( a ->1 b )$;
+  return $|-$ $b =< ( a ->1 b )$;
 }

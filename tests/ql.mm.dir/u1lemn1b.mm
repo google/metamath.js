@@ -63,5 +63,5 @@ theorem u1lemn1b(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ->1 b ) = ( ( a ->1 b ) ' ->1 b )$;
+  return $|-$ $( a ->1 b ) = ( ( a ->1 b ) ' ->1 b )$;
 }

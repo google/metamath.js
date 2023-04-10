@@ -106,5 +106,5 @@ theorem li3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr1;
   };
 
-  return $|- ( c ->3 a ) = ( c ->3 b )$;
+  return $|-$ $( c ->3 a ) = ( c ->3 b )$;
 }

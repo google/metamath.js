@@ -46,5 +46,5 @@ theorem gomaex3h8(wvp: $term$ p, wvq: $term$ q, wvu: $term$ u, wvw: $term$ w) {
     le3tr1;
   };
 
-  return $|- u =< w '$;
+  return $|-$ $u =< w '$;
 }

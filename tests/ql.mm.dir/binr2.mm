@@ -28,5 +28,5 @@ theorem binr2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lei3;
   };
 
-  return $|- ( a ->3 c ) = 1$;
+  return $|-$ $( a ->3 c ) = 1$;
 }

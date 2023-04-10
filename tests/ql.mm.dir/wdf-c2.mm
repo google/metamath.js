@@ -226,5 +226,5 @@ theorem wdf-c2(wva: $term$ a, wvb: $term$ b) {
     lebi;
   };
 
-  return $|- ( a == ( ( a ^ b ) v ( a ^ b ' ) ) ) = 1$;
+  return $|-$ $( a == ( ( a ^ b ) v ( a ^ b ' ) ) ) = 1$;
 }

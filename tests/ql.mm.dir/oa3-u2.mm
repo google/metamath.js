@@ -236,5 +236,5 @@ theorem oa3-u2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     bltr;
   };
 
-  return $|- ( ( a ->1 c ) ^ ( ( a ' ->1 c ) v ( c ^ ( ( a ->1 c ) v ( ( b ->1 c ) ^ ( ( ( a ->1 c ) ^ ( b ->1 c ) ) v ( ( a ' ->1 c ) ^ ( b ' ->1 c ) ) ) ) ) ) ) ) =< c$;
+  return $|-$ $( ( a ->1 c ) ^ ( ( a ' ->1 c ) v ( c ^ ( ( a ->1 c ) v ( ( b ->1 c ) ^ ( ( ( a ->1 c ) ^ ( b ->1 c ) ) v ( ( a ' ->1 c ) ^ ( b ' ->1 c ) ) ) ) ) ) ) ) =< c$;
 }

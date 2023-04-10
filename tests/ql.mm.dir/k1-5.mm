@@ -107,5 +107,5 @@ theorem k1-5(wvc: $term$ c, wvx: $term$ x) {
     k1-4;
   };
 
-  return $|- ( x v ( x ' ^ c ' ) ) = c '$;
+  return $|-$ $( x v ( x ' ^ c ' ) ) = c '$;
 }

@@ -286,5 +286,5 @@ theorem 3vth9(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr1;
   };
 
-  return $|- ( ( a v b ) ->1 ( c ->2 b ) ) = ( ( b v c ) ->2 ( a ->2 b ) )$;
+  return $|-$ $( ( a v b ) ->1 ( c ->2 b ) ) = ( ( b v c ) ->2 ( a ->2 b ) )$;
 }

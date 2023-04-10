@@ -32,5 +32,5 @@ theorem lecon1(wva: $term$ a, wvb: $term$ b) {
     le3tr1;
   };
 
-  return $|- b =< a$;
+  return $|-$ $b =< a$;
 }

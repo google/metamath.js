@@ -39,5 +39,5 @@ theorem wlbtr(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     wdf2le1;
   };
 
-  return $|- ( a =<2 c ) = 1$;
+  return $|-$ $( a =<2 c ) = 1$;
 }

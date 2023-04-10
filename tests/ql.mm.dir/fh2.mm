@@ -281,5 +281,5 @@ theorem fh2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r1;
   };
 
-  return $|- ( b ^ ( a v c ) ) = ( ( b ^ a ) v ( b ^ c ) )$;
+  return $|-$ $( b ^ ( a v c ) ) = ( ( b ^ a ) v ( b ^ c ) )$;
 }

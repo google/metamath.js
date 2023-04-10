@@ -27,5 +27,5 @@ theorem w3tr2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     w3tr1;
   };
 
-  return $|- ( c == d ) = 1$;
+  return $|-$ $( c == d ) = 1$;
 }

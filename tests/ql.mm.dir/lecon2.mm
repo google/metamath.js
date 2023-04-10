@@ -27,5 +27,5 @@ theorem lecon2(wva: $term$ a, wvb: $term$ b) {
     lecon1;
   };
 
-  return $|- b ' =< a$;
+  return $|-$ $b ' =< a$;
 }

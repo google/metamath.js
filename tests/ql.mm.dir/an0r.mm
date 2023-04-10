@@ -26,5 +26,5 @@ theorem an0r(wva: $term$ a) {
     ax-r2;
   };
 
-  return $|- ( 0 ^ a ) = 0$;
+  return $|-$ $( 0 ^ a ) = 0$;
 }

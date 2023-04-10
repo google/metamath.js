@@ -58,5 +58,5 @@ theorem oa4cl(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     ax-oal4;
   };
 
-  return $|- ( ( a v ( b ^ a ' ) ) ^ ( c v ( d ^ c ' ) ) ) =< ( ( b ^ a ' ) v ( a ^ ( c v ( ( a v c ) ^ ( ( b ^ a ' ) v ( d ^ c ' ) ) ) ) ) )$;
+  return $|-$ $( ( a v ( b ^ a ' ) ) ^ ( c v ( d ^ c ' ) ) ) =< ( ( b ^ a ' ) v ( a ^ ( c v ( ( a v c ) ^ ( ( b ^ a ' ) v ( d ^ c ' ) ) ) ) ) )$;
 }

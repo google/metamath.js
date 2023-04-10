@@ -367,5 +367,5 @@ theorem u24lem(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->2 b ) ^ ( a ->4 b ) ) = ( a ->5 b )$;
+  return $|-$ $( ( a ->2 b ) ^ ( a ->4 b ) ) = ( a ->5 b )$;
 }

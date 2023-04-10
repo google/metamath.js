@@ -67,5 +67,5 @@ theorem mccune3(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( ( ( a ' ^ b ) v ( a ' ^ b ' ) ) v ( a ^ ( a ' v b ) ) ) ' v ( a ' v b ) ) = 1$;
+  return $|-$ $( ( ( ( a ' ^ b ) v ( a ' ^ b ' ) ) v ( a ^ ( a ' v b ) ) ) ' v ( a ' v b ) ) = 1$;
 }

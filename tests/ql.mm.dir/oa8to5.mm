@@ -484,5 +484,5 @@ theorem oa8to5(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve: 
     le3tr2;
   };
 
-  return $|- ( ( a ->1 j ) ^ ( a v ( c ^ ( ( ( ( a ^ c ) v ( ( a ->1 j ) ^ ( c ->1 j ) ) ) v ( ( ( a ^ g ) v ( ( a ->1 j ) ^ ( g ->1 j ) ) ) ^ ( ( c ^ g ) v ( ( c ->1 j ) ^ ( g ->1 j ) ) ) ) ) v ( ( ( ( a ^ e ) v ( ( a ->1 j ) ^ ( e ->1 j ) ) ) v ( ( ( a ^ g ) v ( ( a ->1 j ) ^ ( g ->1 j ) ) ) ^ ( ( e ^ g ) v ( ( e ->1 j ) ^ ( g ->1 j ) ) ) ) ) ^ ( ( ( c ^ e ) v ( ( c ->1 j ) ^ ( e ->1 j ) ) ) v ( ( ( c ^ g ) v ( ( c ->1 j ) ^ ( g ->1 j ) ) ) ^ ( ( e ^ g ) v ( ( e ->1 j ) ^ ( g ->1 j ) ) ) ) ) ) ) ) ) ) =< ( ( ( a ^ j ) v ( c ^ j ) ) v ( ( e ^ j ) v ( g ^ j ) ) )$;
+  return $|-$ $( ( a ->1 j ) ^ ( a v ( c ^ ( ( ( ( a ^ c ) v ( ( a ->1 j ) ^ ( c ->1 j ) ) ) v ( ( ( a ^ g ) v ( ( a ->1 j ) ^ ( g ->1 j ) ) ) ^ ( ( c ^ g ) v ( ( c ->1 j ) ^ ( g ->1 j ) ) ) ) ) v ( ( ( ( a ^ e ) v ( ( a ->1 j ) ^ ( e ->1 j ) ) ) v ( ( ( a ^ g ) v ( ( a ->1 j ) ^ ( g ->1 j ) ) ) ^ ( ( e ^ g ) v ( ( e ->1 j ) ^ ( g ->1 j ) ) ) ) ) ^ ( ( ( c ^ e ) v ( ( c ->1 j ) ^ ( e ->1 j ) ) ) v ( ( ( c ^ g ) v ( ( c ->1 j ) ^ ( g ->1 j ) ) ) ^ ( ( e ^ g ) v ( ( e ->1 j ) ^ ( g ->1 j ) ) ) ) ) ) ) ) ) ) =< ( ( ( a ^ j ) v ( c ^ j ) ) v ( ( e ^ j ) v ( g ^ j ) ) )$;
 }

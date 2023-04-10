@@ -537,5 +537,5 @@ theorem oa3moa3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve:
     lbtr;
   };
 
-  return $|- ( ( a v b ) ^ ( ( c v d ) v e ) ) =< ( a v ( ( ( b ^ ( c v ( ( b v c ) ^ ( ( a v d ) v e ) ) ) ) ^ ( d v ( ( b v d ) ^ ( ( a v c ) v e ) ) ) ) ^ ( e v ( ( b v e ) ^ ( ( a v c ) v d ) ) ) ) )$;
+  return $|-$ $( ( a v b ) ^ ( ( c v d ) v e ) ) =< ( a v ( ( ( b ^ ( c v ( ( b v c ) ^ ( ( a v d ) v e ) ) ) ) ^ ( d v ( ( b v d ) ^ ( ( a v c ) v e ) ) ) ) ^ ( e v ( ( b v e ) ^ ( ( a v c ) v d ) ) ) ) )$;
 }

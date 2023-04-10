@@ -122,5 +122,5 @@ theorem wql1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr;
   };
 
-  return $|- ( a ->2 b ) = 1$;
+  return $|-$ $( a ->2 b ) = 1$;
 }

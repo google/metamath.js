@@ -94,5 +94,5 @@ theorem wcomcom5(wva: $term$ a, wvb: $term$ b) {
     wdf-c1;
   };
 
-  return $|- C ( a , b ) = 1$;
+  return $|-$ $C ( a , b ) = 1$;
 }

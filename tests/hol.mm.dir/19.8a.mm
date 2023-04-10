@@ -73,5 +73,5 @@ theorem 19.8a(hal: $type$ al, vx: $var$ x, ta: $term$ A) {
     syl;
   };
 
-  return $|- A |= ( ? \ x : al . A )$;
+  return $|-$ $A |= ( ? \ x : al . A )$;
 }

@@ -296,5 +296,5 @@ theorem dfi3b(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ->3 b ) = ( ( a ' v b ) ^ ( ( a v ( a ' ^ b ' ) ) v ( a ' ^ b ) ) )$;
+  return $|-$ $( a ->3 b ) = ( ( a ' v b ) ^ ( ( a v ( a ' ^ b ' ) ) v ( a ' ^ b ) ) )$;
 }

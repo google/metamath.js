@@ -54,5 +54,5 @@ theorem wom4(wva: $term$ a, wvb: $term$ b) {
     w3tr2;
   };
 
-  return $|- ( ( a v ( a ' ^ b ) ) == b ) = 1$;
+  return $|-$ $( ( a v ( a ' ^ b ) ) == b ) = 1$;
 }

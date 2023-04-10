@@ -112,5 +112,5 @@ theorem i2bi(wva: $term$ a, wvb: $term$ b) {
     lebi;
   };
 
-  return $|- ( a ->2 b ) = ( b v ( a == b ) )$;
+  return $|-$ $( a ->2 b ) = ( b v ( a == b ) )$;
 }

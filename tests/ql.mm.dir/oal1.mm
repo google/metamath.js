@@ -97,5 +97,5 @@ theorem oal1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     le3tr1;
   };
 
-  return $|- ( ( a ->1 c ) ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) =< ( b ->1 c )$;
+  return $|-$ $( ( a ->1 c ) ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) =< ( b ->1 c )$;
 }

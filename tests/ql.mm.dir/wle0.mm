@@ -46,5 +46,5 @@ theorem wle0(wva: $term$ a) {
     ax-r2;
   };
 
-  return $|- ( 0 =<2 a ) = 1$;
+  return $|-$ $( 0 =<2 a ) = 1$;
 }

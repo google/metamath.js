@@ -156,5 +156,5 @@ theorem dp41lemh(wvp: $term$ p, wva0: $term$ a0, wva1: $term$ a1, wva2: $term$ a
     le2or;
   };
 
-  return $|- ( ( ( b1 v b2 ) ^ ( ( a1 v a2 ) v ( a0 ^ ( a1 v b1 ) ) ) ) v ( ( a0 v a2 ) ^ ( ( b0 v b2 ) v ( b1 ^ ( a0 v b0 ) ) ) ) ) =< ( ( ( b1 v b2 ) ^ ( ( a1 v a2 ) v ( a0 ^ ( a2 v b2 ) ) ) ) v ( ( a0 v a2 ) ^ ( ( b0 v b2 ) v ( b1 ^ ( a2 v b2 ) ) ) ) )$;
+  return $|-$ $( ( ( b1 v b2 ) ^ ( ( a1 v a2 ) v ( a0 ^ ( a1 v b1 ) ) ) ) v ( ( a0 v a2 ) ^ ( ( b0 v b2 ) v ( b1 ^ ( a0 v b0 ) ) ) ) ) =< ( ( ( b1 v b2 ) ^ ( ( a1 v a2 ) v ( a0 ^ ( a2 v b2 ) ) ) ) v ( ( a0 v a2 ) ^ ( ( b0 v b2 ) v ( b1 ^ ( a2 v b2 ) ) ) ) )$;
 }

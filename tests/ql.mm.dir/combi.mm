@@ -57,5 +57,5 @@ theorem combi(wva: $term$ a, wvb: $term$ b) {
     cbtr;
   };
 
-  return $|- a C ( a == b )$;
+  return $|-$ $a C ( a == b )$;
 }

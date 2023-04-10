@@ -13,5 +13,5 @@ theorem u5lemc5(wva: $term$ a, wvb: $term$ b) {
     u5lemc1;
   };
 
-  return $|- a C ( a ->5 b )$;
+  return $|-$ $a C ( a ->5 b )$;
 }

@@ -36,5 +36,5 @@ theorem ler2an(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     bltr;
   };
 
-  return $|- a =< ( b ^ c )$;
+  return $|-$ $a =< ( b ^ c )$;
 }

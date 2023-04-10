@@ -34,5 +34,5 @@ theorem i32or(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     binr2;
   };
 
-  return $|- ( ( a v c ) ->3 ( b v d ) ) = 1$;
+  return $|-$ $( ( a v c ) ->3 ( b v d ) ) = 1$;
 }

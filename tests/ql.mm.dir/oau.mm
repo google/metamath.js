@@ -177,5 +177,5 @@ theorem oau(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     df-le1;
   };
 
-  return $|- b =< ( a ->1 c )$;
+  return $|-$ $b =< ( a ->1 c )$;
 }

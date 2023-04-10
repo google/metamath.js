@@ -444,5 +444,5 @@ theorem testmod2expanded(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term
     tr;
   };
 
-  return $|- ( ( a v b ) ^ ( a v ( c v d ) ) ) = ( a v ( b ^ ( ( ( a v c ) ^ ( b v d ) ) v ( d ^ ( ( a v c ) v ( ( b v c ) ^ ( d v a ) ) ) ) ) ) )$;
+  return $|-$ $( ( a v b ) ^ ( a v ( c v d ) ) ) = ( a v ( b ^ ( ( ( a v c ) ^ ( b v d ) ) v ( d ^ ( ( a v c ) v ( ( b v c ) ^ ( d v a ) ) ) ) ) ) )$;
 }

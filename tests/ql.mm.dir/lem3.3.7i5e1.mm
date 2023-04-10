@@ -143,5 +143,5 @@ theorem lem3.3.7i5e1(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ->5 ( a ^ b ) ) = ( a ==5 ( a ^ b ) )$;
+  return $|-$ $( a ->5 ( a ^ b ) ) = ( a ==5 ( a ^ b ) )$;
 }

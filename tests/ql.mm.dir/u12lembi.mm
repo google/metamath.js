@@ -165,5 +165,5 @@ theorem u12lembi(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( ( a ->1 b ) ^ ( b ->2 a ) ) = ( a == b )$;
+  return $|-$ $( ( a ->1 b ) ^ ( b ->2 a ) ) = ( a == b )$;
 }

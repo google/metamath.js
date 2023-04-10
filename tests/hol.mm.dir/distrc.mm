@@ -116,5 +116,5 @@ theorem distrc(hal: $type$ al, hbe: $type$ be, hga: $type$ ga, vx: $var$ x, ta: 
     dfov2;
   };
 
-  return $|- T. |= [ ( \ x : al . ( F A ) B ) = ( ( \ x : al . F B ) ( \ x : al . A B ) ) ]$;
+  return $|-$ $T. |= [ ( \ x : al . ( F A ) B ) = ( ( \ x : al . F B ) ( \ x : al . A B ) ) ]$;
 }

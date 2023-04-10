@@ -58,5 +58,5 @@ theorem an4(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     3tr1;
   };
 
-  return $|- ( ( a ^ b ) ^ ( c ^ d ) ) = ( ( a ^ c ) ^ ( b ^ d ) )$;
+  return $|-$ $( ( a ^ b ) ^ ( c ^ d ) ) = ( ( a ^ c ) ^ ( b ^ d ) )$;
 }

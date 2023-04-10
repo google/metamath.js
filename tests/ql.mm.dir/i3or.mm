@@ -83,5 +83,5 @@ theorem i3or(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lebi;
   };
 
-  return $|- ( ( a == b ) ' v ( ( a v c ) ->3 ( b v c ) ) ) = 1$;
+  return $|-$ $( ( a == b ) ' v ( ( a v c ) ->3 ( b v c ) ) ) = 1$;
 }

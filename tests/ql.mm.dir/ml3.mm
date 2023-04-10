@@ -35,5 +35,5 @@ theorem ml3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lebi;
   };
 
-  return $|- ( a v ( b ^ ( c v a ) ) ) = ( a v ( c ^ ( b v a ) ) )$;
+  return $|-$ $( a v ( b ^ ( c v a ) ) ) = ( a v ( c ^ ( b v a ) ) )$;
 }

@@ -75,5 +75,5 @@ theorem ud4(wva: $term$ a, wvb: $term$ b) {
     ax-r1;
   };
 
-  return $|- ( a v b ) = ( ( a ->4 b ) ->4 ( ( ( a ->4 b ) ->4 ( b ->4 a ) ) ->4 a ) )$;
+  return $|-$ $( a v b ) = ( ( a ->4 b ) ->4 ( ( ( a ->4 b ) ->4 ( b ->4 a ) ) ->4 a ) )$;
 }

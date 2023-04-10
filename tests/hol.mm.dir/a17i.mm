@@ -37,5 +37,5 @@ theorem a17i(hal: $type$ al, hbe: $type$ be, vx: $var$ x, ta: $term$ A, tb: $ter
     a1i;
   };
 
-  return $|- R |= [ ( \ x : al . A B ) = A ]$;
+  return $|-$ $R |= [ ( \ x : al . A B ) = A ]$;
 }

@@ -245,5 +245,5 @@ theorem lem3.3.4(wva: $term$ a, wvb: $term$ b) {
     3tr;
   };
 
-  return $|- ( a ->2 ( a ==5 b ) ) = ( a ==5 b )$;
+  return $|-$ $( a ->2 ( a ==5 b ) ) = ( a ==5 b )$;
 }

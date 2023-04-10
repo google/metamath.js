@@ -26,5 +26,5 @@ theorem comor2(wva: $term$ a, wvb: $term$ b) {
     bctr;
   };
 
-  return $|- ( a v b ) C b$;
+  return $|-$ $( a v b ) C b$;
 }

@@ -36,5 +36,5 @@ theorem mpbir(ta: $term$ A, tb: $term$ B, tr: $term$ R) {
     mpbi;
   };
 
-  return $|- R |= B$;
+  return $|-$ $R |= B$;
 }

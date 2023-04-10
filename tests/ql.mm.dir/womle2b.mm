@@ -40,5 +40,5 @@ theorem womle2b(wva: $term$ a, wvb: $term$ b) {
     lbtr;
   };
 
-  return $|- ( a ^ ( a ->2 b ) ) =< ( ( a ->2 b ) ' v ( a ->1 b ) )$;
+  return $|-$ $( a ^ ( a ->2 b ) ) =< ( ( a ->2 b ) ' v ( a ->1 b ) )$;
 }

@@ -14,5 +14,5 @@ theorem tru() {
     id;
   };
 
-  return $|- T. |= T.$;
+  return $|-$ $T. |= T.$;
 }

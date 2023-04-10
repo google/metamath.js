@@ -1,5 +1,5 @@
 
 axiom wid1(wva: $term$ a, wvb: $term$ b) {
 
-  return $term ( a ==1 b )$;
+  return $term$ $( a ==1 b )$;
 }

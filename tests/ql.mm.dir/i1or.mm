@@ -103,5 +103,5 @@ theorem i1or(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lbtr;
   };
 
-  return $|- ( ( c ->1 a ) v ( c ->1 b ) ) =< ( c ->1 ( a v b ) )$;
+  return $|-$ $( ( c ->1 a ) v ( c ->1 b ) ) =< ( c ->1 ( a v b ) )$;
 }

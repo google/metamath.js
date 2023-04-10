@@ -57,5 +57,5 @@ theorem i32i3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     lei3;
   };
 
-  return $|- ( ( a ->3 c ) ->3 ( b ->3 d ) ) = 1$;
+  return $|-$ $( ( a ->3 c ) ->3 ( b ->3 d ) ) = 1$;
 }

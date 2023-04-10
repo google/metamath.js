@@ -23,5 +23,5 @@ theorem comcom3(wva: $term$ a, wvb: $term$ b) {
     comcom;
   };
 
-  return $|- a ' C b$;
+  return $|-$ $a ' C b$;
 }

@@ -78,5 +78,5 @@ theorem ud5(wva: $term$ a, wvb: $term$ b) {
     ax-r1;
   };
 
-  return $|- ( a v b ) = ( ( a ->5 b ) ->5 ( ( ( a ->5 b ) ->5 ( b ->5 a ) ) ->5 a ) )$;
+  return $|-$ $( a v b ) = ( ( a ->5 b ) ->5 ( ( ( a ->5 b ) ->5 ( b ->5 a ) ) ->5 a ) )$;
 }

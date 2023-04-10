@@ -83,5 +83,5 @@ theorem dfex2(hal: $type$ al, tf: $term$ F) {
     ded;
   };
 
-  return $|- T. |= [ ( ? F ) = ( F ( @ F ) ) ]$;
+  return $|-$ $T. |= [ ( ? F ) = ( F ( @ F ) ) ]$;
 }

@@ -122,5 +122,5 @@ theorem 3vded12(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     u1lemle2;
   };
 
-  return $|- c =< ( b ->1 a )$;
+  return $|-$ $c =< ( b ->1 a )$;
 }

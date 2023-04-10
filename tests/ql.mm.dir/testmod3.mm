@@ -93,5 +93,5 @@ theorem testmod3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     cm;
   };
 
-  return $|- ( ( ( c v a ) v ( ( b v c ) ^ ( d v a ) ) ) ^ ( a v ( b ^ ( d v ( ( a v c ) ^ ( b v d ) ) ) ) ) ) = ( a v ( ( ( c v a ) v ( ( b v c ) ^ ( d v a ) ) ) ^ ( b ^ ( d v ( ( a v c ) ^ ( b v d ) ) ) ) ) )$;
+  return $|-$ $( ( ( c v a ) v ( ( b v c ) ^ ( d v a ) ) ) ^ ( a v ( b ^ ( d v ( ( a v c ) ^ ( b v d ) ) ) ) ) ) = ( a v ( ( ( c v a ) v ( ( b v c ) ^ ( d v a ) ) ) ^ ( b ^ ( d v ( ( a v c ) ^ ( b v d ) ) ) ) ) )$;
 }

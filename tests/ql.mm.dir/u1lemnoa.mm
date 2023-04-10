@@ -47,5 +47,5 @@ theorem u1lemnoa(wva: $term$ a, wvb: $term$ b) {
     con1;
   };
 
-  return $|- ( ( a ->1 b ) ' v a ) = a$;
+  return $|-$ $( ( a ->1 b ) ' v a ) = a$;
 }

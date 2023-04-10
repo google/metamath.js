@@ -63,5 +63,5 @@ theorem gomaex3h7(wvn: $term$ n, wvp: $term$ p, wvq: $term$ q, wvu: $term$ u) {
     le3tr1;
   };
 
-  return $|- n =< u '$;
+  return $|-$ $n =< u '$;
 }

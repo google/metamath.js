@@ -34,5 +34,5 @@ theorem 2i3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     ax-r2;
   };
 
-  return $|- ( a ->3 c ) = ( b ->3 d )$;
+  return $|-$ $( a ->3 c ) = ( b ->3 d )$;
 }

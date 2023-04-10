@@ -43,5 +43,5 @@ theorem nomcon3(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ==3 b ) = ( b ' ==4 a ' )$;
+  return $|-$ $( a ==3 b ) = ( b ' ==4 a ' )$;
 }

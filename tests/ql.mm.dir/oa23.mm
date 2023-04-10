@@ -251,5 +251,5 @@ theorem oa23(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     df-le1;
   };
 
-  return $|- ( ( a ->2 b ) ^ ( ( b v c ) ' v ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) =< ( a ->2 c )$;
+  return $|-$ $( ( a ->2 b ) ^ ( ( b v c ) ' v ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) =< ( a ->2 c )$;
 }

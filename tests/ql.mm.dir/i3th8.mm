@@ -55,5 +55,5 @@ theorem i3th8(wva: $term$ a, wvb: $term$ b) {
     lei3;
   };
 
-  return $|- ( ( a ->3 b ) ' ->3 ( ( a ->3 b ) ->3 a ) ) = 1$;
+  return $|-$ $( ( a ->3 b ) ' ->3 ( ( a ->3 b ) ->3 a ) ) = 1$;
 }

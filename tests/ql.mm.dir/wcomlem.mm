@@ -275,5 +275,5 @@ theorem wcomlem(wva: $term$ a, wvb: $term$ b) {
     w3tr2;
   };
 
-  return $|- ( b == ( ( b ^ a ) v ( b ^ a ' ) ) ) = 1$;
+  return $|-$ $( b == ( ( b ^ a ) v ( b ^ a ' ) ) ) = 1$;
 }

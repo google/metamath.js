@@ -174,5 +174,5 @@ theorem ud1lem2(wva: $term$ a, wvb: $term$ b) {
     3tr;
   };
 
-  return $|- ( ( a v ( a ' ^ b ' ) ) ->1 a ) = ( a v b )$;
+  return $|-$ $( ( a v ( a ' ^ b ' ) ) ->1 a ) = ( a v b )$;
 }

@@ -18,5 +18,5 @@ theorem u4lemc5(wva: $term$ a, wvb: $term$ b) {
     u4lemc2;
   };
 
-  return $|- a C ( a ->4 b )$;
+  return $|-$ $a C ( a ->4 b )$;
 }

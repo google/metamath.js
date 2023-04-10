@@ -356,5 +356,5 @@ theorem oa3to4lem6(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, w
     lecon1;
   };
 
-  return $|- ( ( a v b ) ^ ( c v d ) ) =< ( a v ( b ^ ( d v ( ( a v c ) ^ ( b v d ) ) ) ) )$;
+  return $|-$ $( ( a v b ) ^ ( c v d ) ) =< ( a v ( b ^ ( d v ( ( a v c ) ^ ( b v d ) ) ) ) )$;
 }

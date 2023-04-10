@@ -252,5 +252,5 @@ theorem ax10(hal: $type$ al, vx: $var$ x, vy: $var$ y) {
     ex;
   };
 
-  return $|- T. |= [ ( ! \ x : al . [ x : al = y : al ] ) ==> ( ! \ y : al . [ y : al = x : al ] ) ]$;
+  return $|-$ $T. |= [ ( ! \ x : al . [ x : al = y : al ] ) ==> ( ! \ y : al . [ y : al = x : al ] ) ]$;
 }

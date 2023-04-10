@@ -63,5 +63,5 @@ theorem oa6to4h2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve
     lbtr;
   };
 
-  return $|- c ' =< d ' '$;
+  return $|-$ $c ' =< d ' '$;
 }

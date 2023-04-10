@@ -76,5 +76,5 @@ theorem i1i2(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ->1 b ) = ( b ' ->2 a ' )$;
+  return $|-$ $( a ->1 b ) = ( b ' ->2 a ' )$;
 }

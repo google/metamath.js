@@ -49,5 +49,5 @@ theorem negant3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lebi;
   };
 
-  return $|- ( a ' ->3 c ) = ( b ' ->3 c )$;
+  return $|-$ $( a ' ->3 c ) = ( b ' ->3 c )$;
 }

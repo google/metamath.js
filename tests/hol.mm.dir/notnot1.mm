@@ -104,5 +104,5 @@ theorem notnot1(ta: $term$ A) {
     mpbir;
   };
 
-  return $|- A |= ( ~ ( ~ A ) )$;
+  return $|-$ $A |= ( ~ ( ~ A ) )$;
 }

@@ -42,5 +42,5 @@ theorem ax1(tr: $term$ R, ts: $term$ S) {
     ex;
   };
 
-  return $|- T. |= [ R ==> [ S ==> R ] ]$;
+  return $|-$ $T. |= [ R ==> [ S ==> R ] ]$;
 }

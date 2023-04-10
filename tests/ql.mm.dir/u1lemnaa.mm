@@ -94,5 +94,5 @@ theorem u1lemnaa(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->1 b ) ' ^ a ) = ( a ^ ( a ' v b ' ) )$;
+  return $|-$ $( ( a ->1 b ) ' ^ a ) = ( a ^ ( a ' v b ' ) )$;
 }

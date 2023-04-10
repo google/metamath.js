@@ -105,5 +105,5 @@ theorem oadistb(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve:
     lebi;
   };
 
-  return $|- ( d ^ ( e v ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) = ( ( d ^ e ) v ( d ^ ( ( a ->2 b ) ^ ( a ->2 c ) ) ) )$;
+  return $|-$ $( d ^ ( e v ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) = ( ( d ^ e ) v ( d ^ ( ( a ->2 b ) ^ ( a ->2 c ) ) ) )$;
 }

@@ -121,5 +121,5 @@ theorem cmtrcom(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- C ( a , b ) = C ( b , a )$;
+  return $|-$ $C ( a , b ) = C ( b , a )$;
 }

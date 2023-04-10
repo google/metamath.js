@@ -43,5 +43,5 @@ theorem i3i0tr(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     i0i3;
   };
 
-  return $|- ( a ->3 ( a ->3 c ) ) = 1$;
+  return $|-$ $( a ->3 ( a ->3 c ) ) = 1$;
 }

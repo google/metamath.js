@@ -164,5 +164,5 @@ theorem eta(hal: $type$ al, hbe: $type$ be, vx: $var$ x, tf: $term$ F) {
     syl;
   };
 
-  return $|- T. |= [ \ x : al . ( F x : al ) = F ]$;
+  return $|-$ $T. |= [ \ x : al . ( F x : al ) = F ]$;
 }

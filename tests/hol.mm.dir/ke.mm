@@ -2,5 +2,5 @@
 
 axiom ke() {
 
-  return $term =$;
+  return $term$ $=$;
 }

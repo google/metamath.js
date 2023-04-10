@@ -62,5 +62,5 @@ theorem vneulem5(wvu: $term$ u, wvw: $term$ w, wvx: $term$ x, wvy: $term$ y) {
     3tr;
   };
 
-  return $|- ( ( ( x v y ) v u ) ^ ( ( x v y ) v w ) ) = ( ( x v y ) v ( ( ( x v y ) v u ) ^ w ) )$;
+  return $|-$ $( ( ( x v y ) v u ) ^ ( ( x v y ) v w ) ) = ( ( x v y ) v ( ( ( x v y ) v u ) ^ w ) )$;
 }

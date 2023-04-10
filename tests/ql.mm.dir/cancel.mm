@@ -46,5 +46,5 @@ theorem cancel(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     lebi;
   };
 
-  return $|- ( d v ( a ->1 c ) ) = ( d v ( b ->1 c ) )$;
+  return $|-$ $( d v ( a ->1 c ) ) = ( d v ( b ->1 c ) )$;
 }

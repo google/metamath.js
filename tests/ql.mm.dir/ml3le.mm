@@ -106,5 +106,5 @@ theorem ml3le(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lbtr;
   };
 
-  return $|- ( a v ( b ^ ( c v a ) ) ) =< ( a v ( c ^ ( b v a ) ) )$;
+  return $|-$ $( a v ( b ^ ( c v a ) ) ) =< ( a v ( c ^ ( b v a ) ) )$;
 }

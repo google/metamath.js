@@ -78,5 +78,5 @@ theorem wwoml2(wva: $term$ a, wvb: $term$ b) {
     3tr2;
   };
 
-  return $|- ( ( a v ( a ' ^ b ) ) == b ) = 1$;
+  return $|-$ $( ( a v ( a ' ^ b ) ) == b ) = 1$;
 }

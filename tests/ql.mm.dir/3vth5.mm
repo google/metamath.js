@@ -238,5 +238,5 @@ theorem 3vth5(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr1;
   };
 
-  return $|- ( ( a ->2 b ) ' ->2 ( b v c ) ) = ( c v ( ( a ->2 b ) ^ ( c ->2 b ) ) )$;
+  return $|-$ $( ( a ->2 b ) ' ->2 ( b v c ) ) = ( c v ( ( a ->2 b ) ^ ( c ->2 b ) ) )$;
 }

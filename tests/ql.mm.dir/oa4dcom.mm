@@ -88,5 +88,5 @@ theorem oa4dcom(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     lan;
   };
 
-  return $|- ( b ^ ( ( ( a ^ b ) v ( ( a ->1 d ) ^ ( b ->1 d ) ) ) v ( ( ( a ^ c ) v ( ( a ->1 d ) ^ ( c ->1 d ) ) ) ^ ( ( b ^ c ) v ( ( b ->1 d ) ^ ( c ->1 d ) ) ) ) ) ) = ( b ^ ( ( ( b ^ a ) v ( ( b ->1 d ) ^ ( a ->1 d ) ) ) v ( ( ( b ^ c ) v ( ( b ->1 d ) ^ ( c ->1 d ) ) ) ^ ( ( a ^ c ) v ( ( a ->1 d ) ^ ( c ->1 d ) ) ) ) ) )$;
+  return $|-$ $( b ^ ( ( ( a ^ b ) v ( ( a ->1 d ) ^ ( b ->1 d ) ) ) v ( ( ( a ^ c ) v ( ( a ->1 d ) ^ ( c ->1 d ) ) ) ^ ( ( b ^ c ) v ( ( b ->1 d ) ^ ( c ->1 d ) ) ) ) ) ) = ( b ^ ( ( ( b ^ a ) v ( ( b ->1 d ) ^ ( a ->1 d ) ) ) v ( ( ( b ^ c ) v ( ( b ->1 d ) ^ ( c ->1 d ) ) ) ^ ( ( a ^ c ) v ( ( a ->1 d ) ^ ( c ->1 d ) ) ) ) ) )$;
 }

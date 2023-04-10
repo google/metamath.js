@@ -52,5 +52,5 @@ theorem u1lemc1(wva: $term$ a, wvb: $term$ b) {
     cbtr;
   };
 
-  return $|- a C ( a ->1 b )$;
+  return $|-$ $a C ( a ->1 b )$;
 }

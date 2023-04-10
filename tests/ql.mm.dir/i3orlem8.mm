@@ -196,5 +196,5 @@ theorem i3orlem8(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lbtr;
   };
 
-  return $|- ( ( ( a v b ) ^ ( a v b ' ) ) ^ a ' ) =< ( ( a ->3 b ) ' v ( ( a v c ) ->3 ( b v c ) ) )$;
+  return $|-$ $( ( ( a v b ) ^ ( a v b ' ) ) ^ a ' ) =< ( ( a ->3 b ) ' v ( ( a v c ) ->3 ( b v c ) ) )$;
 }

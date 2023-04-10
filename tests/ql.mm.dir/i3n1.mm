@@ -111,5 +111,5 @@ theorem i3n1(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ' ->3 b ' ) = ( ( ( a ^ b ' ) v ( a ^ b ) ) v ( a ' ^ ( a v b ' ) ) )$;
+  return $|-$ $( a ' ->3 b ' ) = ( ( ( a ^ b ' ) v ( a ^ b ) ) v ( a ' ^ ( a v b ' ) ) )$;
 }

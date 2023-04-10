@@ -23,5 +23,5 @@ theorem comid(wva: $term$ a) {
     cbtr;
   };
 
-  return $|- a C a$;
+  return $|-$ $a C a$;
 }

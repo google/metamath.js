@@ -127,5 +127,5 @@ theorem ax6(hal: $type$ al, vx: $var$ x, tr: $term$ R) {
     isfree;
   };
 
-  return $|- T. |= [ ( ~ ( ! \ x : al . R ) ) ==> ( ! \ x : al . ( ~ ( ! \ x : al . R ) ) ) ]$;
+  return $|-$ $T. |= [ ( ~ ( ! \ x : al . R ) ) ==> ( ! \ x : al . ( ~ ( ! \ x : al . R ) ) ) ]$;
 }

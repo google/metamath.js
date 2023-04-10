@@ -64,5 +64,5 @@ theorem vneulem15(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     cm;
   };
 
-  return $|- ( ( a v c ) ^ ( b v d ) ) = ( ( ( ( a v b ) v c ) ^ ( ( a v c ) v d ) ) ^ ( ( ( a v b ) v d ) ^ ( ( b v c ) v d ) ) )$;
+  return $|-$ $( ( a v c ) ^ ( b v d ) ) = ( ( ( ( a v b ) v c ) ^ ( ( a v c ) v d ) ) ^ ( ( ( a v b ) v d ) ^ ( ( b v c ) v d ) ) )$;
 }

@@ -69,5 +69,5 @@ theorem com3iia(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a v ( a ' ^ b ) ) = ( a v b )$;
+  return $|-$ $( a v ( a ' ^ b ) ) = ( a v b )$;
 }

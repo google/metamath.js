@@ -26,5 +26,5 @@ theorem leor(wva: $term$ a, wvb: $term$ b) {
     lbtr;
   };
 
-  return $|- a =< ( b v a )$;
+  return $|-$ $a =< ( b v a )$;
 }

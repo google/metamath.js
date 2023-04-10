@@ -117,5 +117,5 @@ theorem k1-8a(wvc: $term$ c, wvx: $term$ x, wvy: $term$ y) {
     lebi;
   };
 
-  return $|- x = ( ( x v y ) ^ c )$;
+  return $|-$ $x = ( ( x v y ) ^ c )$;
 }

@@ -27,5 +27,5 @@ theorem 3tr2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     3tr1;
   };
 
-  return $|- c = d$;
+  return $|-$ $c = d$;
 }

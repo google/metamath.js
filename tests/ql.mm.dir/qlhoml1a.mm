@@ -18,5 +18,5 @@ theorem qlhoml1a(wva: $term$ a) {
     bile;
   };
 
-  return $|- a =< a ' '$;
+  return $|-$ $a =< a ' '$;
 }

@@ -62,5 +62,5 @@ theorem bicom(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a == b ) = ( b == a )$;
+  return $|-$ $( a == b ) = ( b == a )$;
 }

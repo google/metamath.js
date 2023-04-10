@@ -7,5 +7,5 @@ axiom ax-inst(hal: $type$ al, vx: $var$ x, vy: $var$ y, ta: $term$ A, tb: $term$
   assume ax-inst.4: $|- [ x : al = C ] |= [ A = B ]$;
   assume ax-inst.5: $|- [ x : al = C ] |= [ R = S ]$;
 
-  return $|- S |= B$;
+  return $|-$ $S |= B$;
 }

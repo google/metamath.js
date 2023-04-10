@@ -24,5 +24,5 @@ theorem lem4.6.5(wva: $term$ a, wvb: $term$ b) {
     ax-r1;
   };
 
-  return $|- ( ( a ->1 b ) ' ->1 b ) = ( a ->1 b )$;
+  return $|-$ $( ( a ->1 b ) ' ->1 b ) = ( a ->1 b )$;
 }

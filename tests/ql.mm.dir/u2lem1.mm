@@ -125,5 +125,5 @@ theorem u2lem1(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->2 b ) ->2 a ) = a$;
+  return $|-$ $( ( a ->2 b ) ->2 a ) = a$;
 }

@@ -207,5 +207,5 @@ theorem oi3ai3(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( ( a ^ b ) v ( a ->3 b ) ' ) = ( ( a v b ) ^ ( a ' ->3 b ' ) )$;
+  return $|-$ $( ( a ^ b ) v ( a ->3 b ) ' ) = ( ( a v b ) ^ ( a ' ->3 b ' ) )$;
 }

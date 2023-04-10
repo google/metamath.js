@@ -1,5 +1,5 @@
 
 axiom wI(wx: $wff$ x) {
 
-  return $wff x I$;
+  return $wff$ $x I$;
 }

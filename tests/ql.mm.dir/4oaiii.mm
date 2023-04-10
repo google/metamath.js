@@ -137,5 +137,5 @@ theorem 4oaiii(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve: 
     lebi;
   };
 
-  return $|- ( ( a ->1 d ) ^ f ) = ( ( b ->1 d ) ^ f )$;
+  return $|-$ $( ( a ->1 d ) ^ f ) = ( ( b ->1 d ) ^ f )$;
 }

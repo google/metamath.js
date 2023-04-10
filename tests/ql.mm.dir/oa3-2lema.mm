@@ -196,5 +196,5 @@ theorem oa3-2lema(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lan;
   };
 
-  return $|- ( ( a ->1 c ) ^ ( a v ( b ^ ( ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) v ( ( ( a ^ 0 ) v ( ( a ->1 c ) ^ ( 0 ->1 c ) ) ) ^ ( ( b ^ 0 ) v ( ( b ->1 c ) ^ ( 0 ->1 c ) ) ) ) ) ) ) ) = ( ( a ->1 c ) ^ ( a v ( b ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) )$;
+  return $|-$ $( ( a ->1 c ) ^ ( a v ( b ^ ( ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) v ( ( ( a ^ 0 ) v ( ( a ->1 c ) ^ ( 0 ->1 c ) ) ) ^ ( ( b ^ 0 ) v ( ( b ->1 c ) ^ ( 0 ->1 c ) ) ) ) ) ) ) ) = ( ( a ->1 c ) ^ ( a v ( b ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) )$;
 }

@@ -57,5 +57,5 @@ theorem 3eqtr4i(hal: $type$ al, ta: $term$ A, tb: $term$ B, tr: $term$ R, ts: $t
     eqtri;
   };
 
-  return $|- R |= [ S = T ]$;
+  return $|-$ $R |= [ S = T ]$;
 }

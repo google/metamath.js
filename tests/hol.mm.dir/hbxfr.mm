@@ -72,5 +72,5 @@ theorem hbxfr(hal: $type$ al, hbe: $type$ be, vx: $var$ x, ta: $term$ A, tb: $te
     syl2anc;
   };
 
-  return $|- R |= [ ( \ x : al . T B ) = T ]$;
+  return $|-$ $R |= [ ( \ x : al . T B ) = T ]$;
 }

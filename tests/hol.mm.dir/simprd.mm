@@ -38,5 +38,5 @@ theorem simprd(tr: $term$ R, ts: $term$ S, tt: $term$ T) {
     syl;
   };
 
-  return $|- R |= T$;
+  return $|-$ $R |= T$;
 }

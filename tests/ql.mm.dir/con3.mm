@@ -27,5 +27,5 @@ theorem con3(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- a = b '$;
+  return $|-$ $a = b '$;
 }

@@ -55,5 +55,5 @@ theorem u1lemnana(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->1 b ) ' ^ a ' ) = 0$;
+  return $|-$ $( ( a ->1 b ) ' ^ a ' ) = 0$;
 }

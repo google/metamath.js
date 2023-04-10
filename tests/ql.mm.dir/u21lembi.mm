@@ -143,5 +143,5 @@ theorem u21lembi(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( ( a ->2 b ) ^ ( b ->1 a ) ) = ( a == b )$;
+  return $|-$ $( ( a ->2 b ) ^ ( b ->1 a ) ) = ( a == b )$;
 }

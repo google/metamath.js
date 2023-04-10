@@ -225,5 +225,5 @@ theorem ax5(hal: $type$ al, vx: $var$ x, tr: $term$ R, ts: $term$ S) {
     ex;
   };
 
-  return $|- T. |= [ ( ! \ x : al . [ R ==> S ] ) ==> [ ( ! \ x : al . R ) ==> ( ! \ x : al . S ) ] ]$;
+  return $|-$ $T. |= [ ( ! \ x : al . [ R ==> S ] ) ==> [ ( ! \ x : al . R ) ==> ( ! \ x : al . S ) ] ]$;
 }

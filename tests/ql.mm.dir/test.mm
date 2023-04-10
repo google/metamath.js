@@ -401,5 +401,5 @@ theorem test(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- ( ( ( c v ( a ' v b ' ) ) ^ ( c ' ^ ( c v ( a ^ b ) ) ) ) v ( ( c ' ^ ( a ^ b ) ) v ( c ^ ( c ' v ( a ^ b ) ) ) ) ) = ( ( c v ( a ^ b ) ) ^ ( c ' v ( a ^ b ) ) )$;
+  return $|-$ $( ( ( c v ( a ' v b ' ) ) ^ ( c ' ^ ( c v ( a ^ b ) ) ) ) v ( ( c ' ^ ( a ^ b ) ) v ( c ^ ( c ' v ( a ^ b ) ) ) ) ) = ( ( c v ( a ^ b ) ) ^ ( c ' v ( a ^ b ) ) )$;
 }

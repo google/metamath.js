@@ -64,5 +64,5 @@ theorem wnot() {
     eqtypri;
   };
 
-  return $|- ~ : ( bool -> bool )$;
+  return $|-$ $~ : ( bool -> bool )$;
 }

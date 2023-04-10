@@ -19,5 +19,5 @@ theorem comor1(wva: $term$ a, wvb: $term$ b) {
     comcom;
   };
 
-  return $|- ( a v b ) C a$;
+  return $|-$ $( a v b ) C a$;
 }

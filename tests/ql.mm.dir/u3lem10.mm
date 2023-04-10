@@ -241,5 +241,5 @@ theorem u3lem10(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ->3 ( a ' ^ ( a v b ) ) ) = a '$;
+  return $|-$ $( a ->3 ( a ' ^ ( a v b ) ) ) = a '$;
 }

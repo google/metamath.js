@@ -115,5 +115,5 @@ theorem 4oagen1b(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve
     3tr2;
   };
 
-  return $|- ( h ^ ( g v ( ( a ->1 d ) ^ ( b ->1 d ) ) ) ) = ( h ^ ( b ->1 d ) )$;
+  return $|-$ $( h ^ ( g v ( ( a ->1 d ) ^ ( b ->1 d ) ) ) ) = ( h ^ ( b ->1 d ) )$;
 }

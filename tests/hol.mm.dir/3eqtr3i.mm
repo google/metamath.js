@@ -44,5 +44,5 @@ theorem 3eqtr3i(hal: $type$ al, ta: $term$ A, tb: $term$ B, tr: $term$ R, ts: $t
     3eqtr4i;
   };
 
-  return $|- R |= [ S = T ]$;
+  return $|-$ $R |= [ S = T ]$;
 }

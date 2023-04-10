@@ -127,5 +127,5 @@ theorem u3lemnana(wva: $term$ a, wvb: $term$ b) {
     con1;
   };
 
-  return $|- ( ( a ->3 b ) ' ^ a ' ) = ( a ' ^ ( ( a v b ) ^ ( a v b ' ) ) )$;
+  return $|-$ $( ( a ->3 b ) ' ^ a ' ) = ( a ' ^ ( ( a v b ) ^ ( a v b ' ) ) )$;
 }

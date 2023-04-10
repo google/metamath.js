@@ -26,5 +26,5 @@ theorem wanass(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     bi1;
   };
 
-  return $|- ( ( ( a ^ b ) ^ c ) == ( a ^ ( b ^ c ) ) ) = 1$;
+  return $|-$ $( ( ( a ^ b ) ^ c ) == ( a ^ ( b ^ c ) ) ) = 1$;
 }

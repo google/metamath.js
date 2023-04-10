@@ -91,5 +91,5 @@ theorem ax8(hal: $type$ al, ta: $term$ A, tb: $term$ B, tc: $term$ C) {
     ex;
   };
 
-  return $|- T. |= [ [ A = B ] ==> [ [ A = C ] ==> [ B = C ] ] ]$;
+  return $|-$ $T. |= [ [ A = B ] ==> [ [ A = C ] ==> [ B = C ] ] ]$;
 }

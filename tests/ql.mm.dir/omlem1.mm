@@ -124,5 +124,5 @@ theorem omlem1(wva: $term$ a, wvb: $term$ b) {
     3tr2;
   };
 
-  return $|- ( ( a v ( a ' ^ ( a v b ) ) ) v ( a v b ) ) = ( a v b )$;
+  return $|-$ $( ( a v ( a ' ^ ( a v b ) ) ) v ( a v b ) ) = ( a v b )$;
 }

@@ -68,5 +68,5 @@ theorem dfb(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a == b ) = ( ( a ^ b ) v ( a ' ^ b ' ) )$;
+  return $|-$ $( a == b ) = ( ( a ^ b ) v ( a ' ^ b ' ) )$;
 }

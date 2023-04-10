@@ -102,5 +102,5 @@ theorem u3lem11a(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ->3 ( ( b ->3 a ) ->3 ( a ->3 b ) ) ' ) = ( a ->3 b ' )$;
+  return $|-$ $( a ->3 ( ( b ->3 a ) ->3 ( a ->3 b ) ) ' ) = ( a ->3 b ' )$;
 }

@@ -1166,5 +1166,5 @@ theorem xxdp41(wvd: $term$ d, wve: $term$ e, wvp: $term$ p, wva0: $term$ a0, wva
     lbtr;
   };
 
-  return $|- c2 =< ( c0 v c1 )$;
+  return $|-$ $c2 =< ( c0 v c1 )$;
 }

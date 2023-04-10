@@ -155,5 +155,5 @@ theorem alimdv(hal: $type$ al, vx: $var$ x, ta: $term$ A, tb: $term$ B, tr: $ter
     alrimi;
   };
 
-  return $|- ( R , ( ! \ x : al . A ) ) |= ( ! \ x : al . B )$;
+  return $|-$ $( R , ( ! \ x : al . A ) ) |= ( ! \ x : al . B )$;
 }

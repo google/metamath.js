@@ -12,5 +12,5 @@ theorem lem3.3.7i0e3(wva: $term$ a, wvb: $term$ b) {
     nom10;
   };
 
-  return $|- ( a ->0 ( a ^ b ) ) = ( a ->1 b )$;
+  return $|-$ $( a ->0 ( a ^ b ) ) = ( a ->1 b )$;
 }

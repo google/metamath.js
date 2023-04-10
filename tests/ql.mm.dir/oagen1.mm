@@ -117,5 +117,5 @@ theorem oagen1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     lebi;
   };
 
-  return $|- ( ( a ->2 b ) ^ ( d v ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) = ( ( a ->2 b ) ^ ( a ->2 c ) )$;
+  return $|-$ $( ( a ->2 b ) ^ ( d v ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) = ( ( a ->2 b ) ^ ( a ->2 c ) )$;
 }

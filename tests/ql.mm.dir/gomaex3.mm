@@ -219,5 +219,5 @@ theorem gomaex3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve:
     bltr;
   };
 
-  return $|- ( ( ( a v b ) ^ ( d v e ) ' ) ^ ( ( ( ( a v b ) ->1 ( d v e ) ' ) ->1 ( ( e v f ) ->1 ( b v c ) ' ) ' ) ' ->1 ( c v d ) ) ) =< ( ( b v c ) v ( e v f ) ' )$;
+  return $|-$ $( ( ( a v b ) ^ ( d v e ) ' ) ^ ( ( ( ( a v b ) ->1 ( d v e ) ' ) ->1 ( ( e v f ) ->1 ( b v c ) ' ) ' ) ' ->1 ( c v d ) ) ) =< ( ( b v c ) v ( e v f ) ' )$;
 }

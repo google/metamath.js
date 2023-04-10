@@ -44,5 +44,5 @@ theorem i1i2con2(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ' ->1 b ) = ( b ' ->2 a )$;
+  return $|-$ $( a ' ->1 b ) = ( b ' ->2 a )$;
 }

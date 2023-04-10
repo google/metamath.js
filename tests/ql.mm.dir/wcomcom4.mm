@@ -20,5 +20,5 @@ theorem wcomcom4(wva: $term$ a, wvb: $term$ b) {
     wcomcom2;
   };
 
-  return $|- C ( a ' , b ' ) = 1$;
+  return $|-$ $C ( a ' , b ' ) = 1$;
 }

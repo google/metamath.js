@@ -212,5 +212,5 @@ theorem negantlem2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     letr;
   };
 
-  return $|- a =< ( b ' ->1 c )$;
+  return $|-$ $a =< ( b ' ->1 c )$;
 }

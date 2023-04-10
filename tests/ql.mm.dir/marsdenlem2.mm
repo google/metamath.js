@@ -168,5 +168,5 @@ theorem marsdenlem2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) 
     3tr;
   };
 
-  return $|- ( ( c v d ) ^ ( b ' v c ' ) ) = ( ( ( b ' ^ c ) v ( c ' ^ d ) ) v ( b ' ^ d ) )$;
+  return $|-$ $( ( c v d ) ^ ( b ' v c ' ) ) = ( ( ( b ' ^ c ) v ( c ' ^ d ) ) v ( b ' ^ d ) )$;
 }

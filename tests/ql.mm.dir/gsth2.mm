@@ -178,5 +178,5 @@ theorem gsth2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     comcom;
   };
 
-  return $|- ( a ^ b ) C c$;
+  return $|-$ $( a ^ b ) C c$;
 }

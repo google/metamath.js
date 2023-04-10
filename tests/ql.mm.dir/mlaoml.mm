@@ -248,5 +248,5 @@ theorem mlaoml(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     le3tr2;
   };
 
-  return $|- ( ( a == b ) ^ ( b == c ) ) =< ( a == c )$;
+  return $|-$ $( ( a == b ) ^ ( b == c ) ) =< ( a == c )$;
 }

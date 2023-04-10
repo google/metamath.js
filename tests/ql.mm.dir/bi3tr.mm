@@ -32,5 +32,5 @@ theorem bi3tr(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     wwbmpr;
   };
 
-  return $|- ( a ->3 c ) = 1$;
+  return $|-$ $( a ->3 c ) = 1$;
 }

@@ -19,5 +19,5 @@ theorem leo(wva: $term$ a, wvb: $term$ b) {
     df2le1;
   };
 
-  return $|- a =< ( a v b )$;
+  return $|-$ $a =< ( a v b )$;
 }

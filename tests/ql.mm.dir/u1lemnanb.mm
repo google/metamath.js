@@ -53,5 +53,5 @@ theorem u1lemnanb(wva: $term$ a, wvb: $term$ b) {
     con1;
   };
 
-  return $|- ( ( a ->1 b ) ' ^ b ' ) = ( a ^ b ' )$;
+  return $|-$ $( ( a ->1 b ) ' ^ b ' ) = ( a ^ b ' )$;
 }

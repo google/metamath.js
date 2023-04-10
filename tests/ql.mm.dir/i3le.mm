@@ -76,5 +76,5 @@ theorem i3le(wva: $term$ a, wvb: $term$ b) {
     lecon1;
   };
 
-  return $|- a =< b$;
+  return $|-$ $a =< b$;
 }

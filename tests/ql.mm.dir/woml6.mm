@@ -328,5 +328,5 @@ theorem woml6(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->1 b ) ' v ( a ->2 b ) ) = 1$;
+  return $|-$ $( ( a ->1 b ) ' v ( a ->2 b ) ) = 1$;
 }

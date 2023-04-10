@@ -224,5 +224,5 @@ theorem oa3-5lem(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lan;
   };
 
-  return $|- ( ( a ->1 c ) ^ ( a v ( c ^ ( ( ( a ^ c ) v ( ( a ->1 c ) ^ 1 ) ) v ( ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ^ ( ( c ^ b ) v ( 1 ^ ( b ->1 c ) ) ) ) ) ) ) ) = ( ( a ->1 c ) ^ ( a v ( c ^ ( ( a ->1 c ) v ( ( b ->1 c ) ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) ) ) )$;
+  return $|-$ $( ( a ->1 c ) ^ ( a v ( c ^ ( ( ( a ^ c ) v ( ( a ->1 c ) ^ 1 ) ) v ( ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ^ ( ( c ^ b ) v ( 1 ^ ( b ->1 c ) ) ) ) ) ) ) ) = ( ( a ->1 c ) ^ ( a v ( c ^ ( ( a ->1 c ) v ( ( b ->1 c ) ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) ) ) )$;
 }

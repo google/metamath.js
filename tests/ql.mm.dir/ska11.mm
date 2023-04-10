@@ -12,5 +12,5 @@ theorem ska11(wva: $term$ a, wvb: $term$ b) {
     woml;
   };
 
-  return $|- ( ( a v ( a ' ^ ( a v b ) ) ) == ( a v b ) ) = 1$;
+  return $|-$ $( ( a v ( a ' ^ ( a v b ) ) ) == ( a v b ) ) = 1$;
 }

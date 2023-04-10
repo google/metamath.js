@@ -158,5 +158,5 @@ theorem exnal1(hal: $type$ al, vx: $var$ x, ta: $term$ A) {
     trul;
   };
 
-  return $|- ( ? \ x : al . ( ~ A ) ) |= ( ~ ( ! \ x : al . A ) )$;
+  return $|-$ $( ? \ x : al . ( ~ A ) ) |= ( ~ ( ! \ x : al . A ) )$;
 }

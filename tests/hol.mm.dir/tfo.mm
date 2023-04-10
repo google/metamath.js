@@ -1,5 +1,5 @@
 
 axiom tfo() {
 
-  return $term onto$;
+  return $term$ $onto$;
 }

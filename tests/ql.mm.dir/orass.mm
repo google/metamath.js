@@ -13,5 +13,5 @@ theorem orass(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-a3;
   };
 
-  return $|- ( ( a v b ) v c ) = ( a v ( b v c ) )$;
+  return $|-$ $( ( a v b ) v c ) = ( a v ( b v c ) )$;
 }

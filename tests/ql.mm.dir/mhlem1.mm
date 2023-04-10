@@ -281,5 +281,5 @@ theorem mhlem1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr;
   };
 
-  return $|- ( ( a v b ) ^ ( b ' v c ) ) = ( ( a ^ b ' ) v ( b ^ c ) )$;
+  return $|-$ $( ( a v b ) ^ ( b ' v c ) ) = ( ( a ^ b ' ) v ( b ^ c ) )$;
 }

@@ -55,5 +55,5 @@ theorem dfov1(hal: $type$ al, hbe: $type$ be, ta: $term$ A, tb: $term$ B, tf: $t
     ax-eqmp;
   };
 
-  return $|- R |= ( ( F A ) B )$;
+  return $|-$ $R |= ( ( F A ) B )$;
 }

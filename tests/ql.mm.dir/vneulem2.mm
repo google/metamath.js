@@ -92,5 +92,5 @@ theorem vneulem2(wvu: $term$ u, wvw: $term$ w, wvx: $term$ x, wvy: $term$ y) {
     tr;
   };
 
-  return $|- ( ( ( x v y ) v u ) ^ ( ( u v w ) ^ w ) ) = ( ( ( ( x v y ) ^ ( u v w ) ) v u ) ^ w )$;
+  return $|-$ $( ( ( x v y ) v u ) ^ ( ( u v w ) ^ w ) ) = ( ( ( ( x v y ) ^ ( u v w ) ) v u ) ^ w )$;
 }

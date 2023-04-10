@@ -34,5 +34,5 @@ theorem i3aa(wva: $term$ a, wvb: $term$ b) {
     wwbmpr;
   };
 
-  return $|- ( b ->3 a ) = 1$;
+  return $|-$ $( b ->3 a ) = 1$;
 }

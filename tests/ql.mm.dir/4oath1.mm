@@ -145,5 +145,5 @@ theorem 4oath1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve: 
     3tr;
   };
 
-  return $|- ( ( a ->1 d ) ^ f ) = ( ( a ->1 d ) ^ ( b ->1 d ) )$;
+  return $|-$ $( ( a ->1 d ) ^ f ) = ( ( a ->1 d ) ^ ( b ->1 d ) )$;
 }

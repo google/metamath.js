@@ -88,5 +88,5 @@ theorem wnbdi(wva: $term$ a, wvb: $term$ b) {
     wr2;
   };
 
-  return $|- ( ( a == b ) ' == ( ( ( a v b ) ^ a ' ) v ( ( a v b ) ^ b ' ) ) ) = 1$;
+  return $|-$ $( ( a == b ) ' == ( ( ( a v b ) ^ a ' ) v ( ( a v b ) ^ b ' ) ) ) = 1$;
 }

@@ -70,5 +70,5 @@ theorem ska8(wva: $term$ a, wvb: $term$ b) {
     bi1;
   };
 
-  return $|- ( ( a ' ^ a ) == ( ( a ' ^ a ) ^ b ) ) = 1$;
+  return $|-$ $( ( a ' ^ a ) == ( ( a ' ^ a ) ^ b ) ) = 1$;
 }

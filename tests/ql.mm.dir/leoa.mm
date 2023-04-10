@@ -37,5 +37,5 @@ theorem leoa(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- ( a ^ b ) = a$;
+  return $|-$ $( a ^ b ) = a$;
 }

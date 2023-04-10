@@ -258,5 +258,5 @@ theorem 3vded3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr;
   };
 
-  return $|- ( c ->0 b ) = 1$;
+  return $|-$ $( c ->0 b ) = 1$;
 }

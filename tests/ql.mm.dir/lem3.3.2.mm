@@ -40,5 +40,5 @@ theorem lem3.3.2(wva: $term$ a, wvb: $term$ b) {
     skr0;
   };
 
-  return $|- b = 1$;
+  return $|-$ $b = 1$;
 }

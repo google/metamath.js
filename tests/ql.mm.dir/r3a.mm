@@ -47,5 +47,5 @@ theorem r3a(wva: $term$ a, wvb: $term$ b) {
     ax-r3;
   };
 
-  return $|- a = b$;
+  return $|-$ $a = b$;
 }

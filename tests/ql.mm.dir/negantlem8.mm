@@ -51,5 +51,5 @@ theorem negantlem8(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr1;
   };
 
-  return $|- ( a ' v c ) = ( b ' v c )$;
+  return $|-$ $( a ' v c ) = ( b ' v c )$;
 }

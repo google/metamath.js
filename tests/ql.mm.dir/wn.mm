@@ -1,5 +1,5 @@
 
 axiom wn(wva: $term$ a) {
 
-  return $term a '$;
+  return $term$ $a '$;
 }

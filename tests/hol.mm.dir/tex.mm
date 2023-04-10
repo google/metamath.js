@@ -1,5 +1,5 @@
 
 axiom tex() {
 
-  return $term ?$;
+  return $term$ $?$;
 }

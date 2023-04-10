@@ -18,5 +18,5 @@ theorem u1lemc3(wva: $term$ a, wvb: $term$ b) {
     u1lemc2;
   };
 
-  return $|- a C ( b ->1 a )$;
+  return $|-$ $a C ( b ->1 a )$;
 }

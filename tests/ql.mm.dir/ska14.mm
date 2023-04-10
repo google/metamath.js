@@ -46,5 +46,5 @@ theorem ska14(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ' v b ) ->3 ( a ->3 ( a ->3 b ) ) ) = 1$;
+  return $|-$ $( ( a ' v b ) ->3 ( a ->3 ( a ->3 b ) ) ) = 1$;
 }

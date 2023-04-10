@@ -15,5 +15,5 @@ theorem ud3lem0a(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     li3;
   };
 
-  return $|- ( c ->3 a ) = ( c ->3 b )$;
+  return $|-$ $( c ->3 a ) = ( c ->3 b )$;
 }

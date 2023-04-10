@@ -119,5 +119,5 @@ theorem notnot(ta: $term$ A) {
     dedi;
   };
 
-  return $|- T. |= [ A = ( ~ ( ~ A ) ) ]$;
+  return $|-$ $T. |= [ A = ( ~ ( ~ A ) ) ]$;
 }

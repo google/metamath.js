@@ -302,5 +302,5 @@ theorem e2ast2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     lbtr;
   };
 
-  return $|- ( ( a v b ) ^ ( c v d ) ) =< ( ( b v d ) v ( a v c ) ' )$;
+  return $|-$ $( ( a v b ) ^ ( c v d ) ) =< ( ( b v d ) v ( a v c ) ' )$;
 }

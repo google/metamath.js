@@ -95,5 +95,5 @@ theorem oatr(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     letr;
   };
 
-  return $|- ( a ' ^ ( a v b ) ) =< c$;
+  return $|-$ $( a ' ^ ( a v b ) ) =< c$;
 }

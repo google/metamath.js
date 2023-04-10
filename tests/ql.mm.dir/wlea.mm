@@ -34,5 +34,5 @@ theorem wlea(wva: $term$ a, wvb: $term$ b) {
     wdf-le1;
   };
 
-  return $|- ( ( a ^ b ) =<2 a ) = 1$;
+  return $|-$ $( ( a ^ b ) =<2 a ) = 1$;
 }

@@ -34,5 +34,5 @@ theorem oadist12(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     oadist2;
   };
 
-  return $|- ( ( a ->2 b ) ^ ( ( ( b v c ) ->1 ( ( a ->2 b ) ^ ( a ->2 c ) ) ) v ( ( b v c ) ->2 ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) ) = ( ( ( a ->2 b ) ^ ( ( b v c ) ->1 ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) v ( ( a ->2 b ) ^ ( ( b v c ) ->2 ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) )$;
+  return $|-$ $( ( a ->2 b ) ^ ( ( ( b v c ) ->1 ( ( a ->2 b ) ^ ( a ->2 c ) ) ) v ( ( b v c ) ->2 ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) ) = ( ( ( a ->2 b ) ^ ( ( b v c ) ->1 ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) v ( ( a ->2 b ) ^ ( ( b v c ) ->2 ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) )$;
 }

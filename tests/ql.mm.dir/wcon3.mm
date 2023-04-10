@@ -44,5 +44,5 @@ theorem wcon3(wva: $term$ a, wvb: $term$ b) {
     wcon1;
   };
 
-  return $|- ( a == b ' ) = 1$;
+  return $|-$ $( a == b ' ) = 1$;
 }

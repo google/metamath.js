@@ -85,5 +85,5 @@ theorem comm0(wva: $term$ a) {
     df-c1;
   };
 
-  return $|- a C 0$;
+  return $|-$ $a C 0$;
 }

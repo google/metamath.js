@@ -37,5 +37,5 @@ theorem i3lan(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     i33tr1;
   };
 
-  return $|- ( ( c ^ a ) ->3 ( c ^ b ) ) = 1$;
+  return $|-$ $( ( c ^ a ) ->3 ( c ^ b ) ) = 1$;
 }

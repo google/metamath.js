@@ -96,5 +96,5 @@ theorem oa3to4lem3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, w
     lelan;
   };
 
-  return $|- ( a ^ ( b v ( d ^ ( ( a ^ c ) v ( b ^ d ) ) ) ) ) =< ( a ^ ( ( a ->1 g ) v ( ( c ->1 g ) ^ ( ( a ^ c ) v ( ( a ->1 g ) ^ ( c ->1 g ) ) ) ) ) )$;
+  return $|-$ $( a ^ ( b v ( d ^ ( ( a ^ c ) v ( b ^ d ) ) ) ) ) =< ( a ^ ( ( a ->1 g ) v ( ( c ->1 g ) ^ ( ( a ^ c ) v ( ( a ->1 g ) ^ ( c ->1 g ) ) ) ) ) )$;
 }

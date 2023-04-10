@@ -23,5 +23,5 @@ theorem qlhoml1b(wva: $term$ a) {
     bile;
   };
 
-  return $|- a ' ' =< a$;
+  return $|-$ $a ' ' =< a$;
 }

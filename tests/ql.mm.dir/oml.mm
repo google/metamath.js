@@ -31,5 +31,5 @@ theorem oml(wva: $term$ a, wvb: $term$ b) {
     lem3.1;
   };
 
-  return $|- ( a v ( a ' ^ ( a v b ) ) ) = ( a v b )$;
+  return $|-$ $( a v ( a ' ^ ( a v b ) ) ) = ( a v b )$;
 }

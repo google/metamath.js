@@ -57,5 +57,5 @@ theorem fh4c(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr1;
   };
 
-  return $|- ( b v ( c ^ a ) ) = ( ( b v c ) ^ ( b v a ) )$;
+  return $|-$ $( b v ( c ^ a ) ) = ( ( b v c ) ^ ( b v a ) )$;
 }

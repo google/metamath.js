@@ -27,5 +27,5 @@ theorem le3tr2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     le3tr1;
   };
 
-  return $|- c =< d$;
+  return $|-$ $c =< d$;
 }

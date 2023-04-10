@@ -64,5 +64,5 @@ theorem lem3.3.3(wva: $term$ a, wvb: $term$ b) {
     3tr;
   };
 
-  return $|- ( ( a ==5 b ) ->0 ( a <->1 b ) ) = 1$;
+  return $|-$ $( ( a ==5 b ) ->0 ( a <->1 b ) ) = 1$;
 }

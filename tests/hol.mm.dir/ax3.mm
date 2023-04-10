@@ -181,5 +181,5 @@ theorem ax3(tr: $term$ R, ts: $term$ S) {
     ex;
   };
 
-  return $|- T. |= [ [ ( ~ R ) ==> ( ~ S ) ] ==> [ S ==> R ] ]$;
+  return $|-$ $T. |= [ [ ( ~ R ) ==> ( ~ S ) ] ==> [ S ==> R ] ]$;
 }

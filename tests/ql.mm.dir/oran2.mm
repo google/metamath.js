@@ -32,5 +32,5 @@ theorem oran2(wva: $term$ a, wvb: $term$ b) {
     con3;
   };
 
-  return $|- ( a ' v b ) = ( a ^ b ' ) '$;
+  return $|-$ $( a ' v b ) = ( a ^ b ' ) '$;
 }

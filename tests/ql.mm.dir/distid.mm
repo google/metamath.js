@@ -99,5 +99,5 @@ theorem distid(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lebi;
   };
 
-  return $|- ( ( a == b ) ^ ( ( a == c ) v ( b == c ) ) ) = ( ( ( a == b ) ^ ( a == c ) ) v ( ( a == b ) ^ ( b == c ) ) )$;
+  return $|-$ $( ( a == b ) ^ ( ( a == c ) v ( b == c ) ) ) = ( ( ( a == b ) ^ ( a == c ) ) v ( ( a == b ) ^ ( b == c ) ) )$;
 }

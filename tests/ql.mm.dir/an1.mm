@@ -56,5 +56,5 @@ theorem an1(wva: $term$ a) {
     ax-r2;
   };
 
-  return $|- ( a ^ 1 ) = a$;
+  return $|-$ $( a ^ 1 ) = a$;
 }

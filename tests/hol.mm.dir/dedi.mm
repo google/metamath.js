@@ -30,5 +30,5 @@ theorem dedi(ts: $term$ S, tt: $term$ T) {
     ded;
   };
 
-  return $|- T. |= [ S = T ]$;
+  return $|-$ $T. |= [ S = T ]$;
 }

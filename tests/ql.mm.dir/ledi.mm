@@ -98,5 +98,5 @@ theorem ledi(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     bltr;
   };
 
-  return $|- ( ( a ^ b ) v ( a ^ c ) ) =< ( a ^ ( b v c ) )$;
+  return $|-$ $( ( a ^ b ) v ( a ^ c ) ) =< ( a ^ ( b v c ) )$;
 }

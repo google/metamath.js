@@ -179,5 +179,5 @@ theorem oas(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     letr;
   };
 
-  return $|- ( ( a ->1 c ) ^ ( a v b ) ) =< c$;
+  return $|-$ $( ( a ->1 c ) ^ ( a v b ) ) =< c$;
 }

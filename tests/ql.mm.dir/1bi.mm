@@ -22,5 +22,5 @@ theorem 1bi(wva: $term$ a, wvb: $term$ b) {
     ax-r1;
   };
 
-  return $|- 1 = ( a == b )$;
+  return $|-$ $1 = ( a == b )$;
 }

@@ -48,5 +48,5 @@ theorem anandir(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- ( ( a ^ b ) ^ c ) = ( ( a ^ c ) ^ ( b ^ c ) )$;
+  return $|-$ $( ( a ^ b ) ^ c ) = ( ( a ^ c ) ^ ( b ^ c ) )$;
 }

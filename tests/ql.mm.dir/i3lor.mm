@@ -42,5 +42,5 @@ theorem i3lor(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     binr2;
   };
 
-  return $|- ( ( c v a ) ->3 ( c v b ) ) = 1$;
+  return $|-$ $( ( c v a ) ->3 ( c v b ) ) = 1$;
 }

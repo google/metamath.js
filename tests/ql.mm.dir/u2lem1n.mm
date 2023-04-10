@@ -21,5 +21,5 @@ theorem u2lem1n(wva: $term$ a, wvb: $term$ b) {
     ax-r4;
   };
 
-  return $|- ( ( a ->2 b ) ->2 a ) ' = a '$;
+  return $|-$ $( ( a ->2 b ) ->2 a ) ' = a '$;
 }

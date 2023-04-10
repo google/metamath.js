@@ -106,5 +106,5 @@ theorem nom23(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ==3 ( a ^ b ) ) = ( a ->1 b )$;
+  return $|-$ $( a ==3 ( a ^ b ) ) = ( a ->1 b )$;
 }

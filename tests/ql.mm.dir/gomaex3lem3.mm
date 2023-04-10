@@ -136,5 +136,5 @@ theorem gomaex3lem3(wvp: $term$ p, wvq: $term$ q) {
     3tr;
   };
 
-  return $|- ( ( p ' ->1 q ) ' v ( p ' ^ q ) ) = p '$;
+  return $|-$ $( ( p ' ->1 q ) ' v ( p ' ^ q ) ) = p '$;
 }

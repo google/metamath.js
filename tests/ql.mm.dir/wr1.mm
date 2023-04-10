@@ -25,5 +25,5 @@ theorem wr1(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( b == a ) = 1$;
+  return $|-$ $( b == a ) = 1$;
 }

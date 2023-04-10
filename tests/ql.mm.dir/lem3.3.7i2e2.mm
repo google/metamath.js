@@ -266,5 +266,5 @@ theorem lem3.3.7i2e2(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ==2 ( a ^ b ) ) = ( ( a ^ b ) ==2 a )$;
+  return $|-$ $( a ==2 ( a ^ b ) ) = ( ( a ^ b ) ==2 a )$;
 }

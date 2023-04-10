@@ -42,5 +42,5 @@ theorem oa3to4(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve: 
     oa3to4lem5;
   };
 
-  return $|- ( ( a v b ) ^ ( c v d ) ) =< ( b v ( a ^ ( c v ( ( a v c ) ^ ( b v d ) ) ) ) )$;
+  return $|-$ $( ( a v b ) ^ ( c v d ) ) =< ( b v ( a ^ ( c v ( ( a v c ) ^ ( b v d ) ) ) ) )$;
 }

@@ -541,5 +541,5 @@ theorem neg3antlem2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     le3tr1;
   };
 
-  return $|- a ' =< ( b ->1 c )$;
+  return $|-$ $a ' =< ( b ->1 c )$;
 }

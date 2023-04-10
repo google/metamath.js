@@ -93,5 +93,5 @@ theorem oa3to4lem5(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     le3tr1;
   };
 
-  return $|- ( ( b v a ) ^ ( d v c ) ) =< ( a v ( b ^ ( d v ( ( b v d ) ^ ( a v c ) ) ) ) )$;
+  return $|-$ $( ( b v a ) ^ ( d v c ) ) =< ( a v ( b ^ ( d v ( ( b v d ) ^ ( a v c ) ) ) ) )$;
 }

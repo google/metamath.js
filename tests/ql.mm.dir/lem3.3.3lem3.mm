@@ -29,5 +29,5 @@ theorem lem3.3.3lem3(wva: $term$ a, wvb: $term$ b) {
     ler2an;
   };
 
-  return $|- ( a ==5 b ) =< ( ( a ->1 b ) ^ ( b ->1 a ) )$;
+  return $|-$ $( a ==5 b ) =< ( ( a ->1 b ) ^ ( b ->1 a ) )$;
 }

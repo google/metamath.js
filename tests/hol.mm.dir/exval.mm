@@ -305,5 +305,5 @@ theorem exval(hal: $type$ al, vx: $var$ x, vq: $var$ q, tf: $term$ F) {
     eqtri;
   };
 
-  return $|- T. |= [ ( ? F ) = ( ! \ q : bool . [ ( ! \ x : al . [ ( F x : al ) ==> q : bool ] ) ==> q : bool ] ) ]$;
+  return $|-$ $T. |= [ ( ? F ) = ( ! \ q : bool . [ ( ! \ x : al . [ ( F x : al ) ==> q : bool ] ) ==> q : bool ] ) ]$;
 }

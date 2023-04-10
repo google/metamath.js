@@ -51,5 +51,5 @@ theorem l42mod(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve: 
     lbtr;
   };
 
-  return $|- ( ( ( ( a v b ) ^ c ) v d ) ^ e ) =< ( ( a v b ) v ( ( a v d ) ^ ( b v e ) ) )$;
+  return $|-$ $( ( ( ( a v b ) ^ c ) v d ) ^ e ) =< ( ( a v b ) v ( ( a v d ) ^ ( b v e ) ) )$;
 }

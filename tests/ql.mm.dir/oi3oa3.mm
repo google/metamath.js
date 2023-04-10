@@ -139,5 +139,5 @@ theorem oi3oa3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr;
   };
 
-  return $|- ( ( ( a ->1 c ) ^ ( b ->1 c ) ) v ( ( ( ( a ->1 c ) ^ ( ( ( a ->1 c ) ^ ( b ->1 c ) ) v ( a ^ b ) ) ) ->1 c ) ^ ( ( ( b ->1 c ) ^ ( ( ( a ->1 c ) ^ ( b ->1 c ) ) v ( a ^ b ) ) ) ->1 c ) ) ) = 1$;
+  return $|-$ $( ( ( a ->1 c ) ^ ( b ->1 c ) ) v ( ( ( ( a ->1 c ) ^ ( ( ( a ->1 c ) ^ ( b ->1 c ) ) v ( a ^ b ) ) ) ->1 c ) ^ ( ( ( b ->1 c ) ^ ( ( ( a ->1 c ) ^ ( b ->1 c ) ) v ( a ^ b ) ) ) ->1 c ) ) ) = 1$;
 }

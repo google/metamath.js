@@ -140,5 +140,5 @@ theorem salem1(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( ( ( a ' ->1 b ) v b ) ->1 b ) = ( a ->2 b )$;
+  return $|-$ $( ( ( a ' ->1 b ) v b ) ->1 b ) = ( a ->2 b )$;
 }

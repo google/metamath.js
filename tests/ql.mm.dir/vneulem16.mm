@@ -127,5 +127,5 @@ theorem vneulem16(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     3tr;
   };
 
-  return $|- ( ( ( ( a v b ) v c ) ^ ( ( a v c ) v d ) ) ^ ( ( ( a v b ) v d ) ^ ( ( b v c ) v d ) ) ) = ( ( a ^ b ) v ( c ^ d ) )$;
+  return $|-$ $( ( ( ( a v b ) v c ) ^ ( ( a v c ) v d ) ) ^ ( ( ( a v b ) v d ) ^ ( ( b v c ) v d ) ) ) = ( ( a ^ b ) v ( c ^ d ) )$;
 }

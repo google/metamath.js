@@ -87,5 +87,5 @@ theorem alrimiv(hal: $type$ al, vx: $var$ x, ta: $term$ A, tr: $term$ R) {
     mpbir;
   };
 
-  return $|- R |= ( ! \ x : al . A )$;
+  return $|-$ $R |= ( ! \ x : al . A )$;
 }

@@ -131,5 +131,5 @@ theorem mldual(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     con1;
   };
 
-  return $|- ( a ^ ( b v ( a ^ c ) ) ) = ( ( a ^ b ) v ( a ^ c ) )$;
+  return $|-$ $( a ^ ( b v ( a ^ c ) ) ) = ( ( a ^ b ) v ( a ^ c ) )$;
 }

@@ -85,5 +85,5 @@ theorem negant2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr1;
   };
 
-  return $|- ( a ' ->2 c ) = ( b ' ->2 c )$;
+  return $|-$ $( a ' ->2 c ) = ( b ' ->2 c )$;
 }

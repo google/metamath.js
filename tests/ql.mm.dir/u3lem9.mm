@@ -101,5 +101,5 @@ theorem u3lem9(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ->3 ( a ->3 ( a ' ->3 b ) ) ) = ( a ->3 ( a ' ->3 b ) )$;
+  return $|-$ $( a ->3 ( a ->3 ( a ' ->3 b ) ) ) = ( a ->3 ( a ' ->3 b ) )$;
 }

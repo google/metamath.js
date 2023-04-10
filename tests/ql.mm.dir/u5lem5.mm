@@ -180,5 +180,5 @@ theorem u5lem5(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ->5 ( a ->5 b ) ) = ( a ' v ( a ^ b ) )$;
+  return $|-$ $( a ->5 ( a ->5 b ) ) = ( a ' v ( a ^ b ) )$;
 }

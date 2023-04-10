@@ -111,5 +111,5 @@ theorem wql2lem2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- ( ( a v ( b v c ) ) ' v ( b v c ) ) = 1$;
+  return $|-$ $( ( a v ( b v c ) ) ' v ( b v c ) ) = 1$;
 }

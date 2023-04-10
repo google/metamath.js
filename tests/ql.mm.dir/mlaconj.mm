@@ -201,5 +201,5 @@ theorem mlaconj(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lbtr;
   };
 
-  return $|- ( ( a == b ) ^ ( ( a == c ) v ( b == c ) ) ) =< ( ( ( ( a ->1 ( a ^ b ) ) ^ ( ( a ^ b ) ->1 ( ( a ^ b ) v c ) ) ) ^ ( ( ( ( a ^ b ) v c ) ->1 c ) ^ ( c ->1 ( a v b ) ) ) ) ^ ( ( a v b ) ->1 a ) )$;
+  return $|-$ $( ( a == b ) ^ ( ( a == c ) v ( b == c ) ) ) =< ( ( ( ( a ->1 ( a ^ b ) ) ^ ( ( a ^ b ) ->1 ( ( a ^ b ) v c ) ) ) ^ ( ( ( ( a ^ b ) v c ) ->1 c ) ^ ( c ->1 ( a v b ) ) ) ) ^ ( ( a v b ) ->1 a ) )$;
 }

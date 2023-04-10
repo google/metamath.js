@@ -25,5 +25,5 @@ theorem weqi(hal: $type$ al, ta: $term$ A, tb: $term$ B) {
     wov;
   };
 
-  return $|- [ A = B ] : bool$;
+  return $|-$ $[ A = B ] : bool$;
 }

@@ -73,5 +73,5 @@ theorem gon2n(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve: $
     letr;
   };
 
-  return $|- ( ( a v b ) ^ e ) =< ( b v c )$;
+  return $|-$ $( ( a v b ) ^ e ) =< ( b v c )$;
 }

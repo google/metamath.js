@@ -213,5 +213,5 @@ theorem oa3-2to4(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     bltr;
   };
 
-  return $|- ( a ' ^ ( a v ( b ^ ( ( a == b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) ) =< c$;
+  return $|-$ $( a ' ^ ( a v ( b ^ ( ( a == b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) ) =< c$;
 }

@@ -773,5 +773,5 @@ theorem exmid(ta: $term$ A) {
     ecase;
   };
 
-  return $|- T. |= [ A \/ ( ~ A ) ]$;
+  return $|-$ $T. |= [ A \/ ( ~ A ) ]$;
 }

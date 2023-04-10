@@ -58,5 +58,5 @@ theorem oran(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a v b ) = ( a ' ^ b ' ) '$;
+  return $|-$ $( a v b ) = ( a ' ^ b ' ) '$;
 }

@@ -29,5 +29,5 @@ theorem wddi-4(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     wdid0id4;
   };
 
-  return $|- ( ( a ^ ( b v c ) ) ==4 ( ( a ^ b ) v ( a ^ c ) ) ) = 1$;
+  return $|-$ $( ( a ^ ( b v c ) ) ==4 ( ( a ^ b ) v ( a ^ c ) ) ) = 1$;
 }

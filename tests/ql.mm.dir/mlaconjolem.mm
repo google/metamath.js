@@ -220,5 +220,5 @@ theorem mlaconjolem(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lbtr;
   };
 
-  return $|- ( ( a == c ) v ( b == c ) ) =< ( ( c ^ ( a v b ) ) v ( c ' ^ ( a ' v b ' ) ) )$;
+  return $|-$ $( ( a == c ) v ( b == c ) ) =< ( ( c ^ ( a v b ) ) v ( c ' ^ ( a ' v b ' ) ) )$;
 }

@@ -242,5 +242,5 @@ theorem ud3lem1(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->3 b ) ->3 ( b ->3 a ) ) = ( a v ( a ' ^ b ' ) )$;
+  return $|-$ $( ( a ->3 b ) ->3 ( b ->3 a ) ) = ( a v ( a ' ^ b ' ) )$;
 }

@@ -44,5 +44,5 @@ theorem lel(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     df2le1;
   };
 
-  return $|- ( a ^ c ) =< b$;
+  return $|-$ $( a ^ c ) =< b$;
 }

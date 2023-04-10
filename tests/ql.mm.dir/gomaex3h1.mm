@@ -27,5 +27,5 @@ theorem gomaex3h1(wva: $term$ a, wvb: $term$ b, wvg: $term$ g, wvh: $term$ h) {
     le3tr1;
   };
 
-  return $|- g =< h '$;
+  return $|-$ $g =< h '$;
 }

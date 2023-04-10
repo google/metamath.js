@@ -83,5 +83,5 @@ theorem wql2lem4(wva: $term$ a, wvb: $term$ b) {
     3tr;
   };
 
-  return $|- ( a ->1 b ) = 1$;
+  return $|-$ $( a ->1 b ) = 1$;
 }

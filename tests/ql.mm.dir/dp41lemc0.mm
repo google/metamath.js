@@ -155,5 +155,5 @@ theorem dp41lemc0(wvp: $term$ p, wva0: $term$ a0, wva1: $term$ a1, wva2: $term$ 
     3tr;
   };
 
-  return $|- ( ( ( a0 v b0 ) v b1 ) ^ ( ( a0 v a1 ) v b1 ) ) = ( ( a0 v b1 ) v ( ( a0 v b0 ) ^ ( a1 v b1 ) ) )$;
+  return $|-$ $( ( ( a0 v b0 ) v b1 ) ^ ( ( a0 v a1 ) v b1 ) ) = ( ( a0 v b1 ) v ( ( a0 v b0 ) ^ ( a1 v b1 ) ) )$;
 }

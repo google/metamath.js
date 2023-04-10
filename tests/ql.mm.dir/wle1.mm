@@ -23,5 +23,5 @@ theorem wle1(wva: $term$ a) {
     wdf-le1;
   };
 
-  return $|- ( a =<2 1 ) = 1$;
+  return $|-$ $( a =<2 1 ) = 1$;
 }

@@ -114,5 +114,5 @@ theorem wledio(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     wlbtr;
   };
 
-  return $|- ( ( a v ( b ^ c ) ) =<2 ( ( a v b ) ^ ( a v c ) ) ) = 1$;
+  return $|-$ $( ( a v ( b ^ c ) ) =<2 ( ( a v b ) ^ ( a v c ) ) ) = 1$;
 }

@@ -12,5 +12,5 @@ theorem orcom(wva: $term$ a, wvb: $term$ b) {
     ax-a2;
   };
 
-  return $|- ( a v b ) = ( b v a )$;
+  return $|-$ $( a v b ) = ( b v a )$;
 }

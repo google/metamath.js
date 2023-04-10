@@ -100,5 +100,5 @@ theorem 3oa2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     le3tr2;
   };
 
-  return $|- ( ( a ->1 c ) ^ ( ( ( a ->1 c ) ^ ( b ->1 c ) ) v ( ( a ' ->1 c ) ^ ( b ' ->1 c ) ) ) ) =< ( b ->1 c )$;
+  return $|-$ $( ( a ->1 c ) ^ ( ( ( a ->1 c ) ^ ( b ->1 c ) ) v ( ( a ' ->1 c ) ^ ( b ' ->1 c ) ) ) ) =< ( b ->1 c )$;
 }

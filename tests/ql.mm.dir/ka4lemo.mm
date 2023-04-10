@@ -267,5 +267,5 @@ theorem ka4lemo(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lebi;
   };
 
-  return $|- ( ( a v b ) v ( ( a v c ) == ( b v c ) ) ) = 1$;
+  return $|-$ $( ( a v b ) v ( ( a v c ) == ( b v c ) ) ) = 1$;
 }

@@ -213,5 +213,5 @@ theorem axext(hal: $type$ al, vx: $var$ x, ta: $term$ A, tb: $term$ B) {
     ex;
   };
 
-  return $|- T. |= [ ( ! \ x : al . [ ( A x : al ) = ( B x : al ) ] ) ==> [ A = B ] ]$;
+  return $|-$ $T. |= [ ( ! \ x : al . [ ( A x : al ) = ( B x : al ) ] ) ==> [ A = B ] ]$;
 }

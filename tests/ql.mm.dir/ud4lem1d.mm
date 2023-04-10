@@ -231,5 +231,5 @@ theorem ud4lem1d(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( ( a ->4 b ) ' v ( b ->4 a ) ) ^ ( b ->4 a ) ' ) = ( ( ( a ' v b ' ) ^ ( a ' v b ) ) ^ a )$;
+  return $|-$ $( ( ( a ->4 b ) ' v ( b ->4 a ) ) ^ ( b ->4 a ) ' ) = ( ( ( a ' v b ' ) ^ ( a ' v b ) ) ^ a )$;
 }

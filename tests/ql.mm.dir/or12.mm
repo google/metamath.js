@@ -51,5 +51,5 @@ theorem or12(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr2;
   };
 
-  return $|- ( a v ( b v c ) ) = ( b v ( a v c ) )$;
+  return $|-$ $( a v ( b v c ) ) = ( b v ( a v c ) )$;
 }

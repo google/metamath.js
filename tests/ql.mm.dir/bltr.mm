@@ -35,5 +35,5 @@ theorem bltr(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     df-le1;
   };
 
-  return $|- a =< c$;
+  return $|-$ $a =< c$;
 }

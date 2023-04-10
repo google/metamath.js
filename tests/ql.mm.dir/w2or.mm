@@ -34,5 +34,5 @@ theorem w2or(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     wr2;
   };
 
-  return $|- ( ( a v c ) == ( b v d ) ) = 1$;
+  return $|-$ $( ( a v c ) == ( b v d ) ) = 1$;
 }

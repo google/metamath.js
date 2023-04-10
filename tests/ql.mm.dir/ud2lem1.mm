@@ -184,5 +184,5 @@ theorem ud2lem1(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->2 b ) ->2 ( b ->2 a ) ) = ( a v ( a ' ^ b ' ) )$;
+  return $|-$ $( ( a ->2 b ) ->2 ( b ->2 a ) ) = ( a v ( a ' ^ b ' ) )$;
 }

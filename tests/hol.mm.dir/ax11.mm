@@ -357,5 +357,5 @@ theorem ax11(hal: $type$ al, vx: $var$ x, vy: $var$ y, ta: $term$ A) {
     ex;
   };
 
-  return $|- T. |= [ [ x : al = y : al ] ==> [ ( ! \ y : al . A ) ==> ( ! \ x : al . [ [ x : al = y : al ] ==> A ] ) ] ]$;
+  return $|-$ $T. |= [ [ x : al = y : al ] ==> [ ( ! \ y : al . A ) ==> ( ! \ x : al . [ [ x : al = y : al ] ==> A ] ) ] ]$;
 }

@@ -43,5 +43,5 @@ theorem binr3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lei3;
   };
 
-  return $|- ( ( a v b ) ->3 c ) = 1$;
+  return $|-$ $( ( a v b ) ->3 c ) = 1$;
 }

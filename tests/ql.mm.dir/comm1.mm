@@ -72,5 +72,5 @@ theorem comm1(wva: $term$ a) {
     df-c1;
   };
 
-  return $|- 1 C a$;
+  return $|-$ $1 C a$;
 }

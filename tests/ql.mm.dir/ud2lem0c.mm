@@ -75,5 +75,5 @@ theorem ud2lem0c(wva: $term$ a, wvb: $term$ b) {
     con2;
   };
 
-  return $|- ( a ->2 b ) ' = ( b ' ^ ( a v b ) )$;
+  return $|-$ $( a ->2 b ) ' = ( b ' ^ ( a v b ) )$;
 }

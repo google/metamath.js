@@ -154,5 +154,5 @@ theorem wdid0id1(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ==1 b ) = 1$;
+  return $|-$ $( a ==1 b ) = 1$;
 }

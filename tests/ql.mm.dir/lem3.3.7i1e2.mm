@@ -333,5 +333,5 @@ theorem lem3.3.7i1e2(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ==1 ( a ^ b ) ) = ( ( a ^ b ) ==1 a )$;
+  return $|-$ $( a ==1 ( a ^ b ) ) = ( ( a ^ b ) ==1 a )$;
 }

@@ -115,5 +115,5 @@ theorem lem3.3.5(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lem3.3.5lem;
   };
 
-  return $|- ( a ->1 ( b v c ) ) = 1$;
+  return $|-$ $( a ->1 ( b v c ) ) = 1$;
 }

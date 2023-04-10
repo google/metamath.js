@@ -58,5 +58,5 @@ theorem govar2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lbtr;
   };
 
-  return $|- ( a v b ) =< ( c ->2 a )$;
+  return $|-$ $( a v b ) =< ( c ->2 a )$;
 }

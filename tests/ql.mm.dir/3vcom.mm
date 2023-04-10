@@ -79,5 +79,5 @@ theorem 3vcom(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     comcom;
   };
 
-  return $|- ( ( a ->1 c ) v ( b ->1 c ) ) C ( ( a ' ->1 c ) ^ ( b ' ->1 c ) )$;
+  return $|-$ $( ( a ->1 c ) v ( b ->1 c ) ) C ( ( a ' ->1 c ) ^ ( b ' ->1 c ) )$;
 }

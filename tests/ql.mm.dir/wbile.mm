@@ -37,5 +37,5 @@ theorem wbile(wva: $term$ a, wvb: $term$ b) {
     wdf-le1;
   };
 
-  return $|- ( a =<2 b ) = 1$;
+  return $|-$ $( a =<2 b ) = 1$;
 }

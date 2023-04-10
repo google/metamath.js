@@ -185,5 +185,5 @@ theorem wwfh4(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- ( ( b v ( a ^ c ) ) == ( ( b v a ) ^ ( b v c ) ) ) = 1$;
+  return $|-$ $( ( b v ( a ^ c ) ) == ( ( b v a ) ^ ( b v c ) ) ) = 1$;
 }

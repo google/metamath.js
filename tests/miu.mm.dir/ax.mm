@@ -1,5 +1,5 @@
 
 axiom ax() {
 
-  return $|- M I$;
+  return $|-$ $M I$;
 }

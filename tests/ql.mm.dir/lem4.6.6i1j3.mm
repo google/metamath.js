@@ -345,5 +345,5 @@ theorem lem4.6.6i1j3(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( ( a ->1 b ) v ( a ->3 b ) ) = ( a ->0 b )$;
+  return $|-$ $( ( a ->1 b ) v ( a ->3 b ) ) = ( a ->0 b )$;
 }

@@ -108,5 +108,5 @@ theorem i3orlem5(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     le3tr1;
   };
 
-  return $|- ( ( a ' ^ b ' ) ^ c ' ) =< ( ( a v c ) ->3 ( b v c ) )$;
+  return $|-$ $( ( a ' ^ b ' ) ^ c ' ) =< ( ( a v c ) ->3 ( b v c ) )$;
 }

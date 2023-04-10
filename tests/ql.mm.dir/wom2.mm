@@ -118,5 +118,5 @@ theorem wom2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lbtr;
   };
 
-  return $|- a =< ( ( a == b ) ' v ( ( a v c ) == ( b v c ) ) )$;
+  return $|-$ $a =< ( ( a == b ) ' v ( ( a v c ) == ( b v c ) ) )$;
 }

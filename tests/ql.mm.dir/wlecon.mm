@@ -61,5 +61,5 @@ theorem wlecon(wva: $term$ a, wvb: $term$ b) {
     wdf2le1;
   };
 
-  return $|- ( b ' =<2 a ' ) = 1$;
+  return $|-$ $( b ' =<2 a ' ) = 1$;
 }

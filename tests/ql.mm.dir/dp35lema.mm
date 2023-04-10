@@ -68,5 +68,5 @@ theorem dp35lema(wvp: $term$ p, wva0: $term$ a0, wva1: $term$ a1, wva2: $term$ a
     lel2or;
   };
 
-  return $|- ( b1 v ( b0 ^ ( a0 v p0 ) ) ) =< ( b1 v ( ( a0 v a1 ) ^ ( c0 v c1 ) ) )$;
+  return $|-$ $( b1 v ( b0 ^ ( a0 v p0 ) ) ) =< ( b1 v ( ( a0 v a1 ) ^ ( c0 v c1 ) ) )$;
 }

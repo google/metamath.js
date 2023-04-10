@@ -263,5 +263,5 @@ theorem ud3lem1d(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->3 b ) ^ ( ( a ->3 b ) ' v ( b ->3 a ) ) ) = ( ( a ' ^ b ' ) v ( a ^ ( a ' v b ) ) )$;
+  return $|-$ $( ( a ->3 b ) ^ ( ( a ->3 b ) ' v ( b ->3 a ) ) ) = ( ( a ' ^ b ' ) v ( a ^ ( a ' v b ) ) )$;
 }

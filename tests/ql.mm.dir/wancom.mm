@@ -21,5 +21,5 @@ theorem wancom(wva: $term$ a, wvb: $term$ b) {
     bi1;
   };
 
-  return $|- ( ( a ^ b ) == ( b ^ a ) ) = 1$;
+  return $|-$ $( ( a ^ b ) == ( b ^ a ) ) = 1$;
 }

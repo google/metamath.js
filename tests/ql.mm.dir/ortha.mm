@@ -49,5 +49,5 @@ theorem ortha(wva: $term$ a, wvb: $term$ b) {
     lebi;
   };
 
-  return $|- ( a ^ b ) = 0$;
+  return $|-$ $( a ^ b ) = 0$;
 }

@@ -50,5 +50,5 @@ theorem theorem1() {
     IV;
   };
 
-  return $|- M U I I U$;
+  return $|-$ $M U I I U$;
 }

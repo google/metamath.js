@@ -64,5 +64,5 @@ theorem comanbn(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     cbtr;
   };
 
-  return $|- ( a ' ^ b ' ) C ( ( a == c ) ^ ( b == c ) )$;
+  return $|-$ $( a ' ^ b ' ) C ( ( a == c ) ^ ( b == c ) )$;
 }

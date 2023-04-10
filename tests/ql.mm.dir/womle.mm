@@ -57,5 +57,5 @@ theorem womle(wva: $term$ a, wvb: $term$ b) {
     womle2a;
   };
 
-  return $|- ( ( a ->2 b ) ' v ( a ->1 b ) ) = 1$;
+  return $|-$ $( ( a ->2 b ) ' v ( a ->1 b ) ) = 1$;
 }

@@ -74,5 +74,5 @@ theorem an32s(ta: $term$ A, tr: $term$ R, ts: $term$ S, tt: $term$ T) {
     syl2anc;
   };
 
-  return $|- ( ( R , T ) , S ) |= A$;
+  return $|-$ $( ( R , T ) , S ) |= A$;
 }

@@ -98,5 +98,5 @@ theorem i5lei3(wva: $term$ a, wvb: $term$ b) {
     le3tr1;
   };
 
-  return $|- ( a ->5 b ) =< ( a ->3 b )$;
+  return $|-$ $( a ->5 b ) =< ( a ->3 b )$;
 }

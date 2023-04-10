@@ -24,5 +24,5 @@ theorem wa4(wva: $term$ a, wvb: $term$ b) {
     bi1;
   };
 
-  return $|- ( ( a v ( b v b ' ) ) == ( b v b ' ) ) = 1$;
+  return $|-$ $( ( a v ( b v b ' ) ) == ( b v b ' ) ) = 1$;
 }

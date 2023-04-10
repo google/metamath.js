@@ -309,5 +309,5 @@ theorem u4lem4(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ->4 ( a ->4 ( b ->4 a ) ) ) = ( a ->4 ( b ->4 a ) )$;
+  return $|-$ $( a ->4 ( a ->4 ( b ->4 a ) ) ) = ( a ->4 ( b ->4 a ) )$;
 }

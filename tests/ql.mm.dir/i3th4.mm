@@ -45,5 +45,5 @@ theorem i3th4(wva: $term$ a, wvb: $term$ b) {
     wed;
   };
 
-  return $|- ( a ->3 ( b ->3 b ) ) = 1$;
+  return $|-$ $( a ->3 ( b ->3 b ) ) = 1$;
 }

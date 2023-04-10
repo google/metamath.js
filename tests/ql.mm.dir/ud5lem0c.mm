@@ -138,5 +138,5 @@ theorem ud5lem0c(wva: $term$ a, wvb: $term$ b) {
     con2;
   };
 
-  return $|- ( a ->5 b ) ' = ( ( ( a ' v b ' ) ^ ( a v b ' ) ) ^ ( a v b ) )$;
+  return $|-$ $( a ->5 b ) ' = ( ( ( a ' v b ' ) ^ ( a v b ' ) ) ^ ( a v b ) )$;
 }

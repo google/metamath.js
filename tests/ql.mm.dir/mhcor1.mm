@@ -529,5 +529,5 @@ theorem mhcor1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     3tr1;
   };
 
-  return $|- ( ( ( ( a ->1 b ) ^ ( b ->2 c ) ) ^ ( c ->1 d ) ) ^ ( d ->2 a ) ) = ( ( ( a == b ) ^ ( b == c ) ) ^ ( c == d ) )$;
+  return $|-$ $( ( ( ( a ->1 b ) ^ ( b ->2 c ) ) ^ ( c ->1 d ) ) ^ ( d ->2 a ) ) = ( ( ( a == b ) ^ ( b == c ) ) ^ ( c == d ) )$;
 }

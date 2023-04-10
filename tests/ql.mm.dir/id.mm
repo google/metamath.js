@@ -26,5 +26,5 @@ theorem id(wva: $term$ a) {
     ax-r2;
   };
 
-  return $|- a = a$;
+  return $|-$ $a = a$;
 }

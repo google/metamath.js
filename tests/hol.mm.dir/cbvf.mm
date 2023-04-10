@@ -403,5 +403,5 @@ theorem cbvf(hal: $type$ al, hbe: $type$ be, vx: $var$ x, vy: $var$ y, vz: $var$
     3eqtr3i;
   };
 
-  return $|- T. |= [ \ x : al . A = \ y : al . B ]$;
+  return $|-$ $T. |= [ \ x : al . A = \ y : al . B ]$;
 }

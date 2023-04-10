@@ -56,5 +56,5 @@ theorem ska3(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( ( a == b ) ' v ( a ' == b ' ) ) = 1$;
+  return $|-$ $( ( a == b ) ' v ( a ' == b ' ) ) = 1$;
 }

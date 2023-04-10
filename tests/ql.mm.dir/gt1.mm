@@ -51,5 +51,5 @@ theorem gt1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     bctr;
   };
 
-  return $|- a C d$;
+  return $|-$ $a C d$;
 }

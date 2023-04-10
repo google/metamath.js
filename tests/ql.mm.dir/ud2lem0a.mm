@@ -63,5 +63,5 @@ theorem ud2lem0a(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr1;
   };
 
-  return $|- ( c ->2 a ) = ( c ->2 b )$;
+  return $|-$ $( c ->2 a ) = ( c ->2 b )$;
 }

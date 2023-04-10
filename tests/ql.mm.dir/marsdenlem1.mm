@@ -66,5 +66,5 @@ theorem marsdenlem1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) 
     ax-r2;
   };
 
-  return $|- ( ( a v b ) ^ ( a ' v d ' ) ) = ( ( a ' ^ ( a v b ) ) v ( d ' ^ ( a v b ) ) )$;
+  return $|-$ $( ( a v b ) ^ ( a ' v d ' ) ) = ( ( a ' ^ ( a v b ) ) v ( d ' ^ ( a v b ) ) )$;
 }

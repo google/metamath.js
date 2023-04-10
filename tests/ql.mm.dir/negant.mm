@@ -40,5 +40,5 @@ theorem negant(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lebi;
   };
 
-  return $|- ( a ' ->1 c ) = ( b ' ->1 c )$;
+  return $|-$ $( a ' ->1 c ) = ( b ' ->1 c )$;
 }

@@ -298,5 +298,5 @@ theorem u3lemaa(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->3 b ) ^ a ) = ( a ^ ( a ' v b ) )$;
+  return $|-$ $( ( a ->3 b ) ^ a ) = ( a ^ ( a ' v b ) )$;
 }

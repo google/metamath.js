@@ -32,5 +32,5 @@ theorem i3con1(wva: $term$ a, wvb: $term$ b) {
     i33tr1;
   };
 
-  return $|- ( b ->3 a ) = 1$;
+  return $|-$ $( b ->3 a ) = 1$;
 }

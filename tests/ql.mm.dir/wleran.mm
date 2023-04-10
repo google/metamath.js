@@ -57,5 +57,5 @@ theorem wleran(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     wdf2le1;
   };
 
-  return $|- ( ( a ^ c ) =<2 ( b ^ c ) ) = 1$;
+  return $|-$ $( ( a ^ c ) =<2 ( b ^ c ) ) = 1$;
 }

@@ -38,5 +38,5 @@ theorem lem3a.1(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a v b ) = a$;
+  return $|-$ $( a v b ) = a$;
 }

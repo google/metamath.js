@@ -20,5 +20,5 @@ theorem wddi1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     wfh1;
   };
 
-  return $|- ( ( a ^ ( b v c ) ) == ( ( a ^ b ) v ( a ^ c ) ) ) = 1$;
+  return $|-$ $( ( a ^ ( b v c ) ) == ( ( a ^ b ) v ( a ^ c ) ) ) = 1$;
 }

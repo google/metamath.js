@@ -100,5 +100,5 @@ theorem oat(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lbtr;
   };
 
-  return $|- b =< ( a ' ->1 c )$;
+  return $|-$ $b =< ( a ' ->1 c )$;
 }

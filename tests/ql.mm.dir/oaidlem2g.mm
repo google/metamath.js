@@ -163,5 +163,5 @@ theorem oaidlem2g(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     letr;
   };
 
-  return $|- ( a ^ ( c v ( a ^ b ) ) ) =< b$;
+  return $|-$ $( a ^ ( c v ( a ^ b ) ) ) =< b$;
 }

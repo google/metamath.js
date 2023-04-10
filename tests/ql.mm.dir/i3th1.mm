@@ -252,5 +252,5 @@ theorem i3th1(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ->3 ( a ->3 ( b ->3 a ) ) ) = 1$;
+  return $|-$ $( a ->3 ( a ->3 ( b ->3 a ) ) ) = 1$;
 }

@@ -116,5 +116,5 @@ theorem ax4g(hal: $type$ al, ta: $term$ A, tf: $term$ F) {
     mpbir;
   };
 
-  return $|- ( ! F ) |= ( F A )$;
+  return $|-$ $( ! F ) |= ( F A )$;
 }

@@ -403,5 +403,5 @@ theorem u3lem13a(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ->3 ( a ->3 b ' ) ' ) = ( a ->1 b )$;
+  return $|-$ $( a ->3 ( a ->3 b ' ) ' ) = ( a ->1 b )$;
 }

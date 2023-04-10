@@ -140,5 +140,5 @@ theorem ax2(tr: $term$ R, ts: $term$ S, tt: $term$ T) {
     ex;
   };
 
-  return $|- T. |= [ [ R ==> [ S ==> T ] ] ==> [ [ R ==> S ] ==> [ R ==> T ] ] ]$;
+  return $|-$ $T. |= [ [ R ==> [ S ==> T ] ] ==> [ [ R ==> S ] ==> [ R ==> T ] ] ]$;
 }

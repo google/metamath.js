@@ -31,5 +31,5 @@ theorem nomcon5(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a == b ) = ( b ' == a ' )$;
+  return $|-$ $( a == b ) = ( b ' == a ' )$;
 }

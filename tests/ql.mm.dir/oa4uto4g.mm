@@ -408,5 +408,5 @@ theorem oa4uto4g(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wvh
     oau;
   };
 
-  return $|- ( ( a ->1 d ) ^ ( ( ( a ^ b ) v ( ( a ->1 d ) ^ ( b ->1 d ) ) ) v h ) ) =< ( b ->1 d )$;
+  return $|-$ $( ( a ->1 d ) ^ ( ( ( a ^ b ) v ( ( a ->1 d ) ^ ( b ->1 d ) ) ) v h ) ) =< ( b ->1 d )$;
 }

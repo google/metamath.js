@@ -63,5 +63,5 @@ theorem u1lem9a(wva: $term$ a, wvb: $term$ b) {
     bltr;
   };
 
-  return $|- ( a ' ->1 b ) ' =< a '$;
+  return $|-$ $( a ' ->1 b ) ' =< a '$;
 }

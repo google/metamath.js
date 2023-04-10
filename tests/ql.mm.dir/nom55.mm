@@ -92,5 +92,5 @@ theorem nom55(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( ( a v b ) == b ) = ( a ->2 b )$;
+  return $|-$ $( ( a v b ) == b ) = ( a ->2 b )$;
 }

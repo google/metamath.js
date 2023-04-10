@@ -360,5 +360,5 @@ theorem u5lemaa(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->5 b ) ^ a ) = ( a ^ b )$;
+  return $|-$ $( ( a ->5 b ) ^ a ) = ( a ^ b )$;
 }

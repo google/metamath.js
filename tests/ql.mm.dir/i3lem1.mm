@@ -200,5 +200,5 @@ theorem i3lem1(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ' ^ b ) v ( a ' ^ b ' ) ) = a '$;
+  return $|-$ $( ( a ' ^ b ) v ( a ' ^ b ' ) ) = a '$;
 }

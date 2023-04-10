@@ -218,5 +218,5 @@ theorem d4oa(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve: $t
     bltr;
   };
 
-  return $|- ( ( a ->1 d ) ^ ( e v f ) ) =< ( b ->1 d )$;
+  return $|-$ $( ( a ->1 d ) ^ ( e v f ) ) =< ( b ->1 d )$;
 }

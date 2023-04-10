@@ -35,5 +35,5 @@ theorem anidm(wva: $term$ a) {
     ax-r2;
   };
 
-  return $|- ( a ^ a ) = a$;
+  return $|-$ $( a ^ a ) = a$;
 }

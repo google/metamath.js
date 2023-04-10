@@ -61,5 +61,5 @@ theorem isfree(hal: $type$ al, vx: $var$ x, vy: $var$ y, ta: $term$ A) {
     ex;
   };
 
-  return $|- T. |= [ A ==> ( ! \ x : al . A ) ]$;
+  return $|-$ $T. |= [ A ==> ( ! \ x : al . A ) ]$;
 }

@@ -87,5 +87,5 @@ theorem eqtri(hal: $type$ al, ta: $term$ A, tb: $term$ B, tc: $term$ C, tr: $ter
     dfov2;
   };
 
-  return $|- R |= [ A = C ]$;
+  return $|-$ $R |= [ A = C ]$;
 }

@@ -114,5 +114,5 @@ theorem k1-2(wvc: $term$ c, wvx: $term$ x, wvy: $term$ y) {
     tr;
   };
 
-  return $|- ( ( x v y ) ^ c ) = ( ( x ^ c ) v ( y ^ c ) )$;
+  return $|-$ $( ( x v y ) ^ c ) = ( ( x ^ c ) v ( y ^ c ) )$;
 }

@@ -93,5 +93,5 @@ theorem comi31(wva: $term$ a, wvb: $term$ b) {
     cbtr;
   };
 
-  return $|- a C ( a ->3 b )$;
+  return $|-$ $a C ( a ->3 b )$;
 }

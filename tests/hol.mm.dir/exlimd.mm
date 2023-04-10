@@ -562,5 +562,5 @@ theorem exlimd(hal: $type$ al, vx: $var$ x, vy: $var$ y, ta: $term$ A, tr: $term
     mpd;
   };
 
-  return $|- ( R , ( ? \ x : al . A ) ) |= T$;
+  return $|-$ $( R , ( ? \ x : al . A ) ) |= T$;
 }

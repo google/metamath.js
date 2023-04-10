@@ -141,5 +141,5 @@ theorem lei3(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ->3 b ) = 1$;
+  return $|-$ $( a ->3 b ) = 1$;
 }

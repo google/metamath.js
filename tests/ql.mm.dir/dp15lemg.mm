@@ -81,5 +81,5 @@ theorem dp15lemg(wvd: $term$ d, wve: $term$ e, wva0: $term$ a0, wva1: $term$ a1,
     tr;
   };
 
-  return $|- ( ( ( a1 v a2 ) ^ ( b1 v b2 ) ) v ( ( ( a0 v a2 ) ^ ( b0 v b2 ) ) v ( b1 ^ ( a0 v a1 ) ) ) ) = ( ( c0 v c1 ) v ( b1 ^ ( a0 v a1 ) ) )$;
+  return $|-$ $( ( ( a1 v a2 ) ^ ( b1 v b2 ) ) v ( ( ( a0 v a2 ) ^ ( b0 v b2 ) ) v ( b1 ^ ( a0 v a1 ) ) ) ) = ( ( c0 v c1 ) v ( b1 ^ ( a0 v a1 ) ) )$;
 }

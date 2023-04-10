@@ -112,5 +112,5 @@ theorem testmod1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     tr;
   };
 
-  return $|- ( ( ( c v a ) v ( ( b v c ) ^ ( d v a ) ) ) ^ ( a v ( b ^ ( d v ( ( a v c ) ^ ( b v d ) ) ) ) ) ) = ( a v ( b ^ ( ( ( a v c ) ^ ( b v d ) ) v ( d ^ ( ( a v c ) v ( ( b v c ) ^ ( d v a ) ) ) ) ) ) )$;
+  return $|-$ $( ( ( c v a ) v ( ( b v c ) ^ ( d v a ) ) ) ^ ( a v ( b ^ ( d v ( ( a v c ) ^ ( b v d ) ) ) ) ) ) = ( a v ( b ^ ( ( ( a v c ) ^ ( b v d ) ) v ( d ^ ( ( a v c ) v ( ( b v c ) ^ ( d v a ) ) ) ) ) ) )$;
 }

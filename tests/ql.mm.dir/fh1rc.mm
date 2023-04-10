@@ -57,5 +57,5 @@ theorem fh1rc(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr1;
   };
 
-  return $|- ( ( c v b ) ^ a ) = ( ( c ^ a ) v ( b ^ a ) )$;
+  return $|-$ $( ( c v b ) ^ a ) = ( ( c ^ a ) v ( b ^ a ) )$;
 }

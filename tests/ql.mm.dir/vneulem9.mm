@@ -75,5 +75,5 @@ theorem vneulem9(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     3tr;
   };
 
-  return $|- ( ( ( a v b ) v d ) ^ ( ( a v b ) v c ) ) = ( ( c ^ d ) v ( a v b ) )$;
+  return $|-$ $( ( ( a v b ) v d ) ^ ( ( a v b ) v c ) ) = ( ( c ^ d ) v ( a v b ) )$;
 }

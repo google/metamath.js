@@ -439,5 +439,5 @@ theorem oa3-2to2s(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     le3tr2;
   };
 
-  return $|- ( ( a ->1 c ) ^ ( a v ( b ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) ) =< ( ( a ^ c ) v ( b ^ c ) )$;
+  return $|-$ $( ( a ->1 c ) ^ ( a v ( b ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) ) =< ( ( a ^ c ) v ( b ^ c ) )$;
 }

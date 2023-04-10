@@ -81,5 +81,5 @@ theorem lem3.3.3lem2(wva: $term$ a, wvb: $term$ b) {
     le3tr1;
   };
 
-  return $|- ( a ==5 b ) =< ( b ->1 a )$;
+  return $|-$ $( a ==5 b ) =< ( b ->1 a )$;
 }

@@ -67,5 +67,5 @@ theorem u4lem5n(wva: $term$ a, wvb: $term$ b) {
     con2;
   };
 
-  return $|- ( a ->4 ( a ->4 b ) ) ' = ( ( a v b ) ^ b ' )$;
+  return $|-$ $( a ->4 ( a ->4 b ) ) ' = ( ( a v b ) ^ b ' )$;
 }

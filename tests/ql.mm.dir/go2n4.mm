@@ -187,5 +187,5 @@ theorem go2n4(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve: $
     bltr;
   };
 
-  return $|- ( ( ( a v b ) ^ ( c v d ) ) ^ ( ( e v f ) ^ ( g v h ) ) ) =< ( b v c )$;
+  return $|-$ $( ( ( a v b ) ^ ( c v d ) ) ^ ( ( e v f ) ^ ( g v h ) ) ) =< ( b v c )$;
 }

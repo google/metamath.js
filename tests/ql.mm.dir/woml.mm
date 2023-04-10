@@ -31,5 +31,5 @@ theorem woml(wva: $term$ a, wvb: $term$ b) {
     wlem3.1;
   };
 
-  return $|- ( ( a v ( a ' ^ ( a v b ) ) ) == ( a v b ) ) = 1$;
+  return $|-$ $( ( a v ( a ' ^ ( a v b ) ) ) == ( a v b ) ) = 1$;
 }

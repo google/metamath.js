@@ -170,5 +170,5 @@ theorem ud4lem0c(wva: $term$ a, wvb: $term$ b) {
     con2;
   };
 
-  return $|- ( a ->4 b ) ' = ( ( ( a ' v b ' ) ^ ( a v b ' ) ) ^ ( ( a ^ b ' ) v b ) )$;
+  return $|-$ $( a ->4 b ) ' = ( ( ( a ' v b ' ) ^ ( a v b ' ) ) ^ ( ( a ^ b ' ) v b ) )$;
 }

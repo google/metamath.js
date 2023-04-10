@@ -48,5 +48,5 @@ theorem u4lembi(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->4 b ) ^ ( b ->4 a ) ) = ( a == b )$;
+  return $|-$ $( ( a ->4 b ) ^ ( b ->4 a ) ) = ( a == b )$;
 }

@@ -1008,5 +1008,5 @@ theorem ska2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- ( ( a == b ) ' v ( ( b == c ) ' v ( a == c ) ) ) = 1$;
+  return $|-$ $( ( a == b ) ' v ( ( b == c ) ' v ( a == c ) ) ) = 1$;
 }

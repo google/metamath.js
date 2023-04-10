@@ -108,5 +108,5 @@ theorem oago3.29(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     bltr;
   };
 
-  return $|- ( ( a ->1 b ) ^ ( ( b ->2 c ) ^ ( c ->1 a ) ) ) =< ( a == c )$;
+  return $|-$ $( ( a ->1 b ) ^ ( ( b ->2 c ) ^ ( c ->1 a ) ) ) =< ( a == c )$;
 }

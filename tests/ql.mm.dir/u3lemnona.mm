@@ -79,5 +79,5 @@ theorem u3lemnona(wva: $term$ a, wvb: $term$ b) {
     con1;
   };
 
-  return $|- ( ( a ->3 b ) ' v a ' ) = ( a ' v ( a ^ b ' ) )$;
+  return $|-$ $( ( a ->3 b ) ' v a ' ) = ( a ' v ( a ^ b ' ) )$;
 }

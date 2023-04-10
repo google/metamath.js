@@ -12,5 +12,5 @@ theorem lem4.6.2e2(wva: $term$ a, wvb: $term$ b) {
     u1lemab;
   };
 
-  return $|- ( ( a ->1 b ) ^ b ) = ( ( a ^ b ) v ( a ' ^ b ) )$;
+  return $|-$ $( ( a ->1 b ) ^ b ) = ( ( a ^ b ) v ( a ' ^ b ) )$;
 }

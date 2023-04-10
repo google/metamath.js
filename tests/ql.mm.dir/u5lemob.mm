@@ -91,5 +91,5 @@ theorem u5lemob(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->5 b ) v b ) = ( ( a ' ^ b ' ) v b )$;
+  return $|-$ $( ( a ->5 b ) v b ) = ( ( a ' ^ b ' ) v b )$;
 }

@@ -32,5 +32,5 @@ theorem bile(wva: $term$ a, wvb: $term$ b) {
     df-le1;
   };
 
-  return $|- a =< b$;
+  return $|-$ $a =< b$;
 }

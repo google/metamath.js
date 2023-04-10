@@ -23,5 +23,5 @@ theorem 3tr(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     ax-r2;
   };
 
-  return $|- a = d$;
+  return $|-$ $a = d$;
 }

@@ -84,5 +84,5 @@ theorem u1lemob(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->1 b ) v b ) = ( a ' v b )$;
+  return $|-$ $( ( a ->1 b ) v b ) = ( a ' v b )$;
 }

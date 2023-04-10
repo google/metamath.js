@@ -48,5 +48,5 @@ theorem anandi(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- ( a ^ ( b ^ c ) ) = ( ( a ^ b ) ^ ( a ^ c ) )$;
+  return $|-$ $( a ^ ( b ^ c ) ) = ( ( a ^ b ) ^ ( a ^ c ) )$;
 }

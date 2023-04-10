@@ -19,5 +19,5 @@ theorem coman1(wva: $term$ a, wvb: $term$ b) {
     lecom;
   };
 
-  return $|- ( a ^ b ) C a$;
+  return $|-$ $( a ^ b ) C a$;
 }

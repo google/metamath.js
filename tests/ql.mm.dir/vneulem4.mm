@@ -59,5 +59,5 @@ theorem vneulem4(wvu: $term$ u, wvw: $term$ w, wvx: $term$ x, wvy: $term$ y) {
     3tr;
   };
 
-  return $|- ( ( ( x v y ) v u ) ^ w ) = ( u ^ w )$;
+  return $|-$ $( ( ( x v y ) v u ) ^ w ) = ( u ^ w )$;
 }

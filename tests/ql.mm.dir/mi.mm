@@ -125,5 +125,5 @@ theorem mi(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a v b ) == b ) = ( b v ( a ' ^ b ' ) )$;
+  return $|-$ $( ( a v b ) == b ) = ( b v ( a ' ^ b ' ) )$;
 }

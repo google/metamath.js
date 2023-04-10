@@ -50,5 +50,5 @@ theorem con3d(tr: $term$ R, ts: $term$ S, tt: $term$ T) {
     con2d;
   };
 
-  return $|- ( R , ( ~ T ) ) |= ( ~ S )$;
+  return $|-$ $( R , ( ~ T ) ) |= ( ~ S )$;
 }

@@ -26,5 +26,5 @@ theorem wa3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     bi1;
   };
 
-  return $|- ( ( ( a v b ) v c ) == ( a v ( b v c ) ) ) = 1$;
+  return $|-$ $( ( ( a v b ) v c ) == ( a v ( b v c ) ) ) = 1$;
 }

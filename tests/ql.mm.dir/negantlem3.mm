@@ -123,5 +123,5 @@ theorem negantlem3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     letr;
   };
 
-  return $|- ( a ' ^ c ) =< ( b ' ->1 c )$;
+  return $|-$ $( a ' ^ c ) =< ( b ' ->1 c )$;
 }

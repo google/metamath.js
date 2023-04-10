@@ -70,5 +70,5 @@ theorem ax4(hal: $type$ al, vx: $var$ x, ta: $term$ A) {
     mpbi;
   };
 
-  return $|- ( ! \ x : al . A ) |= A$;
+  return $|-$ $( ! \ x : al . A ) |= A$;
 }

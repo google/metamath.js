@@ -189,5 +189,5 @@ theorem ax12(hal: $type$ al, vx: $var$ x, vy: $var$ y, vz: $var$ z) {
     ex;
   };
 
-  return $|- T. |= [ ( ~ ( ! \ z : al . [ z : al = x : al ] ) ) ==> [ ( ~ ( ! \ z : al . [ z : al = y : al ] ) ) ==> [ [ x : al = y : al ] ==> ( ! \ z : al . [ x : al = y : al ] ) ] ] ]$;
+  return $|-$ $T. |= [ ( ~ ( ! \ z : al . [ z : al = x : al ] ) ) ==> [ ( ~ ( ! \ z : al . [ z : al = y : al ] ) ) ==> [ [ x : al = y : al ] ==> ( ! \ z : al . [ x : al = y : al ] ) ] ] ]$;
 }

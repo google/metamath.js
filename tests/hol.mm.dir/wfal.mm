@@ -59,5 +59,5 @@ theorem wfal() {
     eqtypri;
   };
 
-  return $|- F. : bool$;
+  return $|-$ $F. : bool$;
 }

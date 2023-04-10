@@ -1266,5 +1266,5 @@ theorem vneulemexp(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     tr;
   };
 
-  return $|- ( ( a v c ) ^ ( b v d ) ) = ( ( a ^ b ) v ( c ^ d ) )$;
+  return $|-$ $( ( a v c ) ^ ( b v d ) ) = ( ( a ^ b ) v ( c ^ d ) )$;
 }

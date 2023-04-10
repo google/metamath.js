@@ -122,5 +122,5 @@ theorem ud3lem3b(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->3 b ) ' ^ ( a v b ) ' ) = 0$;
+  return $|-$ $( ( a ->3 b ) ' ^ ( a v b ) ' ) = 0$;
 }

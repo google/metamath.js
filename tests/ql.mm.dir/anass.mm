@@ -99,5 +99,5 @@ theorem anass(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr1;
   };
 
-  return $|- ( ( a ^ b ) ^ c ) = ( a ^ ( b ^ c ) )$;
+  return $|-$ $( ( a ^ b ) ^ c ) = ( a ^ ( b ^ c ) )$;
 }

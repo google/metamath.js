@@ -49,5 +49,5 @@ theorem negantlem5(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr2;
   };
 
-  return $|- ( a ' ^ c ' ) = ( b ' ^ c ' )$;
+  return $|-$ $( a ' ^ c ' ) = ( b ' ^ c ' )$;
 }

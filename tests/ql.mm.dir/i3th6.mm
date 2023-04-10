@@ -38,5 +38,5 @@ theorem i3th6(wva: $term$ a, wvb: $term$ b) {
     skmp3;
   };
 
-  return $|- ( ( a ->3 ( a ->3 ( a ->3 b ) ) ) ->3 ( a ->3 ( a ->3 b ) ) ) = 1$;
+  return $|-$ $( ( a ->3 ( a ->3 ( a ->3 b ) ) ) ->3 ( a ->3 ( a ->3 b ) ) ) = 1$;
 }

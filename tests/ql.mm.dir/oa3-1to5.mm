@@ -145,5 +145,5 @@ theorem oa3-1to5(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     letr;
   };
 
-  return $|- ( c ^ ( ( b ->1 c ) v ( ( a ->1 c ) ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) ) =< ( b ' ->1 c )$;
+  return $|-$ $( c ^ ( ( b ->1 c ) v ( ( a ->1 c ) ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) ) =< ( b ' ->1 c )$;
 }

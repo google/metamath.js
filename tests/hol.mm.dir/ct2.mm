@@ -35,5 +35,5 @@ theorem ct2(tr: $term$ R, ts: $term$ S, tt: $term$ T) {
     jca;
   };
 
-  return $|- ( T , R ) |= ( T , S )$;
+  return $|-$ $( T , R ) |= ( T , S )$;
 }

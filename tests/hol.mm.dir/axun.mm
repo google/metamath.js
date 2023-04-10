@@ -297,5 +297,5 @@ theorem axun(hal: $type$ al, vx: $var$ x, vy: $var$ y, vz: $var$ z, ta: $term$ A
     syl;
   };
 
-  return $|- T. |= ( ? \ y : ( al -> bool ) . ( ! \ z : al . [ ( ? \ x : ( al -> bool ) . [ ( x : ( al -> bool ) z : al ) /\ ( A x : ( al -> bool ) ) ] ) ==> ( y : ( al -> bool ) z : al ) ] ) )$;
+  return $|-$ $T. |= ( ? \ y : ( al -> bool ) . ( ! \ z : al . [ ( ? \ x : ( al -> bool ) . [ ( x : ( al -> bool ) z : al ) /\ ( A x : ( al -> bool ) ) ] ) ==> ( y : ( al -> bool ) z : al ) ] ) )$;
 }

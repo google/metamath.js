@@ -29,5 +29,5 @@ theorem gomaex3h9(wvq: $term$ q, wvw: $term$ w, wvx: $term$ x) {
     le3tr1;
   };
 
-  return $|- w =< x '$;
+  return $|-$ $w =< x '$;
 }

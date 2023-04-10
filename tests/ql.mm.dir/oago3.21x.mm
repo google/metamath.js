@@ -243,5 +243,5 @@ theorem oago3.21x(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     lebi;
   };
 
-  return $|- ( ( ( ( a ->5 b ) ^ ( b ->5 c ) ) ^ ( c ->5 d ) ) ^ ( d ->5 a ) ) = ( ( ( a == b ) ^ ( b == c ) ) ^ ( c == d ) )$;
+  return $|-$ $( ( ( ( a ->5 b ) ^ ( b ->5 c ) ) ^ ( c ->5 d ) ) ^ ( d ->5 a ) ) = ( ( ( a == b ) ^ ( b == c ) ) ^ ( c == d ) )$;
 }

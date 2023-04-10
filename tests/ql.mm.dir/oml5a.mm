@@ -121,5 +121,5 @@ theorem oml5a(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- ( ( a v b ) ^ ( ( a v b ) ' v ( b ^ c ) ) ) = ( b ^ c )$;
+  return $|-$ $( ( a v b ) ^ ( ( a v b ) ' v ( b ^ c ) ) ) = ( b ^ c )$;
 }

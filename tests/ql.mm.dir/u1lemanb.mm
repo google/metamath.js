@@ -157,5 +157,5 @@ theorem u1lemanb(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->1 b ) ^ b ' ) = ( a ' ^ b ' )$;
+  return $|-$ $( ( a ->1 b ) ^ b ' ) = ( a ' ^ b ' )$;
 }

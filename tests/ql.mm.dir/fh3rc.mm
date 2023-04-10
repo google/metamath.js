@@ -57,5 +57,5 @@ theorem fh3rc(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr1;
   };
 
-  return $|- ( ( c ^ b ) v a ) = ( ( c v a ) ^ ( b v a ) )$;
+  return $|-$ $( ( c ^ b ) v a ) = ( ( c v a ) ^ ( b v a ) )$;
 }

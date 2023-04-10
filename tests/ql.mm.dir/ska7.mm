@@ -22,5 +22,5 @@ theorem ska7(wva: $term$ a, wvb: $term$ b) {
     bi1;
   };
 
-  return $|- ( ( a ^ ( a v b ) ) == a ) = 1$;
+  return $|-$ $( ( a ^ ( a v b ) ) == a ) = 1$;
 }

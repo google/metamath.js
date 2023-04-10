@@ -170,5 +170,5 @@ theorem ni31(wva: $term$ a, wvb: $term$ b) {
     con2;
   };
 
-  return $|- ( a ->3 b ) ' = ( ( ( a v b ' ) ^ ( a v b ) ) ^ ( a ' v ( a ^ b ' ) ) )$;
+  return $|-$ $( a ->3 b ) ' = ( ( ( a v b ' ) ^ ( a v b ) ) ^ ( a ' v ( a ^ b ' ) ) )$;
 }

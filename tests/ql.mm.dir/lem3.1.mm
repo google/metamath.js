@@ -28,5 +28,5 @@ theorem lem3.1(wva: $term$ a, wvb: $term$ b) {
     r3a;
   };
 
-  return $|- a = b$;
+  return $|-$ $a = b$;
 }

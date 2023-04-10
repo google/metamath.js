@@ -348,5 +348,5 @@ theorem gsth(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     df2c1;
   };
 
-  return $|- ( a ^ b ) C c$;
+  return $|-$ $( a ^ b ) C c$;
 }

@@ -1,5 +1,5 @@
 
 axiom tan() {
 
-  return $term /\$;
+  return $term$ $/\$;
 }

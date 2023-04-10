@@ -185,5 +185,5 @@ theorem dp15lemh(wvd: $term$ d, wve: $term$ e, wva0: $term$ a0, wva1: $term$ a1,
     lbtr;
   };
 
-  return $|- ( ( a0 v a1 ) ^ ( ( b0 ^ ( a0 v p0 ) ) v b1 ) ) =< ( ( c0 v c1 ) v ( b1 ^ ( a0 v a1 ) ) )$;
+  return $|-$ $( ( a0 v a1 ) ^ ( ( b0 ^ ( a0 v p0 ) ) v b1 ) ) =< ( ( c0 v c1 ) v ( b1 ^ ( a0 v a1 ) ) )$;
 }

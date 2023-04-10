@@ -62,5 +62,5 @@ theorem 0i1(wva: $term$ a) {
     3tr;
   };
 
-  return $|- ( 0 ->1 a ) = 1$;
+  return $|-$ $( 0 ->1 a ) = 1$;
 }

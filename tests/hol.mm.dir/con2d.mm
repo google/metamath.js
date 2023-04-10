@@ -107,5 +107,5 @@ theorem con2d(tr: $term$ R, ts: $term$ S, tt: $term$ T) {
     mpbir;
   };
 
-  return $|- ( R , T ) |= ( ~ S )$;
+  return $|-$ $( R , T ) |= ( ~ S )$;
 }

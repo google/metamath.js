@@ -70,5 +70,5 @@ theorem womaa(wva: $term$ a, wvb: $term$ b) {
     lebi;
   };
 
-  return $|- ( a ' v ( a ^ ( a ' v ( a ^ b ) ) ) ) = ( a ' v ( a ^ b ) )$;
+  return $|-$ $( a ' v ( a ^ ( a ' v ( a ^ b ) ) ) ) = ( a ' v ( a ^ b ) )$;
 }

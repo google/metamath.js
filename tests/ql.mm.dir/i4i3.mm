@@ -62,5 +62,5 @@ theorem i4i3(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ->4 b ) = ( b ' ->3 a ' )$;
+  return $|-$ $( a ->4 b ) = ( b ' ->3 a ' )$;
 }

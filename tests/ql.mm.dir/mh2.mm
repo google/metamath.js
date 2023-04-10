@@ -29,5 +29,5 @@ theorem mh2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     mh;
   };
 
-  return $|- ( ( a v b ) ^ ( c v d ) ) = ( ( ( a ^ c ) v ( a ^ d ) ) v ( ( b ^ c ) v ( b ^ d ) ) )$;
+  return $|-$ $( ( a v b ) ^ ( c v d ) ) = ( ( ( a ^ c ) v ( a ^ d ) ) v ( ( b ^ c ) v ( b ^ d ) ) )$;
 }

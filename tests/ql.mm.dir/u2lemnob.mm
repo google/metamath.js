@@ -53,5 +53,5 @@ theorem u2lemnob(wva: $term$ a, wvb: $term$ b) {
     con1;
   };
 
-  return $|- ( ( a ->2 b ) ' v b ) = ( a v b )$;
+  return $|-$ $( ( a ->2 b ) ' v b ) = ( a v b )$;
 }

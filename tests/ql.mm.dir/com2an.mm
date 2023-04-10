@@ -62,5 +62,5 @@ theorem com2an(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     comcom5;
   };
 
-  return $|- a C ( b ^ c )$;
+  return $|-$ $a C ( b ^ c )$;
 }

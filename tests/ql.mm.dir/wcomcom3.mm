@@ -23,5 +23,5 @@ theorem wcomcom3(wva: $term$ a, wvb: $term$ b) {
     wcomcom;
   };
 
-  return $|- C ( a ' , b ) = 1$;
+  return $|-$ $C ( a ' , b ) = 1$;
 }

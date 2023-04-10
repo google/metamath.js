@@ -15,5 +15,5 @@ theorem ror(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r5;
   };
 
-  return $|- ( a v c ) = ( b v c )$;
+  return $|-$ $( a v c ) = ( b v c )$;
 }

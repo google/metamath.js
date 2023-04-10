@@ -14,5 +14,5 @@ theorem cm(wva: $term$ a, wvb: $term$ b) {
     ax-r1;
   };
 
-  return $|- b = a$;
+  return $|-$ $b = a$;
 }

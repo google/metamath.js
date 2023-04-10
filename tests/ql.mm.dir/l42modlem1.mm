@@ -147,5 +147,5 @@ theorem l42modlem1(wva: $term$ a, wvb: $term$ b, wvd: $term$ d, wve: $term$ e) {
     3tr1;
   };
 
-  return $|- ( ( ( a v b ) v d ) ^ ( ( a v b ) v e ) ) = ( ( a v b ) v ( ( a v d ) ^ ( b v e ) ) )$;
+  return $|-$ $( ( ( a v b ) v d ) ^ ( ( a v b ) v e ) ) = ( ( a v b ) v ( ( a v d ) ^ ( b v e ) ) )$;
 }

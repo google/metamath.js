@@ -41,5 +41,5 @@ theorem syldan(ta: $term$ A, tr: $term$ R, ts: $term$ S, tt: $term$ T) {
     syl2anc;
   };
 
-  return $|- ( R , S ) |= A$;
+  return $|-$ $( R , S ) |= A$;
 }

@@ -34,5 +34,5 @@ theorem 2bi(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     ax-r2;
   };
 
-  return $|- ( a == c ) = ( b == d )$;
+  return $|-$ $( a == c ) = ( b == d )$;
 }

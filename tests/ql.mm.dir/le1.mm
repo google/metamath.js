@@ -16,5 +16,5 @@ theorem le1(wva: $term$ a) {
     df-le1;
   };
 
-  return $|- a =< 1$;
+  return $|-$ $a =< 1$;
 }

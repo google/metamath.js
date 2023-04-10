@@ -107,5 +107,5 @@ theorem ud4lem0b(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr1;
   };
 
-  return $|- ( a ->4 c ) = ( b ->4 c )$;
+  return $|-$ $( a ->4 c ) = ( b ->4 c )$;
 }

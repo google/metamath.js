@@ -116,5 +116,5 @@ theorem comanb(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     i1com;
   };
 
-  return $|- ( a ^ b ) C ( ( a == c ) ^ ( b == c ) )$;
+  return $|-$ $( a ^ b ) C ( ( a == c ) ^ ( b == c ) )$;
 }

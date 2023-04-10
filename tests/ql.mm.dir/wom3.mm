@@ -41,5 +41,5 @@ theorem wom3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     letr;
   };
 
-  return $|- a =< ( ( a v c ) == ( b v c ) )$;
+  return $|-$ $a =< ( ( a v c ) == ( b v c ) )$;
 }

@@ -101,5 +101,5 @@ theorem u5lem4(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ->5 ( a ->5 ( b ->5 a ) ) ) = ( a ->5 ( b ->5 a ) )$;
+  return $|-$ $( a ->5 ( a ->5 ( b ->5 a ) ) ) = ( a ->5 ( b ->5 a ) )$;
 }

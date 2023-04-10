@@ -48,5 +48,5 @@ theorem orordi(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- ( a v ( b v c ) ) = ( ( a v b ) v ( a v c ) )$;
+  return $|-$ $( a v ( b v c ) ) = ( ( a v b ) v ( a v c ) )$;
 }

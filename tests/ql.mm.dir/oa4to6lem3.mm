@@ -204,5 +204,5 @@ theorem oa4to6lem3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, w
     lbtr;
   };
 
-  return $|- f =< ( e ->1 g )$;
+  return $|-$ $f =< ( e ->1 g )$;
 }

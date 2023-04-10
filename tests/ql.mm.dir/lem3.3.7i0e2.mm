@@ -48,5 +48,5 @@ theorem lem3.3.7i0e2(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ==0 ( a ^ b ) ) = ( ( a ^ b ) ==0 a )$;
+  return $|-$ $( a ==0 ( a ^ b ) ) = ( ( a ^ b ) ==0 a )$;
 }

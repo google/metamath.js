@@ -377,5 +377,5 @@ theorem lem4.6.2e1(wva: $term$ a, wvb: $term$ b) {
     3tr;
   };
 
-  return $|- ( ( a ->1 b ) ^ ( a ' ->1 b ) ) = ( ( a ->1 b ) ^ b )$;
+  return $|-$ $( ( a ->1 b ) ^ ( a ' ->1 b ) ) = ( ( a ->1 b ) ^ b )$;
 }

@@ -47,5 +47,5 @@ theorem or1(wva: $term$ a) {
     ax-r2;
   };
 
-  return $|- ( a v 1 ) = 1$;
+  return $|-$ $( a v 1 ) = 1$;
 }

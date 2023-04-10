@@ -46,5 +46,5 @@ theorem u2lemnonb(wva: $term$ a, wvb: $term$ b) {
     con3;
   };
 
-  return $|- ( ( a ->2 b ) ' v b ' ) = b '$;
+  return $|-$ $( ( a ->2 b ) ' v b ' ) = b '$;
 }

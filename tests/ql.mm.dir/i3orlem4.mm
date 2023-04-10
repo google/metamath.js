@@ -63,5 +63,5 @@ theorem i3orlem4(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lbtr;
   };
 
-  return $|- ( ( a v c ) ' ^ ( b v c ) ) =< ( ( a v c ) ->3 ( b v c ) )$;
+  return $|-$ $( ( a v c ) ' ^ ( b v c ) ) =< ( ( a v c ) ->3 ( b v c ) )$;
 }

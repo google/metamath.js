@@ -126,5 +126,5 @@ theorem u4lemnab(wva: $term$ a, wvb: $term$ b) {
     con1;
   };
 
-  return $|- ( ( a ->4 b ) ' ^ b ) = ( ( ( a v b ' ) ^ ( a ' v b ' ) ) ^ b )$;
+  return $|-$ $( ( a ->4 b ) ' ^ b ) = ( ( ( a v b ' ) ^ ( a ' v b ' ) ) ^ b )$;
 }

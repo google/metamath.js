@@ -74,5 +74,5 @@ theorem u5lem2(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( ( a ->5 b ) ->5 a ) ->5 a ) = ( a v ( ( a ' ^ b ) v ( a ' ^ b ' ) ) )$;
+  return $|-$ $( ( ( a ->5 b ) ->5 a ) ->5 a ) = ( a v ( ( a ' ^ b ) v ( a ' ^ b ' ) ) )$;
 }

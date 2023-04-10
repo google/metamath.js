@@ -30,5 +30,5 @@ theorem le0(wva: $term$ a) {
     df-le1;
   };
 
-  return $|- 0 =< a$;
+  return $|-$ $0 =< a$;
 }

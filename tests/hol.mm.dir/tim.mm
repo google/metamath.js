@@ -1,5 +1,5 @@
 
 axiom tim() {
 
-  return $term ==>$;
+  return $term$ $==>$;
 }

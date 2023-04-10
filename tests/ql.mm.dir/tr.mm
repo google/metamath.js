@@ -17,5 +17,5 @@ theorem tr(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- a = c$;
+  return $|-$ $a = c$;
 }

@@ -63,5 +63,5 @@ theorem u1lemona(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->1 b ) v a ' ) = ( a ' v ( a ^ b ) )$;
+  return $|-$ $( ( a ->1 b ) v a ' ) = ( a ' v ( a ^ b ) )$;
 }

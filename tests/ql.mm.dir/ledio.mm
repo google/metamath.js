@@ -98,5 +98,5 @@ theorem ledio(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lbtr;
   };
 
-  return $|- ( a v ( b ^ c ) ) =< ( ( a v b ) ^ ( a v c ) )$;
+  return $|-$ $( a v ( b ^ c ) ) =< ( ( a v b ) ^ ( a v c ) )$;
 }

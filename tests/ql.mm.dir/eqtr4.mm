@@ -48,5 +48,5 @@ theorem eqtr4(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     letr;
   };
 
-  return $|- ( ( ( a == b ) ^ ( b == c ) ) ^ ( c == d ) ) =< ( a == d )$;
+  return $|-$ $( ( ( a == b ) ^ ( b == c ) ) ^ ( c == d ) ) =< ( a == d )$;
 }

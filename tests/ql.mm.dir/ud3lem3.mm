@@ -552,5 +552,5 @@ theorem ud3lem3(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->3 b ) ->3 ( a v b ) ) = ( a v b )$;
+  return $|-$ $( ( a ->3 b ) ->3 ( a v b ) ) = ( a v b )$;
 }

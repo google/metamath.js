@@ -229,5 +229,5 @@ theorem imval(ta: $term$ A, tb: $term$ B) {
     eqtri;
   };
 
-  return $|- T. |= [ [ A ==> B ] = [ [ A /\ B ] = A ] ]$;
+  return $|-$ $T. |= [ [ A ==> B ] = [ [ A /\ B ] = A ] ]$;
 }

@@ -411,5 +411,5 @@ theorem 3vded21(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lbtr;
   };
 
-  return $|- c =< b$;
+  return $|-$ $c =< b$;
 }

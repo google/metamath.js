@@ -285,5 +285,5 @@ theorem exlimdv(hal: $type$ al, vx: $var$ x, ta: $term$ A, tr: $term$ R, tt: $te
     exlimdv2;
   };
 
-  return $|- ( R , ( ? \ x : al . A ) ) |= T$;
+  return $|-$ $( R , ( ? \ x : al . A ) ) |= T$;
 }

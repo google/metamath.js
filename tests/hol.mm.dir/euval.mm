@@ -278,5 +278,5 @@ theorem euval(hal: $type$ al, vx: $var$ x, vy: $var$ y, tf: $term$ F) {
     eqtri;
   };
 
-  return $|- T. |= [ ( ?! F ) = ( ? \ y : al . ( ! \ x : al . [ ( F x : al ) = [ x : al = y : al ] ] ) ) ]$;
+  return $|-$ $T. |= [ ( ?! F ) = ( ? \ y : al . ( ! \ x : al . [ ( F x : al ) = [ x : al = y : al ] ] ) ) ]$;
 }

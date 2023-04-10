@@ -1,5 +1,5 @@
 
 axiom we() {
 
-  return $wff $;
+  return $wff$ $$;
 }

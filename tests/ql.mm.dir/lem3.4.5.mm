@@ -22,5 +22,5 @@ theorem lem3.4.5(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     2vwomr1a;
   };
 
-  return $|- ( a ->2 ( b v c ) ) = 1$;
+  return $|-$ $( a ->2 ( b v c ) ) = 1$;
 }

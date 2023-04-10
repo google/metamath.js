@@ -93,5 +93,5 @@ theorem ud3lem3c(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->3 b ) ' v ( a v b ) ) = ( a v b )$;
+  return $|-$ $( ( a ->3 b ) ' v ( a v b ) ) = ( a v b )$;
 }

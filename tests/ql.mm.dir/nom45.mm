@@ -85,5 +85,5 @@ theorem nom45(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( ( a v b ) ->5 b ) = ( a ->2 b )$;
+  return $|-$ $( ( a v b ) ->5 b ) = ( a ->2 b )$;
 }

@@ -1,5 +1,5 @@
 
 axiom tfal() {
 
-  return $term F.$;
+  return $term$ $F.$;
 }

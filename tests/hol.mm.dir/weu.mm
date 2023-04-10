@@ -136,5 +136,5 @@ theorem weu(hal: $type$ al) {
     eqtypri;
   };
 
-  return $|- ?! : ( ( al -> bool ) -> bool )$;
+  return $|-$ $?! : ( ( al -> bool ) -> bool )$;
 }

@@ -76,5 +76,5 @@ theorem nomb41(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ==4 b ) = ( b ==1 a )$;
+  return $|-$ $( a ==4 b ) = ( b ==1 a )$;
 }

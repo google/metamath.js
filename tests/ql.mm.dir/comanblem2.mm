@@ -299,5 +299,5 @@ theorem comanblem2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- ( ( a ^ b ) ^ ( ( a == c ) ^ ( b == c ) ) ) = ( ( a ^ b ) ^ c )$;
+  return $|-$ $( ( a ^ b ) ^ ( ( a == c ) ^ ( b == c ) ) ) = ( ( a ^ b ) ^ c )$;
 }

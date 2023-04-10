@@ -681,5 +681,5 @@ theorem dfan2(ta: $term$ A, tb: $term$ B) {
     dedi;
   };
 
-  return $|- T. |= [ [ A /\ B ] = ( A , B ) ]$;
+  return $|-$ $T. |= [ [ A /\ B ] = ( A , B ) ]$;
 }

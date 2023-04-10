@@ -27,5 +27,5 @@ theorem leao4(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     letr;
   };
 
-  return $|- ( b ^ a ) =< ( c v a )$;
+  return $|-$ $( b ^ a ) =< ( c v a )$;
 }

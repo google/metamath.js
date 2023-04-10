@@ -27,5 +27,5 @@ theorem syl2anc(ta: $term$ A, tr: $term$ R, ts: $term$ S, tt: $term$ T) {
     syl;
   };
 
-  return $|- R |= A$;
+  return $|-$ $R |= A$;
 }

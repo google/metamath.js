@@ -114,5 +114,5 @@ theorem wledi(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     wbltr;
   };
 
-  return $|- ( ( ( a ^ b ) v ( a ^ c ) ) =<2 ( a ^ ( b v c ) ) ) = 1$;
+  return $|-$ $( ( ( a ^ b ) v ( a ^ c ) ) =<2 ( a ^ ( b v c ) ) ) = 1$;
 }

@@ -137,5 +137,5 @@ theorem i3id(wva: $term$ a) {
     3tr1;
   };
 
-  return $|- ( a ->3 a ) = 1$;
+  return $|-$ $( a ->3 a ) = 1$;
 }

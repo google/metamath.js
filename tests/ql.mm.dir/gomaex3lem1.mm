@@ -109,5 +109,5 @@ theorem gomaex3lem1(wvc: $term$ c, wvd: $term$ d) {
     3tr2;
   };
 
-  return $|- ( c v ( c v d ) ' ) = d '$;
+  return $|-$ $( c v ( c v d ) ' ) = d '$;
 }

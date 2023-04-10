@@ -28,5 +28,5 @@ theorem wdka4o(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     id5id0;
   };
 
-  return $|- ( ( a v c ) ==0 ( b v c ) ) = 1$;
+  return $|-$ $( ( a v c ) ==0 ( b v c ) ) = 1$;
 }

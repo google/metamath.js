@@ -114,5 +114,5 @@ theorem u5lemoa(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->5 b ) v a ) = ( a v ( ( a ' ^ b ) v ( a ' ^ b ' ) ) )$;
+  return $|-$ $( ( a ->5 b ) v a ) = ( a v ( ( a ' ^ b ) v ( a ' ^ b ' ) ) )$;
 }

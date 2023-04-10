@@ -96,5 +96,5 @@ theorem ud5lem0b(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr1;
   };
 
-  return $|- ( a ->5 c ) = ( b ->5 c )$;
+  return $|-$ $( a ->5 c ) = ( b ->5 c )$;
 }

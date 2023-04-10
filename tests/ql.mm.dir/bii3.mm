@@ -44,5 +44,5 @@ theorem bii3(wva: $term$ a, wvb: $term$ b) {
     lei3;
   };
 
-  return $|- ( ( a == b ) ->3 ( a ->3 b ) ) = 1$;
+  return $|-$ $( ( a == b ) ->3 ( a ->3 b ) ) = 1$;
 }

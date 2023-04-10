@@ -157,5 +157,5 @@ theorem k1-4(wvc: $term$ c, wvx: $term$ x) {
     con1;
   };
 
-  return $|- ( x v ( x ' ^ c ) ) = c$;
+  return $|-$ $( x v ( x ' ^ c ) ) = c$;
 }

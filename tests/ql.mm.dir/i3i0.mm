@@ -36,5 +36,5 @@ theorem i3i0(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ' v b ) = 1$;
+  return $|-$ $( a ' v b ) = 1$;
 }

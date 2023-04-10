@@ -61,5 +61,5 @@ theorem wle2an(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     wletr;
   };
 
-  return $|- ( ( a ^ c ) =<2 ( b ^ d ) ) = 1$;
+  return $|-$ $( ( a ^ c ) =<2 ( b ^ d ) ) = 1$;
 }

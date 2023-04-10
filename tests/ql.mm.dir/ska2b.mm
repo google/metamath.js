@@ -51,5 +51,5 @@ theorem ska2b(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     bi1;
   };
 
-  return $|- ( ( ( a v c ) == ( b v c ) ) == ( ( a ' ^ c ' ) ' == ( b ' ^ c ' ) ' ) ) = 1$;
+  return $|-$ $( ( ( a v c ) == ( b v c ) ) == ( ( a ' ^ c ' ) ' == ( b ' ^ c ' ) ' ) ) = 1$;
 }

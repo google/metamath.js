@@ -30,5 +30,5 @@ theorem bina5(wva: $term$ a, wvb: $term$ b) {
     lei3;
   };
 
-  return $|- ( b ->3 ( a v a ' ) ) = 1$;
+  return $|-$ $( b ->3 ( a v a ' ) ) = 1$;
 }

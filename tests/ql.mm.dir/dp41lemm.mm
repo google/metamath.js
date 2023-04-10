@@ -370,5 +370,5 @@ theorem dp41lemm(wvp: $term$ p, wva0: $term$ a0, wva1: $term$ a1, wva2: $term$ a
     lbtr;
   };
 
-  return $|- c2 =< ( c0 v c1 )$;
+  return $|-$ $c2 =< ( c0 v c1 )$;
 }

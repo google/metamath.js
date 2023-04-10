@@ -176,5 +176,5 @@ theorem df2i3(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ->3 b ) = ( ( a ' ^ b ' ) v ( ( a ' v b ) ^ ( a v ( a ' ^ b ) ) ) )$;
+  return $|-$ $( a ->3 b ) = ( ( a ' ^ b ' ) v ( ( a ' v b ) ^ ( a v ( a ' ^ b ) ) ) )$;
 }

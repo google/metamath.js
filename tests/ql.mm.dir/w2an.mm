@@ -34,5 +34,5 @@ theorem w2an(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     wr2;
   };
 
-  return $|- ( ( a ^ c ) == ( b ^ d ) ) = 1$;
+  return $|-$ $( ( a ^ c ) == ( b ^ d ) ) = 1$;
 }

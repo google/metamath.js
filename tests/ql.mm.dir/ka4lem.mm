@@ -104,5 +104,5 @@ theorem ka4lem(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- ( ( a ^ b ) ' v ( ( a ^ c ) == ( b ^ c ) ) ) = 1$;
+  return $|-$ $( ( a ^ b ) ' v ( ( a ^ c ) == ( b ^ c ) ) ) = 1$;
 }

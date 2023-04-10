@@ -78,5 +78,5 @@ theorem u2lemob(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->2 b ) v b ) = ( ( a ' ^ b ' ) v b )$;
+  return $|-$ $( ( a ->2 b ) v b ) = ( ( a ' ^ b ' ) v b )$;
 }

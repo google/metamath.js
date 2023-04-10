@@ -35,5 +35,5 @@ theorem wdf-le2(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a v b ) == b ) = 1$;
+  return $|-$ $( ( a v b ) == b ) = 1$;
 }

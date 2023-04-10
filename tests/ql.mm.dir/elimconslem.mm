@@ -262,5 +262,5 @@ theorem elimconslem(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lbtr;
   };
 
-  return $|- a =< ( b v c ' )$;
+  return $|-$ $a =< ( b v c ' )$;
 }

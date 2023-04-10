@@ -40,5 +40,5 @@ theorem oadist2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     oadist2a;
   };
 
-  return $|- ( ( a ->2 b ) ^ ( d v ( ( b v c ) ->2 ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) ) = ( ( ( a ->2 b ) ^ d ) v ( ( a ->2 b ) ^ ( ( b v c ) ->2 ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) )$;
+  return $|-$ $( ( a ->2 b ) ^ ( d v ( ( b v c ) ->2 ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) ) = ( ( ( a ->2 b ) ^ d ) v ( ( a ->2 b ) ^ ( ( b v c ) ->2 ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) )$;
 }

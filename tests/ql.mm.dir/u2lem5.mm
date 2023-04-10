@@ -65,5 +65,5 @@ theorem u2lem5(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ->2 ( a ->2 b ) ) = ( a ->2 b )$;
+  return $|-$ $( a ->2 ( a ->2 b ) ) = ( a ->2 b )$;
 }

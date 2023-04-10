@@ -37,5 +37,5 @@ theorem r3b(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     wed;
   };
 
-  return $|- a = b$;
+  return $|-$ $a = b$;
 }

@@ -289,5 +289,5 @@ theorem alnex(hal: $type$ al, vx: $var$ x, ta: $term$ A) {
     dedi;
   };
 
-  return $|- T. |= [ ( ! \ x : al . ( ~ A ) ) = ( ~ ( ? \ x : al . A ) ) ]$;
+  return $|-$ $T. |= [ ( ! \ x : al . ( ~ A ) ) = ( ~ ( ? \ x : al . A ) ) ]$;
 }

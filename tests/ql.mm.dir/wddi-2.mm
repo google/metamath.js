@@ -29,5 +29,5 @@ theorem wddi-2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     wdid0id2;
   };
 
-  return $|- ( ( a ^ ( b v c ) ) ==2 ( ( a ^ b ) v ( a ^ c ) ) ) = 1$;
+  return $|-$ $( ( a ^ ( b v c ) ) ==2 ( ( a ^ b ) v ( a ^ c ) ) ) = 1$;
 }

@@ -31,5 +31,5 @@ theorem i3abs2(wva: $term$ a, wvb: $term$ b) {
     wwbmp;
   };
 
-  return $|- ( a ->3 ( a ->3 b ) ) = 1$;
+  return $|-$ $( a ->3 ( a ->3 b ) ) = 1$;
 }

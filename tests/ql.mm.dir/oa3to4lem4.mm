@@ -85,5 +85,5 @@ theorem oa3to4lem4(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, w
     letr;
   };
 
-  return $|- ( a ^ ( b v ( d ^ ( ( a ^ c ) v ( b ^ d ) ) ) ) ) =< g$;
+  return $|-$ $( a ^ ( b v ( d ^ ( ( a ^ c ) v ( b ^ d ) ) ) ) ) =< g$;
 }

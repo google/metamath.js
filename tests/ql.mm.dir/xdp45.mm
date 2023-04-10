@@ -1749,5 +1749,5 @@ theorem xdp45(wvd: $term$ d, wve: $term$ e, wvp: $term$ p, wva0: $term$ a0, wva1
     lbtr;
   };
 
-  return $|- ( ( a0 v a1 ) ^ ( ( b0 ^ ( a0 v p0 ) ) v b1 ) ) =< ( ( c0 v c1 ) v ( b1 ^ ( a0 v a1 ) ) )$;
+  return $|-$ $( ( a0 v a1 ) ^ ( ( b0 ^ ( a0 v p0 ) ) v b1 ) ) =< ( ( c0 v c1 ) v ( b1 ^ ( a0 v a1 ) ) )$;
 }

@@ -255,5 +255,5 @@ theorem sa5(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     le3tr1;
   };
 
-  return $|- ( b ' ->1 c ) =< ( ( a ' ->1 c ) v c )$;
+  return $|-$ $( b ' ->1 c ) =< ( ( a ' ->1 c ) v c )$;
 }

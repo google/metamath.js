@@ -39,5 +39,5 @@ theorem oagen2b(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve:
     letr;
   };
 
-  return $|- ( d ^ e ) =< ( a ->2 c )$;
+  return $|-$ $( d ^ e ) =< ( a ->2 c )$;
 }

@@ -77,5 +77,5 @@ theorem pm2.21(ta: $term$ A) {
     syl;
   };
 
-  return $|- F. |= A$;
+  return $|-$ $F. |= A$;
 }

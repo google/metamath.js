@@ -12,5 +12,5 @@ theorem lem4.6.6i1j2(wva: $term$ a, wvb: $term$ b) {
     u12lem;
   };
 
-  return $|- ( ( a ->1 b ) v ( a ->2 b ) ) = ( a ->0 b )$;
+  return $|-$ $( ( a ->1 b ) v ( a ->2 b ) ) = ( a ->0 b )$;
 }

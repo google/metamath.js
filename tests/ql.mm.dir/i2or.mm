@@ -116,5 +116,5 @@ theorem i2or(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lbtr;
   };
 
-  return $|- ( ( a ->2 c ) v ( b ->2 c ) ) =< ( ( a ^ b ) ->2 c )$;
+  return $|-$ $( ( a ->2 c ) v ( b ->2 c ) ) =< ( ( a ^ b ) ->2 c )$;
 }

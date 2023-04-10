@@ -87,5 +87,5 @@ theorem i3orlem6(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr2;
   };
 
-  return $|- ( ( a ->3 b ) ' v ( ( a v c ) ->3 ( b v c ) ) ) = ( ( ( a v b ) ^ ( a ' ->3 b ' ) ) v ( ( a v c ) ->3 ( b v c ) ) )$;
+  return $|-$ $( ( a ->3 b ) ' v ( ( a v c ) ->3 ( b v c ) ) ) = ( ( ( a v b ) ^ ( a ' ->3 b ' ) ) v ( ( a v c ) ->3 ( b v c ) ) )$;
 }

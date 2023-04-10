@@ -1,5 +1,5 @@
 
 axiom tat() {
 
-  return $term @$;
+  return $term$ $@$;
 }

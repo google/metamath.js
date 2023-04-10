@@ -213,5 +213,5 @@ theorem ax7(hal: $type$ al, vx: $var$ x, vy: $var$ y, tr: $term$ R) {
     ex;
   };
 
-  return $|- T. |= [ ( ! \ x : al . ( ! \ y : al . R ) ) ==> ( ! \ y : al . ( ! \ x : al . R ) ) ]$;
+  return $|-$ $T. |= [ ( ! \ x : al . ( ! \ y : al . R ) ) ==> ( ! \ y : al . ( ! \ x : al . R ) ) ]$;
 }

@@ -770,5 +770,5 @@ theorem ud4lem1c(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->4 b ) ' v ( b ->4 a ) ) = ( a v b ' )$;
+  return $|-$ $( ( a ->4 b ) ' v ( b ->4 a ) ) = ( a v b ' )$;
 }

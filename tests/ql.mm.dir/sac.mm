@@ -46,5 +46,5 @@ theorem sac(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr2;
   };
 
-  return $|- ( a ' ->1 c ) = ( b ' ->1 c )$;
+  return $|-$ $( a ' ->1 c ) = ( b ' ->1 c )$;
 }

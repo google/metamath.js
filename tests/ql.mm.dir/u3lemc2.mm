@@ -17,5 +17,5 @@ theorem u3lemc2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     com2i3;
   };
 
-  return $|- a C ( b ->3 c )$;
+  return $|-$ $a C ( b ->3 c )$;
 }

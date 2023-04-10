@@ -5,5 +5,5 @@ axiom wrep(hal: $type$ al, hbe: $type$ be, ta: $term$ A, tb: $term$ B, tf: $term
   assume ax-tdef.3: $|- T. |= ( F B )$;
   assume ax-tdef.4: $|- typedef be ( A , R ) F$;
 
-  return $|- R : ( be -> al )$;
+  return $|-$ $R : ( be -> al )$;
 }

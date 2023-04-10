@@ -108,5 +108,5 @@ theorem 1oath1i1u(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr2;
   };
 
-  return $|- ( ( a ->1 c ) ^ ( ( ( a ->1 c ) ^ ( b ->1 c ) ) ' ->1 ( ( a ' ->1 c ) ^ ( b ' ->1 c ) ) ) ) = ( ( a ->1 c ) ^ ( b ->1 c ) )$;
+  return $|-$ $( ( a ->1 c ) ^ ( ( ( a ->1 c ) ^ ( b ->1 c ) ) ' ->1 ( ( a ' ->1 c ) ^ ( b ' ->1 c ) ) ) ) = ( ( a ->1 c ) ^ ( b ->1 c ) )$;
 }

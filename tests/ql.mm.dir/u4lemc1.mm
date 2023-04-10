@@ -82,5 +82,5 @@ theorem u4lemc1(wva: $term$ a, wvb: $term$ b) {
     cbtr;
   };
 
-  return $|- b C ( a ->4 b )$;
+  return $|-$ $b C ( a ->4 b )$;
 }

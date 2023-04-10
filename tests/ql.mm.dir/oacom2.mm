@@ -70,5 +70,5 @@ theorem oacom2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     oacom;
   };
 
-  return $|- d C ( ( a ->2 b ) ^ ( a ->2 c ) )$;
+  return $|-$ $d C ( ( a ->2 b ) ^ ( a ->2 c ) )$;
 }

@@ -31,5 +31,5 @@ theorem lel2or(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lbtr;
   };
 
-  return $|- ( a v c ) =< b$;
+  return $|-$ $( a v c ) =< b$;
 }

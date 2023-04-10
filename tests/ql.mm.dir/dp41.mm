@@ -47,5 +47,5 @@ theorem dp41(wva0: $term$ a0, wva1: $term$ a1, wva2: $term$ a2, wvb0: $term$ b0,
     dp41lemm;
   };
 
-  return $|- c2 =< ( c0 v c1 )$;
+  return $|-$ $c2 =< ( c0 v c1 )$;
 }

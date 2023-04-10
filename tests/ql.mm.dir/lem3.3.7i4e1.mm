@@ -231,5 +231,5 @@ theorem lem3.3.7i4e1(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ->4 ( a ^ b ) ) = ( a ==4 ( a ^ b ) )$;
+  return $|-$ $( a ->4 ( a ^ b ) ) = ( a ==4 ( a ^ b ) )$;
 }

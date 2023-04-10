@@ -31,5 +31,5 @@ theorem bina4(wva: $term$ a, wvb: $term$ b) {
     lei3;
   };
 
-  return $|- ( b ->3 ( a v b ) ) = 1$;
+  return $|-$ $( b ->3 ( a v b ) ) = 1$;
 }

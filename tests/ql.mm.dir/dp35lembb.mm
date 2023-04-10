@@ -111,5 +111,5 @@ theorem dp35lembb(wvp: $term$ p, wva0: $term$ a0, wva1: $term$ a1, wva2: $term$ 
     lbtr;
   };
 
-  return $|- ( b0 ^ ( a0 v p0 ) ) =< ( b0 ^ ( b1 v ( ( a0 v a1 ) ^ ( c0 v c1 ) ) ) )$;
+  return $|-$ $( b0 ^ ( a0 v p0 ) ) =< ( b0 ^ ( b1 v ( ( a0 v a1 ) ^ ( c0 v c1 ) ) ) )$;
 }

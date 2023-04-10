@@ -295,5 +295,5 @@ theorem wwfh2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- ( ( b ^ ( a v c ) ) == ( ( b ^ a ) v ( b ^ c ) ) ) = 1$;
+  return $|-$ $( ( b ^ ( a v c ) ) == ( ( b ^ a ) v ( b ^ c ) ) ) = 1$;
 }

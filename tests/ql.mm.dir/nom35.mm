@@ -33,5 +33,5 @@ theorem nom35(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ^ b ) == a ) = ( a ->1 b )$;
+  return $|-$ $( ( a ^ b ) == a ) = ( a ->1 b )$;
 }

@@ -63,5 +63,5 @@ theorem u4lemnaa(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->4 b ) ' ^ a ) = ( a ^ b ' )$;
+  return $|-$ $( ( a ->4 b ) ' ^ a ) = ( a ^ b ' )$;
 }

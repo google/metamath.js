@@ -52,5 +52,5 @@ theorem wlan(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     ax-r2;
   };
 
-  return $|- ( ( c ^ a ) == ( c ^ b ) ) = 1$;
+  return $|-$ $( ( c ^ a ) == ( c ^ b ) ) = 1$;
 }

@@ -58,5 +58,5 @@ theorem negantlem1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     comcom6;
   };
 
-  return $|- a C ( b ->1 c )$;
+  return $|-$ $a C ( b ->1 c )$;
 }

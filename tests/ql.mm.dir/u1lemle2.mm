@@ -157,5 +157,5 @@ theorem u1lemle2(wva: $term$ a, wvb: $term$ b) {
     df2le1;
   };
 
-  return $|- a =< b$;
+  return $|-$ $a =< b$;
 }

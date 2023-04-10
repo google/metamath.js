@@ -19,5 +19,5 @@ theorem wcomorr(wva: $term$ a, wvb: $term$ b) {
     wlecom;
   };
 
-  return $|- C ( a , ( a v b ) ) = 1$;
+  return $|-$ $C ( a , ( a v b ) ) = 1$;
 }

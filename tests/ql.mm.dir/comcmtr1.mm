@@ -76,5 +76,5 @@ theorem comcmtr1(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- C ( a , b ) = 1$;
+  return $|-$ $C ( a , b ) = 1$;
 }

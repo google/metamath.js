@@ -125,5 +125,5 @@ theorem wql2lem5(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( ( b ' ^ ( a v b ) ) ->2 a ' ) = 1$;
+  return $|-$ $( ( b ' ^ ( a v b ) ) ->2 a ' ) = 1$;
 }

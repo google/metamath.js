@@ -245,5 +245,5 @@ theorem comcom(wva: $term$ a, wvb: $term$ b) {
     df-c1;
   };
 
-  return $|- b C a$;
+  return $|-$ $b C a$;
 }

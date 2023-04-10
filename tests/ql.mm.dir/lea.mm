@@ -34,5 +34,5 @@ theorem lea(wva: $term$ a, wvb: $term$ b) {
     df-le1;
   };
 
-  return $|- ( a ^ b ) =< a$;
+  return $|-$ $( a ^ b ) =< a$;
 }

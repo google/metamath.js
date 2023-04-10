@@ -154,5 +154,5 @@ theorem gomaex3lem5(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, 
     go2n6;
   };
 
-  return $|- ( ( ( g v h ) ^ ( i v j ) ) ^ ( ( ( k v m ) ^ ( n v u ) ) ^ ( ( w v x ) ^ ( y v z ) ) ) ) =< ( h v i )$;
+  return $|-$ $( ( ( g v h ) ^ ( i v j ) ) ^ ( ( ( k v m ) ^ ( n v u ) ) ^ ( ( w v x ) ^ ( y v z ) ) ) ) =< ( h v i )$;
 }

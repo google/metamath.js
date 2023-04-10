@@ -316,5 +316,5 @@ theorem lem3.3.7i3e2(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ==3 ( a ^ b ) ) = ( ( a ^ b ) ==3 a )$;
+  return $|-$ $( a ==3 ( a ^ b ) ) = ( ( a ^ b ) ==3 a )$;
 }

@@ -19,5 +19,5 @@ theorem comorr(wva: $term$ a, wvb: $term$ b) {
     lecom;
   };
 
-  return $|- a C ( a v b )$;
+  return $|-$ $a C ( a v b )$;
 }

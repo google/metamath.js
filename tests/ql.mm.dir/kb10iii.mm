@@ -112,5 +112,5 @@ theorem kb10iii(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lecon2;
   };
 
-  return $|- c ' =< ( a ->1 b )$;
+  return $|-$ $c ' =< ( a ->1 b )$;
 }

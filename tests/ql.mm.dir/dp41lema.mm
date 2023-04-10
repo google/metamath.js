@@ -84,5 +84,5 @@ theorem dp41lema(wvp: $term$ p, wva0: $term$ a0, wva1: $term$ a1, wva2: $term$ a
     bltr;
   };
 
-  return $|- ( ( a0 v b0 ) ^ ( a1 v b1 ) ) =< ( ( a0 v b1 ) v ( c2 ^ ( c0 v c1 ) ) )$;
+  return $|-$ $( ( a0 v b0 ) ^ ( a1 v b1 ) ) =< ( ( a0 v b1 ) v ( c2 ^ ( c0 v c1 ) ) )$;
 }

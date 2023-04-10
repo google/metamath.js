@@ -108,5 +108,5 @@ theorem oagen1b(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve:
     3tr2;
   };
 
-  return $|- ( d ^ ( e v ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) = ( d ^ ( a ->2 c ) )$;
+  return $|-$ $( d ^ ( e v ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) = ( d ^ ( a ->2 c ) )$;
 }

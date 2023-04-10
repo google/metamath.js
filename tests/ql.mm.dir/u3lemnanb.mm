@@ -53,5 +53,5 @@ theorem u3lemnanb(wva: $term$ a, wvb: $term$ b) {
     con1;
   };
 
-  return $|- ( ( a ->3 b ) ' ^ b ' ) = ( a ^ b ' )$;
+  return $|-$ $( ( a ->3 b ) ' ^ b ' ) = ( a ^ b ' )$;
 }

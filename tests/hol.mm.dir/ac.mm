@@ -340,5 +340,5 @@ theorem ac(hal: $type$ al, ta: $term$ A, tf: $term$ F) {
     mpd;
   };
 
-  return $|- ( F A ) |= ( F ( @ F ) )$;
+  return $|-$ $( F A ) |= ( F ( @ F ) )$;
 }

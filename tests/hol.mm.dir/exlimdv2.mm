@@ -291,5 +291,5 @@ theorem exlimdv2(hal: $type$ al, vx: $var$ x, tf: $term$ F, tr: $term$ R, tt: $t
     mpd;
   };
 
-  return $|- ( R , ( ? F ) ) |= T$;
+  return $|-$ $( R , ( ? F ) ) |= T$;
 }

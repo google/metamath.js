@@ -61,5 +61,5 @@ theorem wle2or(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     wletr;
   };
 
-  return $|- ( ( a v c ) =<2 ( b v d ) ) = 1$;
+  return $|-$ $( ( a v c ) =<2 ( b v d ) ) = 1$;
 }

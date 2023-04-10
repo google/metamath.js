@@ -127,5 +127,5 @@ theorem eximdv(hal: $type$ al, vx: $var$ x, ta: $term$ A, tb: $term$ B, tr: $ter
     exlimd;
   };
 
-  return $|- ( R , ( ? \ x : al . A ) ) |= ( ? \ x : al . B )$;
+  return $|-$ $( R , ( ? \ x : al . A ) ) |= ( ? \ x : al . B )$;
 }

@@ -64,5 +64,5 @@ theorem wbctr(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     wdf-c1;
   };
 
-  return $|- C ( a , c ) = 1$;
+  return $|-$ $C ( a , c ) = 1$;
 }

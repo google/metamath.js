@@ -1078,5 +1078,5 @@ theorem i3bi(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( ( a ->3 b ) ^ ( b ->3 a ) ) = ( a == b )$;
+  return $|-$ $( ( a ->3 b ) ^ ( b ->3 a ) ) = ( a == b )$;
 }

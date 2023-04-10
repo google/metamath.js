@@ -196,5 +196,5 @@ theorem ud5lem3c(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->5 b ) ' ^ ( a v ( a ' ^ b ) ) ' ) = ( ( ( a v b ) ^ ( a v b ' ) ) ^ a ' )$;
+  return $|-$ $( ( a ->5 b ) ' ^ ( a v ( a ' ^ b ) ) ' ) = ( ( ( a v b ) ^ ( a v b ' ) ) ^ a ' )$;
 }

@@ -4,5 +4,5 @@ axiom ax-oa6(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve: $t
   assume oal6.2: $|- c =< d '$;
   assume oal6.3: $|- e =< f '$;
 
-  return $|- ( ( ( a v b ) ^ ( c v d ) ) ^ ( e v f ) ) =< ( b v ( a ^ ( c v ( ( ( a v c ) ^ ( b v d ) ) ^ ( ( ( a v e ) ^ ( b v f ) ) v ( ( c v e ) ^ ( d v f ) ) ) ) ) ) )$;
+  return $|-$ $( ( ( a v b ) ^ ( c v d ) ) ^ ( e v f ) ) =< ( b v ( a ^ ( c v ( ( ( a v c ) ^ ( b v d ) ) ^ ( ( ( a v e ) ^ ( b v f ) ) v ( ( c v e ) ^ ( d v f ) ) ) ) ) ) )$;
 }

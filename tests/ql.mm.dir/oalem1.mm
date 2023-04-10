@@ -168,5 +168,5 @@ theorem oalem1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lbtr;
   };
 
-  return $|- ( ( b v c ) v ( ( b v c ) ' ^ ( ( a ->2 b ) v ( ( a ->2 c ) ^ ( ( b v c ) ' v ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) ) ) ) =< ( a ->2 ( b v c ) )$;
+  return $|-$ $( ( b v c ) v ( ( b v c ) ' ^ ( ( a ->2 b ) v ( ( a ->2 c ) ^ ( ( b v c ) ' v ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) ) ) ) =< ( a ->2 ( b v c ) )$;
 }

@@ -62,5 +62,5 @@ theorem nom60(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( b ==0 ( a v b ) ) = ( a ->2 b )$;
+  return $|-$ $( b ==0 ( a v b ) ) = ( a ->2 b )$;
 }

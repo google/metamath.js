@@ -53,5 +53,5 @@ theorem u4lemnanb(wva: $term$ a, wvb: $term$ b) {
     con1;
   };
 
-  return $|- ( ( a ->4 b ) ' ^ b ' ) = ( a ^ b ' )$;
+  return $|-$ $( ( a ->4 b ) ' ^ b ' ) = ( a ^ b ' )$;
 }

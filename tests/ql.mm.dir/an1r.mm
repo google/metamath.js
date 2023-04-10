@@ -26,5 +26,5 @@ theorem an1r(wva: $term$ a) {
     ax-r2;
   };
 
-  return $|- ( 1 ^ a ) = a$;
+  return $|-$ $( 1 ^ a ) = a$;
 }

@@ -103,5 +103,5 @@ theorem u3lemnonb(wva: $term$ a, wvb: $term$ b) {
     con1;
   };
 
-  return $|- ( ( a ->3 b ) ' v b ' ) = ( ( a v b ' ) ^ ( a ' v b ' ) )$;
+  return $|-$ $( ( a ->3 b ) ' v b ' ) = ( ( a v b ' ) ^ ( a ' v b ' ) )$;
 }

@@ -385,5 +385,5 @@ theorem orval(vx: $var$ x, ta: $term$ A, tb: $term$ B) {
     eqtri;
   };
 
-  return $|- T. |= [ [ A \/ B ] = ( ! \ x : bool . [ [ A ==> x : bool ] ==> [ [ B ==> x : bool ] ==> x : bool ] ] ) ]$;
+  return $|-$ $T. |= [ [ A \/ B ] = ( ! \ x : bool . [ [ A ==> x : bool ] ==> [ [ B ==> x : bool ] ==> x : bool ] ] ) ]$;
 }

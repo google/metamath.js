@@ -106,5 +106,5 @@ theorem com3ii(wva: $term$ a, wvb: $term$ b) {
     ax-r1;
   };
 
-  return $|- ( a ^ ( a ' v b ) ) = ( a ^ b )$;
+  return $|-$ $( a ^ ( a ' v b ) ) = ( a ^ b )$;
 }

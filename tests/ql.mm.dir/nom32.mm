@@ -40,5 +40,5 @@ theorem nom32(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ^ b ) ==2 a ) = ( a ->1 b )$;
+  return $|-$ $( ( a ^ b ) ==2 a ) = ( a ->1 b )$;
 }

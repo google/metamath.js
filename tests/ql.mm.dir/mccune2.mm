@@ -167,5 +167,5 @@ theorem mccune2(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a v ( ( a ' ^ ( ( a v b ' ) ^ ( a v b ) ) ) v ( a ' ^ ( ( a ' ^ b ) v ( a ' ^ b ' ) ) ) ) ) = 1$;
+  return $|-$ $( a v ( ( a ' ^ ( ( a v b ' ) ^ ( a v b ) ) ) v ( a ' ^ ( ( a ' ^ b ) v ( a ' ^ b ' ) ) ) ) ) = 1$;
 }

@@ -292,5 +292,5 @@ theorem bi1o1a(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a == b ) = ( ( a ->1 ( a ^ b ) ) ^ ( ( a v b ) ->1 a ) )$;
+  return $|-$ $( a == b ) = ( ( a ->1 ( a ^ b ) ) ^ ( ( a v b ) ->1 a ) )$;
 }

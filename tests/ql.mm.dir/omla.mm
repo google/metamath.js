@@ -107,5 +107,5 @@ theorem omla(wva: $term$ a, wvb: $term$ b) {
     con1;
   };
 
-  return $|- ( a ^ ( a ' v ( a ^ b ) ) ) = ( a ^ b )$;
+  return $|-$ $( a ^ ( a ' v ( a ^ b ) ) ) = ( a ^ b )$;
 }

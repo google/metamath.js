@@ -62,5 +62,5 @@ theorem nom30(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ^ b ) ==0 a ) = ( a ->1 b )$;
+  return $|-$ $( ( a ^ b ) ==0 a ) = ( a ->1 b )$;
 }

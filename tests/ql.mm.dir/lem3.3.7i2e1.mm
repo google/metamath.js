@@ -137,5 +137,5 @@ theorem lem3.3.7i2e1(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ->2 ( a ^ b ) ) = ( a ==2 ( a ^ b ) )$;
+  return $|-$ $( a ->2 ( a ^ b ) ) = ( a ==2 ( a ^ b ) )$;
 }

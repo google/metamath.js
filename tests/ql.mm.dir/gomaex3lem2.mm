@@ -130,5 +130,5 @@ theorem gomaex3lem2(wve: $term$ e, wvf: $term$ f) {
     ax-r2;
   };
 
-  return $|- ( ( e v f ) ' v f ) = e '$;
+  return $|-$ $( ( e v f ) ' v f ) = e '$;
 }

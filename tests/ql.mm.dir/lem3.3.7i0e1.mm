@@ -183,5 +183,5 @@ theorem lem3.3.7i0e1(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ->0 ( a ^ b ) ) = ( a ==0 ( a ^ b ) )$;
+  return $|-$ $( a ->0 ( a ^ b ) ) = ( a ==0 ( a ^ b ) )$;
 }

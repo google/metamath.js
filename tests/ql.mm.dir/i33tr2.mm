@@ -27,5 +27,5 @@ theorem i33tr2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     i33tr1;
   };
 
-  return $|- ( c ->3 d ) = 1$;
+  return $|-$ $( c ->3 d ) = 1$;
 }

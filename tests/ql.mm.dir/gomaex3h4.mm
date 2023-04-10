@@ -54,5 +54,5 @@ theorem gomaex3h4(wvc: $term$ c, wvd: $term$ d, wvj: $term$ j, wvk: $term$ k, wv
     le3tr1;
   };
 
-  return $|- j =< k '$;
+  return $|-$ $j =< k '$;
 }

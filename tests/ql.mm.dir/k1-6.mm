@@ -136,5 +136,5 @@ theorem k1-6(wvc: $term$ c, wvx: $term$ x) {
     3tr;
   };
 
-  return $|- ( x ' ^ c ) = ( ( x ' v c ' ) ^ c )$;
+  return $|-$ $( x ' ^ c ) = ( ( x ' v c ' ) ^ c )$;
 }

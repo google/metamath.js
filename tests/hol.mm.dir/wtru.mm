@@ -32,5 +32,5 @@ theorem wtru() {
     ax-cb1;
   };
 
-  return $|- T. : bool$;
+  return $|-$ $T. : bool$;
 }

@@ -104,5 +104,5 @@ theorem u5lemnoa(wva: $term$ a, wvb: $term$ b) {
     con1;
   };
 
-  return $|- ( ( a ->5 b ) ' v a ) = ( ( a v b ) ^ ( a v b ' ) )$;
+  return $|-$ $( ( a ->5 b ) ' v a ) = ( ( a v b ) ^ ( a v b ' ) )$;
 }

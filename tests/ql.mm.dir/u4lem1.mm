@@ -283,5 +283,5 @@ theorem u4lem1(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->4 b ) ->4 a ) = ( ( ( ( a ^ b ) v ( a ^ b ' ) ) v a ' ) ^ ( ( a v b ) ^ ( a v b ' ) ) )$;
+  return $|-$ $( ( a ->4 b ) ->4 a ) = ( ( ( ( a ^ b ) v ( a ^ b ' ) ) v a ' ) ^ ( ( a v b ) ^ ( a v b ' ) ) )$;
 }

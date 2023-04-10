@@ -97,5 +97,5 @@ theorem distrl(hal: $type$ al, hbe: $type$ be, hga: $type$ ga, vx: $var$ x, vy: 
     dfov2;
   };
 
-  return $|- T. |= [ ( \ x : al . \ y : be . A B ) = \ y : be . ( \ x : al . A B ) ]$;
+  return $|-$ $T. |= [ ( \ x : al . \ y : be . A B ) = \ y : be . ( \ x : al . A B ) ]$;
 }

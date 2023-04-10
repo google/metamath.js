@@ -169,5 +169,5 @@ theorem lem4.6.7(wva: $term$ a, wvb: $term$ b) {
     lbtr;
   };
 
-  return $|- b =< ( a ->1 b )$;
+  return $|-$ $b =< ( a ->1 b )$;
 }

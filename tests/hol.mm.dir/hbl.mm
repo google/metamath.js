@@ -116,5 +116,5 @@ theorem hbl(hal: $type$ al, hbe: $type$ be, hga: $type$ ga, vx: $var$ x, vy: $va
     eqtri;
   };
 
-  return $|- R |= [ ( \ x : al . \ y : be . A B ) = \ y : be . A ]$;
+  return $|-$ $R |= [ ( \ x : al . \ y : be . A B ) = \ y : be . A ]$;
 }

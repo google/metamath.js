@@ -96,5 +96,5 @@ theorem k1-8b(wvc: $term$ c, wvx: $term$ x, wvy: $term$ y) {
     tr;
   };
 
-  return $|- y = ( ( x v y ) ^ c ' )$;
+  return $|-$ $y = ( ( x v y ) ^ c ' )$;
 }

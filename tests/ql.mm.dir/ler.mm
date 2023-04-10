@@ -50,5 +50,5 @@ theorem ler(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     df-le1;
   };
 
-  return $|- a =< ( b v c )$;
+  return $|-$ $a =< ( b v c )$;
 }

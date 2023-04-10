@@ -43,5 +43,5 @@ theorem imp(tr: $term$ R, ts: $term$ S, tt: $term$ T) {
     mpd;
   };
 
-  return $|- ( R , S ) |= T$;
+  return $|-$ $( R , S ) |= T$;
 }

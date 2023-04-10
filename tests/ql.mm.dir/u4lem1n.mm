@@ -221,5 +221,5 @@ theorem u4lem1n(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( ( a ->4 b ) ->4 a ) ' = ( ( ( ( a ' v b ) ^ ( a ' v b ' ) ) ^ a ) v ( ( a ' ^ b ) v ( a ' ^ b ' ) ) )$;
+  return $|-$ $( ( a ->4 b ) ->4 a ) ' = ( ( ( ( a ' v b ) ^ ( a ' v b ' ) ) ^ a ) v ( ( a ' ^ b ) v ( a ' ^ b ' ) ) )$;
 }

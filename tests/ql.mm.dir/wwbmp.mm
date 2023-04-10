@@ -37,5 +37,5 @@ theorem wwbmp(wva: $term$ a, wvb: $term$ b) {
     wr3;
   };
 
-  return $|- b = 1$;
+  return $|-$ $b = 1$;
 }

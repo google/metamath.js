@@ -240,5 +240,5 @@ theorem u5lemanb(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->5 b ) ^ b ' ) = ( a ' ^ b ' )$;
+  return $|-$ $( ( a ->5 b ) ^ b ' ) = ( a ' ^ b ' )$;
 }

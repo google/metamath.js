@@ -14,5 +14,5 @@ theorem con4(wva: $term$ a, wvb: $term$ b) {
     ax-r4;
   };
 
-  return $|- a ' = b '$;
+  return $|-$ $a ' = b '$;
 }

@@ -494,5 +494,5 @@ theorem 2oalem1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr;
   };
 
-  return $|- ( ( a ->2 b ) ' v ( ( b v c ) v ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) = 1$;
+  return $|-$ $( ( a ->2 b ) ' v ( ( b v c ) v ( ( a ->2 b ) ^ ( a ->2 c ) ) ) ) = 1$;
 }

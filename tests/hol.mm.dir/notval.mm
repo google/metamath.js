@@ -124,5 +124,5 @@ theorem notval(ta: $term$ A) {
     eqtri;
   };
 
-  return $|- T. |= [ ( ~ A ) = [ A ==> F. ] ]$;
+  return $|-$ $T. |= [ ( ~ A ) = [ A ==> F. ] ]$;
 }

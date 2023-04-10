@@ -77,5 +77,5 @@ theorem gstho(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     comcom5;
   };
 
-  return $|- ( a v b ) C c$;
+  return $|-$ $( a v b ) C c$;
 }

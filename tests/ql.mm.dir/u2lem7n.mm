@@ -116,5 +116,5 @@ theorem u2lem7n(wva: $term$ a, wvb: $term$ b) {
     con2;
   };
 
-  return $|- ( a ->2 ( a ' ->2 b ) ) ' = ( ( ( a v b ) ^ ( a ' v b ) ) ^ b ' )$;
+  return $|-$ $( a ->2 ( a ' ->2 b ) ) ' = ( ( ( a v b ) ^ ( a ' v b ) ) ^ b ' )$;
 }

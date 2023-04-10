@@ -148,5 +148,5 @@ theorem i5con(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ->5 b ) = ( b ' ->5 a ' )$;
+  return $|-$ $( a ->5 b ) = ( b ' ->5 a ' )$;
 }

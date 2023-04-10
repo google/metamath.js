@@ -21,5 +21,5 @@ theorem wa2(wva: $term$ a, wvb: $term$ b) {
     bi1;
   };
 
-  return $|- ( ( a v b ) == ( b v a ) ) = 1$;
+  return $|-$ $( ( a v b ) == ( b v a ) ) = 1$;
 }

@@ -1,5 +1,5 @@
 
 axiom hi() {
 
-  return $type ind$;
+  return $type$ $ind$;
 }

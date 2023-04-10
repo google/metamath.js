@@ -76,5 +76,5 @@ theorem nomb32(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ==3 b ) = ( b ==2 a )$;
+  return $|-$ $( a ==3 b ) = ( b ==2 a )$;
 }

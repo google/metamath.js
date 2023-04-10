@@ -25,5 +25,5 @@ theorem wcomcom(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- C ( b , a ) = 1$;
+  return $|-$ $C ( b , a ) = 1$;
 }

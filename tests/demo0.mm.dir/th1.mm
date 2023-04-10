@@ -49,5 +49,5 @@ theorem th1(tt: $term$ t) {
     mp;
   };
 
-  return $|- t = t$;
+  return $|-$ $t = t$;
 }

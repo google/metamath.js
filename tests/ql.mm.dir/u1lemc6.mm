@@ -80,5 +80,5 @@ theorem u1lemc6(wva: $term$ a, wvb: $term$ b) {
     comcom6;
   };
 
-  return $|- ( a ->1 b ) C ( a ' ->1 b )$;
+  return $|-$ $( a ->1 b ) C ( a ' ->1 b )$;
 }

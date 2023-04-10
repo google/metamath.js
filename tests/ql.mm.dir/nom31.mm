@@ -40,5 +40,5 @@ theorem nom31(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ^ b ) ==1 a ) = ( a ->1 b )$;
+  return $|-$ $( ( a ^ b ) ==1 a ) = ( a ->1 b )$;
 }

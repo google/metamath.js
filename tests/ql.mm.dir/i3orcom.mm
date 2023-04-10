@@ -42,5 +42,5 @@ theorem i3orcom(wva: $term$ a, wvb: $term$ b) {
     wwbmp;
   };
 
-  return $|- ( ( a v b ) ->3 ( b v a ) ) = 1$;
+  return $|-$ $( ( a v b ) ->3 ( b v a ) ) = 1$;
 }

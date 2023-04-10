@@ -19,5 +19,5 @@ theorem wleo(wva: $term$ a, wvb: $term$ b) {
     wdf2le1;
   };
 
-  return $|- ( a =<2 ( a v b ) ) = 1$;
+  return $|-$ $( a =<2 ( a v b ) ) = 1$;
 }

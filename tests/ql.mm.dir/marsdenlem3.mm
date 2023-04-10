@@ -202,5 +202,5 @@ theorem marsdenlem3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) 
     3tr;
   };
 
-  return $|- ( ( ( b ' ^ c ) v ( c ' ^ d ) ) ^ ( b ^ d ' ) ) = 0$;
+  return $|-$ $( ( ( b ' ^ c ) v ( c ' ^ d ) ) ^ ( b ^ d ' ) ) = 0$;
 }

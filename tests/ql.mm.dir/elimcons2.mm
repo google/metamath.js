@@ -201,5 +201,5 @@ theorem elimcons2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     elimcons;
   };
 
-  return $|- a =< b$;
+  return $|-$ $a =< b$;
 }

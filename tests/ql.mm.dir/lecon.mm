@@ -51,5 +51,5 @@ theorem lecon(wva: $term$ a, wvb: $term$ b) {
     df2le1;
   };
 
-  return $|- b ' =< a '$;
+  return $|-$ $b ' =< a '$;
 }

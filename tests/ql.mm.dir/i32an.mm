@@ -34,5 +34,5 @@ theorem i32an(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     binr2;
   };
 
-  return $|- ( ( a ^ c ) ->3 ( b ^ d ) ) = 1$;
+  return $|-$ $( ( a ^ c ) ->3 ( b ^ d ) ) = 1$;
 }

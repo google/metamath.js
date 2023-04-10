@@ -171,5 +171,5 @@ theorem u5lemab(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->5 b ) ^ b ) = ( ( a ^ b ) v ( a ' ^ b ) )$;
+  return $|-$ $( ( a ->5 b ) ^ b ) = ( ( a ^ b ) v ( a ' ^ b ) )$;
 }

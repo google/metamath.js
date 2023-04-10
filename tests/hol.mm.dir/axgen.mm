@@ -17,5 +17,5 @@ theorem axgen(hal: $type$ al, vx: $var$ x, tr: $term$ R) {
     alrimiv;
   };
 
-  return $|- T. |= ( ! \ x : al . R )$;
+  return $|-$ $T. |= ( ! \ x : al . R )$;
 }

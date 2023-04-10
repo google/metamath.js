@@ -78,5 +78,5 @@ theorem nbdi(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a == b ) ' = ( ( ( a v b ) ^ a ' ) v ( ( a v b ) ^ b ' ) )$;
+  return $|-$ $( a == b ) ' = ( ( ( a v b ) ^ a ' ) v ( ( a v b ) ^ b ' ) )$;
 }

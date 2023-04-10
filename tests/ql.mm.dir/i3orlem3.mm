@@ -94,5 +94,5 @@ theorem i3orlem3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     letr;
   };
 
-  return $|- c =< ( ( a v c ) ->3 ( b v c ) )$;
+  return $|-$ $c =< ( ( a v c ) ->3 ( b v c ) )$;
 }

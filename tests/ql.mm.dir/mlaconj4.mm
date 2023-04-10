@@ -672,5 +672,5 @@ theorem mlaconj4(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve
     letr;
   };
 
-  return $|- ( ( a == b ) ^ ( ( a == c ) v ( b == c ) ) ) =< ( a == c )$;
+  return $|-$ $( ( a == b ) ^ ( ( a == c ) v ( b == c ) ) ) =< ( a == c )$;
 }

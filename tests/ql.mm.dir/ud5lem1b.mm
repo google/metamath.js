@@ -468,5 +468,5 @@ theorem ud5lem1b(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->5 b ) ' ^ ( b ->5 a ) ) = ( a ^ b ' )$;
+  return $|-$ $( ( a ->5 b ) ' ^ ( b ->5 a ) ) = ( a ^ b ' )$;
 }

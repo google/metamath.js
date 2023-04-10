@@ -47,5 +47,5 @@ theorem vneulem8(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     tr;
   };
 
-  return $|- ( ( ( a v b ) v d ) ^ ( ( b v c ) v d ) ) = ( b v d )$;
+  return $|-$ $( ( ( a v b ) v d ) ^ ( ( b v c ) v d ) ) = ( b v d )$;
 }

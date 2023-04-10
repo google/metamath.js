@@ -147,5 +147,5 @@ theorem ud2lem3(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->2 b ) ->2 ( a v b ) ) = ( a v b )$;
+  return $|-$ $( ( a ->2 b ) ->2 ( a v b ) ) = ( a v b )$;
 }

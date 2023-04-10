@@ -38,5 +38,5 @@ theorem lem3.4.1(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->1 b ) ->0 ( a ->2 b ) ) = 1$;
+  return $|-$ $( ( a ->1 b ) ->0 ( a ->2 b ) ) = 1$;
 }

@@ -34,5 +34,5 @@ theorem 2or(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     ax-r2;
   };
 
-  return $|- ( a v c ) = ( b v d )$;
+  return $|-$ $( a v c ) = ( b v d )$;
 }

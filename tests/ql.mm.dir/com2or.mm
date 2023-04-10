@@ -194,5 +194,5 @@ theorem com2or(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     comcom;
   };
 
-  return $|- a C ( b v c )$;
+  return $|-$ $a C ( b v c )$;
 }

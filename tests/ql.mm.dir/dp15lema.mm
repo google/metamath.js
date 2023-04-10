@@ -229,5 +229,5 @@ theorem dp15lema(wvd: $term$ d, wve: $term$ e, wva0: $term$ a0, wva1: $term$ a1,
     bltr;
   };
 
-  return $|- ( ( a0 v e ) ^ ( a1 v b1 ) ) =< ( d v b2 )$;
+  return $|-$ $( ( a0 v e ) ^ ( a1 v b1 ) ) =< ( d v b2 )$;
 }

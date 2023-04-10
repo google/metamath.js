@@ -165,5 +165,5 @@ theorem dp41lemf(wvp: $term$ p, wva0: $term$ a0, wva1: $term$ a1, wva2: $term$ a
     3tr;
   };
 
-  return $|- ( ( c0 v c1 ) v ( ( a0 ^ ( b0 v b1 ) ) v ( b1 ^ ( a0 v a1 ) ) ) ) = ( ( ( b1 v b2 ) ^ ( ( a1 v a2 ) v ( b1 ^ ( a0 v a1 ) ) ) ) v ( ( a0 v a2 ) ^ ( ( b0 v b2 ) v ( a0 ^ ( b0 v b1 ) ) ) ) )$;
+  return $|-$ $( ( c0 v c1 ) v ( ( a0 ^ ( b0 v b1 ) ) v ( b1 ^ ( a0 v a1 ) ) ) ) = ( ( ( b1 v b2 ) ^ ( ( a1 v a2 ) v ( b1 ^ ( a0 v a1 ) ) ) ) v ( ( a0 v a2 ) ^ ( ( b0 v b2 ) v ( a0 ^ ( b0 v b1 ) ) ) ) )$;
 }

@@ -141,5 +141,5 @@ theorem dp41leml(wvp: $term$ p, wva0: $term$ a0, wva1: $term$ a1, wva2: $term$ a
     3tr;
   };
 
-  return $|- ( ( c0 v ( b2 ^ ( a0 v a2 ) ) ) v ( c1 v ( a2 ^ ( b1 v b2 ) ) ) ) = ( c0 v c1 )$;
+  return $|-$ $( ( c0 v ( b2 ^ ( a0 v a2 ) ) ) v ( c1 v ( a2 ^ ( b1 v b2 ) ) ) ) = ( c0 v c1 )$;
 }

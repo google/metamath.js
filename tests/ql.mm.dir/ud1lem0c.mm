@@ -83,5 +83,5 @@ theorem ud1lem0c(wva: $term$ a, wvb: $term$ b) {
     con2;
   };
 
-  return $|- ( a ->1 b ) ' = ( a ^ ( a ' v b ' ) )$;
+  return $|-$ $( a ->1 b ) ' = ( a ^ ( a ' v b ' ) )$;
 }

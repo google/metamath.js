@@ -43,5 +43,5 @@ theorem vneulem3(wvu: $term$ u, wvw: $term$ w, wvx: $term$ x, wvy: $term$ y) {
     ran;
   };
 
-  return $|- ( ( ( ( x v y ) ^ ( u v w ) ) v u ) ^ w ) = ( u ^ w )$;
+  return $|-$ $( ( ( ( x v y ) ^ ( u v w ) ) v u ) ^ w ) = ( u ^ w )$;
 }

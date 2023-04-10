@@ -94,5 +94,5 @@ theorem u3lemoa(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->3 b ) v a ) = ( a v ( ( a ' ^ b ) v ( a ' ^ b ' ) ) )$;
+  return $|-$ $( ( a ->3 b ) v a ) = ( a v ( ( a ' ^ b ) v ( a ' ^ b ' ) ) )$;
 }

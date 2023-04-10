@@ -97,5 +97,5 @@ theorem vneulem10(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     tr;
   };
 
-  return $|- ( ( ( a v b ) v c ) ^ ( ( a v c ) v d ) ) = ( a v c )$;
+  return $|-$ $( ( ( a v b ) v c ) ^ ( ( a v c ) v d ) ) = ( a v c )$;
 }

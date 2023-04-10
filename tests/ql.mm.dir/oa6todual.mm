@@ -373,5 +373,5 @@ theorem oa6todual(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wv
     le3tr1;
   };
 
-  return $|- ( b ^ ( a v ( c ^ ( ( ( a ^ c ) v ( b ^ d ) ) v ( ( ( a ^ e ) v ( b ^ f ) ) ^ ( ( c ^ e ) v ( d ^ f ) ) ) ) ) ) ) =< ( ( ( a ^ b ) v ( c ^ d ) ) v ( e ^ f ) )$;
+  return $|-$ $( b ^ ( a v ( c ^ ( ( ( a ^ c ) v ( b ^ d ) ) v ( ( ( a ^ e ) v ( b ^ f ) ) ^ ( ( c ^ e ) v ( d ^ f ) ) ) ) ) ) ) =< ( ( ( a ^ b ) v ( c ^ d ) ) v ( e ^ f ) )$;
 }

@@ -146,5 +146,5 @@ theorem dfi4b(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ->4 b ) = ( ( a ' v b ) ^ ( ( b ' v ( b ^ a ' ) ) v ( b ^ a ) ) )$;
+  return $|-$ $( a ->4 b ) = ( ( a ' v b ) ^ ( ( b ' v ( b ^ a ' ) ) v ( b ^ a ) ) )$;
 }

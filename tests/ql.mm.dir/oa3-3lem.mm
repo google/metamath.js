@@ -167,5 +167,5 @@ theorem oa3-3lem(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lan;
   };
 
-  return $|- ( a ' ^ ( a v ( b ^ ( ( ( a ^ b ) v ( a ' ^ b ' ) ) v ( ( ( a ^ 1 ) v ( a ' ^ c ) ) ^ ( ( b ^ 1 ) v ( b ' ^ c ) ) ) ) ) ) ) = ( a ' ^ ( a v ( b ^ ( ( a == b ) v ( ( a ' ->1 c ) ^ ( b ' ->1 c ) ) ) ) ) )$;
+  return $|-$ $( a ' ^ ( a v ( b ^ ( ( ( a ^ b ) v ( a ' ^ b ' ) ) v ( ( ( a ^ 1 ) v ( a ' ^ c ) ) ^ ( ( b ^ 1 ) v ( b ' ^ c ) ) ) ) ) ) ) = ( a ' ^ ( a v ( b ^ ( ( a == b ) v ( ( a ' ->1 c ) ^ ( b ' ->1 c ) ) ) ) ) )$;
 }

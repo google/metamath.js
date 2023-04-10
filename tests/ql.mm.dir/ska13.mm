@@ -96,5 +96,5 @@ theorem ska13(wva: $term$ a, wvb: $term$ b) {
     sklem;
   };
 
-  return $|- ( ( a == b ) ' v ( a ' v b ) ) = 1$;
+  return $|-$ $( ( a == b ) ' v ( a ' v b ) ) = 1$;
 }

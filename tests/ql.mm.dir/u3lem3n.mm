@@ -116,5 +116,5 @@ theorem u3lem3n(wva: $term$ a, wvb: $term$ b) {
     con2;
   };
 
-  return $|- ( a ->3 ( b ->3 a ) ) ' = ( a ' ^ ( ( a v b ) ^ ( a v b ' ) ) )$;
+  return $|-$ $( a ->3 ( b ->3 a ) ) ' = ( a ' ^ ( ( a v b ) ^ ( a v b ' ) ) )$;
 }

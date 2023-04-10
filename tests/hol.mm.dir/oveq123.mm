@@ -214,5 +214,5 @@ theorem oveq123(hal: $type$ al, hbe: $type$ be, hga: $type$ ga, ta: $term$ A, tb
     3eqtr4i;
   };
 
-  return $|- R |= [ [ A F B ] = [ C S T ] ]$;
+  return $|-$ $R |= [ [ A F B ] = [ C S T ] ]$;
 }

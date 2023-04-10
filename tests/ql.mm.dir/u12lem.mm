@@ -168,5 +168,5 @@ theorem u12lem(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( ( a ->1 b ) v ( a ->2 b ) ) = ( a ->0 b )$;
+  return $|-$ $( ( a ->1 b ) v ( a ->2 b ) ) = ( a ->0 b )$;
 }

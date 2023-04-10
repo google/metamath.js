@@ -31,5 +31,5 @@ theorem lel2an(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lbtr;
   };
 
-  return $|- ( a ^ c ) =< b$;
+  return $|-$ $( a ^ c ) =< b$;
 }

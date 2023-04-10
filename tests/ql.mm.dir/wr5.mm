@@ -15,5 +15,5 @@ theorem wr5(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     wr5-2v;
   };
 
-  return $|- ( ( a v c ) == ( b v c ) ) = 1$;
+  return $|-$ $( ( a v c ) == ( b v c ) ) = 1$;
 }

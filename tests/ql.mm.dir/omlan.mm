@@ -50,5 +50,5 @@ theorem omlan(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ' ^ ( a v ( a ' ^ b ) ) ) = ( a ' ^ b )$;
+  return $|-$ $( a ' ^ ( a v ( a ' ^ b ) ) ) = ( a ' ^ b )$;
 }

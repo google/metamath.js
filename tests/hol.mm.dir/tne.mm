@@ -1,5 +1,5 @@
 
 axiom tne() {
 
-  return $term ~$;
+  return $term$ $~$;
 }

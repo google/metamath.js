@@ -209,5 +209,5 @@ theorem orc(ta: $term$ A, tb: $term$ B) {
     mpbir;
   };
 
-  return $|- A |= [ A \/ B ]$;
+  return $|-$ $A |= [ A \/ B ]$;
 }

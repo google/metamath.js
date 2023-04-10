@@ -1,5 +1,5 @@
 
 axiom tf11() {
 
-  return $term 1-1$;
+  return $term$ $1-1$;
 }

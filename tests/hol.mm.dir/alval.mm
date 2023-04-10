@@ -147,5 +147,5 @@ theorem alval(hal: $type$ al, vx: $var$ x, tf: $term$ F) {
     eqtri;
   };
 
-  return $|- T. |= [ ( ! F ) = [ F = \ x : al . T. ] ]$;
+  return $|-$ $T. |= [ ( ! F ) = [ F = \ x : al . T. ] ]$;
 }

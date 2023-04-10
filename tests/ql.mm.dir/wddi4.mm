@@ -65,5 +65,5 @@ theorem wddi4(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     wr2;
   };
 
-  return $|- ( ( ( a ^ b ) v c ) == ( ( a v c ) ^ ( b v c ) ) ) = 1$;
+  return $|-$ $( ( ( a ^ b ) v c ) == ( ( a v c ) ^ ( b v c ) ) ) = 1$;
 }

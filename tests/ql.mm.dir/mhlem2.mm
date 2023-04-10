@@ -200,5 +200,5 @@ theorem mhlem2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     ax-r2;
   };
 
-  return $|- ( ( ( a v c ) ^ ( c ' v b ' ) ) ^ ( ( b v d ) ^ ( a ' v d ' ) ) ) = ( ( ( a ^ c ' ) ^ ( b ^ d ' ) ) v ( ( c ^ b ' ) ^ ( d ^ a ' ) ) )$;
+  return $|-$ $( ( ( a v c ) ^ ( c ' v b ' ) ) ^ ( ( b v d ) ^ ( a ' v d ' ) ) ) = ( ( ( a ^ c ' ) ^ ( b ^ d ' ) ) v ( ( c ^ b ' ) ^ ( d ^ a ' ) ) )$;
 }

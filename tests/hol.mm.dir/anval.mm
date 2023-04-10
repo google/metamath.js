@@ -316,5 +316,5 @@ theorem anval(vf: $var$ f, ta: $term$ A, tb: $term$ B) {
     eqtri;
   };
 
-  return $|- T. |= [ [ A /\ B ] = [ \ f : ( bool -> ( bool -> bool ) ) . [ A f : ( bool -> ( bool -> bool ) ) B ] = \ f : ( bool -> ( bool -> bool ) ) . [ T. f : ( bool -> ( bool -> bool ) ) T. ] ] ]$;
+  return $|-$ $T. |= [ [ A /\ B ] = [ \ f : ( bool -> ( bool -> bool ) ) . [ A f : ( bool -> ( bool -> bool ) ) B ] = \ f : ( bool -> ( bool -> bool ) ) . [ T. f : ( bool -> ( bool -> bool ) ) T. ] ] ]$;
 }

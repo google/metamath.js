@@ -56,5 +56,5 @@ theorem i3ran(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     i33tr1;
   };
 
-  return $|- ( ( a ^ c ) ->3 ( b ^ c ) ) = 1$;
+  return $|-$ $( ( a ^ c ) ->3 ( b ^ c ) ) = 1$;
 }

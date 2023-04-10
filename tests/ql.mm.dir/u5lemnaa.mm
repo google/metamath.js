@@ -91,5 +91,5 @@ theorem u5lemnaa(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->5 b ) ' ^ a ) = ( a ^ ( a ' v b ' ) )$;
+  return $|-$ $( ( a ->5 b ) ' ^ a ) = ( a ^ ( a ' v b ' ) )$;
 }

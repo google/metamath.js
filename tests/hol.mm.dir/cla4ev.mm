@@ -88,5 +88,5 @@ theorem cla4ev(hal: $type$ al, vx: $var$ x, ta: $term$ A, tb: $term$ B, tc: $ter
     syl;
   };
 
-  return $|- C |= ( ? \ x : al . A )$;
+  return $|-$ $C |= ( ? \ x : al . A )$;
 }

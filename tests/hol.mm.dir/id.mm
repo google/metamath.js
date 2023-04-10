@@ -13,5 +13,5 @@ theorem id(tr: $term$ R) {
     ax-id;
   };
 
-  return $|- R |= R$;
+  return $|-$ $R |= R$;
 }

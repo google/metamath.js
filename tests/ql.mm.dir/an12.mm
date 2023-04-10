@@ -51,5 +51,5 @@ theorem an12(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr2;
   };
 
-  return $|- ( a ^ ( b ^ c ) ) = ( b ^ ( a ^ c ) )$;
+  return $|-$ $( a ^ ( b ^ c ) ) = ( b ^ ( a ^ c ) )$;
 }

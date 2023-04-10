@@ -78,5 +78,5 @@ theorem i3orlem2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     letr;
   };
 
-  return $|- ( a ^ b ) =< ( ( a v c ) ->3 ( b v c ) )$;
+  return $|-$ $( a ^ b ) =< ( ( a v c ) ->3 ( b v c ) )$;
 }

@@ -79,5 +79,5 @@ theorem u4lemnob(wva: $term$ a, wvb: $term$ b) {
     con1;
   };
 
-  return $|- ( ( a ->4 b ) ' v b ) = ( ( a ^ b ' ) v b )$;
+  return $|-$ $( ( a ->4 b ) ' v b ) = ( ( a ^ b ' ) v b )$;
 }

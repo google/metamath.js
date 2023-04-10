@@ -318,5 +318,5 @@ theorem u4lemana(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->4 b ) ^ a ' ) = ( ( a ' ^ b ) v ( a ' ^ b ' ) )$;
+  return $|-$ $( ( a ->4 b ) ^ a ' ) = ( ( a ' ^ b ) v ( a ' ^ b ' ) )$;
 }

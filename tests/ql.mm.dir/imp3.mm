@@ -122,5 +122,5 @@ theorem imp3(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr;
   };
 
-  return $|- ( ( a ->2 b ) ^ ( b ->1 c ) ) = ( ( a ' ^ b ' ) v ( b ^ c ) )$;
+  return $|-$ $( ( a ->2 b ) ^ ( b ->1 c ) ) = ( ( a ' ^ b ' ) v ( b ^ c ) )$;
 }

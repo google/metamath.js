@@ -73,5 +73,5 @@ theorem negant0(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr1;
   };
 
-  return $|- ( a ' ->0 c ) = ( b ' ->0 c )$;
+  return $|-$ $( a ' ->0 c ) = ( b ' ->0 c )$;
 }

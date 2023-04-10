@@ -37,5 +37,5 @@ theorem trul(tr: $term$ R, ts: $term$ S) {
     syl2anc;
   };
 
-  return $|- R |= S$;
+  return $|-$ $R |= S$;
 }

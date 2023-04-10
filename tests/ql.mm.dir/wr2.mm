@@ -119,5 +119,5 @@ theorem wr2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     wwbmpr;
   };
 
-  return $|- ( a == c ) = 1$;
+  return $|-$ $( a == c ) = 1$;
 }

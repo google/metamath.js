@@ -309,5 +309,5 @@ theorem u3lemonb(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->3 b ) v b ' ) = 1$;
+  return $|-$ $( ( a ->3 b ) v b ' ) = 1$;
 }

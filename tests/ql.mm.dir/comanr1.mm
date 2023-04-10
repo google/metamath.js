@@ -19,5 +19,5 @@ theorem comanr1(wva: $term$ a, wvb: $term$ b) {
     comcom;
   };
 
-  return $|- a C ( a ^ b )$;
+  return $|-$ $a C ( a ^ b )$;
 }

@@ -43,5 +43,5 @@ theorem ska2a(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     bi1;
   };
 
-  return $|- ( ( ( a v c ) == ( b v c ) ) == ( ( c v a ) == ( c v b ) ) ) = 1$;
+  return $|-$ $( ( ( a v c ) == ( b v c ) ) == ( ( c v a ) == ( c v b ) ) ) = 1$;
 }

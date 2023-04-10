@@ -14,5 +14,5 @@ theorem u3lemle2(wva: $term$ a, wvb: $term$ b) {
     i3le;
   };
 
-  return $|- a =< b$;
+  return $|-$ $a =< b$;
 }

@@ -261,5 +261,5 @@ theorem ecase(ta: $term$ A, tb: $term$ B, tr: $term$ R, tt: $term$ T) {
     mpd;
   };
 
-  return $|- R |= T$;
+  return $|-$ $R |= T$;
 }

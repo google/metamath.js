@@ -4,10 +4,10 @@ const {Verifier} = require("../src/descent.js");
 describe("Compiler", () => {
   const {Transpiler, Compiler, Parser, Lexer} = require("../src/compiler.js");
 
-  it(`axiom foo() { return $|- bar$; }`, () => {
+  it(`axiom foo() { return $|-$ $bar$; }`, () => {
     let result = new Parser().parse(`
     axiom foo() {
-      return $|- bar$;
+      return $|-$ $bar$;
     }
     `);
     assertThat(result).equalsTo([
@@ -22,10 +22,28 @@ describe("Compiler", () => {
     ]);
   });
   
-  it(`axiom foo() { return $|- $; }`, () => {
+  it(`axiom foo() { return $|-$ $hello  world$; }`, () => {
     let result = new Parser().parse(`
     axiom foo() {
-      return $|- $;
+      return $|-$ $hello  world$;
+    }
+    `);
+    assertThat(result).equalsTo([
+      ["axiom", "foo", [
+        [],
+        [],
+        [],
+        [],
+        ["assert", ["|-", "hello", "world"]],
+      ], [
+      ]]
+    ]);
+  });
+  
+  it(`axiom foo() { return $|-$ $$; }`, () => {
+    let result = new Parser().parse(`
+    axiom foo() {
+      return $|-$ $$;
     }
     `);
     assertThat(result).equalsTo([
@@ -43,7 +61,7 @@ describe("Compiler", () => {
   it(`axiom foo() { return $|- ;$; }`, () => {
     let result = new Parser().parse(`
     axiom foo() {
-      return $|- ;$;
+      return $|-$ $;$;
     }
     `);
     assertThat(result).equalsTo([
@@ -58,10 +76,10 @@ describe("Compiler", () => {
     ]);
   });
 
-  it(`axiom foo() { return $term /\$; }`, () => {
+  it(`axiom foo() { return $term$ $/\$; }`, () => {
     let result = new Parser().parse(`
     axiom foo() {
-      return $term /\\$;
+      return $term$ $/\\$;
     }
     `);
     assertThat(result).equalsTo([
@@ -85,10 +103,10 @@ describe("Compiler", () => {
     ]);
   });
 
-  it(`axiom foo(wff x) { return $|- bar$; }`, () => {
+  it(`axiom foo(wff x) { return $|-$ $bar$; }`, () => {
     let result = new Parser().parse(`
     axiom foo(wff x) {
-      return $|- bar$;
+      return $|-$ $bar$;
     }
     `);
     assertThat(result).equalsTo([
@@ -103,10 +121,10 @@ describe("Compiler", () => {
     ]);
   });
   
-  it(`axiom foo(alet x) { return $|- bar$; }`, () => {
+  it(`axiom foo(alet x) { return $|-$ $bar$; }`, () => {
     let result = new Parser().parse(`
     axiom foo(alet x) {
-      return $|- bar$;
+      return $|-$ $bar$;
     }
     `);
     assertThat(result).equalsTo([
@@ -121,10 +139,10 @@ describe("Compiler", () => {
     ]);
   });
   
-  it(`axiom foo($let$ x) { return $|- bar$; }`, () => {
+  it(`axiom foo($let$ x) { return $|-$ $bar$; }`, () => {
     let result = new Parser().parse(`
     axiom foo($let$ x) {
-      return $|- bar$;
+      return $|-$ $bar$;
     }
     `);
     assertThat(result).equalsTo([
@@ -142,7 +160,7 @@ describe("Compiler", () => {
   it(`axiom foo($|-$ x, $foo$ y, $\\"$ z) { return $|- bar$; }`, () => {
     let result = new Parser().parse(`
     axiom foo($|-$ x, $foo$ y, $\\"$ z) {
-      return $|- bar$;
+      return $|-$ $bar$;
     }
     `);
     assertThat(result).equalsTo([
@@ -150,7 +168,7 @@ describe("Compiler", () => {
         [
           ["param", ["", '|-', "x"]],
           ["param", ["", 'foo', "y"]],
-          ["param", ["", '\"', "z"]],
+          ["param", ["", '\\"', "z"]],
         ],
         [],
         [],
@@ -164,7 +182,7 @@ describe("Compiler", () => {
   it(`axiom foo(f1: wff x) { return $|- bar$; }`, () => {
     let result = new Parser().parse(`
     axiom foo(f1: wff x) {
-      return $|- bar$;
+      return $|-$ $bar$;
     }
     `);
     assertThat(result).equalsTo([
@@ -182,7 +200,7 @@ describe("Compiler", () => {
   it(`axiom foo(f1: $wff$ x) { return $|- bar$; }`, () => {
     let result = new Parser().parse(`
     axiom foo(f1: wff x) {
-      return $|- bar$;
+      return $|-$ $bar$;
     }
     `);
     assertThat(result).equalsTo([
@@ -197,12 +215,12 @@ describe("Compiler", () => {
     ]);
   });
   
-  it(`axiom foo(wff, wffy) { return $|- bar$; }`, () => {
+  it(`axiom foo(wff, wffy) { return $|-$ $bar$; }`, () => {
     let result = new Parser().parse(`
     axiom foo(wff x, wff y) {
       assume $|- x$;
       disjoint x y;
-      return $|- x [ y ]$;
+      return $|-$ $x [ y ]$;
     }
     `);
 
@@ -218,11 +236,11 @@ describe("Compiler", () => {
     ]);
   });
   
-  it(`axiom foo() { return $|- bar$; }`, () => {
+  it(`axiom foo() { return $|-$ $bar$; }`, () => {
     let result = new Parser().parse(`
     axiom foo() {
       assume maj: $|- x$;
-      return $|- x [ y ]$;
+      return $|-$ $x [ y ]$;
     }
     `);
 
@@ -238,11 +256,11 @@ describe("Compiler", () => {
     ]);
   });
   
-  it(`axiom foo() :$|- x$ { return $|- bar$; }`, () => {
+  it(`axiom foo() { return $|-$ $bar$; }`, () => {
     let result = new Parser().parse(`
     axiom foo() {
       assume $|- x$;
-      return $|- bar$;
+      return $|-$ $bar$;
     }
     `);
     assertThat(result).equalsTo([
@@ -264,7 +282,7 @@ describe("Compiler", () => {
     axiom foo() {
       assume $|- x$;
       assume $|- y$;
-      return $|- bar$;
+      return $|-$ $bar$;
     }
     `);
     assertThat(result).equalsTo([
@@ -297,7 +315,7 @@ describe("Compiler", () => {
         theorem;
         axiom;
       };
-      return $|- bar$;
+      return $|-$ $bar$;
     }
     `);
     assertThat(result).equalsTo([
@@ -314,14 +332,14 @@ describe("Compiler", () => {
     ]);
   });
 
-  it(`theorem foo() { return $|- bar$; }`, () => {
+  it(`theorem foo() { return $|-$ $bar$; }`, () => {
     let result = new Parser().parse(`
     theorem foo() {
       let f1: wff p;
       let f2: $|-$ q;
       do {
       };
-      return $|- bar$;
+      return $|-$ $bar$;
     }
     `);
     assertThat(result).equalsTo([
@@ -339,14 +357,14 @@ describe("Compiler", () => {
     ]);
   });
 
-  it(`theorem foo() { let wp: wff p; return $|- bar$; }`, () => {
+  it(`theorem foo() { let wp: wff p; return $|-$ $bar$; }`, () => {
     let result = new Parser().parse(`
     theorem foo() {
       let wp: wff p;
       let wq: wff q;
       do {
       };
-      return $|- bar$;
+      return $|-$ $bar$;
     }
     `);
     assertThat(result).equalsTo([
@@ -371,7 +389,7 @@ describe("Compiler", () => {
       assume e2: $|- x -> y$;
       do {
       };
-      return $|- bar$;
+      return $|-$ $bar$;
     }
     `);
     assertThat(result).equalsTo([
@@ -406,12 +424,12 @@ describe("Compiler", () => {
         // disjoint variables
         disjoint p q;
         
-        return $|- q$;
+        return $|-$ $q$;
       }
 
       axiom we() {
         // empty symbols allowed
-        return $|- $;
+        return $|-$ $$;
       }
 
       theorem theorem1(wx: wff x, wy: wff y) {
@@ -422,7 +440,7 @@ describe("Compiler", () => {
           #;
           @4;
         };
-        return $|- ~ p$;
+        return $|-$ $~ p$;
       }
     `);
     
@@ -576,15 +594,15 @@ describe("Compiler", () => {
   it(`lexer: strings`, async () => {
     new Lexer()
       .parse(`$/\\$  something else"`)
-      .eat("string", '$/\\$');
+      .eat("quote", '$/\\$');
 
     new Lexer()
       .parse(`$\\"$`)
-      .eat("string", '$\\"$');
+      .eat("quote", '$\\"$');
 
     new Lexer()
       .parse(`$/\\$`)
-      .eat("string", '$/\\$')
+      .eat("quote", '$/\\$')
       .done();
 
     new Lexer()
@@ -603,7 +621,7 @@ describe("Compiler", () => {
       .eat("ws", " ")
       .eat("label", "foo")
       .eat("(", "(")
-      .eat("string", '$"$')
+      .eat("quote", '$"$')
       .eat("ws", " ")
       .eat("label", "p")
       .next();
@@ -614,7 +632,7 @@ describe("Compiler", () => {
       .eat("ws", " ")
       .eat("label", "foo")
       .eat("(", "(")
-      .eat("string", '$let$')
+      .eat("quote", '$let$')
       .eat("ws", " ")
     
     new Lexer()
@@ -649,7 +667,7 @@ describe("Compiler", () => {
     lexer.ws("ws");
     lexer.eat("let");
     lexer.ws("ws");
-    lexer.eat("string", '$let$');
+    lexer.eat("quote", '$let$');
     lexer.eat(":", ":");
     lexer.ws("ws");
     lexer.eat("label", "wff");
@@ -761,17 +779,17 @@ describe("Transpiler", () => {
 axiom w0(wp: $wff$ p, wq: $wff$ q) {
   assume foo: $( p -> q )$;
 
-  return $wff ( p var q )$;
+  return $wff$ $( p var q )$;
 }
 
 axiom w2(wp: $wff$ p, wq: $wff$ q) {
 
-  return $wff ( p -> q )$;
+  return $wff$ $( p -> q )$;
 }
 
 axiom wesc(ww: $"$ t) {
 
-  return $wff " t$;
+  return $wff$ $" t$;
 }
 
 theorem wnew(wp: $wff$ p, wr: $wff$ r, ws: $wff$ s) {
@@ -788,7 +806,7 @@ theorem wnew(wp: $wff$ p, wr: $wff$ r, ws: $wff$ s) {
     w2;
   };
 
-  return $wff ( s -> ( r -> p ) )$;
+  return $wff$ $( s -> ( r -> p ) )$;
 }
 `);
 
@@ -1220,17 +1238,17 @@ $\}`);;
   it("S and K", async () => {
     const src = `
 axiom term-k() {
-  return $term K$;
+  return $term$ $K$;
 }
 
 axiom term-s() {
-  return $term S$;
+  return $term$ $S$;
 }
 
 axiom term-c() {
   let call.1: term p;
   let call.2: term q;
-  return $term p [ q ]$;
+  return $term$ $p [ q ]$;
 }
 
 // If Δ is a derivation ending in an expression of the form α((Kβ)γ)ι,
@@ -1241,27 +1259,27 @@ axiom ax-k(
   k.2: term y,
   k.t: word tail) {
   assume k.1: $|- head K [ x ] [ y ] tail$;
-  return $|- head x tail$;
+  return $|-$ $head x tail$;
 }
 
 axiom word-c(word1: word w, word2: word c) {
-  return $word w c$;
+  return $word$ $w c$;
 }
 
 axiom word-null() {
-  return $word $;
+  return $word$ $$;
 }
 
 axiom word-t(word-t.0: term x) {
-  return $word x$;
+  return $word$ $x$;
 }
 
 axiom word-l() {
-  return $word [$;
+  return $word$ $[$;
 }
 
 axiom word-r() {
-  return $word ]$;
+  return $word$ $]$;
 }
 
 // If Δ is a derivation ending in an expression of the form α(((Sβ)γ)δ)ι,
@@ -1273,7 +1291,7 @@ axiom ax-s(
   s.3: term z,
   s.4: word tail) {
   assume ax-s.1: $|- head S [ x ] [ y ] [ z ] tail$;
-  return $|- head x [ z ] [ y [ z ] ] tail$;
+  return $|-$ $head x [ z ] [ y [ z ] ] tail$;
 }
 
 theorem s(s.1: term x, s.2: term y, s.3: term z) {
@@ -1292,7 +1310,7 @@ theorem s(s.1: term x, s.2: term y, s.3: term z) {
     ax-s;
   };
 
-  return $|- x [ z ] [ y [ z ] ]$;
+  return $|-$ $x [ z ] [ y [ z ] ]$;
 }
 
 theorem k(k.1: term x, k.2: term y) {
@@ -1309,7 +1327,7 @@ theorem k(k.1: term x, k.2: term y) {
 
     ax-k;
   };
-  return $|- x$;
+  return $|-$ $x$;
 }
 
 axiom df-eq(
@@ -1319,15 +1337,15 @@ axiom df-eq(
   eq.f3: word tail) {
   assume eq.e0: $|- x = y$;
   assume eq.e1: $|- head x tail$;
-  return $|- head y tail$;
+  return $|-$ $head y tail$;
 }
 
 axiom df-id() {
-  return $|- I = S [ K ] [ K ]$;
+  return $|-$ $I = S [ K ] [ K ]$;
 }
 
 axiom term-i() {
-  return $term I$;
+  return $term$ $I$;
 }
 
 theorem id(
@@ -1382,19 +1400,19 @@ theorem id(
     ax-k;
   };
 
-  return $|- head x tail$;
+  return $|-$ $head x tail$;
 }
 
 axiom term-f() {
-  return $term F$;
+  return $term$ $F$;
 }
 
 axiom term-t() {
-  return $term T$;
+  return $term$ $T$;
 }
 
 axiom df-true() {
-  return $|- T = K$;
+  return $|-$ $T = K$;
 }
 
 theorem true(
@@ -1448,7 +1466,7 @@ theorem true(
     
    ax-k;
   };
-  return $|- head x tail$;
+  return $|-$ $head x tail$;
 }
 
 theorem sksk() {
@@ -1470,7 +1488,7 @@ theorem sksk() {
 
     k;     // | K
   };
-  return $|- K$;
+  return $|-$ $K$;
 }
 
     `;

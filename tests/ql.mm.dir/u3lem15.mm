@@ -208,5 +208,5 @@ theorem u3lem15(wva: $term$ a, wvb: $term$ b) {
     3tr;
   };
 
-  return $|- ( ( a ->3 b ) ^ ( a v b ) ) = ( ( a ' v b ) ^ ( a v ( a ' ^ b ) ) )$;
+  return $|-$ $( ( a ->3 b ) ^ ( a v b ) ) = ( ( a ' v b ) ^ ( a v ( a ' ^ b ) ) )$;
 }

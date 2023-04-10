@@ -200,5 +200,5 @@ theorem oadistd(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wve:
     lebi;
   };
 
-  return $|- ( d ^ ( e v f ) ) = ( ( d ^ e ) v ( d ^ f ) )$;
+  return $|-$ $( d ^ ( e v f ) ) = ( ( d ^ e ) v ( d ^ f ) )$;
 }

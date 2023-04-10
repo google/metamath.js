@@ -213,5 +213,5 @@ theorem test2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     bltr;
   };
 
-  return $|- ( a v b ) =< ( ( a == b ) ' v ( ( c v ( a ^ b ) ) ^ ( c ' v ( a ^ b ) ) ) )$;
+  return $|-$ $( a v b ) =< ( ( a == b ) ' v ( ( c v ( a ^ b ) ) ^ ( c ' v ( a ^ b ) ) ) )$;
 }

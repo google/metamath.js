@@ -32,5 +32,5 @@ theorem i3btr(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     wwbmp;
   };
 
-  return $|- ( a ->3 c ) = 1$;
+  return $|-$ $( a ->3 c ) = 1$;
 }

@@ -2,5 +2,5 @@
 
 axiom weq(hal: $type$ al) {
 
-  return $|- = : ( al -> ( al -> bool ) )$;
+  return $|-$ $= : ( al -> ( al -> bool ) )$;
 }

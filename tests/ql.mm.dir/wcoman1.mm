@@ -19,5 +19,5 @@ theorem wcoman1(wva: $term$ a, wvb: $term$ b) {
     wlecom;
   };
 
-  return $|- C ( ( a ^ b ) , a ) = 1$;
+  return $|-$ $C ( ( a ^ b ) , a ) = 1$;
 }

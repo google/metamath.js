@@ -71,5 +71,5 @@ theorem lem3.3.7i5e2(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ==5 ( a ^ b ) ) = ( ( a ^ b ) ==5 a )$;
+  return $|-$ $( a ==5 ( a ^ b ) ) = ( ( a ^ b ) ==5 a )$;
 }

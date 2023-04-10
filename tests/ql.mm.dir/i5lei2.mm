@@ -67,5 +67,5 @@ theorem i5lei2(wva: $term$ a, wvb: $term$ b) {
     le3tr1;
   };
 
-  return $|- ( a ->5 b ) =< ( a ->2 b )$;
+  return $|-$ $( a ->5 b ) =< ( a ->2 b )$;
 }

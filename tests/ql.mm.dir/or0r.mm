@@ -26,5 +26,5 @@ theorem or0r(wva: $term$ a) {
     ax-r2;
   };
 
-  return $|- ( 0 v a ) = a$;
+  return $|-$ $( 0 v a ) = a$;
 }

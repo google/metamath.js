@@ -101,5 +101,5 @@ theorem wcomd(wva: $term$ a, wvb: $term$ b) {
     wr2;
   };
 
-  return $|- ( a == ( ( a v b ) ^ ( a v b ' ) ) ) = 1$;
+  return $|-$ $( a == ( ( a v b ) ^ ( a v b ' ) ) ) = 1$;
 }

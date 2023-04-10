@@ -47,5 +47,5 @@ theorem u1lem12(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->1 b ) ->1 b ) = ( a ' ->1 b )$;
+  return $|-$ $( ( a ->1 b ) ->1 b ) = ( a ' ->1 b )$;
 }

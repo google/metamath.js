@@ -149,5 +149,5 @@ theorem lem3.4.3(wva: $term$ a, wvb: $term$ b) {
     2vwomr1a;
   };
 
-  return $|- ( a ->2 ( a ==5 b ) ) = 1$;
+  return $|-$ $( a ->2 ( a ==5 b ) ) = 1$;
 }

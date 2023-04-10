@@ -38,5 +38,5 @@ theorem i31(wva: $term$ a) {
     ax-r2;
   };
 
-  return $|- ( a ->3 1 ) = 1$;
+  return $|-$ $( a ->3 1 ) = 1$;
 }

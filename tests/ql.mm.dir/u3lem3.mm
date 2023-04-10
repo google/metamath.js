@@ -171,5 +171,5 @@ theorem u3lem3(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ->3 ( b ->3 a ) ) = ( a v ( ( a ' ^ b ) v ( a ' ^ b ' ) ) )$;
+  return $|-$ $( a ->3 ( b ->3 a ) ) = ( a v ( ( a ' ^ b ) v ( a ' ^ b ' ) ) )$;
 }

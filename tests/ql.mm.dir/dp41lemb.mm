@@ -101,5 +101,5 @@ theorem dp41lemb(wvp: $term$ p, wva0: $term$ a0, wva1: $term$ a1, wva2: $term$ a
     tr;
   };
 
-  return $|- c2 = ( ( c2 ^ ( ( a0 v b0 ) v b1 ) ) ^ ( ( a0 v a1 ) v b1 ) )$;
+  return $|-$ $c2 = ( ( c2 ^ ( ( a0 v b0 ) v b1 ) ) ^ ( ( a0 v a1 ) v b1 ) )$;
 }

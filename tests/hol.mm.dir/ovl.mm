@@ -239,5 +239,5 @@ theorem ovl(hal: $type$ al, hbe: $type$ be, hga: $type$ ga, vx: $var$ x, vy: $va
     eqtri;
   };
 
-  return $|- T. |= [ [ S \ x : al . \ y : be . A T ] = C ]$;
+  return $|-$ $T. |= [ [ S \ x : al . \ y : be . A T ] = C ]$;
 }

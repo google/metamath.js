@@ -51,5 +51,5 @@ theorem an32(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr1;
   };
 
-  return $|- ( ( a ^ b ) ^ c ) = ( ( a ^ c ) ^ b )$;
+  return $|-$ $( ( a ^ b ) ^ c ) = ( ( a ^ c ) ^ b )$;
 }

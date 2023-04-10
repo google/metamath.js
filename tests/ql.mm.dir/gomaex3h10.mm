@@ -97,5 +97,5 @@ theorem gomaex3h10(wvb: $term$ b, wvc: $term$ c, wve: $term$ e, wvf: $term$ f, w
     le3tr1;
   };
 
-  return $|- x =< y '$;
+  return $|-$ $x =< y '$;
 }

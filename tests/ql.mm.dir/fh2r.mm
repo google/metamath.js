@@ -64,5 +64,5 @@ theorem fh2r(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr1;
   };
 
-  return $|- ( ( a v c ) ^ b ) = ( ( a ^ b ) v ( c ^ b ) )$;
+  return $|-$ $( ( a v c ) ^ b ) = ( ( a ^ b ) v ( c ^ b ) )$;
 }

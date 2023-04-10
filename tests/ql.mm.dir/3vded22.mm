@@ -288,5 +288,5 @@ theorem 3vded22(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3vded21;
   };
 
-  return $|- c =< b$;
+  return $|-$ $c =< b$;
 }

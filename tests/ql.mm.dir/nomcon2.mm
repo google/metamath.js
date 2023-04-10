@@ -98,5 +98,5 @@ theorem nomcon2(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( a ==2 b ) = ( b ' ==1 a ' )$;
+  return $|-$ $( a ==2 b ) = ( b ' ==1 a ' )$;
 }

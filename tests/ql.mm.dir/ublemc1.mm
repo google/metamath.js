@@ -12,5 +12,5 @@ theorem ublemc1(wva: $term$ a, wvb: $term$ b) {
     combi;
   };
 
-  return $|- a C ( a == b )$;
+  return $|-$ $a C ( a == b )$;
 }

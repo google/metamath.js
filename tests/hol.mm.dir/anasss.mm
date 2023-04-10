@@ -53,5 +53,5 @@ theorem anasss(ta: $term$ A, tr: $term$ R, ts: $term$ S, tt: $term$ T) {
     ancoms;
   };
 
-  return $|- ( R , ( S , T ) ) |= A$;
+  return $|-$ $( R , ( S , T ) ) |= A$;
 }

@@ -33,5 +33,5 @@ theorem dp15lemb(wvd: $term$ d, wve: $term$ e, wva0: $term$ a0, wva1: $term$ a1,
     ax-arg;
   };
 
-  return $|- ( ( a0 v a1 ) ^ ( e v b1 ) ) =< ( ( ( a0 v d ) ^ ( e v b2 ) ) v ( ( a1 v d ) ^ ( b1 v b2 ) ) )$;
+  return $|-$ $( ( a0 v a1 ) ^ ( e v b1 ) ) =< ( ( ( a0 v d ) ^ ( e v b2 ) ) v ( ( a1 v d ) ^ ( b1 v b2 ) ) )$;
 }

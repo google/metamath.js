@@ -10,5 +10,5 @@ theorem idi(ta: $term$ A, tr: $term$ R) {
     idi.1;
   };
 
-  return $|- R |= A$;
+  return $|-$ $R |= A$;
 }

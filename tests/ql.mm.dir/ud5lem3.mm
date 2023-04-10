@@ -494,5 +494,5 @@ theorem ud5lem3(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( ( a ->5 b ) ->5 ( a v ( a ' ^ b ) ) ) = ( a v b )$;
+  return $|-$ $( ( a ->5 b ) ->5 ( a v ( a ' ^ b ) ) ) = ( a v b )$;
 }

@@ -326,5 +326,5 @@ theorem e2astlem1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, wv
     ax-r2;
   };
 
-  return $|- ( ( ( a v b ) ^ ( c v d ) ) ^ ( ( a v c ) v r ) ) = ( ( a v ( b ^ ( c v r ) ) ) ^ ( c v ( d ^ ( a v r ) ) ) )$;
+  return $|-$ $( ( ( a v b ) ^ ( c v d ) ) ^ ( ( a v c ) v r ) ) = ( ( a v ( b ^ ( c v r ) ) ) ^ ( c v ( d ^ ( a v r ) ) ) )$;
 }

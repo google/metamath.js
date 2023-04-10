@@ -22,5 +22,5 @@ theorem wa5b(wva: $term$ a, wvb: $term$ b) {
     bi1;
   };
 
-  return $|- ( ( a v ( a ^ b ) ) == a ) = 1$;
+  return $|-$ $( ( a v ( a ^ b ) ) == a ) = 1$;
 }

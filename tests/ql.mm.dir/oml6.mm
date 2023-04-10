@@ -112,5 +112,5 @@ theorem oml6(wva: $term$ a, wvb: $term$ b) {
     3tr;
   };
 
-  return $|- ( a v ( b ^ ( a ' v b ' ) ) ) = ( a v b )$;
+  return $|-$ $( a v ( b ^ ( a ' v b ' ) ) ) = ( a v b )$;
 }

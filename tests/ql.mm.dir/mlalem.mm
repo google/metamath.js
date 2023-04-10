@@ -313,5 +313,5 @@ theorem mlalem(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     le3tr1;
   };
 
-  return $|- ( ( a == b ) ^ ( b ->1 c ) ) =< ( a ->1 c )$;
+  return $|-$ $( ( a == b ) ^ ( b ->1 c ) ) =< ( a ->1 c )$;
 }

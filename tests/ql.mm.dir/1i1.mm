@@ -78,5 +78,5 @@ theorem 1i1(wva: $term$ a) {
     ax-r2;
   };
 
-  return $|- ( 1 ->1 a ) = a$;
+  return $|-$ $( 1 ->1 a ) = a$;
 }

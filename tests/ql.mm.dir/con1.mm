@@ -32,5 +32,5 @@ theorem con1(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- a = b$;
+  return $|-$ $a = b$;
 }

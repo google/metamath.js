@@ -95,5 +95,5 @@ theorem id5leid0(wva: $term$ a, wvb: $term$ b) {
     le3tr1;
   };
 
-  return $|- ( a == b ) =< ( a ==0 b )$;
+  return $|-$ $( a == b ) =< ( a ==0 b )$;
 }

@@ -199,5 +199,5 @@ theorem oa3to4lem2(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d, w
     lbtr;
   };
 
-  return $|- d =< ( c ->1 g )$;
+  return $|-$ $d =< ( c ->1 g )$;
 }

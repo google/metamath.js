@@ -10,5 +10,5 @@ theorem idt(hal: $type$ al, ta: $term$ A) {
     idt.1;
   };
 
-  return $|- A : al$;
+  return $|-$ $A : al$;
 }

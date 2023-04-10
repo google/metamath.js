@@ -55,5 +55,5 @@ theorem or0(wva: $term$ a) {
     ax-r2;
   };
 
-  return $|- ( a v 0 ) = a$;
+  return $|-$ $( a v 0 ) = a$;
 }

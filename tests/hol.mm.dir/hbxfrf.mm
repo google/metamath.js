@@ -119,5 +119,5 @@ theorem hbxfrf(hal: $type$ al, hbe: $type$ be, vx: $var$ x, ta: $term$ A, tb: $t
     3eqtr4i;
   };
 
-  return $|- ( S , R ) |= [ ( \ x : al . T B ) = T ]$;
+  return $|-$ $( S , R ) |= [ ( \ x : al . T B ) = T ]$;
 }

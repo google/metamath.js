@@ -167,5 +167,5 @@ theorem wlem14(wva: $term$ a, wvb: $term$ b) {
     wwbmpr;
   };
 
-  return $|- ( ( ( a ^ b ' ) v a ' ) ' v ( ( a ^ b ' ) v ( ( a ' ^ ( ( a v b ' ) ^ ( a v b ) ) ) v ( a ' ^ ( ( a v b ' ) ^ ( a v b ) ) ' ) ) ) ) = 1$;
+  return $|-$ $( ( ( a ^ b ' ) v a ' ) ' v ( ( a ^ b ' ) v ( ( a ' ^ ( ( a v b ' ) ^ ( a v b ) ) ) v ( a ' ^ ( ( a v b ' ) ^ ( a v b ) ) ' ) ) ) ) = 1$;
 }

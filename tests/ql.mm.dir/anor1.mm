@@ -52,5 +52,5 @@ theorem anor1(wva: $term$ a, wvb: $term$ b) {
     ax-r2;
   };
 
-  return $|- ( a ^ b ' ) = ( a ' v b ) '$;
+  return $|-$ $( a ^ b ' ) = ( a ' v b ) '$;
 }

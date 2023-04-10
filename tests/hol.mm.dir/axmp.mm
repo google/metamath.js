@@ -20,5 +20,5 @@ theorem axmp(tr: $term$ R, ts: $term$ S) {
     mpd;
   };
 
-  return $|- T. |= S$;
+  return $|-$ $T. |= S$;
 }

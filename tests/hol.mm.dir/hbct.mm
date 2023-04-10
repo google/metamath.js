@@ -148,5 +148,5 @@ theorem hbct(hal: $type$ al, vx: $var$ x, ta: $term$ A, tb: $term$ B, tc: $term$
     mpdan;
   };
 
-  return $|- R |= [ ( \ x : al . ( A , C ) B ) = ( A , C ) ]$;
+  return $|-$ $R |= [ ( \ x : al . ( A , C ) B ) = ( A , C ) ]$;
 }

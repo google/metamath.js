@@ -254,5 +254,5 @@ theorem oa3-2lemb(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     lan;
   };
 
-  return $|- ( ( a ->1 c ) ^ ( a v ( b ^ ( ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) v ( ( ( a ^ c ) v ( ( a ->1 c ) ^ ( c ->1 c ) ) ) ^ ( ( b ^ c ) v ( ( b ->1 c ) ^ ( c ->1 c ) ) ) ) ) ) ) ) = ( ( a ->1 c ) ^ ( a v ( b ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) )$;
+  return $|-$ $( ( a ->1 c ) ^ ( a v ( b ^ ( ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) v ( ( ( a ^ c ) v ( ( a ->1 c ) ^ ( c ->1 c ) ) ) ^ ( ( b ^ c ) v ( ( b ->1 c ) ^ ( c ->1 c ) ) ) ) ) ) ) ) = ( ( a ->1 c ) ^ ( a v ( b ^ ( ( a ^ b ) v ( ( a ->1 c ) ^ ( b ->1 c ) ) ) ) ) )$;
 }

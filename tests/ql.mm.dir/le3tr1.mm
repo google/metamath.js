@@ -28,5 +28,5 @@ theorem le3tr1(wva: $term$ a, wvb: $term$ b, wvc: $term$ c, wvd: $term$ d) {
     lbtr;
   };
 
-  return $|- c =< d$;
+  return $|-$ $c =< d$;
 }

@@ -93,5 +93,5 @@ theorem ud4lem3a(wva: $term$ a, wvb: $term$ b) {
     3tr1;
   };
 
-  return $|- ( ( a ->4 b ) ' ^ ( a v b ) ) = ( a ->4 b ) '$;
+  return $|-$ $( ( a ->4 b ) ' ^ ( a v b ) ) = ( a ->4 b ) '$;
 }

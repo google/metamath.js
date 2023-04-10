@@ -63,5 +63,5 @@ theorem ml2i(wva: $term$ a, wvb: $term$ b, wvc: $term$ c) {
     3tr2;
   };
 
-  return $|- ( c v ( b ^ a ) ) = ( ( c v b ) ^ a )$;
+  return $|-$ $( c v ( b ^ a ) ) = ( ( c v b ) ^ a )$;
 }
