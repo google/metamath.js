@@ -306,126 +306,284 @@ theorem not(
 
   do {
 
-    not.h;
+  // head x [ F ] [ K [ T ] [ x ] ] tail
+  // Applying ax-k to get to:
+  // head x [ F ] [ T ] tail
 
-    term-i; // x''' = I
+  // constructing head
+  not.h;   // head
 
-    term-k;
-    term-f;
-    term-c; // y''' = K [ F ]
+  termx;   // head x
+  word-t;  // head x
+  word-c;  // head x
 
-    termx; // z''' = x
+  word-l;  // head x [
+  word-c;  // head x [
 
-    // constructing the tail [ K [ T ] [ x ] ] 
+  term-f;  // head x [ F
+  word-t;  // head x [ F
+  word-c;  // head x [ F
 
-    word-l;  // [
+  word-r;  // head x [ F ]
+  word-c;  // head x [ F ]
 
-    term-k;  // [ K
-    word-t;  // [ K
-    word-c;  // [ K
+  word-l;  // head x [ F ] [
+  word-c;  // head x [ F ] [
 
-    word-l;  // [ K [
-    word-c;  // [ K [
+  term-t;  // x'''''' = T
+  termx;   // y'''''' = x
 
-    term-t;  // [ K [ T
-    word-t;  // [ K [ T
-    word-c;  // [ K [ T
+  // constructing tail
 
-    word-r;  // [ K [ T ]
-    word-c;  // [ K [ T ]
+  word-r;  // ]
+  not.t;   // ] tail
+  word-c;  // ] tail
 
-    word-l;  // [ K [ T ] [
-    word-c;  // [ K [ T ] [
+    // head x [ K [ F ] [ x ] ] [ K [ T ] [ x ] ] tail
+    // Applying ax-k to get to:
+    // head x [ F ] [ K [ T ] [ x ] ] tail
 
-    termx;  // [ K [ T ] [ x
-    word-t; // [ K [ T ] [ x
-    word-c; // [ K [ T ] [ x
+    // constructing head
+    not.h;   // head
 
-    word-r;  // [ K [ T ] [ x ]
-    word-c;  // [ K [ T ] [ x ]
+    termx;   // head x
+    word-t;  // head x
+    word-c;  // head x
 
-    word-r;  // [ K [ T ] [ x ] ]
-    word-c;  // [ K [ T ] [ x ] ]
+    word-l;  // head x [
+    word-c;  // head x [
+
+    term-f;  // x''''' = F
+    termx; // y''''' = x
+
+    // constructing tail
+    word-r;  // ]
+    word-l;  // ] [
+    word-c;  // ] [
+
+    term-k;  // ] [ K
+    word-t;  // ] [ K
+    word-c;  // ] [ K
+
+    word-l;  // ] [ K [
+    word-c;  // ] [ K [
+
+    term-t;  // ] [ K [ T
+    word-t;  // ] [ K [ T
+    word-c;  // ] [ K [ T
+
+    word-r;  // ] [ K [ T ]
+    word-c;  // ] [ K [ T ]
+
+    word-l;  // ] [ K [ T ] [
+    word-c;  // ] [ K [ T ] [
+
+    termx;   // ] [ K [ T ] [ x
+    word-t;  // ] [ K [ T ] [ x
+    word-c;  // ] [ K [ T ] [ x
+
+    word-r;  // ] [ K [ T ] [ x ]
+    word-c;  // ] [ K [ T ] [ x ]
+
+    word-r;  // ] [ K [ T ] [ x ] ]
+    word-c;  // ] [ K [ T ] [ x ] ]
 
     not.t; // tail
-    word-c;  // tail' = [ K [ T ] [ x ] ] tail
+    word-c; // 
+  
 
+      // head I [ x ] [ K [ F ] [ x ] ] [ K [ T ] [ x ] ] tail 
       not.h;
 
-      // S [ I ] [ K [ F ] ]
-      term-s; // S
-      term-i; // I
-      term-c; // S [ I ]
+      termx; // x'''' = x
 
-      term-k; // K
-      term-f; // F
-      term-c; // K [ F ]
+      // constructing the tail [ K [ F ] [ x ] ] [ K [ T ] [ x ] ]
 
-      term-c; // x'' = S [ I ] [ K [ F ] ]
+      word-l;  // [
 
-      //  K [ T ]
-      term-k; // K
-      term-t; // T
-      term-c; // y'' = K [ T ]
+      term-k;  // [ K
+      word-t;  // [ K
+      word-c;  // [ K
 
-      // x
-      termx; // z'' = x
+      word-l;  // [ K [
+      word-c;  // [ K [
+
+      term-f;  // [ K [ F
+      word-t;  // [ K [ F
+      word-c;  // [ K [ F
+
+      word-r;  // [ K [ F ]
+      word-c;  // [ K [ F ]
+ 
+      word-l;  // [ K [ F ] [
+      word-c;  // [ K [ F ] [
+
+      termx;  // [ K [ F ] [ x
+      word-t; // [ K [ F ] [ x
+      word-c; // [ K [ F ] [ x
+
+      word-r;  // [ K [ F ] [ x ]
+      word-c;  // [ K [ F ] [ x ]
+  
+      word-r;  // [ K [ F ] [ x ] ]
+      word-c;  // [ K [ F ] [ x ] ]
+   
+      word-l;  // [ K [ F ] [ x ] ] [
+      word-c;  // [ K [ F ] [ x ] ] [
+
+      term-k;  // [ K [ F ] [ x ] ] [ K
+      word-t;  // [ K [ F ] [ x ] ] [ K
+      word-c;  // [ K [ F ] [ x ] ] [ K
+  
+      word-l;  // [ K [ F ] [ x ] ] [ K [
+      word-c;  // [ K [ F ] [ x ] ] [ K [
+
+      term-t;  // [ K [ F ] [ x ] ] [ K [ T
+      word-t;  // [ K [ F ] [ x ] ] [ K [ T
+      word-c;  // [ K [ F ] [ x ] ] [ K [ T
+
+      word-r;  // [ K [ F ] [ x ] ] [ K [ T ]
+      word-c;  // [ K [ F ] [ x ] ] [ K [ T ]
+
+      word-l;  // [ K [ F ] [ x ] ] [ K [ T ] [
+      word-c;  // [ K [ F ] [ x ] ] [ K [ T ] [
+
+      termx;   // [ K [ F ] [ x ] ] [ K [ T ] [ x
+      word-t;  // [ K [ F ] [ x ] ] [ K [ T ] [ x
+      word-c;  // [ K [ F ] [ x ] ] [ K [ T ] [ x
+
+      word-r;  // [ K [ F ] [ x ] ] [ K [ T ] [ x ]
+      word-c;  // [ K [ F ] [ x ] ] [ K [ T ] [ x ]
+
+      word-r;  // [ K [ F ] [ x ] ] [ K [ T ] [ x ] ]
+      word-c;  // [ K [ F ] [ x ] ] [ K [ T ] [ x ] ]
 
       not.t;
+      word-c; // tail'''' = [ K [ F ] [ x ] ] [ K [ T ] [ x ] ] tail
 
-        not.h; // head'
+        not.h;
 
-        term-not; // x' = NOT
-
-        term-s; // S
-
-        term-s;
-        term-i;
-        term-c; // S [ I ]
-
-        term-k; 
-        term-f;
-        term-c; // K [ F ]
-
-        term-c; // S [ I ] [ K [ F ] ]
-
-        term-c; // S [ S [ I ] [ K [ F ] ] ]
+        term-i; // x''' = I
 
         term-k;
-        term-t;
-        term-c; // K [ T ]
+        term-f;
+        term-c; // y''' = K [ F ]
 
-        term-c; // y' = S [ S [ I ] [ K [ F ] ] ] [ K [ T ] ]
+        termx; // z''' = x
 
-        // constructing the tail
+        // constructing the tail [ K [ T ] [ x ] ] 
+
         word-l;  // [
 
-        termx;   // [ x
-        word-t;  // [ x
-        word-c;  // [ x
+        term-k;  // [ K
+        word-t;  // [ K
+        word-c;  // [ K
 
-        word-r;  // [ x ]
-        word-c;  // [ x ]
+        word-l;  // [ K [
+        word-c;  // [ K [
+
+        term-t;  // [ K [ T
+        word-t;  // [ K [ T
+        word-c;  // [ K [ T
+
+        word-r;  // [ K [ T ]
+        word-c;  // [ K [ T ]
+
+        word-l;  // [ K [ T ] [
+        word-c;  // [ K [ T ] [
+
+        termx;  // [ K [ T ] [ x
+        word-t; // [ K [ T ] [ x
+        word-c; // [ K [ T ] [ x
+
+        word-r;  // [ K [ T ] [ x ]
+        word-c;  // [ K [ T ] [ x ]
+
+        word-r;  // [ K [ T ] [ x ] ]
+        word-c;  // [ K [ T ] [ x ] ]
 
         not.t; // tail
-        word-c;  // tail' = [ x ] tail
+        word-c;  // tail' = [ K [ T ] [ x ] ] tail
 
-        df-not; // NOT = S [ S [ I ] [ K [ F ] ] ] [ K [ T ] ]
+          not.h;
 
-        not-e;  // head NOT [ x ] tail
+          // S [ I ] [ K [ F ] ]
+          term-s; // S
+          term-i; // I
+          term-c; // S [ I ]
 
-        // |- head S [ S [ I ] [ K [ F ] ] ] [ K [ T ] ] [ x ] tail
-        df-eq;  // head' y' tail' = head S [ K ] [ x' ] [ y' ] tail
+          term-k; // K
+          term-f; // F
+          term-c; // K [ F ]
 
-      ax-s; // head S [ I ] [ K [ F ] ] [ x ] [ K [ T ] [ x ] ] tail
+          term-c; // x'' = S [ I ] [ K [ F ] ]
 
-    ax-s; // head I [ x ] [ K [ F ] [ x ] ] [ K [ T ] [ x ] ] tail
+          //  K [ T ]
+          term-k; // K
+          term-t; // T
+          term-c; // y'' = K [ T ]
 
+          // x
+          termx; // z'' = x
+
+          not.t;
+
+            not.h; // head'
+
+            term-not; // x' = NOT
+
+            term-s; // S
+
+            term-s;
+            term-i;
+            term-c; // S [ I ]
+
+            term-k; 
+            term-f;
+            term-c; // K [ F ]
+
+            term-c; // S [ I ] [ K [ F ] ]
+
+            term-c; // S [ S [ I ] [ K [ F ] ] ]
+
+            term-k;
+            term-t;
+            term-c; // K [ T ]
+
+            term-c; // y' = S [ S [ I ] [ K [ F ] ] ] [ K [ T ] ]
+
+            // constructing the tail
+            word-l;  // [
+
+            termx;   // [ x
+            word-t;  // [ x
+            word-c;  // [ x
+
+            word-r;  // [ x ]
+            word-c;  // [ x ]
+
+            not.t; // tail
+            word-c;  // tail' = [ x ] tail
+
+            df-not; // NOT = S [ S [ I ] [ K [ F ] ] ] [ K [ T ] ]
+
+            not-e;  // head NOT [ x ] tail
+
+            // |- head S [ S [ I ] [ K [ F ] ] ] [ K [ T ] ] [ x ] tail
+            df-eq;  // head' y' tail' = head S [ K ] [ x' ] [ y' ] tail
+
+          ax-s; // head S [ I ] [ K [ F ] ] [ x ] [ K [ T ] [ x ] ] tail
+
+        ax-s; // head I [ x ] [ K [ F ] [ x ] ] [ K [ T ] [ x ] ] tail
+
+      id;
+
+    ax-k;
+
+  ax-k;
   };
 
-  return |- head I [ x ] [ K [ F ] [ x ] ] [ K [ T ] [ x ] ] tail;
-  // TODO: continue the proof to get to the final form.
-  // return |- head x [ F ] [ T ] tail;
+  return |- head x [ F ] [ T ] tail;
 }
 
 
