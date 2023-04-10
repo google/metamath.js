@@ -103,15 +103,15 @@ describe("Compiler", () => {
     ]);
   });
   
-  it(`axiom foo(let x) { return $|- bar$; }`, () => {
+  it(`axiom foo(alet x) { return $|- bar$; }`, () => {
     let result = new Parser().parse(`
-    axiom foo(let x) {
+    axiom foo(alet x) {
       return $|- bar$;
     }
     `);
     assertThat(result).equalsTo([
       ["axiom", "foo", [
-        [["param", ["", "let", "x"]]],
+        [["param", ["", "alet", "x"]]],
         [],
         [],
         [],

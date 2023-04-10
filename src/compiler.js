@@ -66,21 +66,6 @@ function assertThat(a) {
   };
 }
 
-const symbols = [
-  // a subset of possible symbols
-  "label",
-  // reserved keywords that can also be symbols
-  '"',
-  "(",
-  ")",
-  ",",
-  ":",
-  ";",
-  "@",
-  "#",
-  "//",
-];
-
 const labels = [
   // a subset of possible labels
   "label",
@@ -92,7 +77,6 @@ const labels = [
   "assume",
   "disjoint",
   "return",
-  // catch all types of sequences
 ];
 
 class Parser {
@@ -159,7 +143,7 @@ class Parser {
     const f = [];
     // parameters
     while (this.accepts(...labels, "string")) {
-      let first = this.accepts(...labels) ? this.label() : this.quote();
+      let first = this.accepts("label") ? this.label() : this.quote();
       this.ws(true);
 
       let label;
@@ -188,6 +172,8 @@ class Parser {
       this.ws(true);
     }
 
+    //console.log(this.lexer.head);
+    //throw new Error("hi");
     this.eat(")");
 
     this.ws(true);
