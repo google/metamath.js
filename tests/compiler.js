@@ -21,7 +21,25 @@ describe("Compiler", () => {
       ]]
     ]);
   });
-  
+
+  it(`axiom foo() { return |- ( 1 , 2 , 3 ); }`, () => {
+    let result = new Parser().parse(`
+    axiom foo() {
+      return |- ( 1 , 2 , 3 );
+    }
+    `);
+    assertThat(result).equalsTo([
+      ["axiom", "foo", [
+        [],
+        [],
+        [],
+        [],
+        ["assert", ["|-", "(", "1", ",", "2", ",", "3", ")"]],
+      ], [
+      ]]
+    ]);
+  });
+
   it(`axiom foo() { return |- hello  world; }`, () => {
     let result = new Parser().parse(`
     axiom foo() {
@@ -496,6 +514,52 @@ describe("Compiler", () => {
     ]);
   });
 
+  it("Invalid Syntax: ; in strings", async () => {
+    try {
+      new Parser().parse(`
+    axiom foo() {
+      // ";" are not allowed in strings.
+      return |- ( ; );
+    }
+    `);
+      throw new Error("Should fail first");
+    } catch (e) {
+      assertThat(e.message)
+        .equalsTo(`Unexpected token ")" ()) on line 4 column 22.`);
+    }
+  });
+
+  it("Invalid Syntax: , in types", async () => {
+    try {
+      new Parser().parse(`
+    // "," are not allowed in types
+    axiom foo(t1 a, t,2 b) {
+      return |- 1;
+    }
+    `);
+      throw new Error("Should fail first");
+    } catch (e) {
+      assertThat(e.message)
+        .equalsTo(`Unexpected token "," (,) on line 3 column 23.`);
+    }
+  });
+
+  it("Invalid Syntax: ) in types", async () => {
+    try {
+      new Parser().parse(`
+    // ")" are not allowed in types
+    axiom foo(t1 a, t)2 b) {
+      return |- 1;
+    }
+    `);
+      throw new Error("Should fail first");
+    } catch (e) {
+      assertThat(e.message)
+        .equalsTo(`Unexpected token ")" ()) on line 3 column 23.`);
+    }
+  });
+
+  
 
   it.skip("Symbols", async () => {
     let escape = (str) => str.replace(",", "$2C").replace(";", "$3B");
@@ -660,6 +724,16 @@ describe("Compiler", () => {
 
   });
 
+  it("lexer: args", async () => {
+    new Lexer()
+      .parse("(|- a)")
+      .eat("(")
+      .eat("symbol", "|-")
+      .eat("ws", " ")
+      .eat("label", "a")
+      .eat(")");
+  });
+  
   it("lexer: let", async () => {
     let lexer = new Lexer();
     lexer.parse(`

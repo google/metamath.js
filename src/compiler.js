@@ -26,7 +26,7 @@ class Lexer {
       ["@"]: "@",
       ["#"]: "#",
       ["label"]: /[A-Za-z0-9-_.]+/,
-      ["symbol"]: /[!-#%-'*-\+\--\:<-~]+/, // no " ", "$", "(", ")", ";" and ","
+      ["symbol"]: /[!-#%-\:<-~]+/, // no " ", "$", ";"
       ["quote"]: /\$[!-#%-~]+\$/,
       ["string"]: /\$(?:[!-#%-~]+(?:\s+[!-#%-~]+)*\s?)?\$/,
     };
@@ -89,11 +89,11 @@ const symbols = [
   '"',
   ":",
   ",",
-  ";",
+  //";",
   "@",
   "#",
   ...labels,
-  "symbol"
+  "symbol",
 ];
 
 class Parser {
@@ -278,9 +278,6 @@ class Parser {
     this.eat("return");
     this.ws();
     const type = this.symbol();
-    //console.log(type);
-    //console.log(this.lexer.head);
-    //throw new Error("hi");
     this.ws();
     const str = this.str();
     this.ws(true);
@@ -290,17 +287,12 @@ class Parser {
   }
 
   symbol() {
-    if (this.accepts(...labels)) {
-      return this.label();
-    } else if (this.accepts("symbol")) {
-      return this.eat("symbol");
+    if (this.accepts(...symbols)) {
+      return this.eat(...symbols);
     }
-    //this.eat("$");
-    // console.log(this.lexer.head);
+
     const quote = this.eat("quote");
     return quote.slice(1, quote.length - 1);
-    //this.eat("$");
-    // return symbol;
   }
   
   str() {
@@ -311,8 +303,8 @@ class Parser {
     }
 
     const str = [];
-    while (this.accepts(...labels, "symbol")) {
-      str.push(this.eat(...labels, "symbol"));
+    while (this.accepts(...symbols)) {
+      str.push(this.eat(...symbols));
       if (!this.accepts("ws")) {
         break;
       }
