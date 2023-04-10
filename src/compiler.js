@@ -25,8 +25,8 @@ class Lexer {
       [";"]: ";",
       ["@"]: "@",
       ["#"]: "#",
-      // ["$"]: "$",
       ["label"]: /[A-Za-z0-9-_.]+/,
+      ["symbol"]: /[!-#%-'*-\+\--\:<-~]+/, // no " ", "$", "(", ")", ";" and ","
       ["quote"]: /\$[!-#%-~]+\$/,
       ["string"]: /\$(?:[!-#%-~]+(?:\s+[!-#%-~]+)*\s?)?\$/,
     };
@@ -290,8 +290,10 @@ class Parser {
   }
 
   symbol() {
-    if (this.accepts("label")) {
+    if (this.accepts(...labels)) {
       return this.label();
+    } else if (this.accepts("symbol")) {
+      return this.eat("symbol");
     }
     //this.eat("$");
     // console.log(this.lexer.head);
@@ -302,11 +304,21 @@ class Parser {
   }
   
   str() {
-    const result = this.eat("quote", "string");
-    const symbols = result.slice(1, result.length - 1);
-    //console.log(symbols.split(/[\s]+/));
-    //throw new Error("hi");
-    return symbols.split(/[\s]+/);
+    if (this.accepts("quote", "string")) {
+      const result = this.eat("quote", "string");
+      const symbols = result.slice(1, result.length - 1);
+      return symbols.split(/[\s]+/);
+    }
+
+    const str = [];
+    while (this.accepts(...labels, "symbol")) {
+      str.push(this.eat(...labels, "symbol"));
+      if (!this.accepts("ws")) {
+        break;
+      }
+      this.ws();
+    }
+    return str;
   }
 
   axiom() {
