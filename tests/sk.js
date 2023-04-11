@@ -1261,6 +1261,288 @@ theorem b(
   return |- head f [ g [ x ] ] tail;
 }
 
+axiom term-C() {
+  return term C;
+}
+
+axiom df-c(term f, term g, term x) {
+  return |- C [ f ] [ g ] [ x ] = S [ B [ B ] [ S ] ] [ K [ K ] ] [ f ] [ g ] [ x ];
+}
+
+theorem c(
+  head: word head,
+  f: term f,
+  g: term g,
+  x: term x,
+  tail: word tail) {
+
+  assume c-e: |- head C [ f ] [ g ] [ x ] tail;
+
+  do {
+
+  // head f [ x ] [ K [ g ] [ x ] ] tail
+  head;
+  f;
+  word-t;
+  word-c; // head f
+  word-l;
+  word-c; // head f [
+  x;
+  word-t;
+  word-c; // head f [ x
+  word-r;
+  word-c; // head f [ x ]
+  word-l;
+  word-c; // head f [ x ] [
+
+  g;      // x = g
+  x;      // y = x
+
+  word-r;
+  tail;
+  word-c; // ] tail
+
+    // head f [ x ] [ K [ K ] [ f ] [ g ] [ x ] ] tail
+
+    head;
+    f;
+    word-t;
+    word-c; // head f
+    word-l;
+    word-c; // head f [
+    x;
+    word-t;
+    word-c; // head f [ x
+    word-r;
+    word-c; // head f [ x ]
+    word-l;
+    word-c; // head f [ x ] [
+
+    term-k; // x = K
+    f;      // y = f
+
+    word-l;  // [
+
+    g;       // g
+    word-t;  // g
+    word-c;  // [ g
+
+    word-r;  // ]
+    word-c;  // [ g ]
+
+    word-l;  // [
+    word-c;  // [ g ] [
+
+    x;       // x
+    word-t;  // x
+    word-c;  // [ g ] [ x
+
+    word-r;  // ]
+    word-c;  // [ g ] [ x ]
+
+    word-r;  // ]
+    word-c;  // [ g ] [ x ] ]
+    
+    tail;    // tail
+    word-c;  // [ g ] [ x ] ] tail
+
+      // head S [ f ] [ K [ K ] [ f ] [ g ] ] [ x ] tail
+
+      head;
+
+      f;      // x = f
+
+      term-k;
+      term-k;
+      term-c; // K [ K ]
+      f;
+      term-c; // K [ K ] [ f ]
+      g;
+      term-c; // y = K [ K ] [ f ] [ g ]
+
+      x;
+
+      tail;
+
+
+        // head B [ S [ f ] ] [ K [ K ] [ f ] ] [ g ] [ x ] tail
+
+        head;
+
+        term-s;
+        f;
+        term-c;  // f = S [ f ]
+
+        term-k;
+        term-k;
+        term-c;  // K [ K ]
+        f;
+        term-c;  // g = K [ K ] [ f ]
+
+        g;       // x = g
+
+        word-l;  // [
+        x;       // x
+        word-t;  // x
+        word-c;  // [ x
+
+        word-r;  // ]
+        word-c;  // [ x ]
+
+        tail;    // tail
+        word-c;  // [ x ] tail
+
+          // head B [ B ] [ S ] [ f ] [ K [ K ] [ f ] ] [ g ] [ x ] tail
+
+          head;
+ 
+          term-b;
+          term-s;
+          f;
+
+          word-l; // [
+          term-k; // K
+          word-t; // K
+          word-c; // [ K
+
+          word-l; // [
+          word-c; // [ K [
+
+          term-k; // K
+          word-t; // K
+          word-c; // [ K [ K
+
+          word-r; // ]
+          word-c; // [ K [ K ]
+
+          word-l; // [
+          word-c; // [ K [ K ] [
+
+          f;      // f
+          word-t; // f
+          word-c; // [ K [ K ] [ f
+
+          word-r; // ]
+          word-c; // [ K [ K ] [ f ]
+
+          word-r; // ]
+          word-c; // [ K [ K ] [ f ] ]
+
+          word-l;  // [
+          word-c;  // [ K [ K ] [ f ] ] [
+
+          g;       // g
+          word-t;  // g
+          word-c;  // [ K [ K ] [ f ] ] [ g
+
+          word-r;  // ]
+          word-c;  // [ K [ K ] [ f ] ] [ g ]
+
+          word-l;  // [
+          word-c;  // [ K [ K ] [ f ] ] [ g ] [
+
+          x;       // x
+          word-t;  // x
+          word-c;  // [ K [ K ] [ f ] ] [ g ] [ x
+
+          word-r;  // ]
+          word-c;  // [ K [ K ] [ f ] ] [ g ] [ x ]
+
+          tail;    // tail
+          word-c;  // [ K [ K ] [ f ] ] [ g ] [ x ] tail
+
+            // head S [ B [ B ] [ S ] ] [ K [ K ] ] [ f ] [ g ] [ x ] tail
+
+            head;
+
+            term-b;  // B
+            term-b;  // B
+            term-c;  // B [ B ]
+            term-s;  // S
+            term-c;  // B [ B ] [ S ]
+
+            term-k;  // K
+            term-k;  // K
+            term-c;  // K [ K ]
+
+            f;
+
+            word-l;  // [
+
+            g;       // g
+            word-t;  // g
+            word-c;  // [ g
+
+            word-r;  // ]
+            word-c;  // [ g ]
+
+            word-l;  // [
+            word-c;  // [ g ] [
+
+            x;       // x
+            word-t;  // x
+            word-c;  // [ g ] [ x
+
+            word-r;  // ]
+            word-c;  // [ g ] [ x ]
+
+            tail;    // tail
+            word-c;  // [ g ] [ x ] tail
+
+              head;
+
+              term-C; // C
+              f;      // f
+              term-c; // C [ f ] 
+              g;      // g
+              term-c; // C [ f ] [ g ]
+              x;      // x
+              term-c; // C [ f ] [ g ] [ x ]
+
+              term-s; // S
+              term-b; // B
+              term-b; // B
+              term-c; // B [ B ]
+              term-s; // S
+              term-c; // B [ B ] [ S ]
+              term-c; // S [ B [ B ] [ S ] ]
+              term-k; // K
+              term-k; // K
+              term-c; // K [ K ]
+              term-c; // S [ B [ B ] [ S ] ] [ K [ K ] ]
+              f;      // f
+              term-c; // S [ B [ B ] [ S ] ] [ K [ K ] ] [ f ] 
+              g;      // g
+              term-c; // S [ B [ B ] [ S ] ] [ K [ K ] ] [ f ] [ g ]
+              x;      // x
+              term-c; // S [ B [ B ] [ S ] ] [ K [ K ] ] [ f ] [ g ] [ x ]
+
+              tail;
+
+              f;
+              g;
+              x;
+              df-c; // |- C [ f ] [ g ] [ x ] = S [ B [ B ] [ S ] ] [ K [ K ] ] [ f ] [ g ] [ x ]
+
+              c-e; // |- head C [ f ] [ g ] [ x ] tail
+
+              df-eq; // head S [ B [ B ] [ S ] ] [ K [ K ] ] [ f ] [ g ] [ x ] tail
+
+            ax-s; // head B [ B ] [ S ] [ f ] [ K [ K ] [ f ] ] [ g ] [ x ] tail
+
+          b; // head B [ S [ f ] ] [ K [ K ] [ f ] ] [ g ] [ x ] tail
+
+        b; // head S [ f ] [ K [ K ] [ f ] [ g ] ] [ x ] tail
+
+      ax-s; // head f [ x ] [ K [ K ] [ f ] [ g ] [ x ] ] tail
+
+    ax-k; // head f [ x ] [ K [ g ] [ x ] ] tail
+
+  ax-k; 
+  };
+
+  return |- head f [ x ] [ g ] tail;
+}
 
 
     `;
