@@ -1741,6 +1741,266 @@ theorem v(
   return |- head z [ x ] [ y ] tail;
 }
 
+axiom term-pair() {
+  return term Pair;
+}
+
+axiom df-pair(term x, term y, term z) {
+  return |- Pair [ x ] [ y ] [ z ] = V [ x ] [ y ] [ z ];
+}
+
+theorem pair(
+  head: word head,
+  x: term x,
+  y: term y,
+  z: term z,
+  tail: word tail) {
+
+  assume pair-e: |- head Pair [ x ] [ y ] [ z ] tail;
+
+  do {
+
+    // head V [ x ] [ y ] [ z ] tail
+
+    head;
+    x;
+    y;
+    z;
+    tail;
+    
+              head;
+
+              term-pair; // Pair
+              x;      // x
+              term-c; // Pair [ x ] 
+              y;      // y
+              term-c; // Pair [ x ] [ y ]
+              z;      // z
+              term-c; // Pair [ x ] [ y ] [ z ]
+
+              term-v; // V
+              x;      // x
+              term-c; // V [ x ] 
+              y;      // y
+              term-c; // V [ x ] [ y ]
+              z;      // z
+              term-c; // V [ x ] [ y ] [ z ]
+
+              tail;
+
+              x;
+              y;
+              z;
+              df-pair; // |- Pair [ x ] [ y ] [ z ] = V [ x ] [ y ] [ z ] 
+
+              pair-e; // |- head Pair [ x ] [ y ] [ z ] tail
+
+              df-eq; // head V [ x ] [ y ] [ z ] tail
+    v;
+
+  };
+
+  return |- head z [ x ] [ y ] tail;
+}
+
+axiom term-first() {
+  return term First;
+}
+
+axiom df-first() {
+  return |- First = W [ T ];
+}
+
+theorem first(
+  head: word head,
+  x: term x,
+  y: term y,
+  tail: word tail) {
+
+  assume first-e: |- head First [ Pair [ x ] [ y ] ] tail;
+
+  do {
+
+  // head T [ x ] [ y ] tail
+
+  head;
+
+  x;
+  y;
+
+  tail;
+
+    // head Pair [ x ] [ y ] [ T ] tail
+
+    head;
+
+    x;
+    y;
+    term-t;
+
+    tail;
+
+      // head W [ T ] [ Pair [ x ] [ y ] ] tail
+
+      head;
+
+      term-t;
+      term-pair;
+      x;
+      term-c;
+      y;
+      term-c;
+
+      tail;
+
+              head;
+
+              term-first;
+
+              term-W;
+              term-t;
+              term-c;
+
+              word-l;
+              term-pair;
+              word-t;
+              word-c; // [ Pair
+              word-l;
+              word-c; // [ Pair [
+              x;
+              word-t;
+              word-c; // [ Pair [ x
+              word-r;
+              word-c; // [ Pair [ x ]
+              word-l; // 
+              word-c; // [ Pair [ x ] [
+              y;
+              word-t;
+              word-c; // [ Pair [ x ] [ y
+              word-r;
+              word-c; // [ Pair [ x ] [ y ]
+              word-r;
+              word-c; // [ Pair [ x ] [ y ] ]
+
+              tail;
+              word-c; // [ Pair [ x ] [ y ] ] tail
+
+              df-first; // |- First = W [ T ]
+
+              first-e; // |- head First [ Pair [ x ] [ y ] ] tail
+
+              df-eq; // head W [ T ] [ Pair [ x ] [ y ] ] tail
+
+      w; // head Pair [ x ] [ y ] [ T ] tail
+
+    pair; // head T [ x ] [ y ] tail
+
+  true;
+  };
+
+  return |- head x tail;
+}
+
+axiom term-second() {
+  return term Second;
+}
+
+axiom df-second() {
+  return |- Second = W [ F ];
+}
+
+theorem second(
+  head: word head,
+  x: term x,
+  y: term y,
+  tail: word tail) {
+
+  assume second-e: |- head Second [ Pair [ x ] [ y ] ] tail;
+
+  do {
+
+  // head F [ x ] [ y ] tail
+
+  head;
+
+  x;
+  y;
+
+  tail;
+
+    // head Pair [ x ] [ y ] [ F ] tail
+
+    head;
+
+    x;
+    y;
+    term-f;
+
+    tail;
+
+      // head W [ T ] [ Pair [ x ] [ y ] ] tail
+
+      head;
+
+      term-f;
+      term-pair;
+      x;
+      term-c;
+      y;
+      term-c;
+
+      tail;
+
+              head;
+
+              term-second;
+
+              term-W;
+              term-f;
+              term-c; // W [ F ]
+
+              word-l;
+              term-pair;
+              word-t;
+              word-c; // [ Pair
+              word-l;
+              word-c; // [ Pair [
+              x;
+              word-t;
+              word-c; // [ Pair [ x
+              word-r;
+              word-c; // [ Pair [ x ]
+              word-l; // 
+              word-c; // [ Pair [ x ] [
+              y;
+              word-t;
+              word-c; // [ Pair [ x ] [ y
+              word-r;
+              word-c; // [ Pair [ x ] [ y ]
+              word-r;
+              word-c; // [ Pair [ x ] [ y ] ]
+
+              tail;
+              word-c; // [ Pair [ x ] [ y ] ] tail
+
+              df-second; // |- Second = W [ F ]
+
+              second-e; // |- head Second [ Pair [ x ] [ y ] ] tail
+
+              df-eq; // head W [ F ] [ Pair [ x ] [ y ] ] tail
+
+      w; // head Pair [ x ] [ y ] [ F ] tail
+
+    pair; // head F [ x ] [ y ] tail
+
+  false;
+  };
+
+  return |- head y tail;
+}
+
+
+
     `;
     const {Compiler} = require("./../src/compiler.js");
     const {Verifier} = require("./../src/descent.js");
