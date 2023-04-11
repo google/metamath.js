@@ -596,7 +596,6 @@ axiom term-or() {
   return term OR;
 }
 
-
 axiom df-or() {
   return |- OR = S [ I ] [ K [ T ] ];
 }
@@ -1051,6 +1050,63 @@ theorem nand(
   return |- head x [ y ] [ F ] [ F ] [ T ] tail;
 }
 
+axiom term-h() {
+  return term H;
+}
+
+
+axiom df-h(term x, term y) {
+  return |- H [ x ] [ y ] = F [ x ] [ y ];
+}
+
+theorem h(
+  h.h: word head,
+  term-x: term x,
+  term-y: term y,
+  h.t: word tail) {
+
+  assume h-e: |- head H [ x ] [ y ] tail;
+
+  do {
+
+  // head F [ x ] [ y ] tail
+
+  h.h;
+
+  term-x; // x'' = x
+
+  term-y; // y'' = y
+
+  h.t;
+
+    h.h;
+
+    term-h; // H
+    term-x; // x
+    term-c; // H [ x ] 
+    term-y; // y
+    term-c; // x' = H [ x ] [ y ]
+
+    term-f; // F
+    term-x; // x
+    term-c; // F [ x ] 
+    term-y; // y
+    term-c; // y' = F [ x ] [ y ]
+
+    h.t;
+
+    term-x;
+    term-y;
+    df-h;
+
+    h-e;
+    df-eq; // head F [ x ] [ y ] tail
+
+  false; // head y tail
+  };
+
+  return |- head y tail;
+}
 
 theorem sksk() {
   assume sksk.1: |- S [ K ] [ S ] [ K ];
