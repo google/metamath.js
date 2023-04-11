@@ -49,42 +49,6 @@ axiom ax-s(word head, term x, term y, term z, word tail) {
   return |- head x [ z ] [ y [ z ] ] tail;
 }
 
-theorem s(s.1: term x, s.2: term y, s.3: term z) {
-  assume s.e1: |- S [ x ] [ y ] [ z ];
-  do {
-    word-null;
-
-    s.1;
-    s.2;
-    s.3;
-
-    word-null;
-
-    s.e1;
-
-    ax-s;
-  };
-
-  return |- x [ z ] [ y [ z ] ];
-}
-
-theorem k(k.1: term x, k.2: term y) {
-  assume k.e1: |- K [ x ] [ y ];
-  do {
-    word-null;
-
-    k.1;
-    k.2;
-
-    word-null;
-
-    k.e1;
-
-    ax-k;
-  };
-  return |- x;
-}
-
 axiom df-eq(word head, term x, term y, word tail) {
   assume |- x = y;
   assume |- head x tail;
@@ -1054,7 +1018,6 @@ axiom term-h() {
   return term H;
 }
 
-
 axiom df-h(term x, term y) {
   return |- H [ x ] [ y ] = F [ x ] [ y ];
 }
@@ -1108,27 +1071,197 @@ theorem h(
   return |- head y tail;
 }
 
-theorem sksk() {
-  assume sksk.1: |- S [ K ] [ S ] [ K ];
-  do {
-    term-k;     // wff K
-
-    term-s;     // wff S
-    term-k;     // wff K
-    term-c;     // wff S [ k ]
-
-      term-k;     // wff K
-      term-s;     // wff S
-      term-k;     // wff K
-
-      sksk.1;   // |- S [ K ] [ S ] [ K ] t
-
-      s;        // |- K [ K ] [ S [ K ] ] t
-
-    k;     // | K
-  };
-  return |- K;
+axiom term-b() {
+  return term B;
 }
+
+axiom df-b(term f, term g, term x) {
+  return |- B [ f ] [ g ] [ x ] = S [ K [ S ] ] [ K ] [ f ] [ g ] [ x ];
+}
+
+theorem b(
+  b.h: word head,
+  f: term f,
+  g: term g,
+  x: term x,
+  b.t: word tail) {
+
+  assume b-e: |- head B [ f ] [ g ] [ x ] tail;
+
+  do {
+
+  // head K [ f ] [ x ] [ g [ x ] ] tail
+
+  b.h;
+
+  f;
+
+  x;
+
+  word-l; // [
+  g;      // g
+  word-t; // g
+  word-c; // [ g
+
+  word-l; // [
+  word-c; // [ g [
+
+  x;      // x
+  word-t; // x
+  word-c; // [ g [ x
+
+  word-r; // ]
+  word-c; // [ g [ x ]
+
+  word-r; // ]
+  word-c; // [ g [ x ] ]
+
+  b.t;    // tail
+  word-c; // [ g [ x ] ] tail
+
+    // head S [ K [ f ] ] [ g ] [ x ] tail
+
+    b.h;
+
+    term-k; // K
+    f;      // f
+    term-c; // K [ f ]
+
+    g;      // g
+
+    x;      // x
+
+    b.t;
+
+      // head K [ S ] [ f ] [ K [ f ] ] [ g ] [ x ] tail
+
+      b.h;
+
+      term-s; // x''' = S
+      f;      // y''' = f
+
+      word-l; // [
+      term-k; // K
+      word-t; // K
+      word-c; // [ K
+
+      word-l; // [
+      word-c; // [ K [
+ 
+      f;      // f
+      word-t; // f
+      word-c; // [ K [ f
+
+      word-r; // ]
+      word-c; // [ K [ f ]
+
+      word-r; // ]
+      word-c; // [ K [ f ] ]
+
+      word-l; // [
+      g;      // g
+      word-t; // g
+      word-c; // [ g
+
+      word-r; // ]
+      word-c; // [ g ]
+
+      word-l; // [
+      word-c; // [ g ] [
+
+      x;      // x
+      word-t; // x
+      word-c; // [ g ] [ x
+
+      word-r; // ]
+      word-c; // [ g ] [ x ]
+
+      word-c; // [ K [ f ] ] [ g ] [ x ]
+
+      b.t;    // tail
+      word-c; // tail'' = [ K [ f ] ] [ g ] [ x ] tail
+
+        // head S [ K [ S ] ] [ K ] [ f ] [ g ] [ x ] tail
+
+        b.h;
+
+        term-k;
+        term-s;
+        term-c; // x'' = K [ S ]
+
+        term-k; // y'' = K
+
+        f;      // z'' = f
+
+        word-l; // [
+        g;      // g
+        word-t; // g
+        word-c; // [ g
+
+        word-r; // ]
+        word-c; // [ g ]
+
+        word-l; // [
+        word-c; // [ g ] [
+
+        x;      // x
+        word-t; // x
+        word-c; // [ g ] [ x
+
+        word-r; // ]
+        word-c; // [ g ] [ x ]
+
+        b.t;    // tail
+        word-c; // tail'' = [ g ] [ x ] tail
+
+          b.h;
+
+          term-b; // B
+          f;      // f
+          term-c; // B [ f ] 
+          g;      // g
+          term-c; // B [ f ] [ g ]
+          x;      // x
+          term-c; // B [ f ] [ g ] [ x ]
+
+          term-s; // S
+          term-k; // K
+          term-s; // S
+          term-c; // K [ S ]
+          term-c; // S [ K [ S ] ]
+          term-k; // K
+          term-c; // S [ K [ S ] ] [ K ]
+          f;      // f
+          term-c; // S [ K [ S ] ] [ K ] [ f ] 
+          g;      // g
+          term-c; // S [ K [ S ] ] [ K ] [ f ] [ g ]
+          x;      // x
+          term-c; // S [ K [ S ] ] [ K ] [ f ] [ g ] [ x ]
+
+          b.t;
+
+          f;
+          g;
+          x;
+          df-b; // |- B [ f ] [ g ] [ x ] = S [ K [ S ] ] [ K ] [ f ] [ g ] [ x ]
+
+          b-e; // |- head B [ f ] [ g ] [ x ] tail
+
+          df-eq; // head S [ K [ S ] ] [ K ] [ f ] [ g ] [ x ] tail
+
+        ax-s; // head K [ S ] [ f ] [ K [ f ] ] [ g ] [ x ] tail
+
+      ax-k; // head S [ K [ f ] ] [ g ] [ x ] tail
+
+    ax-s; // head K [ f ] [ x ] [ g [ x ] ] tail
+
+  ax-k; // head f [ g [ x ] ] tail
+  };
+
+  return |- head f [ g [ x ] ] tail;
+}
+
+
 
     `;
     const {Compiler} = require("./../src/compiler.js");
