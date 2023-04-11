@@ -15,13 +15,6 @@ axiom term-c(term p, term q) {
   return term p [ q ];
 }
 
-// If Δ is a derivation ending in an expression of the form α((Kβ)γ)ι,
-// then Δ followed by the term αβι is a derivation.
-axiom ax-k(word head, term x, term y, word tail) {
-  assume |- head K [ x ] [ y ] tail;
-  return |- head x tail;
-}
-
 axiom word-c(word w, word c) {
   return word w c;
 }
@@ -40,6 +33,13 @@ axiom word-l() {
 
 axiom word-r() {
   return word ];
+}
+
+// If Δ is a derivation ending in an expression of the form α((Kβ)γ)ι,
+// then Δ followed by the term αβι is a derivation.
+axiom ax-k(word head, term x, term y, word tail) {
+  assume |- head K [ x ] [ y ] tail;
+  return |- head x tail;
 }
 
 // If Δ is a derivation ending in an expression of the form α(((Sβ)γ)δ)ι,
@@ -103,7 +103,9 @@ theorem id(
   id.fh: word head,
   id.f0: term x,
   id.ft: word tail) {
+
   assume id.e0: |- head I [ x ] tail;
+
   do {
     id.fh;
     id.f0;
@@ -171,7 +173,9 @@ theorem true(
   termx: term x,
   termy: term y,
   true.t: word tail) {
+
   assume true-e: |- head T [ x ] [ y ] tail;
+
   do {
     true.h;
 
@@ -229,6 +233,7 @@ theorem false(
   termx: term x,
   termy: term y,
   false.t: word tail) {
+
   assume false-e: |- head F [ x ] [ y ] tail;
 
   do {
@@ -302,6 +307,7 @@ theorem not(
   not.h: word head,
   termx: term x,
   not.t: word tail) {
+
   assume not-e: |- head NOT [ x ] tail;
 
   do {
@@ -586,7 +592,175 @@ theorem not(
   return |- head x [ F ] [ T ] tail;
 }
 
+axiom term-or() {
+  return term OR;
+}
 
+
+axiom df-or() {
+  return |- OR = S [ I ] [ K [ T ] ];
+}
+
+theorem or(
+  or.h: word head,
+  term-x: term x,
+  term-y: term y,
+  or.t: word tail) {
+
+  assume or-e: |- head OR [ x ] [ y ] tail;
+
+  do {
+
+  // head x [ K [ T ] [ x ] ] [ y ] tail
+
+  or.h;   // head
+  term-x; // head x
+  word-t; // head x
+  word-c; // head x
+
+  word-l; // head x [
+  word-c; // head x [
+
+  term-t; // x'''' = T
+  term-x; // y'''' = x
+
+  word-r; // ]
+  word-l; // ] [
+  word-c; // ] [
+
+  term-y; // ] [ y
+  word-t; // ] [ y
+  word-c; // ] [ y
+
+  word-r; // ] [ y ]
+  word-c; // ] [ y ]
+
+  or.t;   // tail''''
+  word-c; //  ] [ y ] tail''''
+
+    // head I [ x ] [ K [ T ] [ x ] ] [ y ] tail
+    or.h; // head'''
+
+    term-x; // x''' = x
+
+    // constructing tail'''
+    word-l;  // [
+
+    term-k;  // [ K
+    word-t;  // [ K
+    word-c;  // [ K
+
+    word-l;  // [ K [
+    word-c;  // [ K [
+
+    term-t;  // [ K [ T
+    word-t;  // [ K [ T
+    word-c;  // [ K [ T
+
+    word-r;  // [ K [ T ]
+    word-c;  // [ K [ T ]
+    
+    word-l;  // [ K [ T ] [
+    word-c;  // [ K [ T ] [
+    
+    term-x;  // [ K [ T ] [ x
+    word-t;  // [ K [ T ] [ x
+    word-c;  // [ K [ T ] [ x
+
+    word-r;  // [ K [ T ] [ x ]
+    word-c;  // [ K [ T ] [ x ]
+    
+    word-r;  // [ K [ T ] [ x ] ]
+    word-c;  // [ K [ T ] [ x ] ]
+    
+    word-l;  // [ K [ T ] [ x ] ] [
+    word-c;  // [ K [ T ] [ x ] ] [
+    
+    term-y;  // [ K [ T ] [ x ] ] [ y
+    word-t;  // [ K [ T ] [ x ] ] [ y
+    word-c;  // [ K [ T ] [ x ] ] [ y
+
+    word-r;  // [ K [ T ] [ x ] ] [ y ]
+    word-c;  // [ K [ T ] [ x ] ] [ y ]
+
+    or.t;    // tail
+    word-c;  // tail'' = [ K ] tail
+
+      // head S [ I ] [ K [ T ] ] [ x ] [ y ] tail
+
+      or.h;  // head
+
+      term-i;  // x'' = I
+
+      term-k;  // K
+      term-t;  // T
+      term-c;  // y'' = K [ T ]
+
+      term-x;  // z'' = x
+
+      word-l;  // [
+
+      term-y;  // [ y
+      word-t;  // [ y
+      word-c;  // [ y
+
+      word-r;  // [ y ]
+      word-c;  // [ y ]
+    
+      or.t;    // tail
+      word-c;  // tail'' = [ y ] tail
+
+        or.h; // head'
+
+        term-or;  // x' = OR
+
+        term-s;  // S
+        term-i;  // I
+        term-c;  // S [ I ]
+
+        term-k;  // K
+        term-t;  // T
+        term-c;  // K [ T ]
+
+        term-c;  // y' = S [ I ] [ K [ T ] ]
+
+        word-l;  // [
+
+        termx;   // [ x
+        word-t;  // [ x
+        word-c;  // [ x
+
+        word-r;  // [ x ]
+        word-c;  // [ x ]
+
+        word-l;  // [ x ] [
+        word-c;  // [ x ] [
+
+        termy;   // [ x ] [ y
+        word-t;  // [ x ] [ y
+        word-c;  // [ x ] [ y
+
+        word-r;  // [ x ] [ y ]
+        word-c;  // [ x ] [ y ]
+
+        or.t; // tail
+        word-c;  // tail' = [ x ] [ y ] tail
+
+        df-or; // OR = S [ K ]
+
+        or-e;  // head OR [ x ] [ y ] tail
+
+        df-eq;  // head' y' tail' = head S [ I ] [ K [ T ] ] [ x ] [ y ] tail
+
+      ax-s; // head I [ x ] [ K [ T ] [ x ] ] [ y ] tail
+
+    id; // head x [ K [ T ] [ x ] ] [ y ] tail
+
+    ax-k; // head x [ T ] [ y ] tail
+  };
+
+  return |- head x [ T ] [ y ] tail;
+}
 
 theorem sksk() {
   assume sksk.1: |- S [ K ] [ S ] [ K ];
