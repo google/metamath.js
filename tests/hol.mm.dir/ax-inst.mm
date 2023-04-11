@@ -1,5 +1,4 @@
 
-
 axiom ax-inst(hal: $type$ al, vx: $var$ x, vy: $var$ y, ta: $term$ A, tb: $term$ B, tc: $term$ C, tr: $term$ R, ts: $term$ S) {
   assume ax-inst.1: $|- R |= A$;
   assume ax-inst.2: $|- T. |= [ ( \ x : al . B y : al ) = B ]$;

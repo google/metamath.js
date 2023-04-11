@@ -1,7 +1,7 @@
 const Assert = require("assert");
 
 describe("S and K", async () => {
-  it.only("S and K", async () => {
+  it("S and K", async () => {
     const src = `
 axiom term-k() {
   return term K;
