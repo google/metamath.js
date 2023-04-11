@@ -1,7 +1,7 @@
 const Assert = require("assert");
 
 describe("S and K", async () => {
-  it("S and K", async () => {
+  it.only("S and K", async () => {
     const src = `
 axiom term-k() {
   return term K;
@@ -952,6 +952,105 @@ theorem and(
 
   return |- head x [ y ] [ F ] tail;
 }
+
+axiom term-nand() {
+  return term NAND;
+}
+
+
+axiom df-nand(term x, term y) {
+  return |- NAND [ x ] [ y ] = NOT [ AND [ x ] [ y ] ];
+}
+
+theorem nand(
+  nand.h: word head,
+  term-x: term x,
+  term-y: term y,
+  nand.t: word tail) {
+
+  assume nand-e: |- head NAND [ x ] [ y ] tail;
+
+  do {
+
+  // head AND [ x ] [ y ] [ F ] [ T ] tail
+
+  nand.h; // head
+
+  term-x; // x'''' = x
+  term-y; // y'''' = y
+
+  word-l; // [
+  term-f; // F
+  word-t; // F
+  word-c; // [ F
+
+  word-r; // ]
+  word-c; // [ F ]
+
+  word-l; // [
+  word-c; // [ F ] [
+
+  term-t; // T
+  word-t; // T
+  word-c; // [ F ] [ T
+
+  word-r; // ]
+  word-c; // [ F ] [ T ]
+
+  nand.t; // tail
+  word-c; // [ F ] [ T ] tail
+
+    // head NOT [ AND [ x ] [ y ] ] tail
+
+    nand.h; // head
+
+    term-and; // AND
+    term-x;   // x
+    term-c;   // AND [ x ]
+    term-y;   // y
+    term-c;   // x ''' = AND [ x ] [ y ]
+
+    nand.t;  // tai
+
+      nand.h; // head
+
+      term-nand; // NAND
+      term-x;    // x
+      term-c;    // NAND [ x ]
+
+      term-y;    // y
+      term-c;    // x' = NAND [ x ] [ y ]
+
+      term-not;  // NOT
+
+      term-and;  // AND
+      term-x;    // x
+      term-c;    // AND [ x ]
+      term-y;    // y
+      term-c;    // AND [ x ] [ y ]
+
+      term-c;    // y' = NOT [ AND [ x ] [ y ] ]
+
+      nand.t; // tail
+
+      term-x; // x = x
+
+      term-y; // y = y
+
+      df-nand; // |- NAND [ x ] [ y ] = NOT [ AND [ x ] [ y ] ]
+
+      nand-e; // |- head NAND [ x ] [ y ] tail
+
+      df-eq; // head NOT [ AND [ x ] [ y ] ] tail
+
+    not; // head AND [ x ] [ y ] [ F ] [ T ] tail
+
+  and; // head x [ y ] [ F ] [ F ] [ T ] tail    
+  };
+
+  return |- head x [ y ] [ F ] [ F ] [ T ] tail;
+}
+
 
 theorem sksk() {
   assume sksk.1: |- S [ K ] [ S ] [ K ];
