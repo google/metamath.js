@@ -1544,6 +1544,202 @@ theorem c(
   return |- head f [ x ] [ g ] tail;
 }
 
+axiom term-W() {
+  return term W;
+}
+
+axiom df-w(term x, term f) {
+  return |- W [ x ] [ f ] = C [ I ] [ x ] [ f ];
+}
+
+theorem w(
+  head: word head,
+  x: term x,
+  f: term f,
+  tail: word tail) {
+
+  assume w-e: |- head W [ x ] [ f ] tail;
+
+  do {
+
+    // "head I [ f ] [ x ] tail
+
+    head;
+
+    f; // x = f
+
+    word-l;
+
+    x;
+    word-t;
+    word-c; // [ x
+
+    word-r;
+    word-c; // [ x ]
+
+    tail;
+    word-c; // [ x ] tail
+
+      // head C [ I ] [ x ] [ f ] tail
+      head;
+
+      term-i;
+      x;
+      f;
+
+      tail;
+    
+
+              head;
+
+              term-W; // W
+              x;      // x
+              term-c; // W [ x ] 
+              f;      // f
+              term-c; // W [ x ] [ f ]
+
+              term-C;
+              term-i;
+              term-c; // C [ I ]
+              x;
+              term-c; // C [ I ] [ x ]
+              f;
+              term-c; // C [ I ] [ x ] [ f ]
+
+              tail;
+
+              x;
+              f;
+              df-w; // |- W [ x ] [ f ] = C [ I ] [ x ] [ f ]
+
+              w-e; // |- head W [ x ] [ f ] tail
+
+              df-eq; // head tail
+
+       c;
+
+    id;
+
+  };
+  return |- head f [ x ] tail;
+}
+
+
+axiom term-v() {
+  return term V;
+}
+
+axiom df-v(term x, term y, term z) {
+  return |- V [ x ] [ y ] [ z ] = B [ C ] [ W ] [ x ] [ y ] [ z ];
+}
+
+theorem v(
+  head: word head,
+  x: term x,
+  y: term y,
+  z: term z,
+  tail: word tail) {
+
+  assume v-e: |- head V [ x ] [ y ] [ z ] tail;
+
+  do {
+
+  // head W [ x ] [ z ] [ y ] tail
+
+  head;
+
+  x;
+  z;
+
+  word-l;
+  y;
+  word-t;
+  word-c; // [ y
+  word-r;
+  word-c; // [ y ]
+  tail;
+  word-c; // [ y ] tail
+
+    // head C [ W [ x ] ] [ y ] [ z ] tail
+
+    head;
+
+    term-W;
+    x;
+    term-c; // f = W [ x ]
+
+    y;      // g = y
+
+    z;      // x = z
+
+    tail;
+
+      // head B [ C ] [ W ] [ x ] [ y ] [ z ] tail
+      head;
+
+      term-C; // f = C
+      term-W; // g = W
+      x;      // x = x
+
+      word-l;
+      y;
+      word-t;
+      word-c; // [ y
+      word-r;
+      word-c; // [ y ]
+      word-l;
+      word-c; // [ y ] [
+      z;
+      word-t;
+      word-c; // [ y ] [ z
+      word-r;
+      word-c; // [ y ] [ z ]
+      tail;
+      word-c; // [ y ] [ z ] tail
+
+              head;
+
+              term-v; // V
+              x;      // x
+              term-c; // V [ x ] 
+              y;      // y
+              term-c; // V [ x ] [ y ]
+              z;      // z
+              term-c; // V [ x ] [ y ] [ z ]
+
+              term-b; // B
+              term-C; // C
+              term-c; // B [ C ]
+              term-W; // W
+              term-c; // B [ C ] [ W ]
+              x;      // x
+              term-c; // B [ C ] [ W ] [ x ] 
+              y;      // y
+              term-c; // B [ C ] [ W ] [ x ] [ y ]
+              z;      // z
+              term-c; // B [ C ] [ W ] [ x ] [ y ] [ z ]
+
+              tail;
+
+              x;
+              y;
+              z;
+              df-v; // |- V [ x ] [ y ] [ z ] = B [ C ] [ W ] [ x ] [ y ] [ z ]
+
+              v-e; // |- head V [ x ] [ y ] [ z ] tail
+
+              df-eq; // head B [ C ] [ W ] [ x ] [ y ] [ z ] tail
+
+        b; // head C [ W [ x ] ] [ y ] [ z ] tail
+
+    c; // head W [ x ] [ z ] [ y ] tail
+
+  w;
+
+  };
+
+  return |- head z [ x ] [ y ] tail;
+}
 
     `;
     const {Compiler} = require("./../src/compiler.js");
