@@ -2020,6 +2020,17 @@ axiom df-Zero(term x) {
   return |- Zero [ x ]  = First [ x ];
 }
 
+//theorem z0eT() {
+//  do {
+    
+
+//    term-0;
+//    df-Zero; // Zero [ 0 ] = First [ 0 ]
+//  };
+
+//  return |- Zero [ 0 ] = T;
+//}
+
 theorem zero(
   head: word head,
   tail: word tail) {
@@ -2190,6 +2201,259 @@ theorem n0eq1() {
 
   return |- Next [ 0 ] = 1;
 }
+
+axiom term-2() {
+  return term 2;
+}
+
+axiom df-2() {
+  return |- 2 = Pair [ F ] [ 1 ];
+}
+
+theorem n1e2() {
+
+  do {
+
+    // Next [ 1 ] = Pair [ F ] [ 1 ]
+
+    term-Next;
+    word-t;
+    word-l;
+    word-c; // Next [
+    term-1;
+    word-t;
+    word-c; // Next [ 1
+    word-r;
+    word-c; // Next [ 1 ]
+    word-eq;
+    word-c; // Next [ 1 ] =
+
+    term-pair;
+    term-f;
+    term-c; // Pair [ F ]
+    term-1;
+    term-c; // Pair [ F ] [ 1 ]
+
+    term-2; // x = 2
+
+    word-null;
+
+      word-null;
+
+      term-2; // 2
+
+      term-pair;
+      term-f;
+      term-c;
+      term-1;
+      term-c; // Pair [ F ] [ 1 ]
+
+      word-null;
+
+      df-2; // 2 = Pair [ F ] [ 1 ]
+
+      df-sym;
+
+    term-1;
+    df-Next; // Next [ 1 ] = Pair [ F ] [ 1 ]
+
+    df-eq;
+
+  };
+
+  return |- Next [ 1 ] = 2;
+}
+
+axiom term-Previous() {
+  return term Previous;
+}
+
+axiom df-Previous(term x) {
+  return |- Previous [ x ] = Second [ x ];
+}
+
+theorem p2e1() {
+
+  do {
+
+  // Previous [ 2 ] = Second [ Pair [ F ] [ 1 ] ]
+
+  term-Previous;
+  word-t;
+  word-l;
+  word-c;  // Previous [
+  term-2;
+  word-t;
+  word-c;  // Previous [ 2
+  word-r;
+  word-c;  // Previous [ 2 ]
+  word-eq;
+  word-c;  // Previous [ 2 ]
+
+  term-f;  // x = F
+  term-1;  // y = 1
+
+  word-null;
+
+
+    // Previous [ 2 ] = Second [ 2 ]
+
+    term-Previous;
+    word-t;
+    word-l;
+    word-c;  // Previous [
+    term-2;
+    word-t;
+    word-c;  // Previous [ 2
+    word-r;
+    word-c;  // Previous [ 2 ]
+    word-eq;
+    word-c;  // Previous [ 2 ] =
+    term-second;
+    word-t;
+    word-c;  // Previous [ 2 ] = Second
+    word-l;
+    word-c;  // head = Previous [ 2 ] = Second [
+
+    term-2;
+
+    term-pair;
+    term-f;
+    term-c;  // Pair [ F ]
+    term-1;
+    term-c;  // Pair [ F ] [ 1 ]
+
+    word-r;  // tail = ]
+
+    df-2;
+
+      term-2;
+      df-Previous; // Previous [ 2 ] = Second [ 2 ]
+
+    df-eq;
+
+  second;
+
+  };
+
+  return |- Previous [ 2 ] = 1;
+}
+
+axiom term-Apply() {
+  return term Apply;
+}
+
+// Apply[0, f, x] = x, Apply[1, f, x] = f(x), Apply[2, f, x] = f(f(x)), etc
+axiom df-Apply(term n, term f, term x) {
+  // Apply(n, f, x) {
+  //   if n == 0
+  //     return x
+  //   else
+  //    return f(Apply(n - 1, f, x))
+  // }
+  //                                  if n == 0 is T we get the first parameter, if F, the second
+  return |- Apply [ n ] [ f ] [ x ] = Zero [ n ] [ x ] [ f [ Apply [ Previous [ n ] ] [ f ] [ x ] ] ];
+}
+
+axiom term-Add() {
+  return term Add;
+}
+
+// Add(m, n) = Apply(m, Next, n) = Next(... Next(Next(n)) ...) m times
+axiom df-Add(term m, term n) {
+  return |- Add [ m ] [ n ] = Apply [ m ] [ Next ] [ n ];
+}
+
+theorem z1ef() {
+  do {
+
+  // Zero [ 1 ] = First [ Pair [ F ] [ 0 ] ]
+
+  term-Zero;
+  word-t;
+  word-l;
+  word-c; // Zero [
+  term-1;
+  word-t;
+  word-c; // Zero [ 1
+  word-r;
+  word-c; // Zero [ 1 ]
+  word-eq;
+  word-c; // Zero [ 1 ] =
+
+  term-f; // x = F
+  term-0; // y = 0
+
+  word-null;
+
+    // Zero [ 1 ] = First [ 1 ]
+
+    term-Zero;
+    word-t;
+    word-l;
+    word-c; // Zero [
+    term-1;
+    word-t;
+    word-c; // Zero [ 1
+    word-r;
+    word-c; // Zero [ 1 ]
+    word-eq;
+    word-c; // Zero [ 1 ] = 
+    term-first;
+    word-t;
+    word-c; // Zero [ 1 ] = First
+    word-l;
+    word-c; // Zero [ 1 ] = First [
+
+    term-1; // x = 1
+
+    term-pair;
+    term-f;
+    term-c; // Pair [ F ]
+    term-0;
+    term-c; // y = Pair [ F ] [ 0 ]
+
+    word-r; // ]
+
+    df-1;
+
+      term-1;
+      df-Zero;
+
+    df-eq; // Zero [ 1 ] = First [ Pair [ F ] [ 0 ] ]
+
+  first;
+  };
+
+  return |- Zero [ 1 ] = F;
+}
+
+//theorem a1n1() {
+//  do {
+
+    // Apply [ 1 ] [ Next ] [ 1 ] = Zero [ 1 ] [ 1 ] [ Next [ Apply [ Previous [ 1 ] ] [ Next ] [ 1 ] ] ]
+
+    
+//      term-1;
+//      term-Next;
+//      term-1;
+//      df-Apply; 
+//  };
+//  return |- Apply [ 1 ] [ Next ] [ 1 ] = 2;
+//}
+
+//theorem 1p1e2() {
+//
+//  do {
+//
+//      term-1;
+//      term-1;
+//      df-Add; // Add [ 1 ] [ 1 ] = Apply [ 1 ] [ Next ] [ 1 ]
+//
+//  };
+//
+//  return |- Add [ 1 ] [ 1 ] = 2;
+//}
 
 
     `;
