@@ -2433,6 +2433,18 @@ theorem z1ef() {
 
     // Apply [ 1 ] [ Next ] [ 1 ] = Zero [ 1 ] [ 1 ] [ Next [ Apply [ Previous [ 1 ] ] [ Next ] [ 1 ] ] ]
 
+    //term-Apply;
+    //word-t;
+    //word-l;
+    //word-c; // Apply [
+    //term-1;
+    //word-t;
+    //word-c; // Apply [ 1
+    //word-r;
+    //word-c; // Apply [ 1 ]
+    //word-l;
+    //word-c; // Apply [ 1 ] 
+
     
 //      term-1;
 //      term-Next;
