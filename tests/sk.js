@@ -55,6 +55,11 @@ axiom df-eq(word head, term x, term y, word tail) {
   return |- head y tail;
 }
 
+axiom df-sym(word head, term x, term y, word tail) {
+  assume |- head x = y tail;
+  return |- head y = x tail;
+}
+
 axiom df-id() {
   return |- I = S [ K ] [ K ];
 }
@@ -1999,6 +2004,192 @@ theorem second(
   return |- head y tail;
 }
 
+axiom term-0() {
+  return term 0;
+}
+
+axiom df-0() {
+  return |- 0 = I;
+}
+
+axiom term-Zero() {
+  return term Zero;
+}
+
+axiom df-Zero(term x) {
+  return |- Zero [ x ]  = First [ x ];
+}
+
+theorem zero(
+  head: word head,
+  tail: word tail) {
+
+  assume zero-e: |- head Zero [ 0 ] tail;
+
+  do {
+
+    // head I [ T ] tail
+
+    head;
+    term-t;
+    tail;
+
+      // head 0 [ T ] tail
+
+      head;
+
+      term-0;
+
+      term-i;
+
+      word-l;
+      term-t;
+      word-t;
+      word-c; // [ T
+      word-r;
+      word-c; // [ T ]
+      tail;
+      word-c; // [ T ] tail
+
+      df-0;
+
+        // head W [ T ] [ 0 ] tail
+
+        head;
+
+        term-t;
+        term-0;
+
+        tail;
+
+
+          // head First [ 0 ] tail
+
+          head;
+
+          term-first; // First
+
+          term-W;
+          term-t;
+          term-c; // W [ T ]    
+
+          word-l;
+          term-0;
+          word-t;
+          word-c; // [ 0
+          word-r;
+          word-c; // [ 0 ]
+          tail;
+          word-c; // [ 0 ] tail
+
+          df-first; // First = W [ T ]
+
+              head;
+
+              term-Zero;
+              term-0;
+              term-c; // Zero [ 0 ]
+
+              term-first;
+              term-0;
+              term-c; // First [ 0 ]
+
+              tail;
+
+              term-0;
+
+              df-Zero; // |- Zero [ 0 ] = First [ 0 ]
+
+              zero-e; // |- Zero [ 0 ]
+
+              df-eq; // |- head First [ 0 ] tail
+
+           df-eq; // head W [ T ] [ 0 ] tail
+
+         w; //
+
+       df-eq; // head I [ T ] tail
+
+    id;
+
+  };
+
+  return |- head T tail;
+}
+
+axiom term-1() {
+  return term 1;
+}
+
+axiom df-1() {
+  return |- 1 = Pair [ F ] [ 0 ];
+}
+
+axiom term-Next() {
+  return term Next;
+}
+
+axiom df-Next(term x) {
+  return |- Next [ x ] = Pair [ F ] [ x ];
+}
+
+axiom word-eq() {
+  return word =;
+}
+
+theorem n0eq1() {
+
+  do {
+
+    // Next [ 0 ] = Pair [ F ] [ 0 ]
+
+    term-Next;
+    word-t;
+    word-l;
+    word-c; // Next [
+    term-0;
+    word-t;
+    word-c; // Next [ 0
+    word-r;
+    word-c; // Next [ 0 ]
+    word-eq;
+    word-c; // Next [ 0 ] =
+
+    term-pair;
+    term-f;
+    term-c; // Pair [ F ]
+    term-0;
+    term-c; // Pair [ F ] [ 0 ]
+
+    term-1; // x = 1
+
+    word-null;
+
+      word-null;
+
+      term-1; // 1
+
+      term-pair;
+      term-f;
+      term-c;
+      term-0;
+      term-c; // Pair [ F ] [ 0 ]
+
+      word-null;
+
+      df-1; // 1 = Pair [ F ] [ 0 ]
+
+      df-sym;
+
+    term-0;
+    df-Next; // Next [ 0 ] = Pair [ F ] [ 0 ]
+
+    df-eq;
+
+  };
+
+  return |- Next [ 0 ] = 1;
+}
 
 
     `;
