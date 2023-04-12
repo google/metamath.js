@@ -2339,6 +2339,72 @@ theorem p2e1() {
   return |- Previous [ 2 ] = 1;
 }
 
+theorem p1e0() {
+
+  do {
+
+  // Previous [ 1 ] = Second [ Pair [ F ] [ 0 ] ]
+
+  term-Previous;
+  word-t;
+  word-l;
+  word-c;  // Previous [
+  term-1;
+  word-t;
+  word-c;  // Previous [ 1
+  word-r;
+  word-c;  // Previous [ 1 ]
+  word-eq;
+  word-c;  // Previous [ 1 ]
+
+  term-f;  // x = F
+  term-0;  // y = 0
+
+  word-null;
+
+    // Previous [ 1 ] = Second [ 1 ]
+
+    term-Previous;
+    word-t;
+    word-l;
+    word-c;  // Previous [
+    term-1;
+    word-t;
+    word-c;  // Previous [ 1
+    word-r;
+    word-c;  // Previous [ 1 ]
+    word-eq;
+    word-c;  // Previous [ 1 ] =
+    term-second;
+    word-t;
+    word-c;  // Previous [ 1 ] = Second
+    word-l;
+    word-c;  // head = Previous [ 1 ] = Second [
+
+    term-1;
+
+    term-pair;
+    term-f;
+    term-c;  // Pair [ F ]
+    term-0;
+    term-c;  // Pair [ F ] [ 0 ]
+
+    word-r;  // tail = ]
+
+    df-1;
+
+      term-1;
+      df-Previous; // Previous [ 1 ] = Second [ 1 ]
+
+    df-eq;
+
+  second;
+
+  };
+
+  return |- Previous [ 1 ] = 0;
+}
+
 axiom term-Apply() {
   return term Apply;
 }
@@ -2428,31 +2494,183 @@ theorem z1ef() {
   return |- Zero [ 1 ] = F;
 }
 
-//theorem a1n1() {
-//  do {
+theorem a1n1() {
+  do {
 
-    // Apply [ 1 ] [ Next ] [ 1 ] = Zero [ 1 ] [ 1 ] [ Next [ Apply [ Previous [ 1 ] ] [ Next ] [ 1 ] ] ]
+  // Apply [ 1 ] [ Next ] [ 1 ] = Next [ Apply [ 0 ] [ Next ] [ 1 ] ]
+  term-Apply;
+  word-t;
+  word-l;
+  word-c; // Apply [
+  term-1;
+  word-t;
+  word-c; // Apply [ 1
+  word-r;
+  word-c; // Apply [ 1 ]
+  word-l;
+  word-c; // Apply [ 1 ] [
+  term-Next;
+  word-t;
+  word-c; // Apply [ 1 ] [ Next
+  word-r;
+  word-c; // Apply [ 1 ] [ Next ]
+  word-l;
+  word-c; // Apply [ 1 ] [ Next ] [
+  term-1;
+  word-t;
+  word-c; // Apply [ 1 ] [ Next ] [ 1
+  word-r;
+  word-c; // Apply [ 1 ] [ Next ] [ 1 ]
+  word-eq;
+  word-c; // Apply [ 1 ] [ Next ] [ 1 ] =
 
-    //term-Apply;
-    //word-t;
-    //word-l;
-    //word-c; // Apply [
-    //term-1;
-    //word-t;
-    //word-c; // Apply [ 1
-    //word-r;
-    //word-c; // Apply [ 1 ]
-    //word-l;
-    //word-c; // Apply [ 1 ] 
+  #;
 
+    // Apply [ 1 ] [ Next ] [ 1 ] = Next [ Apply [ Previous [ 1 ] ] [ Next ] [ 1 ] ]
+
+    //@0;
+
+    // ... continuing on Next [ Apply [ Previous [ 1 ] ] [ Next ] [ 1 ] ]
+
+    term-Next;
+    word-t;
+    word-c; // Apply [ 1 ] [ Next ] [ 1 ] = Next
+    word-l;
+    word-c; // Apply [ 1 ] [ Next ] [ 1 ] = Next [
+    term-Apply;
+    word-t;
+    word-c; // Apply [ 1 ] [ Next ] [ 1 ] = Next [ Apply
+    word-l;
+    word-c; // Apply [ 1 ] [ Next ] [ 1 ] = Next [ Apply [
+
+    term-Previous;
+    term-1;
+    term-c; // x = Previous [ 1 ]
+
+    term-0; // y = 0
+
+    // ... continuing tail ] [ Next ] [ 1 ] ]
+
+    word-r;
+    word-l;
+    word-c; // ] [
+    term-Next;
+    word-t;
+    word-c; // ] [ Next
+    word-r;
+    word-c; // ] [ Next ]
+    word-l;
+    word-c; // ] [ Next ] [
+    term-1;
+    word-t;
+    word-c; // ] [ Next ] [ 1
+    word-r;
+    word-c; // ] [ Next ] [ 1 ]
+    word-r;
+    word-c; // ] [ Next ] [ 1 ] ]
+
+    p1e0;
+
+      // Apply [ 1 ] [ Next ] [ 1 ] = F [ 1 ] [ Next [ Apply [ Previous [ 1 ] ] [ Next ] [ 1 ] ] ]
+      @0;
+
+      term-1; // x = 1
+
+      //  Next [ Apply [ Previous [ 1 ] ] [ Next ] [ 1 ] ]
+
+      term-Next;
+      term-Apply;
+      term-Previous;
+      term-1;
+      term-c; // Previous [ 1 ]
+      term-c; // Apply [ Previous [ 1 ] ]
+      term-Next;
+      term-c; // Apply [ Previous [ 1 ] ] [ Next ]
+      term-1;
+      term-c; // Apply [ Previous [ 1 ] ] [ Next ] [ 1 ]
+      term-c; // Next [ Apply [ Previous [ 1 ] ] [ Next ] [ 1 ] ]
+ 
+      word-null;
+
+        // Apply [ 1 ] [ Next ] [ 1 ] = Zero [ 1 ] [ 1 ] [ Next [ Apply [ Previous [ 1 ] ] [ Next ] [ 1 ] ] ]
+
+        // head
+        @0; // Use the previous result
+
+        term-Zero;
+        term-1;
+        term-c; // x = Zero [ 1 ]
+
+        term-f; // y = F
+
+        // Apply [ 1 ] [ Next ] [ 1 ] = Zero [ 1 ] [ 1 ] [ Next [ Apply [ Previous [ 1 ] ] [ Next ] [ 1 ] ] ]
+
+        // tail
+        word-l;
+        term-1;
+        word-t;
+        word-c; // [ 1
+        word-r;
+        word-c; // [ 1 ]
+        word-l;
+        word-c; // [ 1 ] [
+        term-Next;
+        word-t;
+        word-c; // [ 1 ] [ Next
+        word-l;
+        word-c; // [ 1 ] [ Next [
+        term-Apply;
+        word-t;
+        word-c; // [ 1 ] [ Next [ Apply
+        word-l;
+        word-c; // [ 1 ] [ Next [ Apply [
+        term-Previous;
+        word-t;
+        word-c; // [ 1 ] [ Next [ Apply [ Previous
+        word-l;
+        word-c; // [ 1 ] [ Next [ Apply [ Previous [
+        term-1;
+        word-t;
+        word-c; // [ 1 ] [ Next [ Apply [ Previous [ 1
+        word-r;
+        word-c; // [ 1 ] [ Next [ Apply [ Previous [ 1 ]
+        word-r;
+        word-c; // [ 1 ] [ Next [ Apply [ Previous [ 1 ] ]
+        word-l;
+        word-c; // [ 1 ] [ Next [ Apply [ Previous [ 1 ] ] [
+        term-Next;
+        word-t;
+        word-c; // [ 1 ] [ Next [ Apply [ Previous [ 1 ] ] [ Next
+        word-r;
+        word-c; // [ 1 ] [ Next [ Apply [ Previous [ 1 ] ] [ Next ]
+        word-l;
+        word-c; // [ 1 ] [ Next [ Apply [ Previous [ 1 ] ] [ Next ] [
+        term-1;
+        word-t;
+        word-c; // [ 1 ] [ Next [ Apply [ Previous [ 1 ] ] [ Next ] [ 1
+        word-r;
+        word-c; // [ 1 ] [ Next [ Apply [ Previous [ 1 ] ] [ Next ] [ 1 ]
+        word-r;
+        word-c; // [ 1 ] [ Next [ Apply [ Previous [ 1 ] ] [ Next ] [ 1 ] ]
+        word-r;
+        word-c; // [ 1 ] [ Next [ Apply [ Previous [ 1 ] ] [ Next ] [ 1 ] ] ]
+
+        z1ef;
     
-//      term-1;
-//      term-Next;
-//      term-1;
-//      df-Apply; 
-//  };
-//  return |- Apply [ 1 ] [ Next ] [ 1 ] = 2;
-//}
+          term-1;
+          term-Next;
+          term-1;
+          df-Apply;
+
+        df-eq;
+
+      false;
+
+    df-eq;
+  };
+  // return |- Apply [ 1 ] [ Next ] [ 1 ] = Next [ Apply [ Previous [ 1 ] ] [ Next ] [ 1 ] ];
+  return |- Apply [ 1 ] [ Next ] [ 1 ] = Next [ Apply [ 0 ] [ Next ] [ 1 ] ];
+}
 
 //theorem 1p1e2() {
 //
