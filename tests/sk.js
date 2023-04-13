@@ -2031,7 +2031,7 @@ axiom df-Zero(term x) {
 //  return |- Zero [ 0 ] = T;
 //}
 
-theorem zero(
+theorem Zero0(
   head: word head,
   tail: word tail) {
 
@@ -2421,6 +2421,317 @@ axiom df-Apply(term n, term f, term x) {
   return |- Apply [ n ] [ f ] [ x ] = Zero [ n ] [ x ] [ f [ Apply [ Previous [ n ] ] [ f ] [ x ] ] ];
 }
 
+theorem Apply0(
+  head: word head,
+  f: term f,
+  x: term x,  
+  tail: word tail) {
+
+  assume apply0-e: |- head Apply [ 0 ] [ f ] [ x ] tail;
+
+  do {
+
+  // head T [ x ] [ f [ Apply [ Previous [ 0 ] ] [ f ] [ x ] ] ] tail
+
+  head;
+
+  x;
+
+  f;
+  term-Apply;
+  term-Previous;
+  term-0;
+  term-c; // Previous [ 0 ]
+  term-c; // Apply [ Previous [ 0 ] ]
+  f;
+  term-c; // Apply [ Previous [ 0 ] ] [ f ]
+  x;
+  term-c; // Apply [ Previous [ 0 ] ] [ f ] [ x ]
+  term-c; // f [ Apply [ Previous [ 0 ] ] [ f ] [ x ] ]
+
+  tail;  
+
+    // head Zero [ 0 ] [ x ] [ f [ Apply [ Previous [ 0 ] ] [ f ] [ x ] ] ] tail
+
+    head;
+
+    word-l;
+    x;
+    word-t;
+    word-c; // [ x  
+    word-r;
+    word-c; // [ x ]
+    word-l;
+    word-c; // [ x ] [
+    f;
+    word-t;
+    word-c; // [ x ] [ f
+    word-l;
+    word-c; // [ x ] [ f [
+    term-Apply;
+    word-t;
+    word-c; // [ x ] [ f [ Apply
+    word-l;
+    word-c; // [ x ] [ f [ Apply [
+    term-Previous;
+    word-t;
+    word-c; // [ x ] [ f [ Apply [ Previous
+    word-l;
+    word-c; // [ x ] [ f [ Apply [ Previous [
+    term-0;
+    word-t;
+    word-c; // [ x ] [ f [ Apply [ Previous [ 0
+    word-r;
+    word-c; // [ x ] [ f [ Apply [ Previous [ 0 ]
+    word-r;
+    word-c; // [ x ] [ f [ Apply [ Previous [ 0 ] ]
+    word-l;
+    word-c; // [ x ] [ f [ Apply [ Previous [ 0 ] ] [
+    f;
+    word-t;
+    word-c; // [ x ] [ f [ Apply [ Previous [ 0 ] ] [ f
+    word-r;
+    word-c; // [ x ] [ f [ Apply [ Previous [ 0 ] ] [ f ]
+    word-l;
+    word-c; // [ x ] [ f [ Apply [ Previous [ 0 ] ] [ f ] [
+    x;
+    word-t;
+    word-c; // [ x ] [ f [ Apply [ Previous [ 0 ] ] [ f ] [ x
+    word-r;
+    word-c; // [ x ] [ f [ Apply [ Previous [ 0 ] ] [ f ] [ x ]
+    word-r;
+    word-c; // [ x ] [ f [ Apply [ Previous [ 0 ] ] [ f ] [ x ] ]
+    word-r;
+    word-c; // [ x ] [ f [ Apply [ Previous [ 0 ] ] [ f ] [ x ] ] ]
+    tail;
+    word-c; // tail = [ x ] [ f [ Apply [ Previous [ 0 ] ] [ f ] [ x ] ] ] tail
+
+      // Apply [ 0 ] [ f ] [ x ] = Zero [ 0 ] [ x ] [ f [ Apply [ Previous [ 0 ] ] [ f ] [ x ] ] ]
+
+      head;
+
+      term-Apply;
+      term-0;
+      term-c; // Apply [ 0 ]
+      f;
+      term-c; // Apply [ 0 ] [ f ]
+      x;
+      term-c; // x = Apply [ 0 ] [ f ] [ 0 ]
+
+      term-Zero;
+      term-0;
+      term-c; // Zero [ 0 ]
+      x;
+      term-c; // Zero [ 0 ] [ x ]
+      f;
+      term-Apply;
+      term-Previous;
+      term-0;
+      term-c; // Previous [ 0 ]
+      term-c; // Apply [ Previous [ 0 ] ]
+      f;
+      term-c; // Apply [ Previous [ 0 ] ] [ f ]
+      x;
+      term-c; // Apply [ Previous [ 0 ] ] [ f ]
+      term-c; // f [ Apply [ Previous [ 0 ] ] [ f ] ]
+      term-c; // y = Zero [ 0 ] [ x ] [ f [ Apply [ Previous [ 0 ] ] [ f ] ] ]
+
+      tail;
+
+        term-0;     // n = 0
+        f;          // f = f
+        x;          // x = x
+        df-Apply;   // Apply [ 0 ] [ f ] [ x ]
+
+      apply0-e; // |- head Apply [ 0 ] [ f ] [ x ] tail
+
+      df-eq;
+
+    Zero0;
+
+  true;
+
+  };
+
+  return |- head x tail;
+}
+
+theorem Apply1(
+  head: word head,
+  f: term f,
+  x: term x,  
+  tail: word tail) {
+
+  assume apply1-e: |- head Apply [ 1 ] [ f ] [ x ] tail;
+
+  do {
+
+  // head f [ Apply [ 0 ] [ f ] [ x ] ] tail
+
+  head;
+  f;
+  word-t;
+  word-c; // head f
+  word-l;
+  word-c; // head f [
+
+  f;
+  x;
+
+  word-r;
+  tail;
+  word-c; // ] tail
+
+    // head f [ Apply [ Previous [ 1 ] ] [ f ] [ x ] ] tail
+
+    head;
+    f;
+    word-t;
+    word-c; // head f
+    word-l;
+    word-c; // head f [
+    term-Apply;
+    word-t;
+    word-c; // head f [ Apply
+    word-l;
+    word-c; // head f [ Apply [
+
+    term-Previous;
+    term-1;
+    term-c; // x = Previous [ 1 ]
+
+    term-0; // y = 0
+
+    word-r;
+    word-l;
+    word-c; // ] [
+    f;
+    word-t;
+    word-c; // ] [ f
+    word-r;
+    word-c; // ] [ f ]
+    word-l;
+    word-c; // ] [ f ] [
+    x;
+    word-t;
+    word-c; // ] [ f ] [ x
+    word-r;
+    word-c; // ] [ f ] [ x ]
+    word-r;
+    word-c; // ] [ f ] [ x ] ]
+    tail;
+    word-c; // ] [ f ] [ x ] ] tail
+
+    p1e0; // |- Previous [ 1 ] = 0
+
+
+      // head F [ x ] [ f [ Apply [ Previous [ 1 ] ] [ f ] [ x ] ] ] tail
+
+      head;
+
+      x;
+
+      f;
+      term-Apply;
+      term-Previous;
+      term-1;
+      term-c; // Previous [ 1 ]
+      term-c; // Apply [ Previous [ 1 ] ]
+      f;
+      term-c; // Apply [ Previous [ 1 ] ] [ f ]
+      x;
+      term-c; // Apply [ Previous [ 1 ] ] [ f ] [ x ]
+      term-c; // f [ Apply [ Previous [ 1 ] ] [ f ] [ x ] ]
+  
+      #; // save #1
+
+      tail;
+
+        // head Zero [ 1 ] [ x ] [ f [ Apply [ Previous [ 1 ] ] [ f ] [ x ] ] ] tail
+
+        head;
+
+        term-Zero;
+        term-1;
+        term-c; // x = Zero [ 1 ]
+
+        term-f; // y = F
+
+        word-l;
+        x;
+        word-t;
+        word-c; // [ x
+        word-r;
+        word-c; // [ x ]
+        word-l;
+        word-c; // [ x ] [
+
+        @0;
+
+        word-t;
+        word-c; // [ x ] [ f [ Apply [ Previous [ 1 ] ] [ f ] [ x ] ] ]
+
+        word-r;
+        word-c; // [ x ] [ f [ Apply [ Previous [ 1 ] ] [ f ] [ x ] ] ] ]
+        tail;
+        word-c; // [ x ] [ f [ Apply [ Previous [ 1 ] ] [ f ] [ x ] ] ] ] tail
+
+        z1ef;
+
+          // Apply [ 1 ] [ f ] [ x ] = Zero [ 1 ] [ x ] [ f [ Apply [ Previous [ 1 ] ] [ f ] [ x ] ] ]
+
+          head;
+
+          term-Apply;
+          term-1;
+          term-c; // Apply [ 1 ]
+          f;
+          term-c; // Apply [ 1 ] [ f ]
+          x;
+          term-c; // x = Apply [ 1 ] [ f ] [ x ]
+
+          term-Zero;
+          term-1;
+          term-c; // Zero [ 1 ]
+          x;
+          term-c; // Zero [ 1 ] [ x ]
+          f;
+          term-Apply;
+          term-Previous;
+          term-1;
+          term-c; // Previous [ 1 ]
+          term-c; // Apply [ Previous [ 1 ] ]
+          f;
+          term-c; // Apply [ Previous [ 1 ] ] [ f ]
+          x;
+          term-c; // Apply [ Previous [ 1 ] ] [ f ] [ x ]
+          term-c; // f [ Apply [ Previous [ 1 ] ] [ f ] [ x ] ]
+          term-c; // y = Zero [ 1 ] [ x ] [ f [ Apply [ Previous [ 1 ] ] [ f ] [ x ] ] ]
+
+          tail;
+
+            term-1;     // n = 1
+            f;          // f = f
+            x;          // x = x
+            df-Apply;   // Apply [ 1 ] [ f ] [ x ]
+
+          apply1-e; // |- head Apply [ 1 ] [ f ] [ x ] tail
+
+          df-eq;
+
+        df-eq;
+
+      false;
+
+    df-eq;
+
+  Apply0;
+
+  };
+
+  return |- head f [ x ] tail;
+}
+
 axiom term-Add() {
   return term Add;
 }
@@ -2525,6 +2836,28 @@ theorem a1n1() {
   word-c; // Apply [ 1 ] [ Next ] [ 1 ] =
 
   #;
+
+  // ... continuing on Apply [ 1 ] [ Next ] [ 1 ] = Next [ Apply [ 0 ] [ Next ] [ 1 ] ]
+
+  //term-Next;
+  //word-t;
+  //word-c; // Apply [ 1 ] [ Next ] [ 1 ] = Next
+  //word-l;
+  //word-c; // Apply [ 1 ] [ Next ] [ 1 ] = Next [
+
+  //term-Apply;
+  //term-0;
+  //term-c; // Apply [ 0 ]
+  //term-Next;
+  //term-c; // Apply [ 0 ] [ Next ]
+  //term-1;
+  //term-c; // x = Apply [ 0 ] [ Next ] [ 1 ]
+
+  //term-Zero;
+  //term-0;
+  //term-c; // Zero
+
+  //word-r;
 
     // Apply [ 1 ] [ Next ] [ 1 ] = Next [ Apply [ Previous [ 1 ] ] [ Next ] [ 1 ] ]
 

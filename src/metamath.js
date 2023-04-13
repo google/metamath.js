@@ -397,6 +397,9 @@ class MM {
         // the stack at some point), and reuses its result
         // in another computation by pushing it into the stack.
         // stack.push(markers[step]);
+        if (!markers[step]) {
+          throw new Error(`Can't find marker for ${step}: ${Object.keys(markers)}.`);
+        }
         const [[, type, string], i] = markers[step];
         // Reuse the computation from a previous step, but generate
         // a new step entry.
