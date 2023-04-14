@@ -428,7 +428,7 @@ class MM {
           const args = [];
           let sp = base;
           if (sp < 0) {
-            throw new Error(`Empty stack ${sp}.`);
+            throw new Error(`Step ${step}: empty stack ${sp} (length = ${stack.length} and popping = ${npop}).`);
           }
         
           for (const [k, v] of mandatory) {

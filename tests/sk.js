@@ -60,6 +60,10 @@ axiom df-sym(word head, term x, term y, word tail) {
   return |- head y = x tail;
 }
 
+axiom df-eqid(term x) {
+  return |- x = x;
+}
+
 axiom df-id() {
   return |- I = S [ K ] [ K ];
 }
@@ -1750,7 +1754,116 @@ axiom term-pair() {
   return term Pair;
 }
 
-axiom df-pair(term x, term y, term z) {
+axiom ax-pair() {
+  return |- Pair = V;
+}
+
+theorem pair2(term x, term y) {
+
+  do {
+
+    // Pair [ x ] [ y ] = Pair [ x ] [ y ]
+
+    term-pair;
+    x;
+    term-c; // Pair [ x ]
+    y;
+    term-c; // Pair [ x ] [ y ]
+    word-t;
+    word-eq;
+    word-c; // Pair [ x ] [ y ] =
+
+    term-pair;
+
+    term-v;
+
+    word-l;
+    x;
+    word-t;
+    word-c; // [ x
+    word-r;
+    word-c; // [ x ]
+    word-l;
+    word-c; // [ x ] [
+    y;
+    word-t;
+    word-c; // [ x ] [ y
+    word-r;
+    word-c; // [ x ] [ y ] 
+
+    ax-pair;
+
+      term-pair;
+      x;
+      term-c; // Pair [ x ]
+      y;
+      term-c; // Pair [ x ] [ y ]
+      df-eqid; // Pair [ x ] [ y ] = Pair [ x ] [ y ]
+
+    df-eq;
+
+  };
+
+  return |- Pair [ x ] [ y ] = V [ x ] [ y ];
+}
+
+theorem df-pair(term x, term y, term z) {
+
+  do {
+
+    // Pair [ x ] [ y ] [ z ] = Pair [ x ] [ y ] [ z ]
+
+    term-pair;
+    x;
+    term-c; // Pair [ x ]
+    y;
+    term-c; // Pair [ x ] [ y ]
+    z;
+    term-c; // Pair [ x ] [ y ] [ z ]
+    word-t;
+    word-eq;
+    word-c; // Pair [ x ] [ y ] [ z ] =
+
+    term-pair;
+
+    term-v;
+
+    word-l;
+    x;
+    word-t;
+    word-c; // [ x
+    word-r;
+    word-c; // [ x ]
+    word-l;
+    word-c; // [ x ] [
+    y;
+    word-t;
+    word-c; // [ x ] [ y
+    word-r;
+    word-c; // [ x ] [ y ] 
+    word-l;
+    word-c; // [ x ] [ y ] [
+    z;
+    word-t;
+    word-c; // [ x ] [ y ] [ z
+    word-r;
+    word-c; // [ x ] [ y ] [ z ]
+
+    ax-pair;
+
+      term-pair;
+      x;
+      term-c; // Pair [ x ]
+      y;
+      term-c; // Pair [ x ] [ y ]
+      z;
+      term-c; // Pair [ x ] [ y ] [ z ]
+      df-eqid; // Pair [ x ] [ y ] [ z ] = Pair [ x ] [ y ] [ z ]
+
+    df-eq;
+
+  };
+
   return |- Pair [ x ] [ y ] [ z ] = V [ x ] [ y ] [ z ];
 }
 
@@ -2805,6 +2918,47 @@ theorem z1ef() {
   return |- Zero [ 1 ] = F;
 }
 
+theorem 0pNeN(n: term n) {
+
+  do {
+
+    // Add [ 0 ] [ n ] = Apply [ 0 ] [ Next ] [ n ]
+
+    term-Add;
+    term-0;
+    term-c; // Add [ 0 ]
+    n;
+    term-c; // Add [ 0 ] [ n ]
+    word-t;
+    word-eq;
+    word-c; // Add [ 0 ] [ n ] =
+
+    term-Next;
+    n;
+
+    word-null;
+
+      term-0;
+      n;
+      df-Add; // Add [ 0 ] [ n ] = Apply [ 0 ] [ Next ] [ n ]
+
+    Apply0;
+
+  };
+
+  return |- Add [ 0 ] [ n ] = n;
+}
+
+theorem 0p1e1() {
+  do {
+
+    term-1;
+    0pNeN;
+
+  };
+  return |- Add [ 0 ] [ 1 ] = 1;
+}
+
 theorem 1p1e2() {
 
   do {
@@ -2853,7 +3007,264 @@ theorem 1p1e2() {
   return |- Add [ 1 ] [ 1 ] = 2;
 }
 
+axiom term-Sub() {
+  return term Sub;
+}
 
+// Sub(m, n) = Apply(m, Previous, n) = Previous(... Previous(Previous(n)) ...) m times
+axiom df-Sub(term m, term n) {
+  return |- Sub [ m ] [ n ] = Apply [ m ] [ Previous ] [ n ];
+}
+
+theorem 1m1e0() {
+
+  do {
+  // Sub [ 1 ] [ 1 ] = Previous [ 1 ]
+
+  term-Sub;
+  term-1;
+  term-c; // Sub [ 1 ]
+  term-1;
+  term-c; // Sub [ 1 ] [ 1 ]
+  word-t; // Sub [ 1 ] [ 1 ]
+
+  word-eq;
+  word-c; // Sub [ 1 ] [ 1 ] =
+
+  #;
+
+  term-Previous;
+  term-1;
+  term-c; // x = Previous [ 1 ]
+
+  term-0; // y = 0
+
+  word-null;
+
+  p1e0;
+
+    // Sub [ 1 ] [ 1 ] = Apply [ 1 ] [ Previous ] [ 1 ]
+
+    @0;
+
+    term-Previous;
+    term-1;
+
+    word-null;
+
+      term-1;
+      term-1;
+      df-Sub; // Sub [ 1 ] [ 1 ] = Apply [ 1 ] [ Previous ] [ 1 ]
+
+    Apply1;
+
+  df-eq;
+  };
+
+  return |- Sub [ 1 ] [ 1 ] = 0;
+}
+
+axiom term-NextPair() {
+  return term NextPair;
+}
+
+axiom df-NextPair(term p) {
+  return |- NextPair [ p ] = Pair [ Second [ p ] ] [ Add [ First [ p ] ] [ Second [ p ] ] ];
+}
+
+theorem NextPairXY(term x, term y) {
+  do {
+  
+    // NextPair [ Pair [ 0 ] [ 1 ] ] = Pair [ 1 ] [ Add [ 0 ] [ Second [ Pair [ 0 ] [ 1 ] ] ] ]
+
+    term-NextPair;
+
+    term-pair;
+    x;
+    term-c; // Pair [ x ]
+    y;
+    term-c; // Pair [ x ] [ y ]
+    #;      // 0: Pair [ x ] [ y ]
+
+    term-c; // NextPair [ Pair [ x ] [ y ] ]
+    word-t;
+    word-eq;
+    word-c; // NextPair [ Pair [ x ] [ y ] ] =
+
+    term-pair;
+    word-t;
+    word-c; // NextPair [ Pair [ x ] [ y ] ] = Pair
+    word-l;
+    word-c; // NextPair [ Pair [ x ] [ y ] ] = Pair [
+
+    #;      // 1: NextPair [ Pair [ x ] [ y ] ] = Pair [
+  
+    y;
+    word-t;
+    word-c; // NextPair [ Pair [ x ] [ y ] ] = Pair [ y
+    word-r;
+    word-c; // NextPair [ Pair [ x ] [ y ] ] = Pair [ y ]
+    word-l;
+    word-c; // NextPair [ Pair [ x ] [ y ] ] = Pair [ y ] [
+
+    term-Add;
+    word-t;
+    word-c; // NextPair [ Pair [ x ] [ y ] ] = Pair [ y ] [ Add
+    word-l;
+    word-c; // NextPair [ Pair [ x ] [ y ] ] = Pair [ y ] [ Add [
+    x;
+    word-t;
+    word-c; // NextPair [ Pair [ x ] [ y ] ] = Pair [ y ] [ Add [ x
+    word-r;
+    word-c; // NextPair [ Pair [ x ] [ y ] ] = Pair [ y ] [ Add [ x ]
+    word-l;
+    word-c; // NextPair [ Pair [ x ] [ y ] ] = Pair [ y ] [ Add [ x ] [
+
+    x;
+    y;
+
+    // ] ]
+    word-r;
+    word-r;
+    word-c; // ] ]
+
+      // NextPair [ Pair [ x ] [ y ] ] = Pair [ y ] [ Add [ First [ Pair [ x ] [ y ] ] ] [ Second [ Pair [ x ] [ y ] ] ] ]
+
+      @1;     // 1: NextPair [ Pair [ x ] [ y ] ] = Pair [
+
+      y;
+      word-t;
+      word-c; // NextPair [ Pair [ x ] [ y ] ] = Pair [ y
+      word-r;
+      word-c; // NextPair [ Pair [ x ] [ y ] ] = Pair [ y ]
+      word-l;
+      word-c; // NextPair [ Pair [ x ] [ y ] ] = Pair [ y ] [
+
+      term-Add;
+      word-t;
+      word-c; // NextPair [ Pair [ x ] [ y ] ] = Pair [ y ] [ Add
+      word-l;
+      word-c; // NextPair [ Pair [ x ] [ y ] ] = Pair [ y ] [ Add [
+
+      x;
+      y;
+
+      //  ] [ Second [ Pair [ x ] [ y ] ] ] ]
+      word-r;
+      word-l;
+      word-c; // ] [
+
+      term-second;  // Second
+      @0;     // Pair [ x ] [ y ]
+      term-c; // Second [ Pair [ x ] [ y ] ]
+      word-t;
+      word-c; // ] [ Second [ Pair [ x ] [ y ] ]
+      word-r;
+      word-c; // ] [ Second [ Pair [ x ] [ y ] ] ]
+      word-r;
+      word-c; // ] [ Second [ Pair [ x ] [ y ] ] ] ]
+
+        // NextPair [ Pair [ x ] [ y ] ] = Pair [ Second [ Pair [ x ] [ y ] ] ] [ Add [ First [ Pair [ x ] [ y ] ] ] [ Second [ Pair [ x ] [ y ] ] ] ]
+
+        @1;
+
+        x;
+        y;
+
+        // ] [ Add [ First [ Pair [ x ] [ y ] ] ] [ Second [ Pair [ x ] [ y ] ] ] ]
+
+        word-r;
+        word-l;
+        word-c;
+
+        term-Add;
+        term-first;
+        @0;     // Pair [ x ] [ y ]
+        term-c; // First [ Pair [ x ] [ y ] ]
+        term-c; // Add [ First [ Pair [ x ] [ y ] ] ]
+
+        term-second;
+        @0;
+        term-c; // Second [ Pair [ x ] [ y ] ]
+        term-c; // Add [ First [ Pair [ x ] [ y ] ] ] [ Second [ Pair [ x ] [ y ] ] ]
+
+        word-t;
+
+        word-c; // [ Add [ First [ Pair [ x ] [ y ] ] ] [ Second [ Pair [ x ] [ y ] ] ]
+        word-r;
+        word-c;  // [  Add [ First [ Pair [ x ] [ y ] ] ] [ Second [ Pair [ x ] [ y ] ] ] ]
+
+          @0; // Pair [ x ] [ y ]
+
+          df-NextPair;
+
+        second;     
+
+      first;
+
+    second;
+
+  };
+  return |- NextPair [ Pair [ x ] [ y ] ] = Pair [ y ] [ Add [ x ] [ y ] ];
+}
+
+theorem np01e11() {
+  do {
+
+  // NextPair [ Pair [ 0 ] [ 1 ] ] = Pair [ 1 ] [ Add [ 0 ] [ 1 ] ]
+
+  term-NextPair;
+
+  term-pair;
+  term-0;
+  term-c; // Pair [ 0 ]
+  term-1;
+  term-c; // Pair [ 0 ] [ 1 ]
+  #;      // 0: Pair [ 0 ] [ 1 ]
+
+  term-c; // NextPair [ Pair [ 0 ] [ 1 ] ]
+  word-t;
+  word-eq;
+  word-c; // NextPair [ Pair [ 0 ] [ 1 ] ] =
+
+  term-pair;
+  word-t;
+  word-c; // NextPair [ Pair [ 0 ] [ 1 ] ] = Pair
+  word-l;
+  word-c; // NextPair [ Pair [ 0 ] [ 1 ] ] = Pair [
+
+  #;      // 1: NextPair [ Pair [ 0 ] [ 1 ] ] = Pair [
+
+  term-1;
+  word-t;
+  word-c; // NextPair [ Pair [ 0 ] [ 1 ] ] = Pair [ 1
+  word-r;
+  word-c; // NextPair [ Pair [ 0 ] [ 1 ] ] = Pair [ 1 ]
+  word-l;
+  word-c; // head = NextPair [ Pair [ 0 ] [ 1 ] ] = Pair [ 1 ] [
+
+  term-Add;
+  term-0;
+  term-c; // Add [ 0 ]
+  term-1;
+  term-c; // x = Add [ 0 ] [ 1 ]
+
+  term-1; // y = 1
+
+  word-r; // ]
+
+  0p1e1; // |- Add [ 0 ] [ 1 ] = 1
+
+    term-0;
+    term-1;
+    NextPairXY;
+
+  df-eq;
+    
+  };
+
+  return |- NextPair [ Pair [ 0 ] [ 1 ] ] = Pair [ 1 ] [ 1 ];
+}
     `;
     const {Compiler} = require("./../src/compiler.js");
     const {Verifier} = require("./../src/descent.js");
