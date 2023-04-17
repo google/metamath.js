@@ -1,6 +1,106 @@
 const Assert = require("assert");
 
 describe("S and K", async () => {
+
+  it("A", async () => {
+    let A = ([a, [...x], [...y], [...z]]) => [...x, [...z], [...y, ["K", [...z]]]];
+    let K_ = ([k, [...x], [...y]]) => [...x];
+
+    const T = ["A", [1, [5]], [2], [3]];
+    T.splice(0, 4, ...A(T.slice(0, 4)));
+    assertThat(T)
+      .equalsTo([1, [5], [3], [2, ["K", [3]]]]);
+
+    const U = ["K", [1, [5]], [2]];
+    U.splice(0, 3, ...K_(U.slice(0, 3)));
+    assertThat(U)
+      .equalsTo([1, [5]]);
+
+    const a = 'A';
+    const k = 'K';
+    const x = 'x';
+    const y = 'y';
+
+    // K = A (A A) (A (A A) A A A A A)
+    const K = [a, [a, [a]], [a, [a, [a]], [a], [a], [a], [a], [a]], [x], [y]];
+    K[2].splice(0, 4, ...A(K[2].slice(0, 4)))
+    // a, x = [a, [a]], y = [a], z = [a]
+    assertThat(K)
+      .equalsTo([a, [a, [a]], [a, [a], [a], [a, [k, [a]]], [a], [a], [a]], [x], [y]]);
+    K[2].splice(0, 4, ...A(K[2].slice(0, 4)))
+    // a, x = [a], y = [a], z = [a, [k, [a]]]
+    assertThat(K)
+      .equalsTo([a, [a, [a]], [a, [a, [k, [a]]], [a, [k, [a, [k, [a]]]]], [a], [a], [a]], [x], [y]]);
+    K[2].splice(0, 4, ...A(K[2].slice(0, 4)))
+    // a, x = [a, [k, [a]]], y = [a, [k, [a, [k, [a]]]]], z = [a]
+    assertThat(K)
+      .equalsTo([a, [a, [a]], [a, [k, [a]], [a], [a, [k, [a, [k, [a]]]], [k, [a]]], [a], [a]], [x], [y]]);
+    K[2].splice(0, 4, ...A(K[2].slice(0, 4)))
+    // a, x = [k, [a]], y = [a], z = [a, [k, [a, [k, [a]]]], [k, [a]]]
+    assertThat(K)
+      .equalsTo([a, [a, [a]], [k, [a], [a, [k, [a, [k, [a]]]], [k, [a]]], [a, [k, [a, [k, [a, [k, [a]]]], [k, [a]]]]], [a], [a]], [x], [y]]);
+    K[2].splice(0, 3, ...K_(K[2].slice(0, 3)))
+    assertThat(K)
+      .equalsTo([a, [a, [a]], [a, [a, [k, [a, [k, [a, [k, [a]]]], [k, [a]]]]], [a], [a]], [x], [y]]);
+    K[2].splice(0, 4, ...A(K[2].slice(0, 4)))
+    // a, x = [a, [k, [a, [k, [a, [k, [a]]]], [k, [a]]]]], y = [a], z = [a]
+    assertThat(K)
+      .equalsTo([a, [a, [a]], [a, [k, [a, [k, [a, [k, [a]]]], [k, [a]]]], [a], [a, [k, [a]]]], [x], [y]]);
+    K[2].splice(0, 4, ...A(K[2].slice(0, 4)))
+    // a, x = [k, [a, [k, [a, [k, [a]]]], [k, [a]]]], y = [a], z = [a, [k, [a]]]
+    assertThat(K)
+      .equalsTo([a, [a, [a]], [k, [a, [k, [a, [k, [a]]]], [k, [a]]], [a, [k, [a]]], [a, [k, [a, [k, [a]]]]]], [x], [y]]);
+    K[2].splice(0, 3, ...K_(K[2].slice(0, 3)))
+    assertThat(K)
+      .equalsTo([a, [a, [a]], [a, [k, [a, [k, [a]]]], [k, [a]], [a, [k, [a, [k, [a]]]]]], [x], [y]]);
+    K[2].splice(0, 4, ...A(K[2].slice(0, 4)))
+    // a, x = [k, [a, [k, [a]]]], y = [k, [a]], z = [a, [k, [a, [k, [a]]]]]
+    assertThat(K)
+      .equalsTo([a, [a, [a]], [k, [a, [k, [a]]], [a, [k, [a, [k, [a]]]]], [k, [a], [k, [a, [k, [a, [k, [a]]]]]]]], [x], [y]]);
+    K[2].splice(0, 3, ...K_(K[2].slice(0, 3)))
+    assertThat(K)
+      .equalsTo([a, [a, [a]], [a, [k, [a]], [k, [a], [k, [a, [k, [a, [k, [a]]]]]]]], [x], [y]]);
+    K[2][2].splice(0, 3, ...K_(K[2][2].slice(0, 3)))
+    assertThat(K)
+      .equalsTo([a, [a, [a]], [a, [k, [a]], [a]], [x], [y]]);
+    K.splice(0, 4, ...A(K.slice(0, 4)))
+    // a, x = [a, [a]], y = [a, [k, [a]], [a]], z = [x]
+    assertThat(K)
+      .equalsTo([a, [a], [x], [a, [k, [a]], [a], [k, [x]]], [y]]);
+    K.splice(0, 4, ...A(K.slice(0, 4)))
+    // a, x = [a], y = [x], z = [a, [k, [a]], [a], [k, [x]]]
+    assertThat(K)
+      .equalsTo([a, [a, [k, [a]], [a], [k, [x]]], [x, [k, [a, [k, [a]], [a], [k, [x]]]]], [y]]);
+    K.splice(0, 4, ...A(K.slice(0, 4)))
+    // a, x = [a, [k, [a]], [a], [k, [x]]], y = [x, [k, [a, [k, [a]], [a], [k, [x]]]]], z = [y]
+    assertThat(K)
+      .equalsTo([a, [k, [a]], [a], [k, [x]], [y], [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]]]);
+    K.splice(0, 4, ...A(K.slice(0, 4)))
+    // a, x = [k, [a]], y = [a], z = [k, [x]]
+    assertThat(K)
+      .equalsTo([k, [a], [k, [x]], [a, [k, [k, [x]]]], [y], [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]]]);
+    K.splice(0, 3, ...K_(K.slice(0, 3)))
+    assertThat(K)
+      .equalsTo([a, [a, [k, [k, [x]]]], [y], [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]]]);
+    K.splice(0, 4, ...A(K.slice(0, 4)))
+    // a, x = [a, [k, [k, [x]]]], y = [y], z = [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]]
+    assertThat(K)
+      .equalsTo([a, [k, [k, [x]]], [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]], [y, [k, [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]]]]]);
+    K.splice(0, 4, ...A(K.slice(0, 4)))
+    // a, x = [k, [k, [x]]], y = [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]], z = [y, [k, [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]]]]
+    assertThat(K)
+      .equalsTo([k, [k, [x]], [y, [k, [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]]]], [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]], [k, [y, [k, [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]]]]]]]);
+    K.splice(0, 3, ...K_(K.slice(0, 3)))
+    assertThat(K)
+      .equalsTo([k, [x], [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]], [k, [y, [k, [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]]]]]]]);
+    K.splice(0, 3, ...K_(K.slice(0, 3)))
+    assertThat(K)
+      .equalsTo([x]);
+
+    // S = A (A (A A (A A (A A))(A (A (A A (A A)))))) A A
+
+  });
+  
   it("S and K", async () => {
     const src = `
 axiom term-k() {
