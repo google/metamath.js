@@ -1,7 +1,104 @@
 const Assert = require("assert");
 
 describe("S and K", async () => {
+  function match(parent, i, combinator) {
+    // console.log(combinator.args);
+    if ((i + combinator.args) >= parent.length) {
+      return false;
+    }
+    if (parent[i] != combinator.head) {
+      return false;
+    }
+    return true;
+  }
+    
+  function apply(parent, i, combinator) {
+    if (!match(parent, i, combinator)) {
+      throw new Error(`Can't apply ${combinator.head}`);
+    }
+    
+    parent.splice(i, combinator.args + 1, ...combinator(parent.slice(i, i + combinator.args + 1)));
+    return parent;
+  }
 
+  function go(combinators, node) {
+    for (let i = 0; i < node.length; i++) {
+      if (Array.isArray(node[i])) {
+        go(combinators, node[i]);
+        continue;
+      }
+      while (true) {
+        let done = true;
+        for (let combinator of combinators) {
+          if (match(node, i, combinator)) {
+            apply(node, i, combinator);
+            done = false;
+            break;
+          }
+        }
+        if (done) {
+          break;
+        }
+      }
+    }
+    return node;
+  }
+  
+  it("iota", async () => {
+    const s = "S";
+    const k = "K";
+    const i = "I";
+    
+    let I = ([i, [...x]]) => [...x, [s], [k]];
+    let K = ([k, [...x], [...y]]) => [...x];
+    let S = ([s, [...x], [...y], [...z]]) => [...x, [...z], [...y, [...z]]];
+
+    I.head = "I";
+    I.args = 1;
+
+    K.head = "K";
+    K.args = 2;
+
+    S.head = "S";
+    S.args = 3;
+
+    const x = "x";
+    
+    const id = [i, [i], [x]];
+
+    assertThat(apply(id, 0, I)).equalsTo([i, [s], [k], [x]]);
+    assertThat(apply(id, 0, I)).equalsTo([s, [s], [k], [k], [x]]);
+    assertThat(apply(id, 0, S)).equalsTo([s, [k], [k, [k]], [x]]);
+    assertThat(apply(id, 0, S)).equalsTo([k, [x], [k, [k], [x]]]);
+    assertThat(apply(id, 0, K)).equalsTo([x]);
+
+    assertThat(go([I, K, S], [i, [i], [x]])).equalsTo([x]);
+
+    const y = "y";
+    const K_ = [i, [i, [i, [i]]], [x], [y]];
+
+    assertThat(apply(K_, 0, I)).equalsTo([i, [i, [i]], [s], [k], [x], [y]]);
+    assertThat(apply(K_, 0, I)).equalsTo([i, [i], [s], [k], [s], [k], [x], [y]]);
+    assertThat(apply(K_, 0, I)).equalsTo([i, [s], [k], [s], [k], [s], [k], [x], [y]]);
+    assertThat(apply(K_, 0, I)).equalsTo([s, [s], [k], [k], [s], [k], [s], [k], [x], [y]]);
+    // s, [s], [k], [k]
+    assertThat(apply(K_, 0, S)).equalsTo([s, [k], [k, [k]], [s], [k], [s], [k], [x], [y]]);
+    // s, [k], [k, [k]], [s]
+    assertThat(apply(K_, 0, S)).equalsTo([k, [s], [k, [k], [s]], [k], [s], [k], [x], [y]]);
+    assertThat(apply(K_, 0, K)).equalsTo([s, [k], [s], [k], [x], [y]]);
+    // s, [k], [s], [k]
+    assertThat(apply(K_, 0, S)).equalsTo([k, [k], [s, [k]], [x], [y]]);
+    assertThat(apply(K_, 0, K)).equalsTo([k, [x], [y]]);
+    assertThat(apply(K_, 0, K)).equalsTo([x]);
+
+    assertThat(go([I, K, S], [i, [i, [i, [i]]], [x], [y]])).equalsTo([x]);
+
+    const z = "z";
+    const S_ = [i, [i, [i, [i, [i]]]], [x], [y], [z]];
+
+    assertThat(go([I, K, S], [i, [i, [i, [i, [i]]]], [x], [y], [z]])).equalsTo([x, [z], [y, [z]]]);
+  });
+  
   it("A", async () => {
     let A = ([a, [...x], [...y], [...z]]) => [...x, [...z], [...y, ["K", [...z]]]];
     let K_ = ([k, [...x], [...y]]) => [...x];
@@ -23,6 +120,19 @@ describe("S and K", async () => {
 
     // K = A (A A) (A (A A) A A A A A)
     const K = [a, [a, [a]], [a, [a, [a]], [a], [a], [a], [a], [a]], [x], [y]];
+
+    A.head = "A";
+    A.args = 3;
+    assertThat(A.head).equalsTo("A");
+    assertThat(A.args).equalsTo(3);
+
+    K_.head = "K";
+    K_.args = 2;
+    assertThat(K_.head).equalsTo("K");
+    assertThat(K_.args).equalsTo(2);
+    
+    assertThat(go([K_, A], JSON.parse(JSON.stringify(K)))).equalsTo([x]);
+    
     K[2].splice(0, 4, ...A(K[2].slice(0, 4)))
     // a, x = [a, [a]], y = [a], z = [a]
     assertThat(K)
@@ -97,8 +207,28 @@ describe("S and K", async () => {
     assertThat(K)
       .equalsTo([x]);
 
-    // S = A (A (A A (A A (A A))(A (A (A A (A A)))))) A A
 
+    const z = 'z';
+
+    assertThat(match(["A", x, y, z], 0, A)).equalsTo(true);
+    assertThat(apply(["A", x, y, z], 0, A)).equalsTo([x, [z], [y, [k, [z]]]]);
+    assertThat(match(["A", x, y, z, z], 0, A)).equalsTo(true);
+    assertThat(apply(["A", x, y, z, z], 0, A)).equalsTo([x, [z], [y, [k, [z]]], z]);
+    assertThat(match(["A", x, y], 0, A)).equalsTo(false);
+    assertThat(match(["A", x], 0, A)).equalsTo(false);
+
+    assertThat(match([0, "A", x, y, z], 1, A)).equalsTo(true);
+    assertThat(apply([0, "A", x, y, z], 1, A)).equalsTo([0, x, [z], [y, [k, [z]]]]);
+    assertThat(match([0, "A", x, y, z, z], 1, A)).equalsTo(true);
+    assertThat(apply([0, "A", x, y, z, z], 1, A)).equalsTo([0, x, [z], [y, [k, [z]]], z]);
+    assertThat(match([0, "A", x, y], 1, A)).equalsTo(false);
+    assertThat(match([0, "A", x], y, A)).equalsTo(false);
+
+    // S = A (A (A A (A A (A A))(A (A (A A (A A)))))) A A
+    const S = [a, [a, [a, [a], [a, [a], [a, [a]]], [a, [a, [a, [a], [a, [a]]]]]]], [a], [a], [x], [y], [z]];
+    
+    assertThat(go([K_, A], S)).equalsTo([x, [z], [y, [z]]]);
+    
   });
   
   it("S and K", async () => {
