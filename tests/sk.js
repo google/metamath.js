@@ -7,9 +7,9 @@ describe("S and K", async () => {
     // K[x][y] = x
     // S[x][y][z] = x[z][y[z]]
 
-    // i[f] = f[S][K], I = i[i], K = i[i[i[i]]], S = i[i[i[i[i]]]]
+    // i[x] = x[S][K], I = i[i], K = i[i[i[i]]], S = i[i[i[i[i]]]]
     // m[x][y][z] = x[z][y[K[z]]], K = A (A A) (A (A A) A A A A A), A (A (A A (A A (A A))(A (A (A A (A A)))))) A A
-    // 
+    // w[x] = x[K][S][K], K = W[W][W] and S = W[W[W]]
 
   });
   
@@ -173,6 +173,30 @@ describe("S and K", async () => {
 
     assertThat(go([S, K, W], [w, w, w, x, y])).equalsTo([x]);
     assertThat(go([S, K, W], [w, [w, [w]], x, y, z])).equalsTo([x, [z], [y, [z]]]);
+  });
+  
+  it("V", async () => {
+    const k = "K";
+    const s = "S";
+    const v = "V";
+    const x = "x";
+    const y = "y";
+    const z = "z";
+    
+    const S = ([s, [...x], [...y], [...z]]) => [...x, [...z], [...y, [...z]]];
+    S.head = s;
+    S.args = 3;
+
+    const K = ([k, [...x], [...y]]) => [...x];
+    K.head = k;
+    K.args = 2;
+
+    const V = ([v, [...x]]) => [...x, [k], [s]];
+    V.head = v;
+    V.args = 1;
+
+    assertThat(go([S, K, V], [v, v, v, x, y, z])).equalsTo([x, [z], [y, [z]]]);
+    assertThat(go([S, K, V], [v, [v, [v], [v], [v], [v]], x, y])).equalsTo([x]);
   });
   
 
