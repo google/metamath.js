@@ -1,6 +1,18 @@
 const Assert = require("assert");
 
 describe("S and K", async () => {
+
+  it("MIU", async () => {
+    console.log("hi");
+    // K[x][y] = x
+    // S[x][y][z] = x[z][y[z]]
+
+    // i[f] = f[S][K], I = i[i], K = i[i[i[i]]], S = i[i[i[i[i]]]]
+    // m[x][y][z] = x[z][y[K[z]]], K = A (A A) (A (A A) A A A A A), A (A (A A (A A (A A))(A (A (A A (A A)))))) A A
+    // 
+
+  });
+  
   function match(parent, i, combinator) {
     // console.log(combinator.args);
     if ((i + combinator.args) >= parent.length) {
@@ -139,6 +151,30 @@ describe("S and K", async () => {
     assertThat(go([K_, A], S)).equalsTo([x, [z], [y, [z]]]);
   });
 
+  it("W", async () => {
+    const k = "K";
+    const s = "S";
+    const w = "W";
+    const x = "x";
+    const y = "y";
+    const z = "z";
+    
+    const S = ([s, [...x], [...y], [...z]]) => [...x, [...z], [...y, [...z]]];
+    S.head = s;
+    S.args = 3;
+
+    const K = ([k, [...x], [...y]]) => [...x];
+    K.head = k;
+    K.args = 2;
+
+    const W = ([w, [...x]]) => [...x, [k], [s], [k]];
+    W.head = w;
+    W.args = 1;
+
+    assertThat(go([S, K, W], [w, w, w, x, y])).equalsTo([x]);
+    assertThat(go([S, K, W], [w, [w, [w]], x, y, z])).equalsTo([x, [z], [y, [z]]]);
+  });
+  
 
   it("S and K", async () => {
     const S = ([s, [...x], [...y], [...z]]) => [...x, [...z], [...y, [...z]]];
