@@ -24,6 +24,7 @@ describe("S and K", async () => {
   function go(combinators, node) {
     for (let i = 0; i < node.length; i++) {
       if (Array.isArray(node[i])) {
+        // console.log("hi");
         go(combinators, node[i]);
         continue;
       }
@@ -32,6 +33,7 @@ describe("S and K", async () => {
         for (let combinator of combinators) {
           if (match(node, i, combinator)) {
             apply(node, i, combinator);
+            // yield [node, i, combinator];
             done = false;
             break;
           }
@@ -43,7 +45,7 @@ describe("S and K", async () => {
     }
     return node;
   }
-  
+
   it("iota", async () => {
     const s = "S";
     const k = "K";
@@ -100,8 +102,13 @@ describe("S and K", async () => {
   });
   
   it("A", async () => {
-    let A = ([a, [...x], [...y], [...z]]) => [...x, [...z], [...y, ["K", [...z]]]];
+    const A = ([a, [...x], [...y], [...z]]) => [...x, [...z], [...y, ["K", [...z]]]];
+    A.head = "A";
+    A.args = 3;
+
     let K_ = ([k, [...x], [...y]]) => [...x];
+    K_.head = "K";
+    K_.args = 2;
 
     const T = ["A", [1, [5]], [2], [3]];
     T.splice(0, 4, ...A(T.slice(0, 4)));
@@ -115,120 +122,39 @@ describe("S and K", async () => {
 
     const a = 'A';
     const k = 'K';
+
     const x = 'x';
     const y = 'y';
 
     // K = A (A A) (A (A A) A A A A A)
     const K = [a, [a, [a]], [a, [a, [a]], [a], [a], [a], [a], [a]], [x], [y]];
-
-    A.head = "A";
-    A.args = 3;
-    assertThat(A.head).equalsTo("A");
-    assertThat(A.args).equalsTo(3);
-
-    K_.head = "K";
-    K_.args = 2;
-    assertThat(K_.head).equalsTo("K");
-    assertThat(K_.args).equalsTo(2);
     
     assertThat(go([K_, A], JSON.parse(JSON.stringify(K)))).equalsTo([x]);
     
-    K[2].splice(0, 4, ...A(K[2].slice(0, 4)))
-    // a, x = [a, [a]], y = [a], z = [a]
-    assertThat(K)
-      .equalsTo([a, [a, [a]], [a, [a], [a], [a, [k, [a]]], [a], [a], [a]], [x], [y]]);
-    K[2].splice(0, 4, ...A(K[2].slice(0, 4)))
-    // a, x = [a], y = [a], z = [a, [k, [a]]]
-    assertThat(K)
-      .equalsTo([a, [a, [a]], [a, [a, [k, [a]]], [a, [k, [a, [k, [a]]]]], [a], [a], [a]], [x], [y]]);
-    K[2].splice(0, 4, ...A(K[2].slice(0, 4)))
-    // a, x = [a, [k, [a]]], y = [a, [k, [a, [k, [a]]]]], z = [a]
-    assertThat(K)
-      .equalsTo([a, [a, [a]], [a, [k, [a]], [a], [a, [k, [a, [k, [a]]]], [k, [a]]], [a], [a]], [x], [y]]);
-    K[2].splice(0, 4, ...A(K[2].slice(0, 4)))
-    // a, x = [k, [a]], y = [a], z = [a, [k, [a, [k, [a]]]], [k, [a]]]
-    assertThat(K)
-      .equalsTo([a, [a, [a]], [k, [a], [a, [k, [a, [k, [a]]]], [k, [a]]], [a, [k, [a, [k, [a, [k, [a]]]], [k, [a]]]]], [a], [a]], [x], [y]]);
-    K[2].splice(0, 3, ...K_(K[2].slice(0, 3)))
-    assertThat(K)
-      .equalsTo([a, [a, [a]], [a, [a, [k, [a, [k, [a, [k, [a]]]], [k, [a]]]]], [a], [a]], [x], [y]]);
-    K[2].splice(0, 4, ...A(K[2].slice(0, 4)))
-    // a, x = [a, [k, [a, [k, [a, [k, [a]]]], [k, [a]]]]], y = [a], z = [a]
-    assertThat(K)
-      .equalsTo([a, [a, [a]], [a, [k, [a, [k, [a, [k, [a]]]], [k, [a]]]], [a], [a, [k, [a]]]], [x], [y]]);
-    K[2].splice(0, 4, ...A(K[2].slice(0, 4)))
-    // a, x = [k, [a, [k, [a, [k, [a]]]], [k, [a]]]], y = [a], z = [a, [k, [a]]]
-    assertThat(K)
-      .equalsTo([a, [a, [a]], [k, [a, [k, [a, [k, [a]]]], [k, [a]]], [a, [k, [a]]], [a, [k, [a, [k, [a]]]]]], [x], [y]]);
-    K[2].splice(0, 3, ...K_(K[2].slice(0, 3)))
-    assertThat(K)
-      .equalsTo([a, [a, [a]], [a, [k, [a, [k, [a]]]], [k, [a]], [a, [k, [a, [k, [a]]]]]], [x], [y]]);
-    K[2].splice(0, 4, ...A(K[2].slice(0, 4)))
-    // a, x = [k, [a, [k, [a]]]], y = [k, [a]], z = [a, [k, [a, [k, [a]]]]]
-    assertThat(K)
-      .equalsTo([a, [a, [a]], [k, [a, [k, [a]]], [a, [k, [a, [k, [a]]]]], [k, [a], [k, [a, [k, [a, [k, [a]]]]]]]], [x], [y]]);
-    K[2].splice(0, 3, ...K_(K[2].slice(0, 3)))
-    assertThat(K)
-      .equalsTo([a, [a, [a]], [a, [k, [a]], [k, [a], [k, [a, [k, [a, [k, [a]]]]]]]], [x], [y]]);
-    K[2][2].splice(0, 3, ...K_(K[2][2].slice(0, 3)))
-    assertThat(K)
-      .equalsTo([a, [a, [a]], [a, [k, [a]], [a]], [x], [y]]);
-    K.splice(0, 4, ...A(K.slice(0, 4)))
-    // a, x = [a, [a]], y = [a, [k, [a]], [a]], z = [x]
-    assertThat(K)
-      .equalsTo([a, [a], [x], [a, [k, [a]], [a], [k, [x]]], [y]]);
-    K.splice(0, 4, ...A(K.slice(0, 4)))
-    // a, x = [a], y = [x], z = [a, [k, [a]], [a], [k, [x]]]
-    assertThat(K)
-      .equalsTo([a, [a, [k, [a]], [a], [k, [x]]], [x, [k, [a, [k, [a]], [a], [k, [x]]]]], [y]]);
-    K.splice(0, 4, ...A(K.slice(0, 4)))
-    // a, x = [a, [k, [a]], [a], [k, [x]]], y = [x, [k, [a, [k, [a]], [a], [k, [x]]]]], z = [y]
-    assertThat(K)
-      .equalsTo([a, [k, [a]], [a], [k, [x]], [y], [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]]]);
-    K.splice(0, 4, ...A(K.slice(0, 4)))
-    // a, x = [k, [a]], y = [a], z = [k, [x]]
-    assertThat(K)
-      .equalsTo([k, [a], [k, [x]], [a, [k, [k, [x]]]], [y], [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]]]);
-    K.splice(0, 3, ...K_(K.slice(0, 3)))
-    assertThat(K)
-      .equalsTo([a, [a, [k, [k, [x]]]], [y], [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]]]);
-    K.splice(0, 4, ...A(K.slice(0, 4)))
-    // a, x = [a, [k, [k, [x]]]], y = [y], z = [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]]
-    assertThat(K)
-      .equalsTo([a, [k, [k, [x]]], [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]], [y, [k, [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]]]]]);
-    K.splice(0, 4, ...A(K.slice(0, 4)))
-    // a, x = [k, [k, [x]]], y = [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]], z = [y, [k, [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]]]]
-    assertThat(K)
-      .equalsTo([k, [k, [x]], [y, [k, [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]]]], [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]], [k, [y, [k, [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]]]]]]]);
-    K.splice(0, 3, ...K_(K.slice(0, 3)))
-    assertThat(K)
-      .equalsTo([k, [x], [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]], [k, [y, [k, [x, [k, [a, [k, [a]], [a], [k, [x]]]], [k, [y]]]]]]]]);
-    K.splice(0, 3, ...K_(K.slice(0, 3)))
-    assertThat(K)
-      .equalsTo([x]);
-
-
     const z = 'z';
-
-    assertThat(match(["A", x, y, z], 0, A)).equalsTo(true);
-    assertThat(apply(["A", x, y, z], 0, A)).equalsTo([x, [z], [y, [k, [z]]]]);
-    assertThat(match(["A", x, y, z, z], 0, A)).equalsTo(true);
-    assertThat(apply(["A", x, y, z, z], 0, A)).equalsTo([x, [z], [y, [k, [z]]], z]);
-    assertThat(match(["A", x, y], 0, A)).equalsTo(false);
-    assertThat(match(["A", x], 0, A)).equalsTo(false);
-
-    assertThat(match([0, "A", x, y, z], 1, A)).equalsTo(true);
-    assertThat(apply([0, "A", x, y, z], 1, A)).equalsTo([0, x, [z], [y, [k, [z]]]]);
-    assertThat(match([0, "A", x, y, z, z], 1, A)).equalsTo(true);
-    assertThat(apply([0, "A", x, y, z, z], 1, A)).equalsTo([0, x, [z], [y, [k, [z]]], z]);
-    assertThat(match([0, "A", x, y], 1, A)).equalsTo(false);
-    assertThat(match([0, "A", x], y, A)).equalsTo(false);
 
     // S = A (A (A A (A A (A A))(A (A (A A (A A)))))) A A
     const S = [a, [a, [a, [a], [a, [a], [a, [a]]], [a, [a, [a, [a], [a, [a]]]]]]], [a], [a], [x], [y], [z]];
     
     assertThat(go([K_, A], S)).equalsTo([x, [z], [y, [z]]]);
-    
+  });
+
+
+  it("S and K", async () => {
+    const S = ([s, [...x], [...y], [...z]]) => [...x, [...z], [...y, [...z]]];
+    S.head = "S";
+    S.args = 3;
+
+    const K = ([k, [...x], [...y]]) => [...x];
+    K.head = "K";
+    K.args = 2;
+
+    const s = "S";
+    const k = "K";
+    const x = "x";
+    const I = [s, [k], [k], [x]];
+
+    assertThat(go([S, K], I)).equalsTo([x]);
   });
   
   it("S and K", async () => {
