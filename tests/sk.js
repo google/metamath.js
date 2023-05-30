@@ -3,14 +3,23 @@ const Assert = require("assert");
 describe("S and K", async () => {
 
   it("MIU", async () => {
-    console.log("hi");
     // K[x][y] = x
     // S[x][y][z] = x[z][y[z]]
 
     // i[x] = x[S][K], I = i[i], K = i[i[i[i]]], S = i[i[i[i[i]]]]
     // m[x][y][z] = x[z][y[K[z]]], K = A (A A) (A (A A) A A A A A), A (A (A A (A A (A A))(A (A (A A (A A)))))) A A
-    // w[x] = x[K][S][K], K = W[W][W] and S = W[W[W]]
+    // w[x] = x[K][S][K], K = w[w][w] and S = w[w[w]]
+    // v[x] = x[K][S], S = v[v][v] and K = v[v[v][v][v][v]]
+    
+    const trees = ["F"];
 
+    // ["F"]
+    // ["F", ["F"]], F[F]
+    // ["F", ["F"], ["F"]], ["F", ["F", ["F"]]], F[F][F] and F[F[F]]
+    // ["F", ["F"], ["F"], ["F"]] (F[F][F][F]),  ["F", ["F", ["F"]], ["F"]] (F[F[F][F]]), ["F", ["F"], ["F", ["F"]]] (F[F][F[F]])
+    // ["F", ["F"], ["F", ["F"]]] (F[F][F[F]]), ["F", ["F", ["F"], ["F"]]] (F[F[F][F]]), ["F", ["F", ["F", ["F"]]]] (F[F[F[F]]])
+    
+    
   });
   
   function match(parent, i, combinator) {
