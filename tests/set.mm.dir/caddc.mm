@@ -1,0 +1,6 @@
+
+
+axiom caddc() {
+
+  return $class$ $+$;
+}

@@ -1,0 +1,102 @@
+include "wss.mm";
+include "cv.mm";
+include "wcel.mm";
+include "wi.mm";
+include "wal.mm";
+include "dfss2.mm";
+include "nfcriv.mm";
+include "nfim.mm";
+include "nfv.mm";
+include "weq.mm";
+include "eleq1w.mm";
+include "imbi12d.mm";
+include "cbvalv1.mm";
+include "bitri.mm";
+
+theorem dfss2f(vx: $setvar$ x, cA: $class$ A, cB: $class$ B) {
+  assume dfss2f.1: $|- F/_ x A$;
+  assume dfss2f.2: $|- F/_ x B$;
+
+
+
+  let vz: $setvar$ z;
+
+  do {
+    cA;
+    cB;
+    wss;
+    vz;
+    cv;
+    #;
+    cA;
+    wcel;
+    #;
+    @0;
+    cB;
+    wcel;
+    #;
+    wi;
+    #;
+    vz;
+    wal;
+    vx;
+    cv;
+    #;
+    cA;
+    wcel;
+    #;
+    @4;
+    cB;
+    wcel;
+    #;
+    wi;
+    #;
+    vx;
+    wal;
+    vz;
+    cA;
+    cB;
+    dfss2;
+    @3;
+    @7;
+    vz;
+    vx;
+    @1;
+    @2;
+    vx;
+    vx;
+    vz;
+    cA;
+    dfss2f.1;
+    nfcriv;
+    vx;
+    vz;
+    cB;
+    dfss2f.2;
+    nfcriv;
+    nfim;
+    @7;
+    vz;
+    nfv;
+    vz;
+    vx;
+    weq;
+    @1;
+    @5;
+    @2;
+    @6;
+    vz;
+    vx;
+    cA;
+    eleq1w;
+    vz;
+    vx;
+    cB;
+    eleq1w;
+    imbi12d;
+    cbvalv1;
+    bitri;
+  };
+
+  return $|-$ $( A C_ B <-> A. x ( x e. A -> x e. B ) )$;
+}

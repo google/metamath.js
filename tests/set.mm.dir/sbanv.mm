@@ -1,0 +1,108 @@
+include "wn.mm";
+include "wi.mm";
+include "wsb.mm";
+include "wa.mm";
+include "sbnv.mm";
+include "sbimv.mm";
+include "imbi2i.mm";
+include "bitri.mm";
+include "xchbinx.mm";
+include "df-an.mm";
+include "sbbii.mm";
+include "3bitr4i.mm";
+
+theorem sbanv(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x, vy: $setvar$ y) {
+
+  disjoint x y;
+
+
+
+  do {
+    wph;
+    wps;
+    wn;
+    #;
+    wi;
+    #;
+    wn;
+    #;
+    vx;
+    vy;
+    wsb;
+    #;
+    wph;
+    vx;
+    vy;
+    wsb;
+    #;
+    wps;
+    vx;
+    vy;
+    wsb;
+    #;
+    wn;
+    #;
+    wi;
+    #;
+    wn;
+    wph;
+    wps;
+    wa;
+    #;
+    vx;
+    vy;
+    wsb;
+    @4;
+    @5;
+    wa;
+    @3;
+    @1;
+    vx;
+    vy;
+    wsb;
+    #;
+    @7;
+    @1;
+    vx;
+    vy;
+    sbnv;
+    @9;
+    @4;
+    @0;
+    vx;
+    vy;
+    wsb;
+    #;
+    wi;
+    @7;
+    wph;
+    @0;
+    vx;
+    vy;
+    sbimv;
+    @10;
+    @6;
+    @4;
+    wps;
+    vx;
+    vy;
+    sbnv;
+    imbi2i;
+    bitri;
+    xchbinx;
+    @8;
+    @2;
+    vx;
+    vy;
+    wph;
+    wps;
+    df-an;
+    sbbii;
+    @4;
+    @5;
+    df-an;
+    3bitr4i;
+  };
+
+  return $|-$ $( [ y / x ] ( ph /\ ps ) <-> ( [ y / x ] ph /\ [ y / x ] ps ) )$;
+}

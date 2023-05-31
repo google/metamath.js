@@ -1195,9 +1195,9 @@ $\}`);;
     ["hol.mm", "cl"],
     ["hol.mm", "mpbirx"],
     // This takes too long, so we avoid running it every time
-    // ["set.mm", "2p2e4"],
+    ["set.mm", "2p2e4"],
   ]) {
-    it(`Transpile the closure: ${label}`, async function() {
+    it.only(`Transpile the closure: ${label}`, async function() {
       this.timeout(50000);
       // const src = "hol.mm";
       const program = await require("fs/promises").readFile(`node_modules/set.mm/${src}`);
