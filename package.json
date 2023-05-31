@@ -9,7 +9,7 @@
     "install": "napa"
   },
   "napa": {
-    "set.mm": "metamath/set.mm"
+    "set.mm": "metamath/set.mm#343823d4e3c07a0fc3205cbdc8dae159d8b26af0"
   },
   "repository": {
     "type": "git",

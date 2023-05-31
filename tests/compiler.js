@@ -1031,7 +1031,7 @@ describe("Transpile and Parse", () => {
     ["../node_modules/set.mm/hol.mm", "cl", 39],
     ["../node_modules/set.mm/ql.mm", "testmod3", 49],
     // 2p2e4 passes but is disabled becaused processing set.mm takes 30 secs
-    // ["set.mm", "2p2e4", 796],
+    // ["../node_modules/set.mm/set.mm", "2p2e4", 648],
   ]) {
     it(`Transpile, compile and verify: ${file} ${label}`, async function() {
       this.timeout(50000);
