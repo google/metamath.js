@@ -1,0 +1,6 @@
+
+
+axiom ke() {
+
+  return $term$ $=$;
+}

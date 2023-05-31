@@ -1,0 +1,5 @@
+
+axiom tne() {
+
+  return $term$ $~$;
+}

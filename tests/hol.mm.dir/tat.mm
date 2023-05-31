@@ -1,0 +1,5 @@
+
+axiom tat() {
+
+  return $term$ $@$;
+}

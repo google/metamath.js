@@ -1,0 +1,5 @@
+
+axiom teu() {
+
+  return $term$ $?!$;
+}

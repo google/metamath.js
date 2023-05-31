@@ -217,7 +217,9 @@ class Parser {
     }
   }
   error() {
-    throw new Error(`Syntax error: unexpected ${this.head.value.type} token.`);
+    // console.log(this.head);
+    const {line, col} = this.head.value;
+    throw new Error(`Syntax error on line ${line} column ${col}: unexpected ${this.head.value.type} token.`);
   }
   block() {
     this.eat("lscope");
@@ -291,7 +293,26 @@ function process(program) {
   return mm;
 }
 
+class Verifier {
+  verify(program, label) {
+    let proofs = 0;
+    let mm = process(program);
+
+    if (label) {
+      const [, , proof] = mm.labels[label];
+      return proof();
+    }
+    
+    for (const [, [, , proof]] of Object.entries(mm.labels).filter(([, [type]]) => type == "$p")) {
+      proof();
+      proofs++;
+    }
+    return proofs;
+  }
+}
+
 module.exports = {
   parse: parse,
   process: process,
+  Verifier: Verifier,
 };

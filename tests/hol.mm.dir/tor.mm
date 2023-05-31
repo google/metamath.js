@@ -1,0 +1,5 @@
+
+axiom tor() {
+
+  return $term$ $\/$;
+}

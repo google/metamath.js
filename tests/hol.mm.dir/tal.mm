@@ -1,0 +1,6 @@
+
+
+axiom tal() {
+
+  return $term$ $!$;
+}

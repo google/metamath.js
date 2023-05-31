@@ -1,0 +1,5 @@
+
+axiom tan() {
+
+  return $term$ $/\$;
+}

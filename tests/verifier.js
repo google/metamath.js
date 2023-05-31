@@ -15,6 +15,7 @@
   **/
 
 const Assert = require("assert");
+const moo = require("moo");
 
 const {parse, grammar, lexicon} = require("../src/parser.js");
 const {Frame, Stack, MM} = require("../src/metamath.js");
@@ -122,9 +123,13 @@ describe("Verifier", () => {
     assertThat(stack.assert("foo", ["bar"]))
       .equalsTo([
         [],
-        [["a", "bar"]],
+        [["a", "bar", "bar"]],
         [[["bar"], "|-", "foo"]],
-        ["foo", ["bar"]]
+        ["foo", ["bar"]],
+        // TODO: is mmverify ignoring the disjoint requirements
+        // of dummy variables
+        [],
+        {}
       ]);
 
     //assertThat(new MM().read(parse(`
@@ -263,9 +268,11 @@ describe("Verifier", () => {
     assertThat(mm.labels["w2"])
       .equalsTo(["$a", [
         [],
-        [["wff", "p"], ["wff", "q"]],
+        [["wff", "p", "wp"], ["wff", "q", "wq"]],
         [],
-        ["wff", ["(", "p", "->", "q", ")"]]
+        ["wff", ["(", "p", "->", "q", ")"]],
+        [],
+        {}
       ]]);
   }); 
 
@@ -282,9 +289,11 @@ describe("Verifier", () => {
     assertThat(mm.labels["w2"])
       .equalsTo(["$a", [
         [["p", "q"]], // disjoint variables conditions
-        [["wff", "p"], ["wff", "q"]], // type hypothesis
+        [["wff", "p", "wp"], ["wff", "q", "wq"]], // type hypothesis
         [], // logical hypothesis
-        ["wff", ["(", "p", "->", "q", ")"]]
+        ["wff", ["(", "p", "->", "q", ")"]],
+        [],
+        {}
       ]]);
   }); 
 
@@ -318,9 +327,9 @@ describe("Verifier", () => {
     // If the hypothesis match, "b" implies "c".
     const [, mand, hyps] = stack.assert("A", ["b", "->", "c"]);
     assertThat(mand).equalsTo([
-      ["A", "a"],
-      ["A", "b"],
-      ["A", "c"],
+      ["A", "a", "let1"],
+      ["A", "b", "let3"],
+      ["A", "c", "let2"],
     ]);
     assertThat(hyps).equalsTo([[["~", "a"], "|-", "hypothesis"]]);
     stack.pop();
@@ -344,9 +353,11 @@ describe("Verifier", () => {
     assertThat(mm.labels["w2"])
       .equalsTo(["$a", [
         [],
-        [["wff", "p"], ["wff", "q"]],
+        [["wff", "p", "wp"], ["wff", "q", "wq"]],
         [],
-        ["wff", ["(", "p", "->", "q", ")"]]
+        ["wff", ["(", "p", "->", "q", ")"]],
+        [],
+        {}
       ]]);
     
     assertThat(top.v)
@@ -762,102 +773,228 @@ describe("Verifier", () => {
     mm.read(code);
   });
   
-  it("id's proof", () => {
-    const [code] = parse(`
-      $c wff |- ( ) -> $.
-      $v ph ps ch $.
-
-      $( Let variable ph be a wff. $)
-      wph $f wff ph $.
-
-      $( Let variable ps be a wff. $)
-      wps $f wff ps $.
-
-      $( Let variable ch be a wff. $)
-      wch $f wff ch $.
-
-      wi $a wff ( ph -> ps ) $.
-
-      ax-1 $a |- ( ph -> ( ps -> ph ) ) $.
-
-      $\{
-        mpd.1 $e |- ( ph -> ps ) $.
-        mpd.2 $e |- ( ph -> ( ps -> ch ) ) $.
-        $(
-          makes this an axiom as opposed to a theorem, so that we
-          can skip bringing in the proof recursively.
-          mpd $p |- ( ph -> ch ) $=
-            ( wi a2i ax-mp ) ABFACFDABCEGH $.
-        $)
-        mpd $a |- ( ph -> ch ) $.
-      $\}
-
-      $( 1 1 1 2 Z 1 1 1 3 1 5 3 4 $)
-      $( mandatory: wph $)
-      $( local: wi ax-1 mpd $)
-      $( decompressed: wph wph wph wi (Z) wph wph wph ax-1 wph (Z: wph wph wph wi) ax-1 mpd $)
-      $(
-       wph, wph, wph  wi                  wph, wph, wph         ax-1                          wph
-
-
-                                          wff ph                                              wff ph
-                                          wff ph                |- ( ph -> ( ph -> ph ) )     |- ( ph -> ( ph -> ph ) )
-       wff ph                             wff ph                wff ph                        wff ph
-       wff ph         wff ( ph -> ph )    wff ( ph -> ph )      wff ( ph -> ph )              wff ( ph -> ph )
-       wff ph         wff ph              wff ph                wff ph                        wff ph
-
-
-       wi                               ax-1                                        mpd
-
-                        
-       wff ( ph -> ph )                 
-       wff ph                           |- ( ph -> ( ( ph -> ph ) -> ph ) )         
-       |- ( ph -> ( ph -> ph ) )        |- ( ph -> ( ph -> ph ) )
-       wff ph                           wff ph
-       wff ( ph -> ph )                 wff ( ph -> ph )
-       wff ph                           wff ph                                      |- ( ph -> ph )
-      $)
-      id $p |- ( ph -> ph ) $=
-        ( wi ax-1 mpd ) AAABZAAACAECD $.
-    `);
-
+  it("id's proof", async () => {
+    const file = await require("fs/promises").readFile("tests/id.mm");
+    const [code] = parse(file.toString());
     const mm = new MM();
     mm.read(code);
+    const [, , proof] = mm.labels["id"];
+    const steps = proof(true, true);
+    assertThat(steps.map(([label, top, args]) => [label, top.flat().join(" "), args])).equalsTo([
+      /**  0 */ [ 'wph', "wff ph", [] ],
+      /**  1 */ [ 'wph', "wff ph", [] ],
+      /**  2 */ [ 'wph', "wff ph", [] ],
+      /**  3 */ [ 'wi', "wff ( ph -> ph )", [ 1, 2 ] ],
+      /** -- */ [ -1, "wff ( ph -> ph )", 3 ],
+      /**  4 */ [ 'wph', "wff ph", [] ],
+      /**  5 */ [ 'wph', "wff ph", [] ],
+      /**  6 */ [ 'wph', "wff ph", [] ],
+      /**  7 */ [ 'ax-1', "|- ( ph -> ( ph -> ph ) )", [ 5, 6 ] ],
+      /**  8 */ [ 'wph', "wff ph", [] ],
+      /**  9 */ [ 0, "wff ( ph -> ph )", 3 ],
+      /** 10 */ [ 'ax-1', "|- ( ph -> ( ( ph -> ph ) -> ph ) )", [ 8, 9 ] ],
+      /** 11 */ [ 'mpd', "|- ( ph -> ph )", [ 0, 3, 4, 7, 10 ] ]
+    ]);
   });
 
-  it("idALT's proof", () => {
-    const [code] = parse(`
-      $c wff |- ( ) -> $.
-      $v ph ps ch $.
+  it("idALT's proof", async () => {
+    const file = await require("fs/promises").readFile("tests/idalt.mm");
 
-      $( Let variable ph be a wff. $)
-      wph $f wff ph $.
-
-      $( Let variable ps be a wff. $)
-      wps $f wff ps $.
-
-      $( Let variable ch be a wff. $)
-      wch $f wff ch $.
-
-      wi $a wff ( ph -> ps ) $.
-
-      ax-1 $a |- ( ph -> ( ps -> ph ) ) $.
-      ax-2 $a |- ( ( ph -> ( ps -> ch ) ) -> ( ( ph -> ps ) -> ( ph -> ch ) ) ) $.
-
-      $\{
-        min $e |- ph $.
-        maj $e |- ( ph -> ps ) $.
-        ax-mp $a |- ps $.
-      $\}
-
-      $( [wph, wi, ax-1, ax-2, ax-mp] $)
-      $( [wph, wph, wph, wi, *, wi, *, wph, wph, ax-1, wph, ...] $)
-      idALT $p |- ( ph -> ph ) $=
-        ( wi ax-1 ax-2 ax-mp ) AAABZBZFAACAFABBGFBAFCAFADEE $.
-    `);
+    const [code] = parse(file.toString());
 
     const mm = new MM();
     mm.read(code);
+
+    const [p, [d, f, e]] = mm.labels["idALT"];
+    
+    const [, , proof] = mm.labels["idALT"];
+
+    const result = proof(true, false);
+    
+    assertThat(result.map(([step]) => step)).equalsTo([
+      'wph',  'wph',  'wph',  'wi',    'wi',
+      'wph',  'wph',  'wi',   'wph',   'wph',
+      'ax-1', 'wph',  'wph',  'wph',   'wi',
+      'wph',  'wi',   'wi',   'wph',   'wph',
+      'wph',  'wi',   'wi',   'wph',   'wph',
+      'wi',   'wi',   'wph',  'wph',   'wph',
+      'wi',   'ax-1', 'wph',  'wph',   'wph',
+      'wi',   'wph',  'ax-2', 'ax-mp', 'ax-mp'
+    ]);
+
+    const markers = proof(true, true);
+
+    // console.log(markers);
+    
+    assertThat(markers.map(([step, top, args]) => [step, top.flat().join(" "), args])).equalsTo([
+      /** 0 */ ['wph', "wff ph", []],
+      /** 1 */ ['wph', "wff ph", []],
+      /** 2 */ ['wph', "wff ph", []],
+      /** 3 */ ['wi', "wff ( ph -> ph )", [1, 2]],
+      /** - */ [-1, "wff ( ph -> ph )", 3], // marker
+      /** 4 */ ['wi', "wff ( ph -> ( ph -> ph ) )", [0, 3]],
+      /** - */ [-1, "wff ( ph -> ( ph -> ph ) )", 4], // marker
+      /** 5 */ [0, "wff ( ph -> ph )", 3], // call
+      /** 6 */ ['wph', "wff ph", []],
+      /** 7 */ ['wph', "wff ph", []],
+      /** 8 */ ['ax-1', "|- ( ph -> ( ph -> ph ) )", [6, 7]],
+      /** 9 */ ['wph', "wff ph", []],
+      /** 10 */ [0, "wff ( ph -> ph )", 3], // call
+      /** 11 */ ['wph', "wff ph", []],
+      /** 12 */ ['wi', "wff ( ( ph -> ph ) -> ph )", [10, 11]],
+      /** 13 */ ['wi', "wff ( ph -> ( ( ph -> ph ) -> ph ) )", [9, 12]],
+      /** 14 */ [1, "wff ( ph -> ( ph -> ph ) )", 4], // call
+      /** 15 */ [0, "wff ( ph -> ph )", 3], // call
+      /** 16 */ ['wi', "wff ( ( ph -> ( ph -> ph ) ) -> ( ph -> ph ) )", [14, 15]],
+      /** 17 */ ['wph', "wff ph", []],
+      /** 18 */ [0, "wff ( ph -> ph )", 3], // call
+      /** 19 */ ['ax-1', "|- ( ph -> ( ( ph -> ph ) -> ph ) )", [17, 18]],
+      /** 20 */ ['wph', "wff ph", []],
+      /** 21 */ [0, "wff ( ph -> ph )", 3], // call
+      /** 22 */ ['wph', "wff ph", []],
+      /** 23 */ ['ax-2', "|- ( ( ph -> ( ( ph -> ph ) -> ph ) ) -> ( ( ph -> ( ph -> ph ) ) -> ( ph -> ph ) ) )", [20, 21, 22]],
+      /** 24 */ ['ax-mp', "|- ( ( ph -> ( ph -> ph ) ) -> ( ph -> ph ) )", [13, 16, 19, 23]],
+      /** 25 */ ['ax-mp', "|- ( ph -> ph )", [4, 5, 8, 24]]
+    ]);
+  });
+  
+  it("decompress then compress proof", async () => {
+    const file = await require("fs/promises").readFile("tests/idalt.mm");
+    const {Decompressor, Compressor} = require("./../src/metamath.js");
+
+    const [code] = parse(file.toString());
+
+    const mm = new MM();
+    mm.read(code);
+
+    const compressed = "AAABZBZFAACAFABBGFBAFCAFADEE";
+
+    const local = ["wph"];
+
+    const external = "wi ax-1 ax-2 ax-mp".split(" ");
+    
+    const integers = new Decompressor().decode(compressed);
+
+    assertThat(integers).equalsTo([
+      1,
+      1,
+      1,
+      2,
+      -1, // marker
+      2,
+      -1, // marker
+      6,
+      1,
+      1,
+      3,
+      1,
+      6,
+      1,
+      2,
+      2,
+      7,
+      6,
+      2,
+      1,
+      6,
+      3,
+      1,
+      6,
+      1,
+      4,
+      5,
+      5
+    ]);
+
+    const steps = new Decompressor()
+          .decompress(local, external, compressed);
+    
+    assertThat(steps)
+      .equalsTo([
+        'wph',
+        'wph',
+        'wph',
+        'wi',
+        -1, // marker
+        'wi',
+        -1, // marker
+        0, // call
+        'wph',
+        'wph',
+        'ax-1',
+        'wph',
+        0, // call
+        'wph',
+        'wi',
+        'wi',
+        1, // call
+        0, // call
+        'wi',
+        'wph',
+        0, // call
+        'ax-1',
+        'wph',
+        0, // call
+        'wph',
+        'ax-2',
+        'ax-mp',
+        'ax-mp'
+      ]);
+
+    
+    let result = new Decompressor().explode(
+      local, external, compressed, mm.labels);
+
+    assertThat(result).equalsTo([
+      'wph',  'wph',  'wph',  'wi',    'wi',
+      'wph',  'wph',  'wi',   'wph',   'wph',
+      'ax-1', 'wph',  'wph',  'wph',   'wi',
+      'wph',  'wi',   'wi',   'wph',   'wph',
+      'wph',  'wi',   'wi',   'wph',   'wph',
+      'wi',   'wi',   'wph',  'wph',   'wph',
+      'wi',   'ax-1', 'wph',  'wph',   'wph',
+      'wi',   'wph',  'ax-2', 'ax-mp', 'ax-mp'
+    ]);
+
+    // return;
+    // Now, lets try to compress it, by recomputing
+    // all of the variables here using the steps that
+    // were generated during the decompression.
+
+    // First, filter out external references and construct
+    // a unique set of labels.
+    const refs = new Compressor(local, steps).external();
+    
+    // The unique references should be the same as the
+    // local array that was used for decompression and
+    // stated explicitly in the theorem.
+    assertThat(external).equalsTo(refs);
+
+    const numbers = new Compressor(local, steps).integers();
+
+    assertThat(numbers).equalsTo(integers);
+    
+    assertThat(Compressor.encode(1)).equalsTo("A");
+    assertThat(Compressor.encode(2)).equalsTo("B");
+    assertThat(Compressor.encode(3)).equalsTo("C");
+    // ...
+    assertThat(Compressor.encode(20)).equalsTo("T");
+    assertThat(Compressor.encode(21)).equalsTo("UA");
+    assertThat(Compressor.encode(22)).equalsTo("UB");
+    // ...
+    assertThat(Compressor.encode(40)).equalsTo("UT");
+    assertThat(Compressor.encode(41)).equalsTo("VA");
+    assertThat(Compressor.encode(42)).equalsTo("VB");
+    // ...
+    assertThat(Compressor.encode(120)).equalsTo("YT");
+    assertThat(Compressor.encode(121)).equalsTo("UUA");
+    // ...
+    assertThat(Compressor.encode(620)).equalsTo("YYT");
+    assertThat(Compressor.encode(621)).equalsTo("UUUA");
+    // ... etc ...
+
+    assertThat(new Compressor(local, steps).compress())
+      .equalsTo(compressed);
   });
 
   it("peirceroll", () => {
@@ -945,7 +1082,7 @@ describe("Verifier", () => {
     parser.feed(code);
     const frame = mm.frames.pop();
     [p, [dvs, args, , theorem], proof] = mm.labels["th1"];
-    assertThat(args).equalsTo([["term", "t"]]);
+    assertThat(args).equalsTo([["term", "t", "tt"]]);
     assertThat(theorem).equalsTo(["|-", ["t", "=", "t"]]);
     const summary = proof()
           .filter(([label, [type]]) => type == "|-")
@@ -975,7 +1112,7 @@ describe("Verifier", () => {
     const frame = mm.frames.pop();
 
     [p, [dvs, args, , theorem], proof] = mm.labels["id"];
-    assertThat(args).equalsTo([["term", "a"]]);
+    assertThat(args).equalsTo([["term", "a", "wva"]]);
     assertThat(theorem).equalsTo(["|-", ["a", "=", "a"]]);
     const summary = proof()
           .filter(([label, [type]]) => type == "|-")
@@ -985,80 +1122,16 @@ describe("Verifier", () => {
     assertThat(summary)
       .equalsTo([
         "ax-a1: |- a = a ' '",
-        "ax-a1: |- a = a ' '",
+        "-1: |- a = a ' '",
+        "1: |- a = a ' '",
         "ax-r1: |- a ' ' = a",
         "ax-r2: |- a = a",
       ]);
   });
 
-  it("trud", () => {
-    const [code] = parse(`
-      $( Declare the primitive constant symbols for lambda calculus. $)
-      $c var $.   $( Typecode for variables (syntax) $)
-      $c type $.  $( Typecode for types (syntax) $)
-      $c term $.  $( Typecode for terms (syntax) $)
-      $c |- $.    $( Typecode for theorems (logical) $)
-      $c : $.     $( Typehood indicator $)
-      $c . $.     $( Separator $)
-      $c |= $.    $( Context separator $)
-      $c bool $.     $( Boolean type $)
-      $c ind $.   $( 'Individual' type $)
-      $c -> $.    $( Function type $)
-      $c ( $.     $( Open parenthesis $)
-      $c ) $.     $( Close parenthesis $)
-      $c , $.     $( Context comma $)
-      $c \\ $.     $( Lambda expression $)
-      $c = $.     $( Equality term $)
-      $c T. $.    $( Truth term $)
-      $c [ $.     $( Infix operator $)
-      $c ] $.     $( Infix operator $)
-
-      $v x y z f g p q $.  $( Bound variables $)
-      $v A B C F R S T $.  $( Term variables $)
-
-      $( Let variable A be a term. $)
-      ta $f term A $.
-      $( Let variable R be a term. $)
-      tr $f term R $.
-      $( Let variable S be a term. $)
-      ts $f term S $.
-      $( Let variable T be a term. $)
-      tt $f term T $.
-
-      $( Truth term. $)
-      kt $a term T. $.
-
-      $\{
-        ax-syl.1 $e |- R |= S $.
-        ax-syl.2 $e |- S |= T $.
-        $( Syllogism inference. $)
-        ax-syl $a |- R |= T $.
-
-        $( Syllogism inference. $)
-        syl $p |- R |= T $=
-          ( ax-syl ) ABCDEF $.
-          $( [8-Oct-2014] $)
-      $\}
-
-      $\{
-        ax-trud.1 $e |- R : bool $.
-        $( Deduction form of ~ tru . $)
-        ax-trud $a |- R |= T. $.
-
-        $( Deduction form of ~ tru . $)
-        trud $p |- R |= T. $=
-          ( ax-trud ) ABC $.
-          $( [7-Oct-2014] $)
-
-        ax-a1i.2 $e |- T. |= A $.
-
-        $( Change an empty context into any context. $)
-        a1i $p |- R |= A $=
-          ( kt ax-trud syl ) BEABCFDG $.
-          $( [7-Oct-2014] $)
-
-      $\}
-    `);
+  it("trud", async () => {
+    const file = await require("fs/promises").readFile("tests/trud.mm");
+    const [code] = parse(file.toString());
     const mm = new MM();
     mm.read(code);
   });
@@ -1076,7 +1149,7 @@ describe("Verifier", () => {
     const frame = mm.frames.pop();
 
     [p, [dvs, args, , theorem], proof] = mm.labels["wal"];
-    assertThat(args).equalsTo([["type", "al"]]);
+    assertThat(args).equalsTo([["type", "al", "hal"]]);
     assertThat(theorem.flat().join(" ")).equalsTo("|- ! : ( ( al -> bool ) -> bool )");
     const summary = proof()
           .filter(([label, [type]]) => type == "|-")
@@ -1320,11 +1393,208 @@ describe("Verifier", () => {
 
       id $p |- ( ph -> ph ) $=
         ( wi ax-1 mpd ) AAABZAAACAECD $.
-
      `);
 
     const [, proof] = mm.theorem("id");
-    assertThat(proof() != undefined).equalsTo(true);
+    assertThat(proof().length).equalsTo(13);
+  });
+
+  it("disjoint variables", () => {
+    const mm = process(`
+      $c wff ( ) -> $.
+      $v x y a $.
+
+      wx $f wff x $.
+      wy $f wff y $.
+
+      wa $f wff a $.
+
+      $\{
+        $d x y $.
+        wi $a wff ( x -> y ) $.
+      $\}
+ 
+      $\{
+        disjoint $p wff ( a -> a ) $= wa wa wi $.
+      $\}
+     `);
+
+    const [, proof] = mm.theorem("disjoint");
+
+    try {
+      proof(false);
+      throw new Error("shouldn't reach this");
+    } catch (e) {
+      assertThat(e.message)
+        .equalsTo("x (=a) and y (=a) are disjoined variables and can't carry the same value. ");
+    }
+  });
+
+  it.skip("disjoint variables from caller", () => {
+    const mm = process(`
+      $c wff ( ) -> $.
+      $v x y a $.
+
+      wx $f wff x $.
+      wy $f wff y $.
+
+      wa $f wff a $.
+
+      $\{
+        wi $a wff ( x -> y ) $.
+      $\}
+ 
+      $\{
+        $d x y $.
+        disjoint $p wff ( a -> a ) $= wa wa wi $.
+      $\}
+     `);
+
+    const [, proof] = mm.theorem("disjoint");
+
+    try {
+      proof(false);
+      throw new Error("shouldn't reach this");
+    } catch (e) {
+      assertThat(e.message)
+        .equalsTo("x (=a) and y (=a) are disjoined variables and can't carry the same value. ");
+    }
+  });
+
+  it.skip("disjoint variables: disjoint", () => {
+    const mm = process(`
+      $c wff ( ) -> $.
+      $v x y a b $.
+
+      wx $f wff x $.
+      wy $f wff y $.
+
+      wa $f wff a $.
+      wb $f wff b $.
+
+      $\{
+        wi $a wff ( x -> y ) $.
+      $\}
+ 
+      $\{
+        $d x y $.
+        disjoint $p wff ( a -> b ) $= wa wb wi $.
+      $\}
+     `);
+
+    const [, proof] = mm.theorem("disjoint");
+
+    assertThat(proof(false)).equalsTo();
+  });
+
+  it("Captures dummy variables only in proof", () => {
+    const mm = process(`
+      $c wff ( ) -> $.
+
+      $\{
+        $v x y $.
+        a1.x $f wff x $.
+        a1.y $f wff y $.
+        a1 $a wff ( x -> y ) $.
+      $\}
+ 
+      $\{
+        $v x y $.
+        a2.x $f wff x $.
+        a2.y $f wff y $.
+        a2.e $e wff y $.
+        a2 $a wff x $.
+      $\}
+ 
+      $\{
+        $v a $.
+        foo.a $f wff a $.
+        $(
+           deliberately construct a dummy variable "x" by explicitly
+           excluding it from the $p and $e statements.
+        $)
+        $v x $.
+        foo.x $f wff x $.
+        foo $p wff ( a -> a ) $= foo.a foo.x foo.x a2 foo.a foo.x foo.x a2 a1 $.
+      $\}
+     `);
+    const [, [d, f, e, p, dd, dummy], verifier] = mm.labels["foo"];
+
+    // "x" isn't a mandatory variable because it doesn't show up in the
+    // $p or $e statements.
+    assertThat(f).equalsTo([["wff", "a", "foo.a"]]);
+
+    // "x" is captured as a dummy variable.
+    assertThat(dummy).equalsTo({
+      "x": "foo.x"
+    });
+    
+    const proof = verifier();
+    const steps = proof
+          .map(([label, [type, top]]) => `${label}: ${type} ${top.join(" ")}`)
+          .join("\n");
+    assertThat(steps).equalsTo(`
+foo.a: wff a
+foo.x: wff x
+foo.x: wff x
+a2: wff a
+foo.a: wff a
+foo.x: wff x
+foo.x: wff x
+a2: wff a
+a1: wff ( a -> a )
+`.trim());
+    
+    
+  });
+  
+  it("dummy variables not part of layout", () => {
+    const mm = process(`
+      $c wff ( ) -> $.
+      $v x y a dummy $.
+
+      wx $f wff x $.
+      wy $f wff y $.
+
+      wa $f wff a $.
+
+      $\{
+        $(
+          Because dummy is never used in the header of the
+          axiom, it doesn't influence its stack layout:
+          it does not require the stack to pop three variables
+          (dummy, x, y) rather than two (x, y).
+        $)
+        wdummy $f wff dummy $.
+        wi $a wff ( x -> y ) $.
+      $\}
+ 
+      $\{
+        disjoint $p wff ( a -> a ) $= wa wa wi $.
+      $\}
+     `);
+
+    const [p, [d, f, e]] = mm.labels["wi"];
+
+    assertThat(d).equalsTo([]);
+    assertThat(f).equalsTo([
+      // Because the $f wdummy statements makes a
+      // statement about a variable that isn't in the
+      // header of the theorem, it doesn't get added to
+      // the mandatory parameters of the theorem, i.e.
+      // it does not affect the stack layout.
+      ["wff", "x", "wx"],
+      ["wff", "y", "wy"],
+    ]);
+    assertThat(e).equalsTo([]);
+    
+    const [, proof] = mm.theorem("disjoint");
+
+    assertThat(proof(false)).equalsTo([
+      ["wa", ["wff", ["a"]], []],
+      ["wa", ["wff", ["a"]], []],
+      ["wi", ["wff", ["(", "a", "->", "a", ")"]], [0, 1]],
+    ]);
   });
 
   it.skip("miu.mm", async () => {
@@ -1351,7 +1621,13 @@ describe("Verifier", () => {
   it.skip("set.mm", async () => {
     const fs = require("fs/promises");
     const file = await fs.readFile("tests/set.mm");
-    const mm = process(file.toString(), "young2d");
+    const mm = process(file.toString());
+
+    // console.log(mm.labels["$v"]);
+    console.log(mm.labels["$c"].find(([c, [name]]) => name.includes('"')));
+    // console.log(mm.labels["$c"].map(([c, [name]]) => name).join("\n"));
+    return;
+    
     const [, proof] = mm.theorem("young2d");
     assertThat(proof() != undefined).equalsTo(true);
     assertThat(mm.theorems().length).equalsTo(40142);
@@ -1374,6 +1650,35 @@ describe("Verifier", () => {
       }
     }    
   }).timeout(1000000);
+
+  it("Disjoint requirements of cl of hol.mm", async () => {
+    const fs = require("fs/promises");
+    const file = await fs.readFile("tests/hol.mm");
+    const mm = process(file.toString());
+    const [, [d, f, , , dummies, dummy]] = mm.labels["cl"];
+    // Mandatory variables requirements
+    assertThat(d).equalsTo([
+      ["B", "x"],
+      ["C", "x"],
+      ["al", "x"],
+    ]);
+    assertThat(f).equalsTo([
+      ["type", "al", "hal"],
+      ["type", "be", "hbe"],
+      ["var", "x","vx"],
+      ["term", "A", "ta"],
+      ["term", "B", "tb"],
+      ["term", "C", "tc"]
+    ]);
+    assertThat(dummies).equalsTo([
+      ["A", "y"],
+      ["x", "y"],
+      ["B", "y"],
+      ["C", "y"],
+      ["al", "y"],
+    ]);
+    assertThat(dummy).equalsTo({y: "vy"});
+  });
 
   function build(program) {
     let root = [];
@@ -1399,7 +1704,6 @@ describe("Verifier", () => {
   
   it("$v a $. $c b $. ${ $v c $. $}", async () => {
     const tree = build("$v a $. $c b $. ${ $v c $. $} $c d $.");
-    
     assertThat(tree).equalsTo([
       ["$v", ["a"]],
       ["$c", ["b"]],
@@ -1409,141 +1713,24 @@ describe("Verifier", () => {
       ["$c", ["d"]],
     ]);
   });
-
 });
 
-
-describe("transpiler", () => {
-  const {parse} = require("../src/descent.js");
-  const moo = require("moo");
-
-  it("lexer", () => {
-    const lexicon = {
-      theorem: "theorem",
-      comment: {match: /\/\*\*[\s]+(?:(?!\$\))[\s\S])*\*\//, lineBreaks: true},
-      lblock: "{",
-      rblock: "}",
-      lparen: "(",
-      rparen: ")",
-      ws: {match: /[\s]+/, lineBreaks: true},
-      label: /[\\.A-Za-z0-9_-]+/,
-      sequence: /[!-#%-~\?]+/,
-      // letter_or_digit: /[A-Za-z0-9]/,                                                                                   
-      // symbol: /[!-#%-~]+/,
-    };
-
-    const lexer = moo.compile(lexicon);
-
-    lexer.reset("theorem foo_-bar1.2(wff a) { /** hello */ }");
-    assertThat(lexer.next().type).equalsTo("theorem");
-    assertThat(lexer.next().type).equalsTo("ws");
-    assertThat(lexer.next().type).equalsTo("label");
-    assertThat(lexer.next().type).equalsTo("lparen");
-    assertThat(lexer.next().type).equalsTo("label");
-    assertThat(lexer.next().type).equalsTo("ws");
-    assertThat(lexer.next().type).equalsTo("label");
-    assertThat(lexer.next().type).equalsTo("rparen"); 
-    assertThat(lexer.next().type).equalsTo("ws");
-    assertThat(lexer.next().type).equalsTo("lblock");
-    assertThat(lexer.next().type).equalsTo("ws");
-    assertThat(lexer.next().type).equalsTo("comment");
-    assertThat(lexer.next().type).equalsTo("ws");
-    assertThat(lexer.next().type).equalsTo("rblock");
-  });
-  
-  it.skip("miu.mm", async () => {
-    const fs = require("fs/promises");
-    const program = await fs.readFile("tests/tq.mm");
-    
-    // const label = "axpow";
-    // const label = "axext";
-    // const label = "theorem1";
-    const label = "t11";
-    const mm = new MM(label);
-    mm.push();
-    
-    parse(program.toString(), {
-      feed(statement) {
-        if (statement == "push") {
-          mm.push();
-        } else if (statement == "pop") {
-          mm.pop();
-        } else {
-          mm.feed([statement]);
-        }
-      }
+describe("Scratch", () => {
+  it.skip("Tarki's S2", () => {
+    const source = require("fs").readFileSync("tests/tarski.mm", {
+      encoding: "utf8",
+      flag: "r"
     });
+    const [code] = parse(source);
+    const mm = new MM();
+    mm.read(code);
 
-    mm.pop();
-
-    const [p, [d, f, e, [type, theorem]], proof] = mm.labels[label];
-
-    let args = "(";
-
-    args += f.map(([type, name]) => `${type} ${name}`).join(", ");
-
-    args += ")";
+    assertThat(mm.labels["wnotp"][2]() != undefined)
+      .equalsTo(true);
     
-    // const conds = e.length == 0 ? "" : " | " + e.map(([seq, type, label]) => `${label}: ${type} ${seq.join(" ")}`).join(", ");
-
-    let conds = "";
-
-    if (e.length > 0) {
-    // conds += "|";
-      args += " if (\n";
-    }
-
-    // console.log(e);
-    let hypothesis = [];
-    for (let [seq, type, label] of e) {
-      hypothesis.push(`  ${label}: ${type} "${seq.join(" ")}"`);
-    }
-
-    if (e.length >0 ) {
-      args += hypothesis.join("\n");
-      args += ")";
-    }
-    
-    let diff = [];
-    if (d.length > 0) {
-      args += " and (";
-      // args += "  [";
-    }
-    for (let [x, y] of d) {
-      diff.push(`${x} != ${y}`);
-    }
-
-    if (d.length > 0) {
-      args += "" + diff.join(", ") + ")";
-    }
-    
-    
-    const body = proof.map(([step, [type, sequence], args], i) => `  ${i}. ${step}(${args.join(", ")}): ${type} "${sequence.join(" ")}"`).join("\n");
-
-    // return;
-//${body.join("\n")}
-    console.log(`
-theorem ${label}${args} :
-  ${type} "${theorem.join(" ")}" {
-${body}
-}
-`);
-
-    // console.log(t);
-    
-    // console.log(d);
-
-    // console.log(proof);
-    // console.log(mm.labels[label]);
-    // console.log(theorem);
-
-    // console.log(f);
-    // console.log(e);
-    
-    // const [, , proof] = mm.labels[label];
-    // return proof;
+    assertThat(mm.verifyAll())
+      .equalsTo(6);
   });
-
 });
 
 function assertThat(x) {

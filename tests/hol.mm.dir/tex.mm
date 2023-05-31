@@ -1,0 +1,5 @@
+
+axiom tex() {
+
+  return $term$ $?$;
+}

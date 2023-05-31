@@ -1,0 +1,5 @@
+
+axiom we() {
+
+  return $wff$ $$;
+}

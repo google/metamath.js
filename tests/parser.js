@@ -760,10 +760,107 @@ describe("Parser", () => {
     } while (true);
     return result;
   }
+});
 
+describe("Streaming", () => {
+  class Reader {
+    constructor() {
+      this.stream = [];
+      this.callbacks = [];
+    }
+    feed(data) {
+      if (this.callbacks.length == 0) {
+        this.stream.push(data);
+      } else {
+        let first = this.callbacks.shift();
+        first(data);          
+      }
+    }
+    async read() {
+      let that = this;
+      return new Promise((resolve, reject) => {
+        // console.log("hi");
+        if (that.stream.length == 0) {
+          that.callbacks.push(resolve);
+        } else {
+          let first = that.stream.shift();
+          resolve(first);
+        }
+      });
+    }
+  }
+
+  it("read() then write()", async () => {
+    let reader = new Reader();
+    let data = reader.read();
+    reader.feed("foo");
+    assertThat(await data).equalsTo("foo");
+  });
+
+  it("write() then reader()", async () => {
+    let reader = new Reader();
+    reader.feed("foo");
+    let data = reader.read();
+    assertThat(await data).equalsTo("foo");
+  });
+
+  it("read() read() then write() write()", async () => {
+    let reader = new Reader();
+    let data1 = reader.read();
+    let data2 = reader.read();
+    reader.feed("foo");
+    reader.feed("bar");
+    assertThat(await data1).equalsTo("foo");
+    assertThat(await data2).equalsTo("bar");
+  });
+
+  it("write() write() then read() read()", async () => {
+    let reader = new Reader();
+    reader.feed("foo");
+    reader.feed("bar");
+    let data1 = reader.read();
+    let data2 = reader.read();
+    assertThat(await data1).equalsTo("foo");
+    assertThat(await data2).equalsTo("bar");
+  });
+
+  it("async tokenizer", async () => {
+    const {lexicon} = require("../src/lexer.js");
+    const moo = require("moo");
+    const lexer = moo.compile(lexicon);
+    let info;
+
+    let reader = new Reader();
+
+    function feed(code) {
+      info = lexer.reset(code, info);
+
+      do {
+        let next = lexer.next();
+        if (!next) {
+          break;
+        }
+        reader.feed(next);
+      } while (true);
+    }
+    
+    feed("$[");
+
+    assertThat((await reader.read()).type).equalsTo("lfile");
+
+    feed(" filename $]");
+
+    assertThat((await reader.read()).type).equalsTo("ws");
+    assertThat((await reader.read()).type).equalsTo("sequence");
+    assertThat((await reader.read()).type).equalsTo("ws");
+    assertThat((await reader.read()).type).equalsTo("rfile");
+  });
+
+  
 });
 
 describe("Descent", () => {
+    
   const {parse} = require("../src/descent.js");
   it("", () => {
     assertThat(parse("")).equalsTo(true);

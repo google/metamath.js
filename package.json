@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -w tests"
+    "test": "mocha -w tests",
+    "build": "browserify src/module.js --standalone module -o static/module.js;"
   },
   "repository": {
     "type": "git",
