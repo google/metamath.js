@@ -1199,7 +1199,6 @@ $\}`);;
   ]) {
     it(`Transpile the closure: ${label}`, async function() {
       this.timeout(50000);
-      // const src = "hol.mm";
       const program = await require("fs/promises").readFile(`node_modules/set.mm/${src}`);
       const files = new Transpiler()
             .read(program.toString())
@@ -1214,8 +1213,8 @@ $\}`);;
   }
     
   it.skip("mpbirx: preprocess", async function() {
-    const dir = "node_modules/set.mm/hol.mm.dir";
-    const file = "mpbirx.mm";
+    const dir = "node_modules/set.mm/set.mm.dir";
+    const file = "2p2e4.mm";
 
     const loader = (async (file) => {
       return require("fs/promises").readFile(file);
@@ -1259,6 +1258,7 @@ $\}`);;
   
   for (let [dir, file, label, s, d] of [
     ["tests/hol.mm.dir", "mpbirx.mm", "mpbirx", [16, 5], [6, 25]],
+    ["tests/set.mm.dir", "2p2e4.mm", "2p2e4", [50, 17], [648, 2428]],
   ]) {
     it(`Compile and verify: ${file}`, async function() {
       let deps = 0;
