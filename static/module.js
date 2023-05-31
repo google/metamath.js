@@ -54,6 +54,38 @@
     }
   }
 
+  function pad(s, length) {
+    if (s.length > length) {
+      return s
+    }
+    return Array(length - s.length + 1).join(" ") + s
+  }
+
+  function lastNLines(string, numLines) {
+    var position = string.length
+    var lineBreaks = 0;
+    while (true) {
+      var idx = string.lastIndexOf("\n", position - 1)
+      if (idx === -1) {
+        break;
+      } else {
+        lineBreaks++
+      }
+      position = idx
+      if (lineBreaks === numLines) {
+        break;
+      }
+      if (position === 0) {
+        break;
+      }
+    }
+    var startPosition = 
+      lineBreaks < numLines ?
+      0 : 
+      position + 1
+    return string.substring(startPosition).split("\n")
+  }
+
   function objectToRules(object) {
     var keys = Object.getOwnPropertyNames(object)
     var result = []
@@ -336,39 +368,31 @@
   }
 
   function keywordTransform(map) {
-    var reverseMap = Object.create(null)
-    var byLength = Object.create(null)
+
+    // Use a JavaScript Map to map keywords to their corresponding token type
+    // unless Map is unsupported, then fall back to using an Object:
+    var isMap = typeof Map !== 'undefined'
+    var reverseMap = isMap ? new Map : Object.create(null)
+
     var types = Object.getOwnPropertyNames(map)
     for (var i = 0; i < types.length; i++) {
       var tokenType = types[i]
       var item = map[tokenType]
       var keywordList = Array.isArray(item) ? item : [item]
       keywordList.forEach(function(keyword) {
-        (byLength[keyword.length] = byLength[keyword.length] || []).push(keyword)
         if (typeof keyword !== 'string') {
           throw new Error("keyword must be string (in keyword '" + tokenType + "')")
         }
-        reverseMap[keyword] = tokenType
+        if (isMap) {
+          reverseMap.set(keyword, tokenType)
+        } else {
+          reverseMap[keyword] = tokenType
+        }
       })
     }
-
-    // fast string lookup
-    // https://jsperf.com/string-lookups
-    function str(x) { return JSON.stringify(x) }
-    var source = ''
-    source += 'switch (value.length) {\n'
-    for (var length in byLength) {
-      var keywords = byLength[length]
-      source += 'case ' + length + ':\n'
-      source += 'switch (value) {\n'
-      keywords.forEach(function(keyword) {
-        var tokenType = reverseMap[keyword]
-        source += 'case ' + str(keyword) + ': return ' + str(tokenType) + '\n'
-      })
-      source += '}\n'
+    return function(k) {
+      return isMap ? reverseMap.get(k) : reverseMap[k]
     }
-    source += '}\n'
-    return Function('value', source) // type
   }
 
   /***************************************************************************/
@@ -387,6 +411,7 @@
     this.line = info ? info.line : 1
     this.col = info ? info.col : 1
     this.queuedToken = info ? info.queuedToken : null
+    this.queuedText = info ? info.queuedText: "";
     this.queuedThrow = info ? info.queuedThrow : null
     this.setState(info ? info.state : this.startState)
     this.stack = info && info.stack ? info.stack.slice() : []
@@ -400,6 +425,7 @@
       state: this.state,
       stack: this.stack.slice(),
       queuedToken: this.queuedToken,
+      queuedText: this.queuedText,
       queuedThrow: this.queuedThrow,
     }
   }
@@ -531,7 +557,8 @@
 
     // throw, if no rule with {error: true}
     if (group.shouldThrow) {
-      throw new Error(this.formatError(token, "invalid syntax"))
+      var err = new Error(this.formatError(token, "invalid syntax"))
+      throw err;
     }
 
     if (group.pop) this.popState()
@@ -572,13 +599,28 @@
         col: this.col,
       }
     }
-    var start = Math.max(0, token.offset - token.col + 1)
-    var eol = token.lineBreaks ? token.text.indexOf('\n') : token.text.length
-    var firstLine = this.buffer.substring(start, token.offset + eol)
-    message += " at line " + token.line + " col " + token.col + ":\n\n"
-    message += "  " + firstLine + "\n"
-    message += "  " + Array(token.col).join(" ") + "^"
-    return message
+    
+    var numLinesAround = 2
+    var firstDisplayedLine = Math.max(token.line - numLinesAround, 1)
+    var lastDisplayedLine = token.line + numLinesAround
+    var lastLineDigits = String(lastDisplayedLine).length
+    var displayedLines = lastNLines(
+        this.buffer, 
+        (this.line - token.line) + numLinesAround + 1
+      )
+      .slice(0, 5)
+    var errorLines = []
+    errorLines.push(message + " at line " + token.line + " col " + token.col + ":")
+    errorLines.push("")
+    for (var i = 0; i < displayedLines.length; i++) {
+      var line = displayedLines[i]
+      var lineNo = firstDisplayedLine + i
+      errorLines.push(pad(String(lineNo), lastLineDigits) + "  " + line);
+      if (lineNo === token.line) {
+        errorLines.push(pad("", lastLineDigits + token.col + 1) + "^")
+      }
+    }
+    return errorLines.join("\n")
   }
 
   Lexer.prototype.clone = function() {
@@ -1868,20 +1910,17 @@ class Lexer {
       ["comment"]: {match: /\/\/.*\n/, lineBreaks: true},
       ["ws"]: {match: /[\s]+/, lineBreaks: true},
       ["_include_"]: "include",
-      //["const"]: "const",
-      //["var"]: "var",
       ["theorem"]: "theorem",
       ["axiom"]: "axiom",
-      ["proof"]: "proof",
-      ["end"]: "end",
-      ["param"]: "param",
+      ["do"]: "do",
       ["let"]: "let",
-      ["step"]: "step",
       ["assume"]: "assume",
       ["disjoint"]: "disjoint",
-      ["assert"]: "assert",
+      ["return"]: "return",
       ["("]: "(",
       [")"]: ")",
+      ["{"]: "{",
+      ["}"]: "}",
       ['"']: '"',
       [":"]: ":",
       [","]: ",",
@@ -1889,12 +1928,15 @@ class Lexer {
       ["@"]: "@",
       ["#"]: "#",
       ["label"]: /[A-Za-z0-9-_.]+/,
-      ["sequence"]: /[!-#%-~\?]+/,
+      ["symbol"]: /[!-#%-\:<-~]+/, // no " ", "$", ";"
+      ["quote"]: /\$[!-#%-~]+\$/,
+      ["string"]: /\$(?:[!-#%-~]+(?:\s+[!-#%-~]+)*\s?)?\$/,
     };
     this.lexer = moo.compile(lexicon);
   }
   parse(code) {
     this.lexer.reset(code);
+    return this;
   }
   next() {
     let next = this.lexer.next();
@@ -1914,6 +1956,7 @@ class Lexer {
   }
   eat(type, value) {
     assertThat(this.next()).equalsTo([type, value ? value : type]);
+    return this;
   };
 }
 
@@ -1927,47 +1970,41 @@ function assertThat(a) {
   };
 }
 
-
-const symbols = [
-  // a subset of possible symbols
-  "label",
-  // reserved keywords that can also be symbols
-  '"',
-  "(",
-  ")",
-  ",",
-  ":",
-  ";",
-  "@",
-  "#",
-  "//",
-  // catch all types of sequences
-  "sequence",
-];
-
 const labels = [
   // a subset of possible labels
   "label",
   // reserved keywords that can also be labels
   "_include_",
-  // "const",
-  // "var",
   "theorem",
   "axiom",
-  "proof",
-  //"end",
   "let",
-  "param",
-  "step",
   "assume",
   "disjoint",
-  "assert",
-  // catch all types of sequences
+  "return",
+];
+
+const symbols = [
+  "(",
+  ")",
+  "{",
+  "}",
+  '"',
+  ":",
+  ",",
+  //";",
+  "@",
+  "#",
+  ...labels,
+  "symbol",
 ];
 
 class Parser {
   constructor() {
     this.lexer = new Lexer();
+    this.__id = 0;
+  }
+  id() {
+    return this.__id++;
   }
   parse(code) {
     this.lexer.parse(code);
@@ -1988,7 +2025,7 @@ class Parser {
   }
   error() {
     const {head} = this.lexer;
-    const {line, col} = this.lexer.lexer;
+    const {line, col, buffer} = this.lexer.lexer;
     throw new Error(`Unexpected token "${head[1]}" (${head[0]}) on line ${line} column ${col}.`);
   }
   
@@ -2006,7 +2043,6 @@ class Parser {
   
   ws(optional = false) {
     const sp = ["ws", "comment", "comment-expr"];
-    // const sp = ["ws"];
     if (this.accepts(...sp)) {
       this.eat(...sp);
       // allows multiple whitespace types intermingled
@@ -2017,80 +2053,197 @@ class Parser {
       this.error();
     }
   }
+  
+  head(extras = false) {
+    this.eat("(");
+    this.ws(true);
 
-  declaration(type, label = true, multiple = true, empty = true) {
-    const result = [];
-    this.eat(type);
-    this.ws();
-    if (label) {
-      result.push(this. label());
+    const f = [];
+    // parameters
+    while (this.accepts(...labels, "quote")) {
+      let first = this.symbol();
+      this.ws(true);
+
+      let label;
+      let type;
+
+      if (this.accepts(":")) {
+        this.eat(":");
+        this.ws();
+        label = first;
+        type = this.symbol();
+        this.ws();
+      } else {
+        label = `${this.id()}`;
+        type = first;
+      }
+
+      const varz = this.label();
+      f.push([label, type, varz]);
+      this.ws(true);
+
+      if (!this.accepts(",")) {
+        break;
+      }
+      
+      this.eat(",");
+      this.ws(true);
+    }
+
+    this.eat(")");
+
+    this.ws(true);
+    
+    return f;
+  }
+
+  body(extras = false) {
+
+    const e = [];
+    
+    while (this.accepts("assume")) {
+      this.eat("assume");
+      this.ws();
+      let label = "";
+      if (this.accepts(...labels)) {
+        label = this.label();
+        this.ws(true);
+        this.eat(":");
+        this.ws(true);
+      } else {
+        label = `${this.id()}`;
+      }
+      const [type, ...str] = this.str();
+      e.push([label, type, str]);
+      this.ws(true);
+      this.eat(";");
+      this.ws(true);
+    };
+
+    const d = [];
+    while (this.accepts("disjoint")) {
+      this.eat("disjoint");
+      this.ws();
+      const varzs = [];
+      do {
+        varzs.push(this.label());
+        this.ws(true);
+      } while (this.accepts(...labels));
+      d.push(varzs);
+      this.ws(true);
+      this.eat(";");
+      this.ws(true);
+    };
+
+    const l = [];
+    
+    while (this.accepts("let")) {
+      this.eat("let");
+      this.ws();
+      const label = this.label();
       this.ws(true);
       this.eat(":");
       this.ws(true);
+      const type = this.accepts(...labels) ? this.label() : this.symbol();
+      this.ws();
+      const name = this.label();
+      l.push([label, type, name]);
+      this.ws(true);
+      this.eat(";");
+      this.ws(true);
+    };
+    
+    const proof = [];
+    if (extras) {
+      this.eat("do");
+      this.ws(true);
+      this.eat("{");
+      this.ws(true);
+      while (this.accepts(...labels, "@", "#")) {
+        if (this.accepts("@")) {
+          proof.push(`${this.eat("@")}${this.eat("label")}`);
+        } else if (this.accepts("#")) {
+          proof.push(this.eat("#"));
+        } else {
+          proof.push(this.label());
+        }
+        this.ws(true);
+        this.eat(";");
+        this.ws(true);
+      }
+      this.eat("}");
+      this.ws(true);
+      this.eat(";");
+      this.ws(true);
     }
-    let first = this.symbol();
-    result.push(first);
-    this.ws(false);
-    if (!this.accepts(...symbols) && empty) {
-      // If empty symbols are allowed
-      result.push("");
-      return [type, result];
+    
+    this.eat("return");
+    this.ws();
+    const type = this.symbol();
+    this.ws();
+    const str = this.str();
+    this.ws(true);
+    this.eat(";");
+    this.ws(true);
+    return [e, d, l, [type, str], proof];
+  }
+
+  symbol() {
+    if (this.accepts(...symbols)) {
+      return this.eat(...symbols);
     }
-    let second = this.symbol();
-    //console.log(second);
-    result.push(second);
-    this.ws(false);
-    if (multiple) {
-      while (this.accepts(...symbols)) {
-        result.push(this.symbol());
-        this.ws(false);
-      };
+
+    const quote = this.eat("quote");
+    return quote.slice(1, quote.length - 1);
+  }
+  
+  str() {
+    if (this.accepts("quote", "string")) {
+      const result = this.eat("quote", "string");
+      const symbols = result.slice(1, result.length - 1);
+      return symbols.split(/[\s]+/);
     }
-    return [type, result];
+
+    const str = [];
+    while (this.accepts(...symbols)) {
+      str.push(this.eat(...symbols));
+      if (!this.accepts("ws")) {
+        break;
+      }
+      this.ws();
+    }
+    return str;
   }
 
   axiom() {
-    this.eat("axiom");
-    this.ws();
-    let name = this.label();
-    this.ws();
-    let h = this.header();
-    this.eat("end");
-    this.ws();
-    return ["axiom", name, h];
+    return this.func("axiom", false);
+  }
+
+  theorem() {
+    return this.func("theorem", true);
   }
   
-  header() {
+  func(type, extras) {
+    this.eat(type);
+    this.ws();
+    let name = this.label();
     this.ws(true);
-    let params = [];
-    while (this.accepts("param")) {
-      params.push(this.declaration("param", true, false));
-    }
-    
+    const f  = this.head(extras);
     this.ws(true);
-    let lets = [];
-    while (this.accepts("let")) {
-      lets.push(this.declaration("let", true, false));
-    }
-    
+    this.eat("{");
     this.ws(true);
-    let ifs = [];
-    while (this.accepts("assume")) {
-      ifs.push(this.declaration("assume", true, true));
-    }
-
+    const [e, d, l, [t, str], p] = this.body(extras);
+    this.eat("}");
     this.ws(true);
-    let disjoints = [];
-    while (this.accepts("disjoint")) {
-      disjoints.push(this.declaration("disjoint", false, true));
-    }
-    
-    this.ws(true);
-    let then = this.declaration("assert", false, true);
-
-    return [params, lets, ifs, disjoints, then];
+    return [type, name, [
+      f.map((p) => ["param", p]),
+      l.map((v) => ["let", v]),
+      e.map(([label, type, str]) => ["assume", [label, type, ...str]]),
+      d.map((varz) => ["disjoint", varz]),
+      ["assert", [t, ...str]],
+    ], p];
   }
-
+  
   args() {
     this.eat("(");
     this.ws(true);
@@ -2109,48 +2262,6 @@ class Parser {
     return args;
   }
   
-  step() {
-    const result = [];
-    this.eat("step");
-    this.eat("ws");
-    // index
-    result.push(this.label());
-    this.ws(true);
-    this.eat(")");
-    this.ws(true);
-    // a step can either be ...
-    if (this.accepts("#")) {
-      // ... a marker ...
-      result.push(this.eat("#"));
-    } else if (this.accepts("@")) {
-      // ... a recall ...
-      result.push(this.eat("@"));
-      result.push(this.label());
-    } else {
-      // ... or call.
-      result.push(this.label());
-      result.push(this.args());
-    }
-    this.ws(true);
-    this.eat(":");
-    this.ws(true);
-    let sequence = [];
-    result.push(sequence);
-    while (this.accepts(...symbols)) {
-      sequence.push(this.symbol());
-      this.ws(true);
-    }
-    return result;
-  }
-
-  symbol() {
-    let name = this.eat(...symbols);
-    while (this.accepts(...symbols)) {
-      name += this.eat(...symbols);
-    }
-    return name;
-  }
-  
   label() {
     let name = this.eat(...labels);
     while (this.accepts(...labels)) {
@@ -2159,44 +2270,14 @@ class Parser {
     return name;
   }
   
-  theorem() {
-    this.eat("theorem");
-    this.ws();
-
-    let name = this.label();
-    this.ws();
-    let head = this.header();
-
-    this.ws(true);
-    this.eat("proof");
-    this.ws(true);
-    
-    let steps = [];
-    do {
-      if (this.accepts(...labels)) {
-        steps.push(this.label());
-      } else if (this.accepts("#")) {
-        steps.push(this.eat("#"));
-      } else if (this.accepts("@")) {
-        steps.push(`${this.eat("@")}${this.label()}`);
-      } else {
-        break;
-      }
-      this.ws();
-    } while (true);
-
-    this.eat("end");
-    this.ws();
-
-    return ["theorem", name, head, steps];
-  }
-  
   include() {
     this.eat("_include_");
     this.ws();
     this.eat('"');
-    const name = this.eat("label");
+    const name = this.label();
     this.eat('"');
+    this.ws(true);
+    this.eat(";");
     this.ws();
     return ["include", name];
   }
@@ -2220,9 +2301,7 @@ class Parser {
       } else {
         this.error();
       }
-      // console.log(this.lexer.head);
     } while (this.lexer.head);
-    // throw new Error("hi");
     return result;
   }
 }
@@ -2403,7 +2482,7 @@ ${v}
 ${f}
 ${e}
 ${d}
-  ${label} $${type == "axiom" ? "a" : "p"} ${assert.join(" ")} ${p}$.
+  ${label} $${type == "axiom" ? "a" : "p"} ${assert.join(" ")} ${type == "theorem" ? p : ""}$.
 $\}`);
     }
 
@@ -2464,26 +2543,29 @@ class Transpiler {
   
   axiom(label) {
     const [, [d, f, e, [type, axiom]]] = this.mm.labels[label];
-    let args = f.map(([type, name, label]) => `  param ${label}: ${type} ${name}`).join("\n");
-    if (Object.entries(f).length  > 0) {
-      args += "\n";
-    }
+    let args = f.map(([type, name, label]) => `${label}: $${this.escape(type)}$ ${name}`).join(", ");
     
-    let assumptions = e.map(([seq, type, name]) => `  assume ${name}: ${type} ${seq.join(" ")}`).join("\n");
+    let assumptions = e.map(([seq, type, name]) => `  assume ${name}: $${this.escape(type)} ${this.escape(seq.join(' '))}$;`).join("\n");
 
     if (Object.entries(e).length > 0) {
       assumptions += "\n";
     }
 
     const result = `
-axiom ${label}
-${args}${assumptions}  assert ${type} ${axiom.join(' ')}
-end
+axiom ${label}(${args}) {
+${assumptions}
+  return $${this.escape(type)}$ $${this.escape(axiom.join(' '))}$;
+}
 `;
 
     return [[], result];
   }
 
+  escape(str) {
+    return str;
+    // return str.replace('"', '\\"');
+  }
+  
   theorem(label) {
     // const deps = [];
     const [, [d, f, e, [type, theorem], ddummy, dummy], func, proof] = this.mm.labels[label];
@@ -2497,17 +2579,17 @@ end
     //    .map(([type, name, label]) => )
     //    .join("\n");
 
-    const varz = [];
+    //const varz = [];
 
-    for (const [type, name, label] of f) {
-      varz.push(`  param ${label}: ${type} ${name}`);
-    }
+    //for (const [type, name, label] of f) {
+    //  varz.push(`  param ${label}: ${type} ${name}`);
+    //}
     
-    for (const [type, name, label] of dummies) {
-      varz.push(`  let ${label}: ${type} ${name}`);
-    }
+    //for (const [type, name, label] of dummies) {
+    //  varz.push(`  let ${label}: ${type} ${name}`);
+    //}
 
-    const args = varz.join("\n");
+    const args = f.map(([type, name, label]) => `${label}: $${this.escape(type)}$ ${name}`).join(", ");
     
     const dlabels = dummies.map(([type, name, label]) => label);
 
@@ -2532,7 +2614,7 @@ end
 
     let conds = "";
     
-    let assumptions = e.map(([seq, type, name]) => `  assume ${name}: ${type} ${seq.join(" ")}`).join("\n");
+    let assumptions = e.map(([seq, type, name]) => `  assume ${name}: $${type} ${this.escape(seq.join(' '))}$;`).join("\n");
 
     if (Object.entries(e).length > 0) {
       assumptions += "\n";
@@ -2540,28 +2622,36 @@ end
     
     let diff = [];
     for (let [x, y] of d) {
-      diff.push(`  disjoint ${x} ${y}`);
+      diff.push(`  disjoint ${x} ${y};`);
     }
     
     for (let [x, y] of ddummy) {
-      diff.push(`  disjoint ${x} ${y}`);
+      diff.push(`  disjoint ${x} ${y};`);
     }
+
+    // console.log();
+    //throw new Error("hi");
     
     const body = steps.map((step, i) => {
       const call = typeof step == "number" ? (step == -1 ? `#` : `@${step}`) : `${step}`;
-      return `    ${call}`;
+      return `    ${call};`;
     }).join("\n");
+
+    const l = dummies.map(([type, name, label]) => `  let ${label}: $${this.escape(type)}$ ${name};`).join("\n");
     
     const code = `
-theorem ${label}
-${args}
+theorem ${label}(${args}) {
 ${assumptions}
 ${d.length > 0 ? diff.join("\n") : ""}
-  assert ${type} ${theorem.join(' ')}
 
-  proof
+${l}
+
+  do {
 ${body}
-end
+  };
+
+  return $${this.escape(type)}$ $${this.escape(theorem.join(' '))}$;
+}
 `;
 
     return [deps, code];
@@ -2614,6 +2704,22 @@ module.exports = {
 };
 
 },{"../src/descent.js":7,"./metamath.js":9,"moo":1}],7:[function(require,module,exports){
+/**
+  *  Copyright 2022 Google LLC
+  *
+  *  Licensed under the Apache License, Version 2.0 (the "License");
+  *  you may not use this file except in compliance with the License.
+  *  You may obtain a copy of the License at
+  *
+  *      https://www.apache.org/licenses/LICENSE-2.0
+  *
+  *  Unless required by applicable law or agreed to in writing, software
+  *  distributed under the License is distributed on an "AS IS" BASIS,
+  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  *  See the License for the specific language governing permissions and
+  *  limitations under the License.
+  **/
+
 const {lexicon} = require("../src/lexer.js");
 const {MM} = require("../src/metamath.js");
 const moo = require("moo");
@@ -2918,6 +3024,22 @@ module.exports = {
 };
 
 },{"../src/lexer.js":8,"../src/metamath.js":9,"moo":1}],8:[function(require,module,exports){
+/**
+  *  Copyright 2022 Google LLC
+  *
+  *  Licensed under the Apache License, Version 2.0 (the "License");
+  *  you may not use this file except in compliance with the License.
+  *  You may obtain a copy of the License at
+  *
+  *      https://www.apache.org/licenses/LICENSE-2.0
+  *
+  *  Unless required by applicable law or agreed to in writing, software
+  *  distributed under the License is distributed on an "AS IS" BASIS,
+  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  *  See the License for the specific language governing permissions and
+  *  limitations under the License.
+  **/
+
 const moo = require("moo");
 
 const lexicon = {
@@ -2952,6 +3074,22 @@ module.exports = {
 };
 
 },{"moo":1}],9:[function(require,module,exports){
+/**
+  *  Copyright 2022 Google LLC
+  *
+  *  Licensed under the Apache License, Version 2.0 (the "License");
+  *  you may not use this file except in compliance with the License.
+  *  You may obtain a copy of the License at
+  *
+  *      https://www.apache.org/licenses/LICENSE-2.0
+  *
+  *  Unless required by applicable law or agreed to in writing, software
+  *  distributed under the License is distributed on an "AS IS" BASIS,
+  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  *  See the License for the specific language governing permissions and
+  *  limitations under the License.
+  **/
+
 class Frame {
   constructor() {
     this.c = new Set();
@@ -3351,6 +3489,9 @@ class MM {
         // the stack at some point), and reuses its result
         // in another computation by pushing it into the stack.
         // stack.push(markers[step]);
+        if (!markers[step]) {
+          throw new Error(`Can't find marker for ${step}: ${Object.keys(markers)}.`);
+        }
         const [[, type, string], i] = markers[step];
         // Reuse the computation from a previous step, but generate
         // a new step entry.
@@ -3379,7 +3520,7 @@ class MM {
           const args = [];
           let sp = base;
           if (sp < 0) {
-            throw new Error(`Empty stack ${sp}.`);
+            throw new Error(`Step ${step}: empty stack ${sp} (length = ${stack.length} and popping = ${npop}).`);
           }
         
           for (const [k, v] of mandatory) {
@@ -3390,7 +3531,7 @@ class MM {
                 console.log(`  ${type} ${string.flat().join(" ")}`);
               }
               // console.log(mandatory);
-              throw new Error(`Step "${step}" of "${label}": argument type of "${v}" doesn't match with the top of the stack. Expected "${k}" but got "${top[1]}".`);
+              throw new Error(`Step "${step}" of "${label}": argument type of "${v}" doesn't match with the top of the stack. Expected "${k}" but got "${top[1]}" (${top[2].flat().join(" ")}).`);
             }
             subs[v] = top[2];
             args.push(top[0]);
@@ -3400,7 +3541,7 @@ class MM {
           for (const [h, type] of hyp) {
             const top = stack[sp];
             if (top[1] != type) {
-              throw new Error(`Step ${step}: argument type doesn't match with the topf of the stack. Expected ${type} but got ${top[0]}.`);
+              throw new Error(`Step ${step}: argument type doesn't match with the top of the stack. Expected ${type} but got ${top[1]}.`);
             }
           
             const sub = h
@@ -3408,7 +3549,7 @@ class MM {
             if (top[2].flat().join("") != sub.flat().join("")) {
               const e = [];
               e.push(`Substitution ${JSON.stringify(subs)} of the hypothesis ${h.join(" ")} doesn't match with the top of the stack`);
-              e.push(`Step ${step}: Expected ${sub.flat().join("")} but got ${top[2].join("")}.`);
+              e.push(`Step ${step}: Expected ${sub.flat().join(" ")} but got ${top[2].flat().join(" ")}.`);
               throw new Error(e.join("\n"));
             }
             args.push(top[0]);
@@ -3717,6 +3858,22 @@ module.exports = {
 };
 
 },{"./compiler.js":6,"./descent.js":7,"./metamath.js":9,"./parser.js":11}],11:[function(require,module,exports){
+/**
+  *  Copyright 2022 Google LLC
+  *
+  *  Licensed under the Apache License, Version 2.0 (the "License");
+  *  you may not use this file except in compliance with the License.
+  *  You may obtain a copy of the License at
+  *
+  *      https://www.apache.org/licenses/LICENSE-2.0
+  *
+  *  Unless required by applicable law or agreed to in writing, software
+  *  distributed under the License is distributed on an "AS IS" BASIS,
+  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  *  See the License for the specific language governing permissions and
+  *  limitations under the License.
+  **/
+
 const nearley = require("nearley");
 const compile = require("nearley/lib/compile");
 const generate = require("nearley/lib/generate");
