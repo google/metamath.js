@@ -103,7 +103,7 @@ class Theorem extends React.Component {
            </div>
          )}
 
-         {a == "$p" && 
+         {a == "$p" && this.props.loaded &&
            <Proof mm={mm} proof={steps}/>
          }
 
@@ -193,9 +193,13 @@ class Proof extends React.Component {
     };
   }
   render() {
-    if (!this.props.proof) {
-      return null;
+    const markers = [];
+    for (let i = 1; i < (this.props.proof.length - 1); i++) {
+      if (this.props.proof[i][0] == -1) {
+        markers.push(this.props.proof[i - 1]);
+      }
     }
+
     const mm = this.props.mm;
     const proof = this.props.proof;
 
@@ -222,8 +226,6 @@ class Proof extends React.Component {
     
     const steps = clone(proof.filter(([step]) => step != -1));
 
-    // this.state.step = 17;
-    
     for (let i = 0; i < step; i++) {
       const [label, rule = [], args = []] = steps[i];
       if (typeof label == "number") {
@@ -234,11 +236,19 @@ class Proof extends React.Component {
       }
     }
 
-    const next = steps[this.state.step];
+    let next = steps[this.state.step];
 
     let pops = false;
-    
-    if (mm && next && mm.labels[next[0]]) {
+    let marker = false;
+        
+    if (next) {
+      let name = next[0];
+
+      if (typeof name == "number") {
+        marker = next;
+        next = markers[next[0]];
+      }
+
       const [, , args] = next;
       const [, [d, f, e]] = mm.labels[next[0]];
       for (let i = 0; i < f.length; i++) {
@@ -256,6 +266,48 @@ class Proof extends React.Component {
 
         <h2>Proof</h2>
 
+        <input type="range" min={0} max={steps.length - 1} value={this.state.step}
+            onChange={() => {}}
+            style={{
+            "width": "100%",
+            "height": "15px",
+            "borderRadius": "5px",
+            "background": "#d3d3d3",
+            "outline": "none",
+            "opacity": "0.7",
+            "WebkitTransition": ".2s",
+            "transition": "opacity .2s",
+            }}
+        />
+
+        <br/>
+        <br/>
+
+        <button disabled={this.state.step <= 0} onClick={() => this.setState({step: step - 1})} >Back</button>
+        <button disabled={this.state.step >= steps.length} onClick={() => this.setState({step: step + 1})} >Next</button>
+
+        <br/>
+      
+        {(() => {
+          if (!next) {
+            return null;
+          }
+
+          const [t, [d, f, e, [type, rule]]] = mm.labels[next[0]];
+
+          return (
+            <div>
+              <h2>Step {step} : {marker ? `Replay step ${marker[2]}: ` : ""} {t == "$a" ? "Axiom" : "Theorem"} {next[0]}</h2>
+              <p><Code mm={mm} src={type} /> <Code mm={mm} src={rule.join(" ")}/>
+              {pops &&
+                <span> = <Code mm={mm} src={next[1][0]} /> <Code mm={mm} src={next[1][1].join(" ")} /></span>
+              }
+              </p>
+            </div>);
+        })()}
+
+        <br/>
+      
         <div style={{position: "relative", display: "inline-block"}}>
           <table>
             <colgroup>
@@ -329,51 +381,7 @@ class Proof extends React.Component {
           </table>
 
           <br/>
-      
-          {(() => {
-            if (!mm || !next || !mm.labels[next[0]]) {
-              return null;
-            }
-
-            // return null;
-            //console.log();
-
-            const [t, [d, f, e, [type, rule]]] = mm.labels[next[0]];
-            //console.log(next[1]);
-            return (
-              <div>
-                <h2>Step {step} : {t == "$a" ? "Axiom" : "Theorem"} {next[0]}</h2>
-                <p><Code mm={mm} src={type} /> <Code mm={mm} src={rule.join(" ")}/>
-                {pops &&
-                 <span>
-                   = <Code mm={mm} src={next[1][0]} /> <Code mm={mm} src={next[1][1].join(" ")} />
-                 </span>
-                }
-                </p>
-              </div>
-            );
-          })()}
- 
-        <input type="range" min={0} max={steps.length - 1} value={this.state.step}
-          onChange={() => {}}
-          style={{
-          "width": "100%",
-          "height": "15px",
-          "borderRadius": "5px",
-          "background": "#d3d3d3",
-          "outline": "none",
-          "opacity": "0.7",
-          "WebkitTransition": ".2s",
-          "transition": "opacity .2s",
-          }}
-        />
-
-        <br/>
-        <br/>
-
-        <button disabled={this.state.step <= 0} onClick={() => this.setState({step: step - 1})} >Back</button>
-        <button disabled={this.state.step >= steps.length} onClick={() => this.setState({step: step + 1})} >Next</button>
-
+       
         </div>
 
         </div>
@@ -439,9 +447,9 @@ class Metamath extends React.Component {
     return new Promise((resolve, reject) => {
       // Waits 100 ms arbitrarily to simulate slow
       // networks
-      that.setState({
-        file: file
-      });
+      //that.setState({
+      //  file: file
+      //});
       setTimeout(() => {
         resolve(body);
       });
