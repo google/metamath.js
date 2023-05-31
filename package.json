@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha -w tests",
-    "build": "browserify src/module.js --standalone module -o static/module.js;"
+    "build": "browserify src/module.js --standalone module -o static/module.js;",
+    "install": "napa"
+  },
+  "napa": {
+    "set.mm": "metamath/set.mm"
   },
   "repository": {
     "type": "git",
@@ -20,5 +24,8 @@
     "mocha": "^9.2.2",
     "moo": "^0.5.1",
     "nearley": "^2.20.1"
+  },
+  "devDependencies": {
+    "napa": "^3.0.0"
   }
 }

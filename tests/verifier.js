@@ -1597,23 +1597,23 @@ a1: wff ( a -> a )
     ]);
   });
 
-  it.skip("miu.mm", async () => {
+  it("miu.mm", async () => {
     const fs = require("fs/promises");
-    const file = await fs.readFile("tests/miu.mm");
+    const file = await fs.readFile("node_modules/set.mm/miu.mm");
     const mm = process(file.toString());
     assertThat(mm.theorems().map(([name, proof]) => proof()).length).equalsTo(1);
   });
 
-  it.skip("hol.mm", async () => {
+  it("hol.mm", async () => {
     const fs = require("fs/promises");
-    const file = await fs.readFile("tests/hol.mm");
+    const file = await fs.readFile("node_modules/set.mm/hol.mm");
     const mm = process(file.toString());
     assertThat(mm.theorems().map(([name, proof]) => proof()).length).equalsTo(138);
   });
 
-  it.skip("ql.mm", async () => {
+  it("ql.mm", async () => {
     const fs = require("fs/promises");
-    const file = await fs.readFile("tests/ql.mm");
+    const file = await fs.readFile("node_modules/set.mm/ql.mm");
     const mm = process(file.toString());
     assertThat(mm.theorems().map(([name, proof]) => proof()).length).equalsTo(1138);
   });
@@ -1653,7 +1653,7 @@ a1: wff ( a -> a )
 
   it("Disjoint requirements of cl of hol.mm", async () => {
     const fs = require("fs/promises");
-    const file = await fs.readFile("tests/hol.mm");
+    const file = await fs.readFile("node_modules/set.mm/hol.mm");
     const mm = process(file.toString());
     const [, [d, f, , , dummies, dummy]] = mm.labels["cl"];
     // Mandatory variables requirements
