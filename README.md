@@ -6,7 +6,7 @@ Typogram borrows from [metamath](https://metamath.org) its verification system, 
 
 Here is an example of a a typogram that verifies the first theorem of Hofstader's PQ system:
 
-```
+```js
 // "-" is a wff (well-formed formula)
 axiom w0() {
   return wff -;
