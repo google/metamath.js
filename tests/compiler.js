@@ -1306,14 +1306,13 @@ $\}`);;
     });
   }
 
-  it.skip(`Compile and verify: pq.tt`, async function() {
+  it(`Compile and verify: pq.tt`, async function() {
     const loader = (async (file) => {
       return require("fs/promises").readFile(file);
     });
     
     const deep = await new Compiler(loader).compile("tests/", "pq.tt", false);
-    assertThat(new Verifier().verify(deep)).equalsTo();
-    assertThat(deps).equalsTo(d[1]);
+    assertThat(new Verifier().verify(deep)).equalsTo(1);
   });
 
   
