@@ -1339,7 +1339,7 @@ $\}`);;
     });
   }
 
-  it.skip("Empty Program", async () => {
+  it("Empty Program", async () => {
     const metamath = await new Compiler().compile("");
     assertThat(new Verifier().verify(metamath)).equalsTo(0);
   });

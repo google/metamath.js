@@ -80,10 +80,10 @@ class Parser {
     const c = this.eat("c");
     this.space();
     const symbols = [];
-    do {
+    while (this.accepts("sequence")) {
       symbols.push(this.eat("sequence"));
       this.space();
-    } while (this.accepts("sequence"));
+    };
     const dot = this.eat("dot");
     this.dispatch([c, symbols]);
   }
