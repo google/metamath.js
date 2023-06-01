@@ -428,6 +428,30 @@ describe("Compiler", () => {
     ]);
   });
 
+  it(`comments`, () => {
+    let result = new Parser().parse(`
+    // comments are allowed ...
+    /**
+      This is a multi-line comment. They are allowed ...
+     */
+    axiom /** ... anywhere ... */ foo() /** ... where a whitespace is ... */ {
+      // ... for example here ...
+      return |- /** ... here ... */ bar; // or here.
+    }
+    // and here
+    `);
+    assertThat(result).equalsTo([
+      ["axiom", "foo", [
+        [],
+        [],
+        [],
+        [],
+        ["assert", ["|-", "bar"]],
+      ], [
+      ]]
+    ]);
+  });
+
   it("parser", () => {
     let result = new Parser().parse(`
       // hello world
@@ -524,7 +548,7 @@ describe("Compiler", () => {
       throw new Error("Should fail first");
     } catch (e) {
       assertThat(e.message)
-        .equalsTo(`Unexpected token ")" ()) on line 4 column 22.`);
+        .equalsTo(`Unexpected token ")":  ")" on line 4 column 22.`);
     }
   });
 
@@ -539,7 +563,7 @@ describe("Compiler", () => {
       throw new Error("Should fail first");
     } catch (e) {
       assertThat(e.message)
-        .equalsTo(`Unexpected token "," (,) on line 3 column 23.`);
+        .equalsTo(`Unexpected token ",":  "," on line 3 column 23.`);
     }
   });
 
@@ -554,7 +578,7 @@ describe("Compiler", () => {
       throw new Error("Should fail first");
     } catch (e) {
       assertThat(e.message)
-        .equalsTo(`Unexpected token ")" ()) on line 3 column 23.`);
+        .equalsTo(`Unexpected token ")":  ")" on line 3 column 23.`);
     }
   });
 
@@ -1282,6 +1306,17 @@ $\}`);;
     });
   }
 
+  it.skip(`Compile and verify: pq.tt`, async function() {
+    const loader = (async (file) => {
+      return require("fs/promises").readFile(file);
+    });
+    
+    const deep = await new Compiler(loader).compile("tests/", "pq.tt", false);
+    assertThat(new Verifier().verify(deep)).equalsTo();
+    assertThat(deps).equalsTo(d[1]);
+  });
+
+  
   // "ql.mm" passes, but we disable it because it takes a long time
   for (let src of [
     "../node_modules/set.mm/demo0.mm",

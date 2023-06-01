@@ -4,7 +4,8 @@ const {MM, Compressor, Decompressor} = require("./metamath.js");
 class Lexer {
   constructor() {
     const lexicon = {
-      ["comment-expr"]: {match: /\/\*\*.*\*\//, lineBreaks: true},
+      // /\/\*\*[^]*\*\//
+      ["comment-expr"]: {match: new RegExp("/\\*[^*]*\\*+(?:[^/*][^*]*\\*+)*/"), lineBreaks: true},
       ["comment"]: {match: /\/\/.*\n/, lineBreaks: true},
       ["ws"]: {match: /[\s]+/, lineBreaks: true},
       ["_include_"]: "include",
@@ -124,7 +125,7 @@ class Parser {
   error() {
     const {head} = this.lexer;
     const {line, col, buffer} = this.lexer.lexer;
-    throw new Error(`Unexpected token "${head[1]}" (${head[0]}) on line ${line} column ${col}.`);
+    throw new Error(`Unexpected token "${head[0]}":  "${head[1]}" on line ${line} column ${col}.`);
   }
   
   accepts(...types) {
@@ -384,10 +385,8 @@ class Parser {
     this.lexer.next();
     let result = [];
     do {
-      if (this.accepts("ws")) {
+      if (this.accepts("ws", "comment", "comment-expr")) {
         this.ws();
-      } else if (this.accepts("//")) {
-        throw new Error("hi");
       } else if (this.accepts("axiom")) {
         result.push(this.axiom());
       } else if (this.accepts("theorem")) {
