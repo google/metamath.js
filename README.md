@@ -4,20 +4,20 @@ Typogram (short for typographic programs) is a programming language that only op
 
 Typogram borrows from [metamath](https://metamath.org) its verification system, and can be transpiled to (i.e. they can be verified with) and from (to a smaller extent) metamath. It extends metamath in providing program modularization, so that large source files can be broken into smaller ones. It borrows from [Isabelle's](https://en.wikipedia.org/wiki/Isabelle_(proof_assistant)) its familiar syntax.
 
-Here is an example of a a typogram that verify SK combinators:
+Here is an example of a a typogram that verifies the first theorem of Hofstader's PQ system:
 
 ```
-// "-" is a well-formed formulat
+// "-" is a wff (well-formed formula)
 axiom w0() {
   return wff -;
 }
 
-// if x is a well-formed formula, then "w -" is a well-formed formulat
+// if x is a wff, then "w -" is a wff
 axiom w1(wff x) {
   return wff x -;
 }
 
-// "- -" is a well-formed formula
+// "- -" is a wff
 theorem t0() {
   do {
     w0;	w1;
