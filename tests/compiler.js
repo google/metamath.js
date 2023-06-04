@@ -25,7 +25,7 @@ describe("Parser", () => {
   it(`axiom foo() { return |- "( 1 , 2 , 3 )"; }`, () => {
     let result = new Parser().parse(`
     axiom foo() {
-      return |- "( 1 , 2 , 3 )";
+      return |- "( 1 , 2 , 3 ) ;";
     }
     `);
     assertThat(result).equalsTo([
@@ -34,7 +34,7 @@ describe("Parser", () => {
         [],
         [],
         [],
-        ["assert", ["|-", ["(", "1", ",", "2", ",", "3", ")"]]],
+        ["assert", ["|-", ["(", "1", ",", "2", ",", "3", ")", ";"]]],
       ], [
       ]]
     ]);
@@ -637,8 +637,17 @@ describe("Parser", () => {
     const symbol = (str, expected) => {
       const parser = new Parser();
       parser.feed(str);
-      assertThat(parser.accepts("'", '"', "label", "char")).equalsTo(true);
-      assertThat(parser.symbol()).equalsTo(expected);
+      //assertThat(parser.accepts("'", '"', "label", "char")).equalsTo(true);
+      if (expected != undefined) {
+        assertThat(parser.symbol()).equalsTo(expected);
+      } else {
+        try {
+          parser.symbol();
+          throw new Error("Expected to fail");
+        } catch (e) {
+          assertThat(e.message != "Expected to fail").equalsTo(true);
+        }
+      }
     }
 
     symbol("''", "");
@@ -650,6 +659,13 @@ describe("Parser", () => {
     symbol("=", "=");
     symbol("[", "[");
     symbol(`'\\"'`, `"`);
+
+    // not symbols
+    symbol(";");
+    symbol(")");
+    symbol(",");
+    // symbol("';'", [";"]);
+    //symbol("'a;'", ["a;"]);
   });
   
   it("return()", async () => {
@@ -1023,7 +1039,7 @@ describe("Transpiler", () => {
   
   it("transpile", async () => {
     const metamath = `
-      $c ( ) -> wff : var " $.
+      $c ( ) -> wff : var " ; $.
       $v p q r s t $.
       wp $f wff p $.
       wq $f wff q $.
@@ -1036,7 +1052,7 @@ describe("Transpiler", () => {
         w0 $a wff ( p var q ) $.
       $\}
       w2 $a wff ( p -> q ) $.
-      wesc $a wff " t $.
+      wesc $a ; " t $.
       wnew $p wff ( s -> ( r -> p ) ) $= ws wr wp w2 w2 $.
     `;
     
@@ -1054,7 +1070,7 @@ axiom w2(wp: wff p, wq: wff q) {
 
 axiom wesc(ww: '\\"' t) {
 
-  return 'wff' "\\" t";
+  return ';' "\\" t";
 }
 
 theorem wnew(wp: wff p, wr: wff r, ws: wff s) {

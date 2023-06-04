@@ -713,13 +713,9 @@ class Compiler {
           const f = vars
                 .filter(([, [, , name]]) => mandatory.has(name))
                 .map(([letty, [label, type, name]]) => label);
-          // console.log(assumes);
-          // throw new Error("hi");
           const e = [...JSON.parse(JSON.stringify(assumes))]
                 .map(([, assumption]) => [assumption.shift(), assumption.shift(), assumption])
                 .map(([label, type, symbols]) => label);
-          //console.log(f);
-          //throw new Error("hi");
           const compressor = new Compressor([...f, ...e], s);
           const compressed = compressor.compress();
           
@@ -797,7 +793,6 @@ class Transpiler {
 
     let args = f.map(([type, name, label]) => {
       if (!type.match(/[A-Za-z]+/)) {
-        // throw new Error(`Invalid type name [${type}]: just letter allowed.`);
         return `${label}: '${this.escape(type)}' ${name}`;
       }
     
