@@ -5,7 +5,7 @@ include "equequ1.mm";
 include "equsexvw.mm";
 include "bicomi.mm";
 
-theorem equvinv(vx: $setvar$ x, vy: $setvar$ y, vz: $setvar$ z) {
+theorem equvinv(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
 
   disjoint x z;
   disjoint y z;
@@ -39,5 +39,5 @@ theorem equvinv(vx: $setvar$ x, vy: $setvar$ y, vz: $setvar$ z) {
     bicomi;
   };
 
-  return $|-$ $( x = y <-> E. z ( z = x /\ z = y ) )$;
+  return '|-' "( x = y <-> E. z ( z = x /\\ z = y ) )";
 }

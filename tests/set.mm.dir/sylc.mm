@@ -1,10 +1,10 @@
 include "syl2im.mm";
 include "pm2.43i.mm";
 
-theorem sylc(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
-  assume sylc.1: $|- ( ph -> ps )$;
-  assume sylc.2: $|- ( ph -> ch )$;
-  assume sylc.3: $|- ( ps -> ( ch -> th ) )$;
+theorem sylc(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+  assume sylc.1: |- "( ph -> ps )";
+  assume sylc.2: |- "( ph -> ch )";
+  assume sylc.3: |- "( ps -> ( ch -> th ) )";
 
 
 
@@ -25,5 +25,5 @@ theorem sylc(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
     pm2.43i;
   };
 
-  return $|-$ $( ph -> th )$;
+  return '|-' "( ph -> th )";
 }

@@ -20,7 +20,7 @@ include "sb2.mm";
 include "jaoi.mm";
 include "impbii.mm";
 
-theorem dfsb2(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
+theorem dfsb2(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
 
 
 
@@ -109,5 +109,5 @@ theorem dfsb2(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
     impbii;
   };
 
-  return $|-$ $( [ y / x ] ph <-> ( ( x = y /\ ph ) \/ A. x ( x = y -> ph ) ) )$;
+  return '|-' "( [ y / x ] ph <-> ( ( x = y /\\ ph ) \\/ A. x ( x = y -> ph ) ) )";
 }

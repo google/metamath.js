@@ -3,9 +3,9 @@ include "bibi1d.mm";
 include "bibi2d.mm";
 include "bitrd.mm";
 
-theorem bibi12d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th, wta: $wff$ ta) {
-  assume imbi12d.1: $|- ( ph -> ( ps <-> ch ) )$;
-  assume imbi12d.2: $|- ( ph -> ( th <-> ta ) )$;
+theorem bibi12d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta: 'wff' ta) {
+  assume imbi12d.1: |- "( ph -> ( ps <-> ch ) )";
+  assume imbi12d.2: |- "( ph -> ( th <-> ta ) )";
 
 
 
@@ -37,5 +37,5 @@ theorem bibi12d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th, wta:
     bitrd;
   };
 
-  return $|-$ $( ph -> ( ( ps <-> th ) <-> ( ch <-> ta ) ) )$;
+  return '|-' "( ph -> ( ( ps <-> th ) <-> ( ch <-> ta ) ) )";
 }

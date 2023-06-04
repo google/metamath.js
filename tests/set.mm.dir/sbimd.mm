@@ -10,9 +10,9 @@ include "anim12d.mm";
 include "df-sb.mm";
 include "3imtr4g.mm";
 
-theorem sbimd(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x, vy: $setvar$ y) {
-  assume sbimd.1: $|- F/ x ph$;
-  assume sbimd.2: $|- ( ph -> ( ps -> ch ) )$;
+theorem sbimd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x, vy: 'setvar' y) {
+  assume sbimd.1: |- "F/ x ph";
+  assume sbimd.2: |- "( ph -> ( ps -> ch ) )";
 
 
 
@@ -90,5 +90,5 @@ theorem sbimd(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x, vy: $
     3imtr4g;
   };
 
-  return $|-$ $( ph -> ( [ y / x ] ps -> [ y / x ] ch ) )$;
+  return '|-' "( ph -> ( [ y / x ] ps -> [ y / x ] ch ) )";
 }

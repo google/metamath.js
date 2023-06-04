@@ -6,14 +6,14 @@ include "a1i.mm";
 include "nfeld.mm";
 include "mptru.mm";
 
-theorem nfel(vx: $setvar$ x, cA: $class$ A, cB: $class$ B) {
-  assume nfnfc.1: $|- F/_ x A$;
-  assume nfeq.2: $|- F/_ x B$;
+theorem nfel(vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
+  assume nfnfc.1: |- "F/_ x A";
+  assume nfeq.2: |- "F/_ x B";
 
 
 
-  let vz: $setvar$ z;
-  let vy: $setvar$ y;
+  let vz: setvar z;
+  let vy: setvar y;
 
   do {
     cA;
@@ -41,5 +41,5 @@ theorem nfel(vx: $setvar$ x, cA: $class$ A, cB: $class$ B) {
     mptru;
   };
 
-  return $|-$ $F/ x A e. B$;
+  return '|-' "F/ x A e. B";
 }

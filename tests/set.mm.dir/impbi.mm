@@ -6,7 +6,7 @@ include "simprim.mm";
 include "ax-mp.mm";
 include "expi.mm";
 
-theorem impbi(wph: $wff$ ph, wps: $wff$ ps) {
+theorem impbi(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -52,5 +52,5 @@ theorem impbi(wph: $wff$ ph, wps: $wff$ ps) {
     expi;
   };
 
-  return $|-$ $( ( ph -> ps ) -> ( ( ps -> ph ) -> ( ph <-> ps ) ) )$;
+  return '|-' "( ( ph -> ps ) -> ( ( ps -> ph ) -> ( ph <-> ps ) ) )";
 }

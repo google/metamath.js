@@ -2,5 +2,5 @@
 
 axiom caddc() {
 
-  return $class$ $+$;
+  return 'class' "+";
 }

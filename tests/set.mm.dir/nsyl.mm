@@ -1,9 +1,9 @@
 include "nsyl3.mm";
 include "con2i.mm";
 
-theorem nsyl(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume nsyl.1: $|- ( ph -> -. ps )$;
-  assume nsyl.2: $|- ( ch -> ps )$;
+theorem nsyl(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume nsyl.1: |- "( ph -> -. ps )";
+  assume nsyl.2: |- "( ch -> ps )";
 
 
 
@@ -21,5 +21,5 @@ theorem nsyl(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     con2i;
   };
 
-  return $|-$ $( ph -> -. ch )$;
+  return '|-' "( ph -> -. ch )";
 }

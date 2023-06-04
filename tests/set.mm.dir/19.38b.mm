@@ -9,7 +9,7 @@ include "nfrd.mm";
 include "syl9r.mm";
 include "impbid2.mm";
 
-theorem 19.38b(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
+theorem 19.38b(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
 
 
 
@@ -60,5 +60,5 @@ theorem 19.38b(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     impbid2;
   };
 
-  return $|-$ $( F/ x ps -> ( ( E. x ph -> A. x ps ) <-> A. x ( ph -> ps ) ) )$;
+  return '|-' "( F/ x ps -> ( ( E. x ph -> A. x ps ) <-> A. x ( ph -> ps ) ) )";
 }

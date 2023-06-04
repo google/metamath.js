@@ -13,7 +13,7 @@ include "3bitri.mm";
 include "dfsb3.mm";
 include "xchbinxr.mm";
 
-theorem sbn(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
+theorem sbn(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
 
 
 
@@ -85,5 +85,5 @@ theorem sbn(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
     xchbinxr;
   };
 
-  return $|-$ $( [ y / x ] -. ph <-> -. [ y / x ] ph )$;
+  return '|-' "( [ y / x ] -. ph <-> -. [ y / x ] ph )";
 }

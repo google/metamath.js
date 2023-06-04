@@ -1,6 +1,6 @@
 
 
-axiom cfv(cA: $class$ A, cF: $class$ F) {
+axiom cfv(cA: 'class' A, cF: 'class' F) {
 
-  return $class$ $( F ` A )$;
+  return 'class' "( F ` A )";
 }

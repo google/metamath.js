@@ -11,9 +11,9 @@ include "abbid.mm";
 include "df-rab.mm";
 include "3eqtr4g.mm";
 
-theorem rabeqf(wph: $wff$ ph, vx: $setvar$ x, cA: $class$ A, cB: $class$ B) {
-  assume rabeqf.1: $|- F/_ x A$;
-  assume rabeqf.2: $|- F/_ x B$;
+theorem rabeqf(wph: 'wff' ph, vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
+  assume rabeqf.1: |- "F/_ x A";
+  assume rabeqf.2: |- "F/_ x B";
 
 
 
@@ -83,5 +83,5 @@ theorem rabeqf(wph: $wff$ ph, vx: $setvar$ x, cA: $class$ A, cB: $class$ B) {
     3eqtr4g;
   };
 
-  return $|-$ $( A = B -> { x e. A | ph } = { x e. B | ph } )$;
+  return '|-' "( A = B -> { x e. A | ph } = { x e. B | ph } )";
 }

@@ -4,8 +4,8 @@ include "wa.mm";
 include "pm5.32.mm";
 include "sylib.mm";
 
-theorem pm5.32d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
-  assume pm5.32d.1: $|- ( ph -> ( ps -> ( ch <-> th ) ) )$;
+theorem pm5.32d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+  assume pm5.32d.1: |- "( ph -> ( ps -> ( ch <-> th ) ) )";
 
 
 
@@ -33,5 +33,5 @@ theorem pm5.32d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
     sylib;
   };
 
-  return $|-$ $( ph -> ( ( ps /\ ch ) <-> ( ps /\ th ) ) )$;
+  return '|-' "( ph -> ( ( ps /\\ ch ) <-> ( ps /\\ th ) ) )";
 }

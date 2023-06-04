@@ -3,8 +3,8 @@ include "bicom.mm";
 include "bibi2i.mm";
 include "3bitri.mm";
 
-theorem bibi1i(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume bibi2i.1: $|- ( ph <-> ps )$;
+theorem bibi1i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume bibi2i.1: |- "( ph <-> ps )";
 
 
 
@@ -37,5 +37,5 @@ theorem bibi1i(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     3bitri;
   };
 
-  return $|-$ $( ( ph <-> ch ) <-> ( ps <-> ch ) )$;
+  return '|-' "( ( ph <-> ch ) <-> ( ps <-> ch ) )";
 }

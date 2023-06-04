@@ -5,8 +5,8 @@ include "wi.mm";
 include "df-nf.mm";
 include "mpbir.mm";
 
-theorem nfi(wph: $wff$ ph, vx: $setvar$ x) {
-  assume nfi.1: $|- ( E. x ph -> A. x ph )$;
+theorem nfi(wph: 'wff' ph, vx: 'setvar' x) {
+  assume nfi.1: |- "( E. x ph -> A. x ph )";
 
 
 
@@ -30,5 +30,5 @@ theorem nfi(wph: $wff$ ph, vx: $setvar$ x) {
     mpbir;
   };
 
-  return $|-$ $F/ x ph$;
+  return '|-' "F/ x ph";
 }

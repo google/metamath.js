@@ -4,7 +4,7 @@ include "preq1.mm";
 include "preq2.mm";
 include "sylan9eq.mm";
 
-theorem preq12(cA: $class$ A, cB: $class$ B, cC: $class$ C, cD: $class$ D) {
+theorem preq12(cA: 'class' A, cB: 'class' B, cC: 'class' C, cD: 'class' D) {
 
 
 
@@ -37,5 +37,5 @@ theorem preq12(cA: $class$ A, cB: $class$ B, cC: $class$ C, cD: $class$ D) {
     sylan9eq;
   };
 
-  return $|-$ $( ( A = C /\ B = D ) -> { A , B } = { C , D } )$;
+  return '|-' "( ( A = C /\\ B = D ) -> { A , B } = { C , D } )";
 }

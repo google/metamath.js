@@ -7,11 +7,11 @@ include "abbidv.mm";
 include "df-sn.mm";
 include "3eqtr4g.mm";
 
-theorem sneq(cA: $class$ A, cB: $class$ B) {
+theorem sneq(cA: 'class' A, cB: 'class' B) {
 
 
 
-  let vx: $setvar$ x;
+  let vx: setvar x;
 
   do {
     cA;
@@ -54,5 +54,5 @@ theorem sneq(cA: $class$ A, cB: $class$ B) {
     3eqtr4g;
   };
 
-  return $|-$ $( A = B -> { A } = { B } )$;
+  return '|-' "( A = B -> { A } = { B } )";
 }

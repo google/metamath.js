@@ -2,7 +2,7 @@ include "wb.mm";
 include "biid.mm";
 include "a1i.mm";
 
-theorem biidd(wph: $wff$ ph, wps: $wff$ ps) {
+theorem biidd(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -18,5 +18,5 @@ theorem biidd(wph: $wff$ ph, wps: $wff$ ps) {
     a1i;
   };
 
-  return $|-$ $( ph -> ( ps <-> ps ) )$;
+  return '|-' "( ph -> ( ps <-> ps ) )";
 }

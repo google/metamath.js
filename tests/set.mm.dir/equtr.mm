@@ -3,7 +3,7 @@ include "wi.mm";
 include "ax7.mm";
 include "equcoms.mm";
 
-theorem equtr(vx: $setvar$ x, vy: $setvar$ y, vz: $setvar$ z) {
+theorem equtr(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
 
 
 
@@ -26,5 +26,5 @@ theorem equtr(vx: $setvar$ x, vy: $setvar$ y, vz: $setvar$ z) {
     equcoms;
   };
 
-  return $|-$ $( x = y -> ( y = z -> x = z ) )$;
+  return '|-' "( x = y -> ( y = z -> x = z ) )";
 }

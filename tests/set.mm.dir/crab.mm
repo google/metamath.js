@@ -1,6 +1,6 @@
 
 
-axiom crab(wph: $wff$ ph, vx: $setvar$ x, cA: $class$ A) {
+axiom crab(wph: 'wff' ph, vx: 'setvar' x, cA: 'class' A) {
 
-  return $class$ ${ x e. A | ph }$;
+  return 'class' "{ x e. A | ph }";
 }

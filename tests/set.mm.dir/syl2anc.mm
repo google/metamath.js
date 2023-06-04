@@ -1,10 +1,10 @@
 include "ex.mm";
 include "sylc.mm";
 
-theorem syl2anc(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
-  assume syl2anc.1: $|- ( ph -> ps )$;
-  assume syl2anc.2: $|- ( ph -> ch )$;
-  assume syl2anc.3: $|- ( ( ps /\ ch ) -> th )$;
+theorem syl2anc(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+  assume syl2anc.1: |- "( ph -> ps )";
+  assume syl2anc.2: |- "( ph -> ch )";
+  assume syl2anc.3: |- "( ( ps /\\ ch ) -> th )";
 
 
 
@@ -25,5 +25,5 @@ theorem syl2anc(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
     sylc;
   };
 
-  return $|-$ $( ph -> th )$;
+  return '|-' "( ph -> th )";
 }

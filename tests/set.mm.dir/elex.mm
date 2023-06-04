@@ -9,11 +9,11 @@ include "df-clel.mm";
 include "isset.mm";
 include "3imtr4i.mm";
 
-theorem elex(cA: $class$ A, cB: $class$ B) {
+theorem elex(cA: 'class' A, cB: 'class' B) {
 
 
 
-  let vx: $setvar$ x;
+  let vx: setvar x;
 
   do {
     vx;
@@ -52,5 +52,5 @@ theorem elex(cA: $class$ A, cB: $class$ B) {
     3imtr4i;
   };
 
-  return $|-$ $( A e. B -> A e. _V )$;
+  return '|-' "( A e. B -> A e. _V )";
 }

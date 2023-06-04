@@ -3,8 +3,8 @@ include "wi.mm";
 include "biimp.mm";
 include "ax-mp.mm";
 
-theorem biimpi(wph: $wff$ ph, wps: $wff$ ps) {
-  assume biimpi.1: $|- ( ph <-> ps )$;
+theorem biimpi(wph: 'wff' ph, wps: 'wff' ps) {
+  assume biimpi.1: |- "( ph <-> ps )";
 
 
 
@@ -24,5 +24,5 @@ theorem biimpi(wph: $wff$ ph, wps: $wff$ ps) {
     ax-mp;
   };
 
-  return $|-$ $( ph -> ps )$;
+  return '|-' "( ph -> ps )";
 }

@@ -15,7 +15,7 @@ include "sb2.mm";
 include "syl6.mm";
 include "pm2.61i.mm";
 
-theorem sbi1(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x, vy: $setvar$ y) {
+theorem sbi1(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
 
 
 
@@ -139,5 +139,5 @@ theorem sbi1(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x, vy: $setvar$ y) {
     pm2.61i;
   };
 
-  return $|-$ $( [ y / x ] ( ph -> ps ) -> ( [ y / x ] ph -> [ y / x ] ps ) )$;
+  return '|-' "( [ y / x ] ( ph -> ps ) -> ( [ y / x ] ph -> [ y / x ] ps ) )";
 }

@@ -5,8 +5,8 @@ include "wi.mm";
 include "df-nf.mm";
 include "sylib.mm";
 
-theorem nfrd(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
-  assume nfrd.1: $|- ( ph -> F/ x ps )$;
+theorem nfrd(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+  assume nfrd.1: |- "( ph -> F/ x ps )";
 
 
 
@@ -31,5 +31,5 @@ theorem nfrd(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     sylib;
   };
 
-  return $|-$ $( ph -> ( E. x ps -> A. x ps ) )$;
+  return '|-' "( ph -> ( E. x ps -> A. x ps ) )";
 }

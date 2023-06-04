@@ -12,8 +12,8 @@ include "bibi12d.mm";
 include "abid.mm";
 include "vtoclg1f.mm";
 
-theorem elabg(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x, cA: $class$ A, cV: $class$ V) {
-  assume elabg.1: $|- ( x = A -> ( ph <-> ps ) )$;
+theorem elabg(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, cA: 'class' A, cV: 'class' V) {
+  assume elabg.1: |- "( x = A -> ( ph <-> ps ) )";
 
   disjoint ps x;
   disjoint A x;
@@ -74,5 +74,5 @@ theorem elabg(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x, cA: $class$ A, cV: $
     vtoclg1f;
   };
 
-  return $|-$ $( A e. V -> ( A e. { x | ph } <-> ps ) )$;
+  return '|-' "( A e. V -> ( A e. { x | ph } <-> ps ) )";
 }

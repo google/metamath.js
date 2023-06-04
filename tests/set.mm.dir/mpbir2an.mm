@@ -1,10 +1,10 @@
 include "mpbiran.mm";
 include "mpbir.mm";
 
-theorem mpbir2an(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume mpbir2an.1: $|- ps$;
-  assume mpbir2an.2: $|- ch$;
-  assume mpbiran2an.1: $|- ( ph <-> ( ps /\ ch ) )$;
+theorem mpbir2an(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume mpbir2an.1: |- "ps";
+  assume mpbir2an.2: |- "ch";
+  assume mpbiran2an.1: |- "( ph <-> ( ps /\\ ch ) )";
 
 
 
@@ -23,5 +23,5 @@ theorem mpbir2an(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     mpbir;
   };
 
-  return $|-$ $ph$;
+  return '|-' "ph";
 }

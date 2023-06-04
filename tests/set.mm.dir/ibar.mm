@@ -3,7 +3,7 @@ include "pm3.2.mm";
 include "simpr.mm";
 include "impbid1.mm";
 
-theorem ibar(wph: $wff$ ph, wps: $wff$ ps) {
+theorem ibar(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -24,5 +24,5 @@ theorem ibar(wph: $wff$ ph, wps: $wff$ ps) {
     impbid1;
   };
 
-  return $|-$ $( ph -> ( ps <-> ( ph /\ ps ) ) )$;
+  return '|-' "( ph -> ( ps <-> ( ph /\\ ps ) ) )";
 }

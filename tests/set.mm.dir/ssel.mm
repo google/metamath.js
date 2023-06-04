@@ -14,11 +14,11 @@ include "eximdv.mm";
 include "df-clel.mm";
 include "3imtr4g.mm";
 
-theorem ssel(cA: $class$ A, cB: $class$ B, cC: $class$ C) {
+theorem ssel(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
 
 
 
-  let vx: $setvar$ x;
+  let vx: setvar x;
 
   do {
     cA;
@@ -91,5 +91,5 @@ theorem ssel(cA: $class$ A, cB: $class$ B, cC: $class$ C) {
     3imtr4g;
   };
 
-  return $|-$ $( A C_ B -> ( C e. A -> C e. B ) )$;
+  return '|-' "( A C_ B -> ( C e. A -> C e. B ) )";
 }

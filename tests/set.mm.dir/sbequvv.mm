@@ -5,7 +5,7 @@ include "wi.mm";
 include "equcoms.mm";
 include "impbid.mm";
 
-theorem sbequvv(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y, vz: $setvar$ z) {
+theorem sbequvv(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
 
   disjoint x z;
   disjoint y z;
@@ -45,5 +45,5 @@ theorem sbequvv(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y, vz: $setvar$ z) {
     impbid;
   };
 
-  return $|-$ $( x = y -> ( [ x / z ] ph <-> [ y / z ] ph ) )$;
+  return '|-' "( x = y -> ( [ x / z ] ph <-> [ y / z ] ph ) )";
 }

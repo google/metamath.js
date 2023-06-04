@@ -1,6 +1,6 @@
 
 
-axiom df-v(vx: $setvar$ x) {
+axiom df-v(vx: 'setvar' x) {
 
-  return $|-$ $_V = { x | x = x }$;
+  return '|-' "_V = { x | x = x }";
 }

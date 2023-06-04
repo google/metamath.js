@@ -3,7 +3,7 @@ include "id.mm";
 include "exgen.mm";
 include "19.35i.mm";
 
-theorem 19.2(wph: $wff$ ph, vx: $setvar$ x) {
+theorem 19.2(wph: 'wff' ph, vx: 'setvar' x) {
 
 
 
@@ -23,5 +23,5 @@ theorem 19.2(wph: $wff$ ph, vx: $setvar$ x) {
     19.35i;
   };
 
-  return $|-$ $( A. x ph -> E. x ph )$;
+  return '|-' "( A. x ph -> E. x ph )";
 }

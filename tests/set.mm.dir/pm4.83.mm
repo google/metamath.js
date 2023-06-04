@@ -7,7 +7,7 @@ include "a1bi.mm";
 include "jaob.mm";
 include "bitr2i.mm";
 
-theorem pm4.83(wph: $wff$ ph, wps: $wff$ ps) {
+theorem pm4.83(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -42,5 +42,5 @@ theorem pm4.83(wph: $wff$ ph, wps: $wff$ ps) {
     bitr2i;
   };
 
-  return $|-$ $( ( ( ph -> ps ) /\ ( -. ph -> ps ) ) <-> ps )$;
+  return '|-' "( ( ( ph -> ps ) /\\ ( -. ph -> ps ) ) <-> ps )";
 }

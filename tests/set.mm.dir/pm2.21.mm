@@ -2,7 +2,7 @@ include "wn.mm";
 include "id.mm";
 include "pm2.21d.mm";
 
-theorem pm2.21(wph: $wff$ ph, wps: $wff$ ps) {
+theorem pm2.21(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -19,5 +19,5 @@ theorem pm2.21(wph: $wff$ ph, wps: $wff$ ps) {
     pm2.21d;
   };
 
-  return $|-$ $( -. ph -> ( ph -> ps ) )$;
+  return '|-' "( -. ph -> ( ph -> ps ) )";
 }

@@ -1,7 +1,7 @@
 include "id.mm";
 include "impbii.mm";
 
-theorem biid(wph: $wff$ ph) {
+theorem biid(wph: 'wff' ph) {
 
 
 
@@ -17,5 +17,5 @@ theorem biid(wph: $wff$ ph) {
     impbii;
   };
 
-  return $|-$ $( ph <-> ph )$;
+  return '|-' "( ph <-> ph )";
 }

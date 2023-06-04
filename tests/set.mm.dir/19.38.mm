@@ -9,7 +9,7 @@ include "sylbir.mm";
 include "ala1.mm";
 include "ja.mm";
 
-theorem 19.38(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
+theorem 19.38(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
 
 
 
@@ -56,5 +56,5 @@ theorem 19.38(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     ja;
   };
 
-  return $|-$ $( ( E. x ph -> A. x ps ) -> A. x ( ph -> ps ) )$;
+  return '|-' "( ( E. x ph -> A. x ps ) -> A. x ( ph -> ps ) )";
 }

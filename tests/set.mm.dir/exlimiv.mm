@@ -3,8 +3,8 @@ include "eximi.mm";
 include "ax5e.mm";
 include "syl.mm";
 
-theorem exlimiv(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
-  assume exlimiv.1: $|- ( ph -> ps )$;
+theorem exlimiv(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+  assume exlimiv.1: |- "( ph -> ps )";
 
   disjoint ps x;
 
@@ -29,5 +29,5 @@ theorem exlimiv(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     syl;
   };
 
-  return $|-$ $( E. x ph -> ps )$;
+  return '|-' "( E. x ph -> ps )";
 }

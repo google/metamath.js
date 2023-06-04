@@ -8,7 +8,7 @@ include "jca.mm";
 include "pm3.44.mm";
 include "impbii.mm";
 
-theorem jaob(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
+theorem jaob(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
 
 
 
@@ -53,5 +53,5 @@ theorem jaob(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     impbii;
   };
 
-  return $|-$ $( ( ( ph \/ ch ) -> ps ) <-> ( ( ph -> ps ) /\ ( ch -> ps ) ) )$;
+  return '|-' "( ( ( ph \\/ ch ) -> ps ) <-> ( ( ph -> ps ) /\\ ( ch -> ps ) ) )";
 }

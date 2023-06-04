@@ -5,8 +5,8 @@ include "wnf.mm";
 include "nfcr.mm";
 include "ax-mp.mm";
 
-theorem nfcriv(vx: $setvar$ x, vy: $setvar$ y, cA: $class$ A) {
-  assume nfcriv.1: $|- F/_ x A$;
+theorem nfcriv(vx: 'setvar' x, vy: 'setvar' y, cA: 'class' A) {
+  assume nfcriv.1: |- "F/_ x A";
 
   disjoint x y;
   disjoint A y;
@@ -31,5 +31,5 @@ theorem nfcriv(vx: $setvar$ x, vy: $setvar$ y, cA: $class$ A) {
     ax-mp;
   };
 
-  return $|-$ $F/ x y e. A$;
+  return '|-' "F/ x y e. A";
 }

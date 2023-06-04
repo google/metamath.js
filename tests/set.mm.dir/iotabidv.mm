@@ -6,8 +6,8 @@ include "alrimiv.mm";
 include "iotabi.mm";
 include "syl.mm";
 
-theorem iotabidv(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
-  assume iotabidv.1: $|- ( ph -> ( ps <-> ch ) )$;
+theorem iotabidv(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
+  assume iotabidv.1: |- "( ph -> ( ps <-> ch ) )";
 
   disjoint ph x;
 
@@ -40,5 +40,5 @@ theorem iotabidv(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
     syl;
   };
 
-  return $|-$ $( ph -> ( iota x ps ) = ( iota x ch ) )$;
+  return '|-' "( ph -> ( iota x ps ) = ( iota x ch ) )";
 }

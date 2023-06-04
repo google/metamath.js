@@ -1,9 +1,9 @@
 include "pm2.21d.mm";
 include "impbid.mm";
 
-theorem 2falsed(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume 2falsed.1: $|- ( ph -> -. ps )$;
-  assume 2falsed.2: $|- ( ph -> -. ch )$;
+theorem 2falsed(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume 2falsed.1: |- "( ph -> -. ps )";
+  assume 2falsed.2: |- "( ph -> -. ch )";
 
 
 
@@ -26,5 +26,5 @@ theorem 2falsed(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     impbid;
   };
 
-  return $|-$ $( ph -> ( ps <-> ch ) )$;
+  return '|-' "( ph -> ( ps <-> ch ) )";
 }

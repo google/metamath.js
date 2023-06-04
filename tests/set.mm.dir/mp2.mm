@@ -1,10 +1,10 @@
 include "wi.mm";
 include "ax-mp.mm";
 
-theorem mp2(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume mp2.1: $|- ph$;
-  assume mp2.2: $|- ps$;
-  assume mp2.3: $|- ( ph -> ( ps -> ch ) )$;
+theorem mp2(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume mp2.1: |- "ph";
+  assume mp2.2: |- "ps";
+  assume mp2.3: |- "( ph -> ( ps -> ch ) )";
 
 
 
@@ -24,5 +24,5 @@ theorem mp2(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     ax-mp;
   };
 
-  return $|-$ $ch$;
+  return '|-' "ch";
 }

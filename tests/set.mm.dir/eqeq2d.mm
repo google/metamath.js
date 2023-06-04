@@ -3,8 +3,8 @@ include "eqeq1d.mm";
 include "eqcom.mm";
 include "3bitr4g.mm";
 
-theorem eqeq2d(wph: $wff$ ph, cA: $class$ A, cB: $class$ B, cC: $class$ C) {
-  assume eqeq2d.1: $|- ( ph -> A = B )$;
+theorem eqeq2d(wph: 'wff' ph, cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+  assume eqeq2d.1: |- "( ph -> A = B )";
 
 
 
@@ -39,5 +39,5 @@ theorem eqeq2d(wph: $wff$ ph, cA: $class$ A, cB: $class$ B, cC: $class$ C) {
     3bitr4g;
   };
 
-  return $|-$ $( ph -> ( C = A <-> C = B ) )$;
+  return '|-' "( ph -> ( C = A <-> C = B ) )";
 }

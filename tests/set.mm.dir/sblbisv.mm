@@ -4,8 +4,8 @@ include "sbbiv.mm";
 include "bibi2i.mm";
 include "bitri.mm";
 
-theorem sblbisv(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x, vy: $setvar$ y) {
-  assume sblbisv.1: $|- ( [ y / x ] ph <-> ps )$;
+theorem sblbisv(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x, vy: 'setvar' y) {
+  assume sblbisv.1: |- "( [ y / x ] ph <-> ps )";
 
   disjoint x y;
 
@@ -45,5 +45,5 @@ theorem sblbisv(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x, vy:
     bitri;
   };
 
-  return $|-$ $( [ y / x ] ( ch <-> ph ) <-> ( [ y / x ] ch <-> ps ) )$;
+  return '|-' "( [ y / x ] ( ch <-> ph ) <-> ( [ y / x ] ch <-> ps ) )";
 }

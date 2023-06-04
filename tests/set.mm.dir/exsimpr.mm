@@ -2,7 +2,7 @@ include "wa.mm";
 include "simpr.mm";
 include "eximi.mm";
 
-theorem exsimpr(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
+theorem exsimpr(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
 
 
 
@@ -20,5 +20,5 @@ theorem exsimpr(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     eximi;
   };
 
-  return $|-$ $( E. x ( ph /\ ps ) -> E. x ps )$;
+  return '|-' "( E. x ( ph /\\ ps ) -> E. x ps )";
 }

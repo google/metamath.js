@@ -6,10 +6,10 @@ include "wceq.mm";
 include "addass.mm";
 include "mp3an.mm";
 
-theorem addassi(cA: $class$ A, cB: $class$ B, cC: $class$ C) {
-  assume axi.1: $|- A e. CC$;
-  assume axi.2: $|- B e. CC$;
-  assume axi.3: $|- C e. CC$;
+theorem addassi(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+  assume axi.1: |- "A e. CC";
+  assume axi.2: |- "B e. CC";
+  assume axi.3: |- "C e. CC";
 
 
 
@@ -50,5 +50,5 @@ theorem addassi(cA: $class$ A, cB: $class$ B, cC: $class$ C) {
     mp3an;
   };
 
-  return $|-$ $( ( A + B ) + C ) = ( A + ( B + C ) )$;
+  return '|-' "( ( A + B ) + C ) = ( A + ( B + C ) )";
 }

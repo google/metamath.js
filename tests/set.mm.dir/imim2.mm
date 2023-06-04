@@ -2,7 +2,7 @@ include "wi.mm";
 include "id.mm";
 include "imim2d.mm";
 
-theorem imim2(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
+theorem imim2(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
 
 
 
@@ -21,5 +21,5 @@ theorem imim2(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     imim2d;
   };
 
-  return $|-$ $( ( ph -> ps ) -> ( ( ch -> ph ) -> ( ch -> ps ) ) )$;
+  return '|-' "( ( ph -> ps ) -> ( ( ch -> ph ) -> ( ch -> ps ) ) )";
 }

@@ -1,8 +1,8 @@
 include "a1d.mm";
 include "imp.mm";
 
-theorem adantr(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume adantr.1: $|- ( ph -> ps )$;
+theorem adantr(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume adantr.1: |- "( ph -> ps )";
 
 
 
@@ -20,5 +20,5 @@ theorem adantr(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     imp;
   };
 
-  return $|-$ $( ( ph /\ ch ) -> ps )$;
+  return '|-' "( ( ph /\\ ch ) -> ps )";
 }

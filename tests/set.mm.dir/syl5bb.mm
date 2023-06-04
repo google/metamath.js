@@ -2,9 +2,9 @@ include "wb.mm";
 include "a1i.mm";
 include "bitrd.mm";
 
-theorem syl5bb(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
-  assume syl5bb.1: $|- ( ph <-> ps )$;
-  assume syl5bb.2: $|- ( ch -> ( ps <-> th ) )$;
+theorem syl5bb(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+  assume syl5bb.1: |- "( ph <-> ps )";
+  assume syl5bb.2: |- "( ch -> ( ps <-> th ) )";
 
 
 
@@ -25,5 +25,5 @@ theorem syl5bb(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
     bitrd;
   };
 
-  return $|-$ $( ch -> ( ph <-> th ) )$;
+  return '|-' "( ch -> ( ph <-> th ) )";
 }

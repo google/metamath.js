@@ -3,7 +3,7 @@ include "olc.mm";
 include "orc.mm";
 include "jaoi.mm";
 
-theorem pm1.4(wph: $wff$ ph, wps: $wff$ ps) {
+theorem pm1.4(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -24,5 +24,5 @@ theorem pm1.4(wph: $wff$ ph, wps: $wff$ ps) {
     jaoi;
   };
 
-  return $|-$ $( ( ph \/ ps ) -> ( ps \/ ph ) )$;
+  return '|-' "( ( ph \\/ ps ) -> ( ps \\/ ph ) )";
 }

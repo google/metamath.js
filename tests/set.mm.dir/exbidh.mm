@@ -4,9 +4,9 @@ include "wb.mm";
 include "alexbii.mm";
 include "syl.mm";
 
-theorem exbidh(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
-  assume exbidh.1: $|- ( ph -> A. x ph )$;
-  assume exbidh.2: $|- ( ph -> ( ps <-> ch ) )$;
+theorem exbidh(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
+  assume exbidh.1: |- "( ph -> A. x ph )";
+  assume exbidh.2: |- "( ph -> ( ps <-> ch ) )";
 
 
 
@@ -34,5 +34,5 @@ theorem exbidh(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
     syl;
   };
 
-  return $|-$ $( ph -> ( E. x ps <-> E. x ch ) )$;
+  return '|-' "( ph -> ( E. x ps <-> E. x ch ) )";
 }

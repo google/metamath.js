@@ -4,7 +4,7 @@ include "exsimpl.mm";
 include "exsimpr.mm";
 include "jca.mm";
 
-theorem 19.40(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
+theorem 19.40(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
 
 
 
@@ -33,5 +33,5 @@ theorem 19.40(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     jca;
   };
 
-  return $|-$ $( E. x ( ph /\ ps ) -> ( E. x ph /\ E. x ps ) )$;
+  return '|-' "( E. x ( ph /\\ ps ) -> ( E. x ph /\\ E. x ps ) )";
 }

@@ -3,8 +3,8 @@ include "orcom.mm";
 include "orbi2i.mm";
 include "3bitri.mm";
 
-theorem orbi1i(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume orbi2i.1: $|- ( ph <-> ps )$;
+theorem orbi1i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume orbi2i.1: |- "( ph <-> ps )";
 
 
 
@@ -37,5 +37,5 @@ theorem orbi1i(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     3bitri;
   };
 
-  return $|-$ $( ( ph \/ ch ) <-> ( ps \/ ch ) )$;
+  return '|-' "( ( ph \\/ ch ) <-> ( ps \\/ ch ) )";
 }

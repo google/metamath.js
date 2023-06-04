@@ -2,8 +2,8 @@ include "wi.mm";
 include "ax-1.mm";
 include "ax-mp.mm";
 
-theorem a1i(wph: $wff$ ph, wps: $wff$ ps) {
-  assume a1i.1: $|- ph$;
+theorem a1i(wph: 'wff' ph, wps: 'wff' ps) {
+  assume a1i.1: |- "ph";
 
 
 
@@ -21,5 +21,5 @@ theorem a1i(wph: $wff$ ph, wps: $wff$ ps) {
     ax-mp;
   };
 
-  return $|-$ $( ps -> ph )$;
+  return '|-' "( ps -> ph )";
 }

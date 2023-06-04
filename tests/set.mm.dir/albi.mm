@@ -5,7 +5,7 @@ include "al2imi.mm";
 include "biimpr.mm";
 include "impbid.mm";
 
-theorem albi(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
+theorem albi(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
 
 
 
@@ -43,5 +43,5 @@ theorem albi(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     impbid;
   };
 
-  return $|-$ $( A. x ( ph <-> ps ) -> ( A. x ph <-> A. x ps ) )$;
+  return '|-' "( A. x ( ph <-> ps ) -> ( A. x ph <-> A. x ps ) )";
 }

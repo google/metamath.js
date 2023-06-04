@@ -4,8 +4,8 @@ include "wi.mm";
 include "nf5r.mm";
 include "syl.mm";
 
-theorem nf5rd(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
-  assume nf5rd.1: $|- ( ph -> F/ x ps )$;
+theorem nf5rd(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+  assume nf5rd.1: |- "( ph -> F/ x ps )";
 
 
 
@@ -28,5 +28,5 @@ theorem nf5rd(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     syl;
   };
 
-  return $|-$ $( ph -> ( ps -> A. x ps ) )$;
+  return '|-' "( ph -> ( ps -> A. x ps ) )";
 }

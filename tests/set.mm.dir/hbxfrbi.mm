@@ -2,9 +2,9 @@ include "wal.mm";
 include "albii.mm";
 include "3imtr4i.mm";
 
-theorem hbxfrbi(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
-  assume hbxfrbi.1: $|- ( ph <-> ps )$;
-  assume hbxfrbi.2: $|- ( ps -> A. x ps )$;
+theorem hbxfrbi(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+  assume hbxfrbi.1: |- "( ph <-> ps )";
+  assume hbxfrbi.2: |- "( ps -> A. x ps )";
 
 
 
@@ -29,5 +29,5 @@ theorem hbxfrbi(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     3imtr4i;
   };
 
-  return $|-$ $( ph -> A. x ph )$;
+  return '|-' "( ph -> A. x ph )";
 }

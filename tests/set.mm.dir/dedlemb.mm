@@ -11,7 +11,7 @@ include "a1i.mm";
 include "jaod.mm";
 include "impbid.mm";
 
-theorem dedlemb(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
+theorem dedlemb(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
 
 
 
@@ -63,5 +63,5 @@ theorem dedlemb(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     impbid;
   };
 
-  return $|-$ $( -. ph -> ( ch <-> ( ( ps /\ ph ) \/ ( ch /\ -. ph ) ) ) )$;
+  return '|-' "( -. ph -> ( ch <-> ( ( ps /\\ ph ) \\/ ( ch /\\ -. ph ) ) ) )";
 }

@@ -1,7 +1,7 @@
 include "pm2.24.mm";
 include "orrd.mm";
 
-theorem orc(wph: $wff$ ph, wps: $wff$ ps) {
+theorem orc(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -17,5 +17,5 @@ theorem orc(wph: $wff$ ph, wps: $wff$ ps) {
     orrd;
   };
 
-  return $|-$ $( ph -> ( ph \/ ps ) )$;
+  return '|-' "( ph -> ( ph \\/ ps ) )";
 }

@@ -2,7 +2,7 @@ include "wb.mm";
 include "id.mm";
 include "alexbii.mm";
 
-theorem exbi(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
+theorem exbi(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
 
 
 
@@ -21,5 +21,5 @@ theorem exbi(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     alexbii;
   };
 
-  return $|-$ $( A. x ( ph <-> ps ) -> ( E. x ph <-> E. x ps ) )$;
+  return '|-' "( A. x ( ph <-> ps ) -> ( E. x ph <-> E. x ps ) )";
 }

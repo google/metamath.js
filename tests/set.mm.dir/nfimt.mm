@@ -4,7 +4,7 @@ include "simpl.mm";
 include "simpr.mm";
 include "nfimd.mm";
 
-theorem nfimt(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
+theorem nfimt(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
 
 
 
@@ -32,5 +32,5 @@ theorem nfimt(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     nfimd;
   };
 
-  return $|-$ $( ( F/ x ph /\ F/ x ps ) -> F/ x ( ph -> ps ) )$;
+  return '|-' "( ( F/ x ph /\\ F/ x ps ) -> F/ x ( ph -> ps ) )";
 }

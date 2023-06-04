@@ -6,7 +6,7 @@ include "hbe1a.mm";
 include "syl6.mm";
 include "nfd.mm";
 
-theorem nf5-1(wph: $wff$ ph, vx: $setvar$ x) {
+theorem nf5-1(wph: 'wff' ph, vx: 'setvar' x) {
 
 
 
@@ -43,5 +43,5 @@ theorem nf5-1(wph: $wff$ ph, vx: $setvar$ x) {
     nfd;
   };
 
-  return $|-$ $( A. x ( ph -> A. x ph ) -> F/ x ph )$;
+  return '|-' "( A. x ( ph -> A. x ph ) -> F/ x ph )";
 }

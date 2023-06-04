@@ -6,7 +6,7 @@ include "sb6.mm";
 include "nfa1.mm";
 include "nfxfr.mm";
 
-theorem nfs1v(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
+theorem nfs1v(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
 
   disjoint x y;
 
@@ -36,5 +36,5 @@ theorem nfs1v(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
     nfxfr;
   };
 
-  return $|-$ $F/ x [ y / x ] ph$;
+  return '|-' "F/ x [ y / x ] ph";
 }

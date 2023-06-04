@@ -13,14 +13,14 @@ include "uneq12i.mm";
 include "df-if.mm";
 include "3eqtr4ri.mm";
 
-theorem dfif6(wph: $wff$ ph, vx: $setvar$ x, cA: $class$ A, cB: $class$ B) {
+theorem dfif6(wph: 'wff' ph, vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
 
   disjoint ph x;
   disjoint A x;
   disjoint B x;
   disjoint C x;
 
-  let cC: $class$ C;
+  let cC: class C;
 
   do {
     vx;
@@ -91,5 +91,5 @@ theorem dfif6(wph: $wff$ ph, vx: $setvar$ x, cA: $class$ A, cB: $class$ B) {
     3eqtr4ri;
   };
 
-  return $|-$ $if ( ph , A , B ) = ( { x e. A | ph } u. { x e. B | -. ph } )$;
+  return '|-' "if ( ph , A , B ) = ( { x e. A | ph } u. { x e. B | -. ph } )";
 }

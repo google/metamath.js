@@ -4,7 +4,7 @@ include "sbequ1.mm";
 include "sbequ2.mm";
 include "impbid.mm";
 
-theorem sbequ12(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
+theorem sbequ12(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
 
 
 
@@ -30,5 +30,5 @@ theorem sbequ12(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
     impbid;
   };
 
-  return $|-$ $( x = y -> ( ph <-> [ y / x ] ph ) )$;
+  return '|-' "( x = y -> ( ph <-> [ y / x ] ph ) )";
 }

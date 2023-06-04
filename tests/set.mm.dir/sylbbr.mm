@@ -1,9 +1,9 @@
 include "biimpri.mm";
 include "sylibr.mm";
 
-theorem sylbbr(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume sylbbr.1: $|- ( ph <-> ps )$;
-  assume sylbbr.2: $|- ( ps <-> ch )$;
+theorem sylbbr(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume sylbbr.1: |- "( ph <-> ps )";
+  assume sylbbr.2: |- "( ps <-> ch )";
 
 
 
@@ -21,5 +21,5 @@ theorem sylbbr(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     sylibr;
   };
 
-  return $|-$ $( ch -> ph )$;
+  return '|-' "( ch -> ph )";
 }

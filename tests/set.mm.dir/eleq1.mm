@@ -2,7 +2,7 @@ include "wceq.mm";
 include "id.mm";
 include "eleq1d.mm";
 
-theorem eleq1(cA: $class$ A, cB: $class$ B, cC: $class$ C) {
+theorem eleq1(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
 
 
 
@@ -21,5 +21,5 @@ theorem eleq1(cA: $class$ A, cB: $class$ B, cC: $class$ C) {
     eleq1d;
   };
 
-  return $|-$ $( A = B -> ( A e. C <-> B e. C ) )$;
+  return '|-' "( A = B -> ( A e. C <-> B e. C ) )";
 }

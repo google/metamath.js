@@ -11,7 +11,7 @@ include "df-an.mm";
 include "sbbii.mm";
 include "3bitr4i.mm";
 
-theorem sbanv(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x, vy: $setvar$ y) {
+theorem sbanv(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
 
   disjoint x y;
 
@@ -104,5 +104,5 @@ theorem sbanv(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x, vy: $setvar$ y) {
     3bitr4i;
   };
 
-  return $|-$ $( [ y / x ] ( ph /\ ps ) <-> ( [ y / x ] ph /\ [ y / x ] ps ) )$;
+  return '|-' "( [ y / x ] ( ph /\\ ps ) <-> ( [ y / x ] ph /\\ [ y / x ] ps ) )";
 }

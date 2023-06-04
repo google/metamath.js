@@ -13,11 +13,11 @@ include "syl6com.mm";
 include "exlimiiv.mm";
 include "pm2.61i.mm";
 
-theorem ax6e(vx: $setvar$ x, vy: $setvar$ y) {
+theorem ax6e(vx: 'setvar' x, vy: 'setvar' y) {
 
 
 
-  let vw: $setvar$ w;
+  let vw: setvar w;
 
   do {
     vx;
@@ -78,5 +78,5 @@ theorem ax6e(vx: $setvar$ x, vy: $setvar$ y) {
     pm2.61i;
   };
 
-  return $|-$ $E. x x = y$;
+  return '|-' "E. x x = y";
 }

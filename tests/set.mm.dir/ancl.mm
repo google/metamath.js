@@ -2,7 +2,7 @@ include "wa.mm";
 include "pm3.2.mm";
 include "a2i.mm";
 
-theorem ancl(wph: $wff$ ph, wps: $wff$ ps) {
+theorem ancl(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -20,5 +20,5 @@ theorem ancl(wph: $wff$ ph, wps: $wff$ ps) {
     a2i;
   };
 
-  return $|-$ $( ( ph -> ps ) -> ( ph -> ( ph /\ ps ) ) )$;
+  return '|-' "( ( ph -> ps ) -> ( ph -> ( ph /\\ ps ) ) )";
 }

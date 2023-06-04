@@ -3,9 +3,9 @@ include "wb.mm";
 include "impbi.mm";
 include "mp2.mm";
 
-theorem impbii(wph: $wff$ ph, wps: $wff$ ps) {
-  assume impbii.1: $|- ( ph -> ps )$;
-  assume impbii.2: $|- ( ps -> ph )$;
+theorem impbii(wph: 'wff' ph, wps: 'wff' ps) {
+  assume impbii.1: |- "( ph -> ps )";
+  assume impbii.2: |- "( ps -> ph )";
 
 
 
@@ -29,5 +29,5 @@ theorem impbii(wph: $wff$ ph, wps: $wff$ ps) {
     mp2;
   };
 
-  return $|-$ $( ph <-> ps )$;
+  return '|-' "( ph <-> ps )";
 }

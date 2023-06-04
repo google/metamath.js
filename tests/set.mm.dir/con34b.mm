@@ -4,7 +4,7 @@ include "con3.mm";
 include "con4.mm";
 include "impbii.mm";
 
-theorem con34b(wph: $wff$ ph, wps: $wff$ ps) {
+theorem con34b(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -28,5 +28,5 @@ theorem con34b(wph: $wff$ ph, wps: $wff$ ps) {
     impbii;
   };
 
-  return $|-$ $( ( ph -> ps ) <-> ( -. ps -> -. ph ) )$;
+  return '|-' "( ( ph -> ps ) <-> ( -. ps -> -. ph ) )";
 }

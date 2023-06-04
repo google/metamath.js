@@ -13,7 +13,7 @@ include "syld.mm";
 include "ax6ev.mm";
 include "exlimiiv.mm";
 
-theorem axext3(vx: $setvar$ x, vy: $setvar$ y, vz: $setvar$ z) {
+theorem axext3(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
 
   disjoint x z;
   disjoint y z;
@@ -21,7 +21,7 @@ theorem axext3(vx: $setvar$ x, vy: $setvar$ y, vz: $setvar$ z) {
   disjoint w x;
   disjoint w y;
 
-  let vw: $setvar$ w;
+  let vw: setvar w;
 
   do {
     vw;
@@ -96,5 +96,5 @@ theorem axext3(vx: $setvar$ x, vy: $setvar$ y, vz: $setvar$ z) {
     exlimiiv;
   };
 
-  return $|-$ $( A. z ( z e. x <-> z e. y ) -> x = y )$;
+  return '|-' "( A. z ( z e. x <-> z e. y ) -> x = y )";
 }

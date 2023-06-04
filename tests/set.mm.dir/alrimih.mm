@@ -1,8 +1,8 @@
 include "sylg.mm";
 
-theorem alrimih(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
-  assume alrimih.1: $|- ( ph -> A. x ph )$;
-  assume alrimih.2: $|- ( ph -> ps )$;
+theorem alrimih(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+  assume alrimih.1: |- "( ph -> A. x ph )";
+  assume alrimih.2: |- "( ph -> ps )";
 
 
 
@@ -18,5 +18,5 @@ theorem alrimih(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     sylg;
   };
 
-  return $|-$ $( ph -> A. x ps )$;
+  return '|-' "( ph -> A. x ps )";
 }

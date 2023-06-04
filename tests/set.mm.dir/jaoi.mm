@@ -4,9 +4,9 @@ include "pm2.53.mm";
 include "syl6.mm";
 include "pm2.61d2.mm";
 
-theorem jaoi(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume jaoi.1: $|- ( ph -> ps )$;
-  assume jaoi.2: $|- ( ch -> ps )$;
+theorem jaoi(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume jaoi.1: |- "( ph -> ps )";
+  assume jaoi.2: |- "( ch -> ps )";
 
 
 
@@ -33,5 +33,5 @@ theorem jaoi(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     pm2.61d2;
   };
 
-  return $|-$ $( ( ph \/ ch ) -> ps )$;
+  return '|-' "( ( ph \\/ ch ) -> ps )";
 }

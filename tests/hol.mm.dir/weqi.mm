@@ -3,9 +3,9 @@ include "ke.mm";
 include "weq.mm";
 include "wov.mm";
 
-theorem weqi(hal: $type$ al, ta: $term$ A, tb: $term$ B) {
-  assume weqi.1: $|- A : al$;
-  assume weqi.2: $|- B : al$;
+theorem weqi(hal: 'type' al, ta: 'term' A, tb: 'term' B) {
+  assume weqi.1: |- "A : al";
+  assume weqi.2: |- "B : al";
 
 
 
@@ -25,5 +25,5 @@ theorem weqi(hal: $type$ al, ta: $term$ A, tb: $term$ B) {
     wov;
   };
 
-  return $|-$ $[ A = B ] : bool$;
+  return '|-' "[ A = B ] : bool";
 }

@@ -5,7 +5,7 @@ include "uncom.mm";
 include "df-pr.mm";
 include "3eqtr4i.mm";
 
-theorem prcom(cA: $class$ A, cB: $class$ B) {
+theorem prcom(cA: 'class' A, cB: 'class' B) {
 
 
 
@@ -40,5 +40,5 @@ theorem prcom(cA: $class$ A, cB: $class$ B) {
     3eqtr4i;
   };
 
-  return $|-$ ${ A , B } = { B , A }$;
+  return '|-' "{ A , B } = { B , A }";
 }

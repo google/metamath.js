@@ -7,7 +7,7 @@ include "19.3t.mm";
 include "imbi2d.mm";
 include "bitr3d.mm";
 
-theorem 19.23t(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
+theorem 19.23t(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
 
 
 
@@ -50,5 +50,5 @@ theorem 19.23t(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     bitr3d;
   };
 
-  return $|-$ $( F/ x ps -> ( A. x ( ph -> ps ) <-> ( E. x ph -> ps ) ) )$;
+  return '|-' "( F/ x ps -> ( A. x ( ph -> ps ) <-> ( E. x ph -> ps ) ) )";
 }

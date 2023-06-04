@@ -4,9 +4,9 @@ include "wi.mm";
 include "aleximi.mm";
 include "syl.mm";
 
-theorem eximdh(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
-  assume eximdh.1: $|- ( ph -> A. x ph )$;
-  assume eximdh.2: $|- ( ph -> ( ps -> ch ) )$;
+theorem eximdh(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
+  assume eximdh.1: |- "( ph -> A. x ph )";
+  assume eximdh.2: |- "( ph -> ( ps -> ch ) )";
 
 
 
@@ -34,5 +34,5 @@ theorem eximdh(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
     syl;
   };
 
-  return $|-$ $( ph -> ( E. x ps -> E. x ch ) )$;
+  return '|-' "( ph -> ( E. x ps -> E. x ch ) )";
 }

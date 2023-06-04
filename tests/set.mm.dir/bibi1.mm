@@ -2,7 +2,7 @@ include "wb.mm";
 include "id.mm";
 include "bibi1d.mm";
 
-theorem bibi1(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
+theorem bibi1(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
 
 
 
@@ -21,5 +21,5 @@ theorem bibi1(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     bibi1d;
   };
 
-  return $|-$ $( ( ph <-> ps ) -> ( ( ph <-> ch ) <-> ( ps <-> ch ) ) )$;
+  return '|-' "( ( ph <-> ps ) -> ( ( ph <-> ch ) <-> ( ps <-> ch ) ) )";
 }

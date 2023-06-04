@@ -10,7 +10,7 @@ include "sbanv.mm";
 include "3bitr4i.mm";
 include "bitri.mm";
 
-theorem sbbiv(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x, vy: $setvar$ y) {
+theorem sbbiv(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
 
   disjoint x y;
 
@@ -107,5 +107,5 @@ theorem sbbiv(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x, vy: $setvar$ y) {
     bitri;
   };
 
-  return $|-$ $( [ y / x ] ( ph <-> ps ) <-> ( [ y / x ] ph <-> [ y / x ] ps ) )$;
+  return '|-' "( [ y / x ] ( ph <-> ps ) <-> ( [ y / x ] ph <-> [ y / x ] ps ) )";
 }

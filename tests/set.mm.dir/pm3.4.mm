@@ -2,7 +2,7 @@ include "wa.mm";
 include "simpr.mm";
 include "a1d.mm";
 
-theorem pm3.4(wph: $wff$ ph, wps: $wff$ ps) {
+theorem pm3.4(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -20,5 +20,5 @@ theorem pm3.4(wph: $wff$ ph, wps: $wff$ ps) {
     a1d;
   };
 
-  return $|-$ $( ( ph /\ ps ) -> ( ph -> ps ) )$;
+  return '|-' "( ( ph /\\ ps ) -> ( ph -> ps ) )";
 }

@@ -27,18 +27,18 @@
 */
 
 axiom w0() {
-  return wff -;
+  return wff "-";
 }
 
 axiom w1(wff x) {
-  return wff x -;
+  return wff "x -";
 }
 
 theorem t0() {
   do {
     w0; w1;
   };
-  return wff - -;
+  return wff "- -";
 }
 
 /**

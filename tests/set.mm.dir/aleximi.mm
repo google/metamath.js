@@ -7,8 +7,8 @@ include "alnex.mm";
 include "3imtr3g.mm";
 include "con4d.mm";
 
-theorem aleximi(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
-  assume aleximi.1: $|- ( ph -> ( ps -> ch ) )$;
+theorem aleximi(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
+  assume aleximi.1: |- "( ph -> ( ps -> ch ) )";
 
 
 
@@ -62,5 +62,5 @@ theorem aleximi(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
     con4d;
   };
 
-  return $|-$ $( A. x ph -> ( E. x ps -> E. x ch ) )$;
+  return '|-' "( A. x ph -> ( E. x ps -> E. x ch ) )";
 }

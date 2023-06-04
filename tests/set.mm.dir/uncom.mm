@@ -7,11 +7,11 @@ include "elun.mm";
 include "bitr4i.mm";
 include "uneqri.mm";
 
-theorem uncom(cA: $class$ A, cB: $class$ B) {
+theorem uncom(cA: 'class' A, cB: 'class' B) {
 
 
 
-  let vx: $setvar$ x;
+  let vx: setvar x;
 
   do {
     vx;
@@ -49,5 +49,5 @@ theorem uncom(cA: $class$ A, cB: $class$ B) {
     uneqri;
   };
 
-  return $|-$ $( A u. B ) = ( B u. A )$;
+  return '|-' "( A u. B ) = ( B u. A )";
 }

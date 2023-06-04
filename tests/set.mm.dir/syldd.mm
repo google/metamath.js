@@ -2,9 +2,9 @@ include "wi.mm";
 include "imim2.mm";
 include "syl6c.mm";
 
-theorem syldd(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th, wta: $wff$ ta) {
-  assume syldd.1: $|- ( ph -> ( ps -> ( ch -> th ) ) )$;
-  assume syldd.2: $|- ( ph -> ( ps -> ( th -> ta ) ) )$;
+theorem syldd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta: 'wff' ta) {
+  assume syldd.1: |- "( ph -> ( ps -> ( ch -> th ) ) )";
+  assume syldd.2: |- "( ph -> ( ps -> ( th -> ta ) ) )";
 
 
 
@@ -31,5 +31,5 @@ theorem syldd(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th, wta: $
     syl6c;
   };
 
-  return $|-$ $( ph -> ( ps -> ( ch -> ta ) ) )$;
+  return '|-' "( ph -> ( ps -> ( ch -> ta ) ) )";
 }

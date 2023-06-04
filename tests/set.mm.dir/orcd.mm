@@ -2,8 +2,8 @@ include "wo.mm";
 include "orc.mm";
 include "syl.mm";
 
-theorem orcd(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume orcd.1: $|- ( ph -> ps )$;
+theorem orcd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume orcd.1: |- "( ph -> ps )";
 
 
 
@@ -22,5 +22,5 @@ theorem orcd(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     syl;
   };
 
-  return $|-$ $( ph -> ( ps \/ ch ) )$;
+  return '|-' "( ph -> ( ps \\/ ch ) )";
 }

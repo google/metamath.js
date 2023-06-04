@@ -11,7 +11,7 @@ include "sb6.mm";
 include "notbii.mm";
 include "3bitr4i.mm";
 
-theorem sbnv(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
+theorem sbnv(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
 
   disjoint x y;
 
@@ -63,5 +63,5 @@ theorem sbnv(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
     3bitr4i;
   };
 
-  return $|-$ $( [ y / x ] -. ph <-> -. [ y / x ] ph )$;
+  return '|-' "( [ y / x ] -. ph <-> -. [ y / x ] ph )";
 }

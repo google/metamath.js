@@ -7,7 +7,7 @@ include "ax6ev.mm";
 include "exintr.mm";
 include "mpi.mm";
 
-theorem equs4v(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
+theorem equs4v(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
 
   disjoint x y;
 
@@ -40,5 +40,5 @@ theorem equs4v(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
     mpi;
   };
 
-  return $|-$ $( A. x ( x = y -> ph ) -> E. x ( x = y /\ ph ) )$;
+  return '|-' "( A. x ( x = y -> ph ) -> E. x ( x = y /\\ ph ) )";
 }

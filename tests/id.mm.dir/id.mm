@@ -2,7 +2,7 @@ include "wi.mm";
 include "ax-1.mm";
 include "mpd.mm";
 
-theorem id(wph: $wff$ ph) {
+theorem id(wph: 'wff' ph) {
 
 
 
@@ -24,5 +24,5 @@ theorem id(wph: $wff$ ph) {
     mpd;
   };
 
-  return $|-$ $( ph -> ph )$;
+  return '|-' "( ph -> ph )";
 }

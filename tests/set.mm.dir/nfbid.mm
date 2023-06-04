@@ -6,9 +6,9 @@ include "nfimd.mm";
 include "nfand.mm";
 include "nfxfrd.mm";
 
-theorem nfbid(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
-  assume nfbid.1: $|- ( ph -> F/ x ps )$;
-  assume nfbid.2: $|- ( ph -> F/ x ch )$;
+theorem nfbid(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
+  assume nfbid.1: |- "( ph -> F/ x ps )";
+  assume nfbid.2: |- "( ph -> F/ x ch )";
 
 
 
@@ -54,5 +54,5 @@ theorem nfbid(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
     nfxfrd;
   };
 
-  return $|-$ $( ph -> F/ x ( ps <-> ch ) )$;
+  return '|-' "( ph -> F/ x ( ps <-> ch ) )";
 }

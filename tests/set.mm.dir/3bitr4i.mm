@@ -1,10 +1,10 @@
 include "bitr4i.mm";
 include "bitri.mm";
 
-theorem 3bitr4i(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
-  assume 3bitr4i.1: $|- ( ph <-> ps )$;
-  assume 3bitr4i.2: $|- ( ch <-> ph )$;
-  assume 3bitr4i.3: $|- ( th <-> ps )$;
+theorem 3bitr4i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+  assume 3bitr4i.1: |- "( ph <-> ps )";
+  assume 3bitr4i.2: |- "( ch <-> ph )";
+  assume 3bitr4i.3: |- "( th <-> ps )";
 
 
 
@@ -24,5 +24,5 @@ theorem 3bitr4i(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
     bitri;
   };
 
-  return $|-$ $( ch <-> th )$;
+  return '|-' "( ch <-> th )";
 }

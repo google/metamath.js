@@ -2,9 +2,9 @@ include "wceq.mm";
 include "a1i.mm";
 include "eqtrd.mm";
 
-theorem syl6eq(wph: $wff$ ph, cA: $class$ A, cB: $class$ B, cC: $class$ C) {
-  assume syl6eq.1: $|- ( ph -> A = B )$;
-  assume syl6eq.2: $|- B = C$;
+theorem syl6eq(wph: 'wff' ph, cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+  assume syl6eq.1: |- "( ph -> A = B )";
+  assume syl6eq.2: |- "B = C";
 
 
 
@@ -25,5 +25,5 @@ theorem syl6eq(wph: $wff$ ph, cA: $class$ A, cB: $class$ B, cC: $class$ C) {
     eqtrd;
   };
 
-  return $|-$ $( ph -> A = C )$;
+  return '|-' "( ph -> A = C )";
 }

@@ -3,8 +3,8 @@ include "pm5.32d.mm";
 include "ancom.mm";
 include "3bitr4g.mm";
 
-theorem pm5.32rd(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
-  assume pm5.32d.1: $|- ( ph -> ( ps -> ( ch <-> th ) ) )$;
+theorem pm5.32rd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+  assume pm5.32d.1: |- "( ph -> ( ps -> ( ch <-> th ) ) )";
 
 
 
@@ -39,5 +39,5 @@ theorem pm5.32rd(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
     3bitr4g;
   };
 
-  return $|-$ $( ph -> ( ( ch /\ ps ) <-> ( th /\ ps ) ) )$;
+  return '|-' "( ph -> ( ( ch /\\ ps ) <-> ( th /\\ ps ) ) )";
 }

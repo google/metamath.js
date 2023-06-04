@@ -13,15 +13,15 @@ include "weqi.mm";
 include "df-al.mm";
 include "eqtypri.mm";
 
-theorem wal(hal: $type$ al) {
+theorem wal(hal: 'type' al) {
 
 
 
-  let vf: $var$ f;
-  let vp: $var$ p;
-  let vq: $var$ q;
-  let vx: $var$ x;
-  let vy: $var$ y;
+  let vf: var f;
+  let vp: var p;
+  let vq: var q;
+  let vx: var x;
+  let vy: var y;
 
   do {
     hal;
@@ -72,5 +72,5 @@ theorem wal(hal: $type$ al) {
     eqtypri;
   };
 
-  return $|-$ $! : ( ( al -> bool ) -> bool )$;
+  return '|-' "! : ( ( al -> bool ) -> bool )";
 }

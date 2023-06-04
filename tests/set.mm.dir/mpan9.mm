@@ -1,9 +1,9 @@
 include "syl5.mm";
 include "impcom.mm";
 
-theorem mpan9(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
-  assume mpan9.1: $|- ( ph -> ps )$;
-  assume mpan9.2: $|- ( ch -> ( ps -> th ) )$;
+theorem mpan9(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+  assume mpan9.1: |- "( ph -> ps )";
+  assume mpan9.2: |- "( ch -> ( ps -> th ) )";
 
 
 
@@ -23,5 +23,5 @@ theorem mpan9(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
     impcom;
   };
 
-  return $|-$ $( ( ph /\ ch ) -> th )$;
+  return '|-' "( ( ph /\\ ch ) -> th )";
 }

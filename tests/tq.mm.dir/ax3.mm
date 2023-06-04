@@ -1,5 +1,5 @@
 
-axiom ax3(wx: $wff$ x, wy: $wff$ y) {
+axiom ax3(wx: 'wff' x, wy: 'wff' y) {
 
-  return $|-$ $x y DND x$;
+  return '|-' "x y DND x";
 }

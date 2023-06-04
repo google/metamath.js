@@ -11,7 +11,7 @@ theorem tru() {
 
 
 
-  let vx.tru: $setvar$ x;
+  let vx.tru: setvar x;
 
   do {
     wtru;
@@ -32,5 +32,5 @@ theorem tru() {
     mpbir;
   };
 
-  return $|-$ $T.$;
+  return '|-' "T.";
 }

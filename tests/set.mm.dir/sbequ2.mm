@@ -7,7 +7,7 @@ include "df-sb.mm";
 include "simplbi.mm";
 include "com12.mm";
 
-theorem sbequ2(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
+theorem sbequ2(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
 
 
 
@@ -41,5 +41,5 @@ theorem sbequ2(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
     com12;
   };
 
-  return $|-$ $( x = y -> ( [ y / x ] ph -> ph ) )$;
+  return '|-' "( x = y -> ( [ y / x ] ph -> ph ) )";
 }

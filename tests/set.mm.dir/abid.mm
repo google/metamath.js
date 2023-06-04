@@ -6,7 +6,7 @@ include "df-clab.mm";
 include "sbid.mm";
 include "bitri.mm";
 
-theorem abid(wph: $wff$ ph, vx: $setvar$ x) {
+theorem abid(wph: 'wff' ph, vx: 'setvar' x) {
 
 
 
@@ -34,5 +34,5 @@ theorem abid(wph: $wff$ ph, vx: $setvar$ x) {
     bitri;
   };
 
-  return $|-$ $( x e. { x | ph } <-> ph )$;
+  return '|-' "( x e. { x | ph } <-> ph )";
 }

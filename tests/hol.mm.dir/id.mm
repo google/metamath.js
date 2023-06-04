@@ -1,7 +1,7 @@
 include "ax-id.mm";
 
-theorem id(tr: $term$ R) {
-  assume ax-id.1: $|- R : bool$;
+theorem id(tr: 'term' R) {
+  assume ax-id.1: |- "R : bool";
 
 
 
@@ -13,5 +13,5 @@ theorem id(tr: $term$ R) {
     ax-id;
   };
 
-  return $|-$ $R |= R$;
+  return '|-' "R |= R";
 }

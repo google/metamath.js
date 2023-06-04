@@ -1,8 +1,8 @@
 include "nfcv.mm";
 include "nfel.mm";
 
-theorem nfel2(vx: $setvar$ x, cA: $class$ A, cB: $class$ B) {
-  assume nfeq2.1: $|- F/_ x B$;
+theorem nfel2(vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
+  assume nfeq2.1: |- "F/_ x B";
 
   disjoint A x;
 
@@ -19,5 +19,5 @@ theorem nfel2(vx: $setvar$ x, cA: $class$ A, cB: $class$ B) {
     nfel;
   };
 
-  return $|-$ $F/ x A e. B$;
+  return '|-' "F/ x A e. B";
 }

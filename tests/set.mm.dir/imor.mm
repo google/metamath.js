@@ -6,7 +6,7 @@ include "imbi1i.mm";
 include "df-or.mm";
 include "bitr4i.mm";
 
-theorem imor(wph: $wff$ ph, wps: $wff$ ps) {
+theorem imor(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -38,5 +38,5 @@ theorem imor(wph: $wff$ ph, wps: $wff$ ps) {
     bitr4i;
   };
 
-  return $|-$ $( ( ph -> ps ) <-> ( -. ph \/ ps ) )$;
+  return '|-' "( ( ph -> ps ) <-> ( -. ph \\/ ps ) )";
 }

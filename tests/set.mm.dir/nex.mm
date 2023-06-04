@@ -3,8 +3,8 @@ include "wex.mm";
 include "alnex.mm";
 include "mpgbi.mm";
 
-theorem nex(wph: $wff$ ph, vx: $setvar$ x) {
-  assume nex.1: $|- -. ph$;
+theorem nex(wph: 'wff' ph, vx: 'setvar' x) {
+  assume nex.1: |- "-. ph";
 
 
 
@@ -25,5 +25,5 @@ theorem nex(wph: $wff$ ph, vx: $setvar$ x) {
     mpgbi;
   };
 
-  return $|-$ $-. E. x ph$;
+  return '|-' "-. E. x ph";
 }

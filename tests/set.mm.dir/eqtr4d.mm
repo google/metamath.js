@@ -1,9 +1,9 @@
 include "eqcomd.mm";
 include "eqtrd.mm";
 
-theorem eqtr4d(wph: $wff$ ph, cA: $class$ A, cB: $class$ B, cC: $class$ C) {
-  assume eqtr4d.1: $|- ( ph -> A = B )$;
-  assume eqtr4d.2: $|- ( ph -> C = B )$;
+theorem eqtr4d(wph: 'wff' ph, cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+  assume eqtr4d.1: |- "( ph -> A = B )";
+  assume eqtr4d.2: |- "( ph -> C = B )";
 
 
 
@@ -23,5 +23,5 @@ theorem eqtr4d(wph: $wff$ ph, cA: $class$ A, cB: $class$ B, cC: $class$ C) {
     eqtrd;
   };
 
-  return $|-$ $( ph -> A = C )$;
+  return '|-' "( ph -> A = C )";
 }

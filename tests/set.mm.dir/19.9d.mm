@@ -4,8 +4,8 @@ include "nfrd.mm";
 include "sp.mm";
 include "syl6.mm";
 
-theorem 19.9d(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
-  assume 19.9d.1: $|- ( ps -> F/ x ph )$;
+theorem 19.9d(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+  assume 19.9d.1: |- "( ps -> F/ x ph )";
 
 
 
@@ -31,5 +31,5 @@ theorem 19.9d(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     syl6;
   };
 
-  return $|-$ $( ps -> ( E. x ph -> ph ) )$;
+  return '|-' "( ps -> ( E. x ph -> ph ) )";
 }

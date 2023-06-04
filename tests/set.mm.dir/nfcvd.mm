@@ -2,13 +2,13 @@ include "wnfc.mm";
 include "nfcv.mm";
 include "a1i.mm";
 
-theorem nfcvd(wph: $wff$ ph, vx: $setvar$ x, cA: $class$ A) {
+theorem nfcvd(wph: 'wff' ph, vx: 'setvar' x, cA: 'class' A) {
 
   disjoint A x;
   disjoint x y;
   disjoint A y;
 
-  let vy: $setvar$ y;
+  let vy: setvar y;
 
   do {
     vx;
@@ -21,5 +21,5 @@ theorem nfcvd(wph: $wff$ ph, vx: $setvar$ x, cA: $class$ A) {
     a1i;
   };
 
-  return $|-$ $( ph -> F/_ x A )$;
+  return '|-' "( ph -> F/_ x A )";
 }

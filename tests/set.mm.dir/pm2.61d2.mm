@@ -2,9 +2,9 @@ include "wi.mm";
 include "a1i.mm";
 include "pm2.61d.mm";
 
-theorem pm2.61d2(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume pm2.61d2.1: $|- ( ph -> ( -. ps -> ch ) )$;
-  assume pm2.61d2.2: $|- ( ps -> ch )$;
+theorem pm2.61d2(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume pm2.61d2.1: |- "( ph -> ( -. ps -> ch ) )";
+  assume pm2.61d2.2: |- "( ps -> ch )";
 
 
 
@@ -24,5 +24,5 @@ theorem pm2.61d2(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     pm2.61d;
   };
 
-  return $|-$ $( ph -> ch )$;
+  return '|-' "( ph -> ch )";
 }

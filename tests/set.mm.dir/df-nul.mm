@@ -2,5 +2,5 @@
 
 axiom df-nul() {
 
-  return $|-$ $(/) = ( _V \ _V )$;
+  return '|-' "(/) = ( _V \\ _V )";
 }

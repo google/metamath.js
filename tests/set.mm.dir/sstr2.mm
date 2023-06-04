@@ -9,11 +9,11 @@ include "alimdv.mm";
 include "dfss2.mm";
 include "3imtr4g.mm";
 
-theorem sstr2(cA: $class$ A, cB: $class$ B, cC: $class$ C) {
+theorem sstr2(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
 
 
 
-  let vx: $setvar$ x;
+  let vx: setvar x;
 
   do {
     cA;
@@ -74,5 +74,5 @@ theorem sstr2(cA: $class$ A, cB: $class$ B, cC: $class$ C) {
     3imtr4g;
   };
 
-  return $|-$ $( A C_ B -> ( B C_ C -> A C_ C ) )$;
+  return '|-' "( A C_ B -> ( B C_ C -> A C_ C ) )";
 }

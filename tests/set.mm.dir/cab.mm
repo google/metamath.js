@@ -1,6 +1,6 @@
 
 
-axiom cab(wph: $wff$ ph, vx: $setvar$ x) {
+axiom cab(wph: 'wff' ph, vx: 'setvar' x) {
 
-  return $class$ ${ x | ph }$;
+  return 'class' "{ x | ph }";
 }

@@ -8,7 +8,7 @@ include "impbi.mm";
 include "impi.mm";
 include "impbii.mm";
 
-theorem dfbi1(wph: $wff$ ph, wps: $wff$ ps) {
+theorem dfbi1(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -60,5 +60,5 @@ theorem dfbi1(wph: $wff$ ph, wps: $wff$ ps) {
     impbii;
   };
 
-  return $|-$ $( ( ph <-> ps ) <-> -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) )$;
+  return '|-' "( ( ph <-> ps ) <-> -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) )";
 }

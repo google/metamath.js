@@ -4,7 +4,7 @@ include "cab.mm";
 include "abid1.mm";
 include "eqcomi.mm";
 
-theorem abid2(vx: $setvar$ x, cA: $class$ A) {
+theorem abid2(vx: 'setvar' x, cA: 'class' A) {
 
   disjoint A x;
 
@@ -24,5 +24,5 @@ theorem abid2(vx: $setvar$ x, cA: $class$ A) {
     eqcomi;
   };
 
-  return $|-$ ${ x | x e. A } = A$;
+  return '|-' "{ x | x e. A } = A";
 }

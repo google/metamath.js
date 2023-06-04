@@ -9,11 +9,11 @@ include "exbidv.mm";
 include "df-clel.mm";
 include "3bitr4g.mm";
 
-theorem eleq1w(vx: $setvar$ x, vy: $setvar$ y, cA: $class$ A) {
+theorem eleq1w(vx: 'setvar' x, vy: 'setvar' y, cA: 'class' A) {
 
 
 
-  let vz: $setvar$ z;
+  let vz: setvar z;
 
   do {
     vx;
@@ -77,5 +77,5 @@ theorem eleq1w(vx: $setvar$ x, vy: $setvar$ y, cA: $class$ A) {
     3bitr4g;
   };
 
-  return $|-$ $( x = y -> ( x e. A <-> y e. A ) )$;
+  return '|-' "( x = y -> ( x e. A <-> y e. A ) )";
 }

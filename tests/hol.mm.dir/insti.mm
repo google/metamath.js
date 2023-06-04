@@ -8,12 +8,12 @@ include "kbr.mm";
 include "eqid.mm";
 include "ax-inst.mm";
 
-theorem insti(hal: $type$ al, vx: $var$ x, vy: $var$ y, ta: $term$ A, tb: $term$ B, tc: $term$ C, tr: $term$ R) {
-  assume insti.1: $|- C : al$;
-  assume insti.2: $|- B : bool$;
-  assume insti.3: $|- R |= A$;
-  assume insti.4: $|- T. |= [ ( \ x : al . B y : al ) = B ]$;
-  assume insti.5: $|- [ x : al = C ] |= [ A = B ]$;
+theorem insti(hal: 'type' al, vx: 'var' x, vy: 'var' y, ta: 'term' A, tb: 'term' B, tc: 'term' C, tr: 'term' R) {
+  assume insti.1: |- "C : al";
+  assume insti.2: |- "B : bool";
+  assume insti.3: |- "R |= A";
+  assume insti.4: |- "T. |= [ ( \\ x : al . B y : al ) = B ]";
+  assume insti.5: |- "[ x : al = C ] |= [ A = B ]";
 
   disjoint x y;
   disjoint R x;
@@ -71,5 +71,5 @@ theorem insti(hal: $type$ al, vx: $var$ x, vy: $var$ y, ta: $term$ A, tb: $term$
     ax-inst;
   };
 
-  return $|-$ $R |= B$;
+  return '|-' "R |= B";
 }

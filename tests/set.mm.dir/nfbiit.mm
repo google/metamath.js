@@ -9,7 +9,7 @@ include "imbi12d.mm";
 include "df-nf.mm";
 include "3bitr4g.mm";
 
-theorem nfbiit(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
+theorem nfbiit(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
 
 
 
@@ -69,5 +69,5 @@ theorem nfbiit(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     3bitr4g;
   };
 
-  return $|-$ $( A. x ( ph <-> ps ) -> ( F/ x ph <-> F/ x ps ) )$;
+  return '|-' "( A. x ( ph <-> ps ) -> ( F/ x ph <-> F/ x ps ) )";
 }

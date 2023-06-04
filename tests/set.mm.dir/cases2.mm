@@ -11,7 +11,7 @@ include "ancom.mm";
 include "orbi12i.mm";
 include "3bitr4ri.mm";
 
-theorem cases2(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
+theorem cases2(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
 
 
 
@@ -95,5 +95,5 @@ theorem cases2(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     3bitr4ri;
   };
 
-  return $|-$ $( ( ( ph /\ ps ) \/ ( -. ph /\ ch ) ) <-> ( ( ph -> ps ) /\ ( -. ph -> ch ) ) )$;
+  return '|-' "( ( ( ph /\\ ps ) \\/ ( -. ph /\\ ch ) ) <-> ( ( ph -> ps ) /\\ ( -. ph -> ch ) ) )";
 }

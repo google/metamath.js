@@ -4,11 +4,11 @@ include "pm2.43i.mm";
 include "ax6ev.mm";
 include "exlimiiv.mm";
 
-theorem equid(vx: $setvar$ x) {
+theorem equid(vx: 'setvar' x) {
 
 
 
-  let vy: $setvar$ y;
+  let vy: setvar y;
 
   do {
     vy;
@@ -33,5 +33,5 @@ theorem equid(vx: $setvar$ x) {
     exlimiiv;
   };
 
-  return $|-$ $x = x$;
+  return '|-' "x = x";
 }

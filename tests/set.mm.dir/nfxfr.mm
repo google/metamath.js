@@ -2,9 +2,9 @@ include "wnf.mm";
 include "nfbii.mm";
 include "mpbir.mm";
 
-theorem nfxfr(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
-  assume nfbii.1: $|- ( ph <-> ps )$;
-  assume nfxfr.2: $|- F/ x ps$;
+theorem nfxfr(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+  assume nfbii.1: |- "( ph <-> ps )";
+  assume nfxfr.2: |- "F/ x ps";
 
 
 
@@ -26,5 +26,5 @@ theorem nfxfr(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     mpbir;
   };
 
-  return $|-$ $F/ x ph$;
+  return '|-' "F/ x ph";
 }

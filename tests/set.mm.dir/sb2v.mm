@@ -9,7 +9,7 @@ include "equs4v.mm";
 include "df-sb.mm";
 include "sylanbrc.mm";
 
-theorem sb2v(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
+theorem sb2v(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
 
   disjoint x y;
 
@@ -49,5 +49,5 @@ theorem sb2v(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
     sylanbrc;
   };
 
-  return $|-$ $( A. x ( x = y -> ph ) -> [ y / x ] ph )$;
+  return '|-' "( A. x ( x = y -> ph ) -> [ y / x ] ph )";
 }

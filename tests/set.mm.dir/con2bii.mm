@@ -2,8 +2,8 @@ include "wn.mm";
 include "bicomi.mm";
 include "con1bii.mm";
 
-theorem con2bii(wph: $wff$ ph, wps: $wff$ ps) {
-  assume con2bii.1: $|- ( ph <-> -. ps )$;
+theorem con2bii(wph: 'wff' ph, wps: 'wff' ps) {
+  assume con2bii.1: |- "( ph <-> -. ps )";
 
 
 
@@ -24,5 +24,5 @@ theorem con2bii(wph: $wff$ ph, wps: $wff$ ps) {
     bicomi;
   };
 
-  return $|-$ $( ps <-> -. ph )$;
+  return '|-' "( ps <-> -. ph )";
 }

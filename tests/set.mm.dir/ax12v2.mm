@@ -10,14 +10,14 @@ include "syld.mm";
 include "ax6evr.mm";
 include "exlimiiv.mm";
 
-theorem ax12v2(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
+theorem ax12v2(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
 
   disjoint x y;
   disjoint x z;
   disjoint y z;
   disjoint ph z;
 
-  let vz: $setvar$ z;
+  let vz: setvar z;
 
   do {
     vy;
@@ -85,5 +85,5 @@ theorem ax12v2(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
     exlimiiv;
   };
 
-  return $|-$ $( x = y -> ( ph -> A. x ( x = y -> ph ) ) )$;
+  return '|-' "( x = y -> ( ph -> A. x ( x = y -> ph ) ) )";
 }

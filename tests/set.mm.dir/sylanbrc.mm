@@ -2,10 +2,10 @@ include "wa.mm";
 include "jca.mm";
 include "sylibr.mm";
 
-theorem sylanbrc(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
-  assume sylanbrc.1: $|- ( ph -> ps )$;
-  assume sylanbrc.2: $|- ( ph -> ch )$;
-  assume sylanbrc.3: $|- ( th <-> ( ps /\ ch ) )$;
+theorem sylanbrc(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+  assume sylanbrc.1: |- "( ph -> ps )";
+  assume sylanbrc.2: |- "( ph -> ch )";
+  assume sylanbrc.3: |- "( th <-> ( ps /\\ ch ) )";
 
 
 
@@ -27,5 +27,5 @@ theorem sylanbrc(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
     sylibr;
   };
 
-  return $|-$ $( ph -> th )$;
+  return '|-' "( ph -> th )";
 }

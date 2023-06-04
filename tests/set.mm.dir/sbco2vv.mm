@@ -3,7 +3,7 @@ include "nfv.mm";
 include "sbequvv.mm";
 include "sbiev.mm";
 
-theorem sbco2vv(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y, vz: $setvar$ z) {
+theorem sbco2vv(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
 
   disjoint x y;
   disjoint x z;
@@ -35,5 +35,5 @@ theorem sbco2vv(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y, vz: $setvar$ z) {
     sbiev;
   };
 
-  return $|-$ $( [ y / z ] [ z / x ] ph <-> [ y / x ] ph )$;
+  return '|-' "( [ y / z ] [ z / x ] ph <-> [ y / x ] ph )";
 }

@@ -4,9 +4,9 @@ include "eleq2d.mm";
 include "anbi12d.mm";
 include "rexbidv2.mm";
 
-theorem rexeqbidv(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x, cA: $class$ A, cB: $class$ B) {
-  assume raleqbidv.1: $|- ( ph -> A = B )$;
-  assume raleqbidv.2: $|- ( ph -> ( ps <-> ch ) )$;
+theorem rexeqbidv(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
+  assume raleqbidv.1: |- "( ph -> A = B )";
+  assume raleqbidv.2: |- "( ph -> ( ps <-> ch ) )";
 
   disjoint ph x;
 
@@ -41,5 +41,5 @@ theorem rexeqbidv(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x, c
     rexbidv2;
   };
 
-  return $|-$ $( ph -> ( E. x e. A ps <-> E. x e. B ch ) )$;
+  return '|-' "( ph -> ( E. x e. A ps <-> E. x e. B ch ) )";
 }

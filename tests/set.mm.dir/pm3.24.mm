@@ -5,7 +5,7 @@ include "id.mm";
 include "iman.mm";
 include "mpbi.mm";
 
-theorem pm3.24(wph: $wff$ ph) {
+theorem pm3.24(wph: 'wff' ph) {
 
 
 
@@ -28,5 +28,5 @@ theorem pm3.24(wph: $wff$ ph) {
     mpbi;
   };
 
-  return $|-$ $-. ( ph /\ -. ph )$;
+  return '|-' "-. ( ph /\\ -. ph )";
 }

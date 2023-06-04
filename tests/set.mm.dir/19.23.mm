@@ -6,8 +6,8 @@ include "wb.mm";
 include "19.23t.mm";
 include "ax-mp.mm";
 
-theorem 19.23(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
-  assume 19.23.1: $|- F/ x ps$;
+theorem 19.23(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+  assume 19.23.1: |- "F/ x ps";
 
 
 
@@ -36,5 +36,5 @@ theorem 19.23(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     ax-mp;
   };
 
-  return $|-$ $( A. x ( ph -> ps ) <-> ( E. x ph -> ps ) )$;
+  return '|-' "( A. x ( ph -> ps ) <-> ( E. x ph -> ps ) )";
 }

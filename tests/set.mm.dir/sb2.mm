@@ -9,7 +9,7 @@ include "equs4.mm";
 include "df-sb.mm";
 include "sylanbrc.mm";
 
-theorem sb2(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
+theorem sb2(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
 
 
 
@@ -49,5 +49,5 @@ theorem sb2(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
     sylanbrc;
   };
 
-  return $|-$ $( A. x ( x = y -> ph ) -> [ y / x ] ph )$;
+  return '|-' "( A. x ( x = y -> ph ) -> [ y / x ] ph )";
 }

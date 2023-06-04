@@ -1,9 +1,9 @@
 include "a1i.mm";
 include "mpancom.mm";
 
-theorem mpan(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume mpan.1: $|- ph$;
-  assume mpan.2: $|- ( ( ph /\ ps ) -> ch )$;
+theorem mpan(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume mpan.1: |- "ph";
+  assume mpan.2: |- "( ( ph /\\ ps ) -> ch )";
 
 
 
@@ -21,5 +21,5 @@ theorem mpan(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     mpancom;
   };
 
-  return $|-$ $( ps -> ch )$;
+  return '|-' "( ps -> ch )";
 }

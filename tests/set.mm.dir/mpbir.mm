@@ -1,9 +1,9 @@
 include "biimpri.mm";
 include "ax-mp.mm";
 
-theorem mpbir(wph: $wff$ ph, wps: $wff$ ps) {
-  assume mpbir.min: $|- ps$;
-  assume mpbir.maj: $|- ( ph <-> ps )$;
+theorem mpbir(wph: 'wff' ph, wps: 'wff' ps) {
+  assume mpbir.min: |- "ps";
+  assume mpbir.maj: |- "( ph <-> ps )";
 
 
 
@@ -20,5 +20,5 @@ theorem mpbir(wph: $wff$ ph, wps: $wff$ ps) {
     ax-mp;
   };
 
-  return $|-$ $ph$;
+  return '|-' "ph";
 }

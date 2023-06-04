@@ -2,8 +2,8 @@ include "weq.mm";
 include "equcomi.mm";
 include "syl.mm";
 
-theorem equcoms(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
-  assume equcoms.1: $|- ( x = y -> ph )$;
+theorem equcoms(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
+  assume equcoms.1: |- "( x = y -> ph )";
 
 
 
@@ -24,5 +24,5 @@ theorem equcoms(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
     syl;
   };
 
-  return $|-$ $( y = x -> ph )$;
+  return '|-' "( y = x -> ph )";
 }

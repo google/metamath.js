@@ -10,7 +10,7 @@ include "df-an.mm";
 include "bibi12i.mm";
 include "bitr4i.mm";
 
-theorem pm5.32(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
+theorem pm5.32(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
 
 
 
@@ -91,5 +91,5 @@ theorem pm5.32(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     bitr4i;
   };
 
-  return $|-$ $( ( ph -> ( ps <-> ch ) ) <-> ( ( ph /\ ps ) <-> ( ph /\ ch ) ) )$;
+  return '|-' "( ( ph -> ( ps <-> ch ) ) <-> ( ( ph /\\ ps ) <-> ( ph /\\ ch ) ) )";
 }

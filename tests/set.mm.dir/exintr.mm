@@ -3,7 +3,7 @@ include "wa.mm";
 include "ancl.mm";
 include "aleximi.mm";
 
-theorem exintr(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
+theorem exintr(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
 
 
 
@@ -24,5 +24,5 @@ theorem exintr(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     aleximi;
   };
 
-  return $|-$ $( A. x ( ph -> ps ) -> ( E. x ph -> E. x ( ph /\ ps ) ) )$;
+  return '|-' "( A. x ( ph -> ps ) -> ( E. x ph -> E. x ( ph /\\ ps ) ) )";
 }

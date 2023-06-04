@@ -1,6 +1,6 @@
 
 
-axiom cun(cA: $class$ A, cB: $class$ B) {
+axiom cun(cA: 'class' A, cB: 'class' B) {
 
-  return $class$ $( A u. B )$;
+  return 'class' "( A u. B )";
 }

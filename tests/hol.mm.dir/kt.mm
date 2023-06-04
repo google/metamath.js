@@ -2,5 +2,5 @@
 
 axiom kt() {
 
-  return $term$ $T.$;
+  return 'term' "T.";
 }

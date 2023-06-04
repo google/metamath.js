@@ -2,8 +2,8 @@ include "wb.mm";
 include "a1d.mm";
 include "pm5.32d.mm";
 
-theorem anbi2d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
-  assume anbid.1: $|- ( ph -> ( ps <-> ch ) )$;
+theorem anbi2d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+  assume anbid.1: |- "( ph -> ( ps <-> ch ) )";
 
 
 
@@ -24,5 +24,5 @@ theorem anbi2d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
     pm5.32d;
   };
 
-  return $|-$ $( ph -> ( ( th /\ ps ) <-> ( th /\ ch ) ) )$;
+  return '|-' "( ph -> ( ( th /\\ ps ) <-> ( th /\\ ch ) ) )";
 }

@@ -1,10 +1,10 @@
 include "syl6.mm";
 include "syl5.mm";
 
-theorem syl56(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th, wta: $wff$ ta) {
-  assume syl56.1: $|- ( ph -> ps )$;
-  assume syl56.2: $|- ( ch -> ( ps -> th ) )$;
-  assume syl56.3: $|- ( th -> ta )$;
+theorem syl56(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta: 'wff' ta) {
+  assume syl56.1: |- "( ph -> ps )";
+  assume syl56.2: |- "( ch -> ( ps -> th ) )";
+  assume syl56.3: |- "( th -> ta )";
 
 
 
@@ -26,5 +26,5 @@ theorem syl56(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th, wta: $
     syl5;
   };
 
-  return $|-$ $( ch -> ( ph -> ta ) )$;
+  return '|-' "( ch -> ( ph -> ta ) )";
 }

@@ -2,7 +2,7 @@ include "wa.mm";
 include "id.mm";
 include "ex.mm";
 
-theorem pm3.2(wph: $wff$ ph, wps: $wff$ ps) {
+theorem pm3.2(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -20,5 +20,5 @@ theorem pm3.2(wph: $wff$ ph, wps: $wff$ ps) {
     ex;
   };
 
-  return $|-$ $( ph -> ( ps -> ( ph /\ ps ) ) )$;
+  return '|-' "( ph -> ( ps -> ( ph /\\ ps ) ) )";
 }

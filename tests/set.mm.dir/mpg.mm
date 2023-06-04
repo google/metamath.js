@@ -2,9 +2,9 @@ include "wal.mm";
 include "ax-gen.mm";
 include "ax-mp.mm";
 
-theorem mpg(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
-  assume mpg.1: $|- ( A. x ph -> ps )$;
-  assume mpg.2: $|- ph$;
+theorem mpg(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+  assume mpg.1: |- "( A. x ph -> ps )";
+  assume mpg.2: |- "ph";
 
 
 
@@ -23,5 +23,5 @@ theorem mpg(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     ax-mp;
   };
 
-  return $|-$ $ps$;
+  return '|-' "ps";
 }

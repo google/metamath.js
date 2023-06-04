@@ -3,8 +3,8 @@ include "wn.mm";
 include "nfnt.mm";
 include "ax-mp.mm";
 
-theorem nfn(wph: $wff$ ph, vx: $setvar$ x) {
-  assume nfn.1: $|- F/ x ph$;
+theorem nfn(wph: 'wff' ph, vx: 'setvar' x) {
+  assume nfn.1: |- "F/ x ph";
 
 
 
@@ -25,5 +25,5 @@ theorem nfn(wph: $wff$ ph, vx: $setvar$ x) {
     ax-mp;
   };
 
-  return $|-$ $F/ x -. ph$;
+  return '|-' "F/ x -. ph";
 }

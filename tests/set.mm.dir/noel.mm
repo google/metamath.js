@@ -23,12 +23,12 @@ include "mtbir.mm";
 include "intnan.mm";
 include "df-clel.mm";
 
-theorem noel(cA: $class$ A) {
+theorem noel(cA: 'class' A) {
 
 
 
-  let vx: $setvar$ x;
-  let vy: $setvar$ y;
+  let vx: setvar x;
+  let vy: setvar y;
 
   do {
     cA;
@@ -119,5 +119,5 @@ theorem noel(cA: $class$ A) {
     mtbir;
   };
 
-  return $|-$ $-. A e. (/)$;
+  return '|-' "-. A e. (/)";
 }

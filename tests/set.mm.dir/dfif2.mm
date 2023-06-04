@@ -15,14 +15,14 @@ include "3bitr4i.mm";
 include "abbii.mm";
 include "eqtri.mm";
 
-theorem dfif2(wph: $wff$ ph, vx: $setvar$ x, cA: $class$ A, cB: $class$ B) {
+theorem dfif2(wph: 'wff' ph, vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
 
   disjoint ph x;
   disjoint A x;
   disjoint B x;
   disjoint C x;
 
-  let cC: $class$ C;
+  let cC: class C;
 
   do {
     wph;
@@ -94,5 +94,5 @@ theorem dfif2(wph: $wff$ ph, vx: $setvar$ x, cA: $class$ A, cB: $class$ B) {
     eqtri;
   };
 
-  return $|-$ $if ( ph , A , B ) = { x | ( ( x e. B -> ph ) -> ( x e. A /\ ph ) ) }$;
+  return '|-' "if ( ph , A , B ) = { x | ( ( x e. B -> ph ) -> ( x e. A /\\ ph ) ) }";
 }

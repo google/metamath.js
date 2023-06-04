@@ -11,7 +11,7 @@ include "imbi12i.mm";
 include "albii.mm";
 include "bitri.mm";
 
-theorem ss2ab(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
+theorem ss2ab(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
 
 
 
@@ -75,5 +75,5 @@ theorem ss2ab(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     bitri;
   };
 
-  return $|-$ $( { x | ph } C_ { x | ps } <-> A. x ( ph -> ps ) )$;
+  return '|-' "( { x | ph } C_ { x | ps } <-> A. x ( ph -> ps ) )";
 }

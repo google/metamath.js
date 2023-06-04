@@ -2,8 +2,8 @@ include "wn.mm";
 include "a1d.mm";
 include "con4d.mm";
 
-theorem pm2.21d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume pm2.21d.1: $|- ( ph -> -. ps )$;
+theorem pm2.21d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume pm2.21d.1: |- "( ph -> -. ps )";
 
 
 
@@ -23,5 +23,5 @@ theorem pm2.21d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     con4d;
   };
 
-  return $|-$ $( ph -> ( ps -> ch ) )$;
+  return '|-' "( ph -> ( ps -> ch ) )";
 }

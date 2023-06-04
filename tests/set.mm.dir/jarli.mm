@@ -3,8 +3,8 @@ include "wi.mm";
 include "pm2.21.mm";
 include "syl.mm";
 
-theorem jarli(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume jarli.1: $|- ( ( ph -> ps ) -> ch )$;
+theorem jarli(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume jarli.1: |- "( ( ph -> ps ) -> ch )";
 
 
 
@@ -24,5 +24,5 @@ theorem jarli(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     syl;
   };
 
-  return $|-$ $( -. ph -> ch )$;
+  return '|-' "( -. ph -> ch )";
 }

@@ -1,6 +1,6 @@
 
 
-axiom cuni(cA: $class$ A) {
+axiom cuni(cA: 'class' A) {
 
-  return $class$ $U. A$;
+  return 'class' "U. A";
 }

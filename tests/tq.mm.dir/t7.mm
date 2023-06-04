@@ -23,5 +23,5 @@ theorem t7() {
     ax2;
   };
 
-  return $|-$ $C - - - - - -$;
+  return '|-' "C - - - - - -";
 }

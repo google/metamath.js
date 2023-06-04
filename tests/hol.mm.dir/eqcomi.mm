@@ -5,9 +5,9 @@ include "dfov1.mm";
 include "eqcomx.mm";
 include "dfov2.mm";
 
-theorem eqcomi(hal: $type$ al, ta: $term$ A, tb: $term$ B, tr: $term$ R) {
-  assume eqcomi.1: $|- A : al$;
-  assume eqcomi.2: $|- R |= [ A = B ]$;
+theorem eqcomi(hal: 'type' al, ta: 'term' A, tb: 'term' B, tr: 'term' R) {
+  assume eqcomi.1: |- "A : al";
+  assume eqcomi.2: |- "R |= [ A = B ]";
 
 
 
@@ -53,5 +53,5 @@ theorem eqcomi(hal: $type$ al, ta: $term$ A, tb: $term$ B, tr: $term$ R) {
     dfov2;
   };
 
-  return $|-$ $R |= [ B = A ]$;
+  return '|-' "R |= [ B = A ]";
 }

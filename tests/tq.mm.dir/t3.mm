@@ -12,5 +12,5 @@ theorem t3() {
     ax0;
   };
 
-  return $|-$ $- - t - q - -$;
+  return '|-' "- - t - q - -";
 }

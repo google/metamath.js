@@ -5,7 +5,7 @@ include "notbid.mm";
 include "con4bid.mm";
 include "impbii.mm";
 
-theorem notbi(wph: $wff$ ph, wps: $wff$ ps) {
+theorem notbi(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -37,5 +37,5 @@ theorem notbi(wph: $wff$ ph, wps: $wff$ ps) {
     impbii;
   };
 
-  return $|-$ $( ( ph <-> ps ) <-> ( -. ph <-> -. ps ) )$;
+  return '|-' "( ( ph <-> ps ) <-> ( -. ph <-> -. ps ) )";
 }

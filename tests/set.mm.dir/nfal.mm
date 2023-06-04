@@ -3,8 +3,8 @@ include "nf5ri.mm";
 include "hbal.mm";
 include "nf5i.mm";
 
-theorem nfal(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
-  assume nfal.1: $|- F/ x ph$;
+theorem nfal(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
+  assume nfal.1: |- "F/ x ph";
 
 
 
@@ -26,5 +26,5 @@ theorem nfal(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
     nf5i;
   };
 
-  return $|-$ $F/ x A. y ph$;
+  return '|-' "F/ x A. y ph";
 }

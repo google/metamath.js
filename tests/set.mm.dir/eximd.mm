@@ -1,9 +1,9 @@
 include "nf5ri.mm";
 include "eximdh.mm";
 
-theorem eximd(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
-  assume eximd.1: $|- F/ x ph$;
-  assume eximd.2: $|- ( ph -> ( ps -> ch ) )$;
+theorem eximd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
+  assume eximd.1: |- "F/ x ph";
+  assume eximd.2: |- "( ph -> ( ps -> ch ) )";
 
 
 
@@ -22,5 +22,5 @@ theorem eximd(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
     eximdh;
   };
 
-  return $|-$ $( ph -> ( E. x ps -> E. x ch ) )$;
+  return '|-' "( ph -> ( E. x ps -> E. x ch ) )";
 }

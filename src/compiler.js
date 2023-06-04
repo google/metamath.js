@@ -21,15 +21,18 @@ class Lexer {
       ["{"]: "{",
       ["}"]: "}",
       ['"']: '"',
+      ["'"]: "'",
       [":"]: ":",
       [","]: ",",
       [";"]: ";",
       ["@"]: "@",
       ["#"]: "#",
+      ["\\"]: "\\",
       ["label"]: /[A-Za-z0-9-_.]+/,
-      ["symbol"]: /[!-#%-\:<-~]+/, // no " ", "$", ";"
-      ["quote"]: /\$[!-#%-~]+\$/,
-      ["string"]: /\$(?:[!-#%-~]+(?:\s+[!-#%-~]+)*\s?)?\$/,
+      ["char"]: /[!#-&\(-\[\]-~]+/, // no \ and " and '
+      //["symbol"]: /[!-#%-\:<-~]+/, // no " ", "$", ";"
+      //["quote"]: /\$[!-#%-~]+\$/,
+      //["string"]: /\$(?:[!-#%-~]+(?:\s+[!-#%-~]+)*\s?)?\$/,
     };
     this.lexer = moo.compile(lexicon);
   }
@@ -97,6 +100,22 @@ const symbols = [
   "symbol",
 ];
 
+const chars = [
+  "(",
+  ")",
+  "{",
+  "}",
+  //'"',
+  ":",
+  ",",
+  ";",
+  "@",
+  "#",
+  "'",
+  //...labels,
+  "char",
+];
+
 class Parser {
   constructor() {
     this.lexer = new Lexer();
@@ -105,8 +124,12 @@ class Parser {
   id() {
     return this.__id++;
   }
-  parse(code) {
+  feed(code) {
     this.lexer.parse(code);
+    this.lexer.next();
+  }
+  parse(code) {
+    this.feed(code);
     return this.top();
   }
   eat(...types) {
@@ -125,6 +148,10 @@ class Parser {
   error() {
     const {head} = this.lexer;
     const {line, col, buffer} = this.lexer.lexer;
+    //console.log(head);
+    //console.log(this.lexer.lexer);
+    // console.log(this.lexer.lexer.formatError());
+    // throw new Error(this.lexer.lexer.formatError());
     throw new Error(`Unexpected token "${head[0]}":  "${head[1]}" on line ${line} column ${col}.`);
   }
   
@@ -139,6 +166,36 @@ class Parser {
     }
     return false;
   }
+
+  escape2() {
+    this.eat("\\");
+    const ch = this.eat("\\", '"');
+    return ch;
+  }
+  
+  string() {
+    const result = [];
+    this.eat('"');
+    do {
+      if (this.accepts(...labels, ...chars)) {
+        let s = this.eat(...labels, ...chars);
+        while (this.accepts(...labels, ...chars)) {
+          s += this.eat(...labels, ...chars);
+        }
+        result.push(s);
+        continue;
+      } else if (this.accepts("\\")) {
+        //throw new Error("hi");
+        result.push(this.escape2());
+      } else if (this.accepts("ws")) {
+        this.eat("ws");
+      } else {
+        break;
+      }
+    } while (true);
+    this.eat('"');
+    return result;
+  }
   
   ws(optional = false) {
     const sp = ["ws", "comment", "comment-expr"];
@@ -152,35 +209,40 @@ class Parser {
       this.error();
     }
   }
+
+  param() {
+    let first = this.symbol();
+    this.ws(true);
+
+    let label;
+    let type;
+
+    if (this.accepts(":")) {
+      this.eat(":");
+      this.ws();
+      label = first;
+      type = this.symbol();
+      this.ws();
+    } else {
+      label = `${this.id()}`;
+      type = first;
+    }
+
+    const varz = this.label();
+    this.ws(true);
+    return [label, type, varz];
+  }
   
-  head(extras = false) {
+  head() {
     this.eat("(");
     this.ws(true);
 
     const f = [];
+
     // parameters
-    while (this.accepts(...labels, "quote")) {
-      let first = this.symbol();
-      this.ws(true);
-
-      let label;
-      let type;
-
-      if (this.accepts(":")) {
-        this.eat(":");
-        this.ws();
-        label = first;
-        type = this.symbol();
-        this.ws();
-      } else {
-        label = `${this.id()}`;
-        type = first;
-      }
-
-      const varz = this.label();
-      f.push([label, type, varz]);
-      this.ws(true);
-
+    while (this.accepts(...labels, "'")) {
+      f.push(this.param());
+      
       if (!this.accepts(",")) {
         break;
       }
@@ -196,27 +258,48 @@ class Parser {
     return f;
   }
 
+  assume() {
+    this.eat("assume");
+    this.ws();
+    let label = "";
+    if (this.accepts(...labels)) {
+      label = this.label();
+      this.ws(true);
+      this.eat(":");
+      this.ws(true);
+    } else {
+      label = `${this.id()}`;
+    }
+    const [type, str] = this.str();
+    this.ws(true);
+    this.eat(";");
+    this.ws(true);
+    return [label, type, str];
+  }
+
+  let() {
+    this.eat("let");
+    this.ws();
+    const label = this.label();
+    this.ws(true);
+    this.eat(":");
+    this.ws(true);
+    const type = this.accepts(...labels) ? this.label() : this.symbol();
+    this.ws();
+    const name = this.label();
+    this.ws(true);
+    this.eat(";");
+    this.ws(true);
+    return [label, type, name];
+  }
+  
   body(extras = false) {
 
     const e = [];
     
     while (this.accepts("assume")) {
-      this.eat("assume");
-      this.ws();
-      let label = "";
-      if (this.accepts(...labels)) {
-        label = this.label();
-        this.ws(true);
-        this.eat(":");
-        this.ws(true);
-      } else {
-        label = `${this.id()}`;
-      }
-      const [type, ...str] = this.str();
-      e.push([label, type, str]);
-      this.ws(true);
-      this.eat(";");
-      this.ws(true);
+      const assume = this.assume();
+      e.push(assume);
     };
 
     const d = [];
@@ -237,19 +320,7 @@ class Parser {
     const l = [];
     
     while (this.accepts("let")) {
-      this.eat("let");
-      this.ws();
-      const label = this.label();
-      this.ws(true);
-      this.eat(":");
-      this.ws(true);
-      const type = this.accepts(...labels) ? this.label() : this.symbol();
-      this.ws();
-      const name = this.label();
-      l.push([label, type, name]);
-      this.ws(true);
-      this.eat(";");
-      this.ws(true);
+      l.push(this.let());
     };
     
     const proof = [];
@@ -275,19 +346,68 @@ class Parser {
       this.eat(";");
       this.ws(true);
     }
-    
-    this.eat("return");
-    this.ws();
-    const type = this.symbol();
-    this.ws();
-    const str = this.str();
-    this.ws(true);
-    this.eat(";");
+
+    const [type, str] = this.return();
     this.ws(true);
     return [e, d, l, [type, str], proof];
   }
 
+  return() {
+    this.eat("return");
+    this.ws();
+    const [type, str] = this.str();
+    // const type = this.symbol();
+    //this.ws();
+    //const str = this.str();
+    this.ws(true);
+    this.eat(";");
+    return [type, str];
+  }
+
+  str() {
+    const type = this.symbol();
+    this.ws();
+    let str = [];
+    if (this.accepts('"')) {
+      str = this.string();
+    } else {
+      str.push(this.symbol());
+    }
+    return [type, str];
+  }
+
+  quote() {
+    this.eat("'");
+    const result = [];
+    //console.log(this.lexer.head);
+    //throw new Error("hi");
+    do {
+      if (this.accepts(...labels, "char")) {
+        result.push(this.eat(...labels, "char"));
+        continue;
+      } else if (this.accepts("\\")) {
+        result.push(this.escape2());
+      } else {
+        break;
+      }
+    } while (true);
+    this.eat("'");
+    return result.join("");
+  }
+  
   symbol() {
+    if (this.accepts(...labels, "char")) {
+      return this.eat(...labels, "char");
+    }
+
+    if (this.accepts("'")) {
+      return this.quote();
+    }
+
+    this.error("Invalid symbol");
+    
+    return this.string().join("");
+    
     if (this.accepts(...symbols)) {
       return this.eat(...symbols);
     }
@@ -296,7 +416,8 @@ class Parser {
     return quote.slice(1, quote.length - 1);
   }
   
-  str() {
+  str2() {
+    return this.string();
     if (this.accepts("quote", "string")) {
       const result = this.eat("quote", "string");
       const symbols = result.slice(1, result.length - 1);
@@ -337,9 +458,9 @@ class Parser {
     return [type, name, [
       f.map((p) => ["param", p]),
       l.map((v) => ["let", v]),
-      e.map(([label, type, str]) => ["assume", [label, type, ...str]]),
+      e.map(([label, type, str]) => ["assume", [label, type, str]]),
       d.map((varz) => ["disjoint", varz]),
-      ["assert", [t, ...str]],
+      ["assert", [t, str]],
     ], p];
   }
   
@@ -382,7 +503,6 @@ class Parser {
   }
     
   top() {
-    this.lexer.next();
     let result = [];
     do {
       if (this.accepts("ws", "comment", "comment-expr")) {
@@ -484,21 +604,34 @@ class Compiler {
         consts.add(type);
       }
 
+      // All types in assertions are constants
+      consts.add(assert[0]);
+
       const names = vars.map(([, [label, type, name]]) => name);
 
       // All symbols in logical hypothesis that aren't variables are constants
+      //console.log(assumes);
       const logical = [...assumes]
-            .map(([, [type, ...symbols]]) => [type, symbols])
-            .map(([type, symbols]) => symbols.filter((symbol) => !names.includes(symbol)))
+            .map(([, [label, type, symbols]]) => [type, ...symbols])
+            .map((symbols) => symbols.filter((symbol) => !names.includes(symbol)))
             .flat();
+      //console.log(assumes);
+      //console.log(logical);
+      //throw new Error("hi");
       for (let symbol of logical) {
         consts.add(symbol);
       }
       // All symbols in assertions that aren't variables are constants
-      for (let symbol of assert.filter((symbol) => !names.includes(symbol))) {
+      const [, str] = assert;
+      for (let symbol of str.filter((symbol) => !names.includes(symbol))) {
         consts.add(symbol);
+        //console.log(symbol);
+        //throw new Error("hi");
       }
     }
+
+    //console.log(consts);
+    //throw new Error("hi");
 
     let result = [];
     result.push(`$c ${[...consts].join(" ")} $.`);
@@ -509,23 +642,42 @@ class Compiler {
 
       const mandatory = new Set();
 
-      for (const hyp of [...JSON.parse(JSON.stringify(assumes)).map(([, string]) => string.splice(1)), assert]) {
-        for (const tok of hyp) {
-          if (names.includes(tok)) {
-            mandatory.add(tok);
-          } else if (!consts.has(tok)) {
-            throw new Error(`Undeclared token: "${tok}" is neither a constant nor a variable.`);
-          }
+      //console.log();
+      //throw new Error("hi");
+      //assumes.map(([, [label, type, str]]) => str)
+      //console.log();
+      //console.log(assert.flat());
+      //throw new Error("hi");
+      for (const tok of [
+        // ...assumes.map(([, [label, type, string]]) => string), assert
+        ...assumes.map(([, [label, type, string]]) => [type, ...string]).flat(),
+        ...assert.flat()
+      ]) {
+        //console.log(tok);
+        //throw new Error("hi");
+        //for (const tok of hyp) {
+          
+        if (names.includes(tok)) {
+          mandatory.add(tok);
+        } else if (!consts.has(tok)) {
+          throw new Error(`Undeclared token: "${tok}" is neither a constant nor a variable.`);
         }
+        //}
       }
 
       // console.log(mandatory);
       
       const types = [...vars, ...dummies].map(([, [label, type, name]]) => `  ${label} $f ${type} ${name} $.`);
       //console.log(assumes);
-      const logical = [...JSON.parse(JSON.stringify(assumes))]
-            .map(([, assumption]) => [assumption.shift(), assumption.shift(), assumption])
-            .map(([label, type, symbols]) => `  ${label} $e ${type} ${symbols.join(" ")} $.`);
+      //const logical = [...JSON.parse(JSON.stringify(assumes))]
+      //      .map(([, assumption]) => [assumption.shift(), assumption.shift(), assumption])
+      //      .map(([label, type, symbols]) => `  ${label} $e ${type} ${symbols.join(" ")} $.`);
+
+      const logical = assumes.map(([assume, [label, type, str]]) => `  ${label} $e ${type} ${str.join(" ")} $.`);
+      //console.log(logical);
+      //throw new Error("hi");
+      
+
       //console.log(assumes);
       //throw new Error("hi");
       //console.log(assumes);
@@ -540,7 +692,7 @@ class Compiler {
       const f = types.length > 0 ? `${types.join("\n")}` : "";
       const e = logical.length > 0 ? `${logical.join("\n")}` : "";
       //const d = disjoints.length > 0 ? `  $d ${dvis.join(" ")} $.` : "";
-      
+
       let p = "";
 
       if (proof) {
@@ -561,6 +713,8 @@ class Compiler {
           const f = vars
                 .filter(([, [, , name]]) => mandatory.has(name))
                 .map(([letty, [label, type, name]]) => label);
+          // console.log(assumes);
+          // throw new Error("hi");
           const e = [...JSON.parse(JSON.stringify(assumes))]
                 .map(([, assumption]) => [assumption.shift(), assumption.shift(), assumption])
                 .map(([label, type, symbols]) => label);
@@ -579,7 +733,7 @@ ${v}
 ${f}
 ${e}
 ${d}
-  ${label} $${type == "axiom" ? "a" : "p"} ${assert.join(" ")} ${type == "theorem" ? p : ""}$.
+  ${label} $${type == "axiom" ? "a" : "p"} ${assert[0]} ${assert[1].join(" ")} ${type == "theorem" ? p : ""}$.
 $\}`);
     }
 
@@ -640,9 +794,9 @@ class Transpiler {
   
   axiom(label) {
     const [, [d, f, e, [type, axiom]]] = this.mm.labels[label];
-    let args = f.map(([type, name, label]) => `${label}: $${this.escape(type)}$ ${name}`).join(", ");
+    let args = f.map(([type, name, label]) => `${label}: '${this.escape(type)}' ${name}`).join(", ");
     
-    let assumptions = e.map(([seq, type, name]) => `  assume ${name}: $${this.escape(type)} ${this.escape(seq.join(' '))}$;`).join("\n");
+    let assumptions = e.map(([seq, type, name]) => `  assume ${name}: ${this.escape(type)} "${this.escape(seq.join(' '))}";`).join("\n");
 
     if (Object.entries(e).length > 0) {
       assumptions += "\n";
@@ -651,7 +805,7 @@ class Transpiler {
     const result = `
 axiom ${label}(${args}) {
 ${assumptions}
-  return $${this.escape(type)}$ $${this.escape(axiom.join(' '))}$;
+  return '${this.escape(type)}' "${this.escape(axiom.join(' '))}";
 }
 `;
 
@@ -659,8 +813,8 @@ ${assumptions}
   }
 
   escape(str) {
-    return str;
-    // return str.replace('"', '\\"');
+    //return str;
+    return str.replaceAll('\\', `\\\\`).replaceAll('"', '\\"');
   }
   
   theorem(label) {
@@ -686,7 +840,7 @@ ${assumptions}
     //  varz.push(`  let ${label}: ${type} ${name}`);
     //}
 
-    const args = f.map(([type, name, label]) => `${label}: $${this.escape(type)}$ ${name}`).join(", ");
+    const args = f.map(([type, name, label]) => `${label}: '${this.escape(type)}' ${name}`).join(", ");
     
     const dlabels = dummies.map(([type, name, label]) => label);
 
@@ -711,7 +865,7 @@ ${assumptions}
 
     let conds = "";
     
-    let assumptions = e.map(([seq, type, name]) => `  assume ${name}: $${type} ${this.escape(seq.join(' '))}$;`).join("\n");
+    let assumptions = e.map(([seq, type, name]) => `  assume ${name}: ${type} "${this.escape(seq.join(' '))}";`).join("\n");
 
     if (Object.entries(e).length > 0) {
       assumptions += "\n";
@@ -734,7 +888,7 @@ ${assumptions}
       return `    ${call};`;
     }).join("\n");
 
-    const l = dummies.map(([type, name, label]) => `  let ${label}: $${this.escape(type)}$ ${name};`).join("\n");
+    const l = dummies.map(([type, name, label]) => `  let ${label}: ${this.escape(type)} ${name};`).join("\n");
     
     const code = `
 theorem ${label}(${args}) {
@@ -747,7 +901,7 @@ ${l}
 ${body}
   };
 
-  return $${this.escape(type)}$ $${this.escape(theorem.join(' '))}$;
+  return '${this.escape(type)}' "${this.escape(theorem.join(' '))}";
 }
 `;
 

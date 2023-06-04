@@ -8,7 +8,7 @@ include "id.mm";
 include "alanimi.mm";
 include "impbii.mm";
 
-theorem 19.26(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
+theorem 19.26(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
 
 
 
@@ -59,5 +59,5 @@ theorem 19.26(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     impbii;
   };
 
-  return $|-$ $( A. x ( ph /\ ps ) <-> ( A. x ph /\ A. x ps ) )$;
+  return '|-' "( A. x ( ph /\\ ps ) <-> ( A. x ph /\\ A. x ps ) )";
 }

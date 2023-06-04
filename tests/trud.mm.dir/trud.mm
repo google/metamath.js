@@ -1,7 +1,7 @@
 include "ax-trud.mm";
 
-theorem trud(tr: $term$ R) {
-  assume ax-trud.1: $|- R : bool$;
+theorem trud(tr: 'term' R) {
+  assume ax-trud.1: |- "R : bool";
 
 
 
@@ -13,5 +13,5 @@ theorem trud(tr: $term$ R) {
     ax-trud;
   };
 
-  return $|-$ $R |= T.$;
+  return '|-' "R |= T.";
 }

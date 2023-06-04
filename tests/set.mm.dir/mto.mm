@@ -2,9 +2,9 @@ include "wn.mm";
 include "a1i.mm";
 include "pm2.65i.mm";
 
-theorem mto(wph: $wff$ ph, wps: $wff$ ps) {
-  assume mto.1: $|- -. ps$;
-  assume mto.2: $|- ( ph -> ps )$;
+theorem mto(wph: 'wff' ph, wps: 'wff' ps) {
+  assume mto.1: |- "-. ps";
+  assume mto.2: |- "( ph -> ps )";
 
 
 
@@ -22,5 +22,5 @@ theorem mto(wph: $wff$ ph, wps: $wff$ ps) {
     pm2.65i;
   };
 
-  return $|-$ $-. ph$;
+  return '|-' "-. ph";
 }

@@ -5,9 +5,9 @@ include "ax-refl.mm";
 include "a1i.mm";
 include "dfov2.mm";
 
-theorem eqid(hal: $type$ al, ta: $term$ A, tr: $term$ R) {
-  assume eqid.1: $|- R : bool$;
-  assume eqid.2: $|- A : al$;
+theorem eqid(hal: 'type' al, ta: 'term' A, tr: 'term' R) {
+  assume eqid.1: |- "R : bool";
+  assume eqid.2: |- "A : al";
 
 
 
@@ -39,5 +39,5 @@ theorem eqid(hal: $type$ al, ta: $term$ A, tr: $term$ R) {
     dfov2;
   };
 
-  return $|-$ $R |= [ A = A ]$;
+  return '|-' "R |= [ A = A ]";
 }

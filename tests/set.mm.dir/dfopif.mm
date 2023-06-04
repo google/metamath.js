@@ -29,11 +29,11 @@ include "eqtr4d.mm";
 include "pm2.61i.mm";
 include "3eqtri.mm";
 
-theorem dfopif(cA: $class$ A, cB: $class$ B) {
+theorem dfopif(cA: 'class' A, cB: 'class' B) {
 
 
 
-  let vx: $setvar$ x;
+  let vx: setvar x;
 
   do {
     cA;
@@ -152,5 +152,5 @@ theorem dfopif(cA: $class$ A, cB: $class$ B) {
     3eqtri;
   };
 
-  return $|-$ $<. A , B >. = if ( ( A e. _V /\ B e. _V ) , { { A } , { A , B } } , (/) )$;
+  return '|-' "<. A , B >. = if ( ( A e. _V /\\ B e. _V ) , { { A } , { A , B } } , (/) )";
 }

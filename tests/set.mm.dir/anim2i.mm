@@ -1,8 +1,8 @@
 include "id.mm";
 include "anim12i.mm";
 
-theorem anim2i(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume anim1i.1: $|- ( ph -> ps )$;
+theorem anim2i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume anim1i.1: |- "( ph -> ps )";
 
 
 
@@ -19,5 +19,5 @@ theorem anim2i(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     anim12i;
   };
 
-  return $|-$ $( ( ch /\ ph ) -> ( ch /\ ps ) )$;
+  return '|-' "( ( ch /\\ ph ) -> ( ch /\\ ps ) )";
 }

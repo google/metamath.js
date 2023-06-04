@@ -1,7 +1,7 @@
 const Assert = require("assert");
 const {Verifier} = require("../src/descent.js");
 
-describe("Compiler", () => {
+describe("Parser", () => {
   const {Transpiler, Compiler, Parser, Lexer} = require("../src/compiler.js");
 
   it(`axiom foo() { return |- bar; }`, () => {
@@ -16,16 +16,16 @@ describe("Compiler", () => {
         [],
         [],
         [],
-        ["assert", ["|-", "bar"]],
+        ["assert", ["|-", ["bar"]]],
       ], [
       ]]
     ]);
   });
 
-  it(`axiom foo() { return |- ( 1 , 2 , 3 ); }`, () => {
+  it(`axiom foo() { return |- "( 1 , 2 , 3 )"; }`, () => {
     let result = new Parser().parse(`
     axiom foo() {
-      return |- ( 1 , 2 , 3 );
+      return |- "( 1 , 2 , 3 )";
     }
     `);
     assertThat(result).equalsTo([
@@ -34,16 +34,16 @@ describe("Compiler", () => {
         [],
         [],
         [],
-        ["assert", ["|-", "(", "1", ",", "2", ",", "3", ")"]],
+        ["assert", ["|-", ["(", "1", ",", "2", ",", "3", ")"]]],
       ], [
       ]]
     ]);
   });
 
-  it(`axiom foo() { return |- hello  world; }`, () => {
+  it(`axiom foo() { return |- "hello  world"; }`, () => {
     let result = new Parser().parse(`
     axiom foo() {
-      return |- hello  world;
+      return |- "hello  world";
     }
     `);
     assertThat(result).equalsTo([
@@ -52,16 +52,16 @@ describe("Compiler", () => {
         [],
         [],
         [],
-        ["assert", ["|-", "hello", "world"]],
+        ["assert", ["|-", ["hello", "world"]]],
       ], [
       ]]
     ]);
   });
 
-  it(`axiom foo() { return |- $$; }`, () => {
+  it(`axiom foo() { return |- ""; }`, () => {
     let result = new Parser().parse(`
     axiom foo() {
-      return |- $$;
+      return |- "";
     }
     `);
     assertThat(result).equalsTo([
@@ -70,16 +70,16 @@ describe("Compiler", () => {
         [],
         [],
         [],
-        ["assert", ["|-", ""]],
+        ["assert", ["|-", []]],
       ], [
       ]]
     ]);
   });
   
-  it(`axiom foo() { return |- $;$; }`, () => {
+  it(`axiom foo() { return |- ";"; }`, () => {
     let result = new Parser().parse(`
     axiom foo() {
-      return |- $;$;
+      return |- ";";
     }
     `);
     assertThat(result).equalsTo([
@@ -88,16 +88,16 @@ describe("Compiler", () => {
         [],
         [],
         [],
-        ["assert", ["|-", ";"]],
+        ["assert", ["|-", [";"]]],
       ], [
       ]]
     ]);
   });
 
-  it(`axiom foo() { return term /\; }`, () => {
+  it(`axiom foo() { return term "/\\\\"; }`, () => {
     let result = new Parser().parse(`
     axiom foo() {
-      return term /\\;
+      return term "/\\\\";
     }
     `);
     assertThat(result).equalsTo([
@@ -106,7 +106,7 @@ describe("Compiler", () => {
         [],
         [],
         [],
-        ["assert", ["term", "/\\"]],
+        ["assert", ["term", ["/", "\\"]]],
       ], [
       ]]
     ]);
@@ -133,7 +133,7 @@ describe("Compiler", () => {
         [],
         [],
         [],
-        ["assert", ["|-", "bar"]],
+        ["assert", ["|-", ["bar"]]],
       ], [
       ]]
     ]);
@@ -151,7 +151,7 @@ describe("Compiler", () => {
         [],
         [],
         [],
-        ["assert", ["|-", "bar"]],
+        ["assert", ["|-", ["bar"]]],
       ], [
       ]]
     ]);
@@ -169,15 +169,15 @@ describe("Compiler", () => {
         [],
         [],
         [],
-        ["assert", ["|-", "bar"]],
+        ["assert", ["|-", ["bar"]]],
       ], [
       ]]
     ]);
   });
   
-  it(`axiom foo(|- x, foo y, \\" z) { return |- bar; }`, () => {
+  it(`axiom foo(|- x, foo y, '\\"' z) { return |- bar; }`, () => {
     let result = new Parser().parse(`
-    axiom foo($|-$ x, foo y, $\\"$ z) {
+    axiom foo('|-' x, foo y, '\\"' z) {
       return |- bar;
     }
     `);
@@ -186,12 +186,12 @@ describe("Compiler", () => {
         [
           ["param", ["0", '|-', "x"]],
           ["param", ["1", 'foo', "y"]],
-          ["param", ["2", '\\"', "z"]],
+          ["param", ["2", '\"', "z"]],
         ],
         [],
         [],
         [],
-        ["assert", ["|-", "bar"]],
+        ["assert", ["|-", ["bar"]]],
       ], [
       ]]
     ]);
@@ -209,7 +209,7 @@ describe("Compiler", () => {
         [],
         [],
         [],
-        ["assert", ["|-", "bar"]],
+        ["assert", ["|-", ["bar"]]],
       ], [
       ]]
     ]);
@@ -227,7 +227,7 @@ describe("Compiler", () => {
         [],
         [],
         [],
-        ["assert", ["|-", "bar"]],
+        ["assert", ["|-", ["bar"]]],
       ], [
       ]]
     ]);
@@ -238,7 +238,7 @@ describe("Compiler", () => {
     axiom foo(wff x, wff y) {
       assume |- x;
       disjoint x y;
-      return |- x [ y ];
+      return |- "x [ y ]";
     }
     `);
 
@@ -246,9 +246,9 @@ describe("Compiler", () => {
       ["axiom", "foo", [
         [["param", ["0", "wff", "x"]], ["param", ["1", "wff", "y"]]],
         [],
-        [["assume", ["2", "|-", "x"]]],
+        [["assume", ["2", "|-", ["x"]]]],
         [["disjoint", ["x", "y"]]],
-        ["assert", ["|-", "x", "[", "y", "]"]],
+        ["assert", ["|-", ["x", "[", "y", "]"]]],
       ], [
       ]]
     ]);
@@ -257,8 +257,8 @@ describe("Compiler", () => {
   it(`axiom foo() { return |- bar; }`, () => {
     let result = new Parser().parse(`
     axiom foo() {
-      assume maj: |- x;
-      return |- x [ y ];
+      assume maj: |- "x";
+      return |- "x [ y ]";
     }
     `);
 
@@ -266,9 +266,9 @@ describe("Compiler", () => {
       ["axiom", "foo", [
         [],
         [],
-        [["assume", ["maj", "|-", "x"]]],
+        [["assume", ["maj", "|-", ["x"]]]],
         [],
-        ["assert", ["|-", "x", "[", "y", "]"]],
+        ["assert", ["|-", ["x", "[", "y", "]"]]],
       ], [
       ]]
     ]);
@@ -286,10 +286,10 @@ describe("Compiler", () => {
         [],
         [],
         [
-          ["assume", ["0", "|-", "x"]],
+          ["assume", ["0", "|-", ["x"]]],
         ],
         [],
-        ["assert", ["|-", "bar"]],
+        ["assert", ["|-", ["bar"]]],
       ], [
       ]]
     ]);
@@ -308,11 +308,11 @@ describe("Compiler", () => {
         [],
         [],
         [
-          ["assume", ["0", "|-", "x"]],
-          ["assume", ["1", "|-", "y"]]
+          ["assume", ["0", "|-", ["x"]]],
+          ["assume", ["1", "|-", ["y"]]]
         ],
         [],
-        ["assert", ["|-", "bar"]],
+        ["assert", ["|-", ["bar"]]],
       ], [
       ]]
     ]);
@@ -342,7 +342,7 @@ describe("Compiler", () => {
         [],
         [],
         [],
-        ["assert", ["|-", "bar"]],
+        ["assert", ["|-", ["bar"]]],
       ], [
         "hello", "#", "world", "@2",
         "let", "return", "letx", "letreturn", "theorem", "axiom"
@@ -369,7 +369,7 @@ describe("Compiler", () => {
         ],
         [],
         [],
-        ["assert", ["|-", "bar"]],
+        ["assert", ["|-", ["bar"]]],
       ], [
       ]]
     ]);
@@ -394,7 +394,7 @@ describe("Compiler", () => {
         ],
         [],
         [],
-        ["assert", ["|-", "bar"]],
+        ["assert", ["|-", ["bar"]]],
       ], [
       ]]
     ]);
@@ -403,8 +403,8 @@ describe("Compiler", () => {
   it(`theorem foo(f1: wff x, f2: wff y) { return |- bar; }`, () => {
     let result = new Parser().parse(`
     theorem foo(f1: wff x, f2: wff y) {
-      assume e1: $|- x$;
-      assume e2: $|- x -> y$;
+      assume e1: |- "x";
+      assume e2: |- "x -> y";
       do {
       };
       return |- bar;
@@ -418,11 +418,11 @@ describe("Compiler", () => {
         ],
         [],
         [
-          ["assume", ["e1", "|-", "x"]],
-          ["assume", ["e2", "|-", "x", "->", "y"]],
+          ["assume", ["e1", "|-", ["x"]]],
+          ["assume", ["e2", "|-", ["x", "->", "y"]]],
         ],
         [],
-        ["assert", ["|-", "bar"]],
+        ["assert", ["|-", ["bar"]]],
       ],
       []]
     ]);
@@ -446,7 +446,7 @@ describe("Compiler", () => {
         [],
         [],
         [],
-        ["assert", ["|-", "bar"]],
+        ["assert", ["|-", ["bar"]]],
       ], [
       ]]
     ]);
@@ -460,18 +460,18 @@ describe("Compiler", () => {
 
       axiom mp(wp: wff p, wq: wff q) {
         // logical hypothesis
-        assume maj: |- p => q;
-        assume min: |- p;
+        assume maj: |- "p => q";
+        assume min: |- "p";
 
         // disjoint variables
         disjoint p q;
         
-        return |- q;
+        return |- "q";
       }
 
       axiom we() {
         // empty symbols allowed
-        return |- $$;
+        return |- "";
       }
 
       theorem theorem1(wx: wff x, wy: wff y) {
@@ -482,7 +482,7 @@ describe("Compiler", () => {
           #;
           @4;
         };
-        return |- ~ p;
+        return |- "~ p";
       }
     `);
     
@@ -498,15 +498,15 @@ describe("Compiler", () => {
         ],
         [
           // assumptions
-          ["assume", ["maj", "|-", "p", "=>", "q"]],
-          ["assume", ["min", "|-", "p"]],
+          ["assume", ["maj", "|-", ["p", "=>", "q"]]],
+          ["assume", ["min", "|-", ["p"]]],
         ],
         [
           // disjoint requirements
           ["disjoint", ["p", "q"]]
         ],
         // assertion
-        ["assert", ["|-", "q"]],
+        ["assert", ["|-", ["q"]]],
       ], []
       ],
       ["axiom", "we", [
@@ -514,7 +514,7 @@ describe("Compiler", () => {
         [],
         [],
         [],
-        ["assert", ["|-", ""]],
+        ["assert", ["|-", []]],
       ], []
       ],
       ["theorem", "theorem1", [
@@ -525,7 +525,7 @@ describe("Compiler", () => {
         [],
         [],
         [],
-        ["assert", ["|-", "~", "p"]]
+        ["assert", ["|-", ["~", "p"]]]
       ],
        [
          "foo",
@@ -537,12 +537,12 @@ describe("Compiler", () => {
     ]);
   });
 
-  it("Invalid Syntax: ; in strings", async () => {
+  it.skip("Invalid Syntax: ; in strings", async () => {
     try {
       new Parser().parse(`
     axiom foo() {
       // ";" are not allowed in strings.
-      return |- ( ; );
+      return |- "( ; )";
     }
     `);
       throw new Error("Should fail first");
@@ -604,6 +604,173 @@ describe("Compiler", () => {
     assertThat("a$2C".match(r)[0]).equalsTo("a$2C");
   });
 
+  it("string()", async () => {
+    const {Parser} = require("../src/compiler.js");
+
+    const string = (str, expected) => {
+      const parser = new Parser();
+      parser.feed(str);
+      assertThat(parser.accepts('"')).equalsTo(true);
+      assertThat(parser.string()).equalsTo(expected);
+    }
+
+    string('""', []);
+    string('"a"', ['a']);
+    string('"abc"', ['abc']);
+    string('"\\""', ['"']);
+    string('"\\\\"', ["\\"]);
+    string('"/\\""', ['/', '"']);
+    string('"hello \\" world"', ["hello", '"', "world"]);
+    string('"\\" hello \\" world \\""', ['"', "hello", '"', "world", '"']);
+    string('"|- p"', ["|-", "p"]);
+    string('"|- p && q"', ["|-", "p", "&&", "q"]);
+    string('";"', [";"]);
+    string('"->"', ["->"]);
+    string('"x -> y"', ["x", "->", "y"]);
+    string('"p [ q ]"', ["p", "[", "q", "]"]);
+    string(`"0 = ( a v a ' ) '"`, ["0", "=", "(", "a", "v", "a", "'", ")", "'"]);
+  });
+  
+  it("symbol()", async () => {
+    const {Parser} = require("../src/compiler.js");
+
+    const symbol = (str, expected) => {
+      const parser = new Parser();
+      parser.feed(str);
+      assertThat(parser.accepts("'", '"', "label", "char")).equalsTo(true);
+      assertThat(parser.symbol()).equalsTo(expected);
+    }
+
+    symbol("''", "");
+    symbol("'|-'", "|-");
+    symbol("a", "a");
+    symbol("ab", "ab");
+    symbol("abc", "abc");
+    symbol("|-", "|-");
+    symbol("=", "=");
+    symbol("[", "[");
+    symbol(`'\\"'`, `"`);
+  });
+  
+  it("return()", async () => {
+    const {Parser} = require("../src/compiler.js");
+
+    const returny = (str, expected) => {
+      const parser = new Parser();
+      parser.feed(str);
+      assertThat(parser.accepts("return")).equalsTo(true);
+      assertThat(parser.return()).equalsTo(expected);
+    }
+
+    returny('return |- "";', ["|-", []]);
+    returny('return |- "p";', ["|-", ["p"]]);
+    returny('return |- p;', ["|-", ["p"]]);
+    returny('return |- "p && q";', ["|-", ["p", "&&", "q"]]);
+    returny('return |- "/\\\\";', ["|-", ["/", "\\"]]);
+    // TODO: reconsider if we should extend the grammar to support $.
+    returny('return |- "$";', ["|-", ["$"]]);
+    returny('return |- "$( comment $)";', ["|-", ["$(", "comment", "$)"]]);
+  });
+  
+  it("assume()", async () => {
+    const {Parser} = require("../src/compiler.js");
+
+    const assume = (str, expected) => {
+      const parser = new Parser();
+      parser.feed(str);
+      assertThat(parser.accepts("assume")).equalsTo(true);
+      assertThat(parser.assume()).equalsTo(expected);
+    }
+
+    assume('assume e1: |- p;', ["e1", "|-", ["p"]]);
+    assume('assume e1: |- "p && q";', ["e1", "|-", ["p", "&&", "q"]]);
+    assume('assume e1: |- "~ p";', ["e1", "|-", ["~", "p"]]);
+    assume('assume e1: |- "~ p";', ["e1", "|-", ["~", "p"]]);
+  });
+  
+  it("let()", async () => {
+    const {Parser} = require("../src/compiler.js");
+
+    const letty = (str, expected) => {
+      const parser = new Parser();
+      parser.feed(str);
+      assertThat(parser.accepts("let")).equalsTo(true);
+      assertThat(parser.let()).equalsTo(expected);
+    }
+
+    letty('let e1: wff p;', ["e1", "wff", "p"]);
+    letty('let e1: wff q;', ["e1", "wff", "q"]);
+  });
+
+  it("param()", async () => {
+    const {Parser} = require("../src/compiler.js");
+
+    const param = (str, expected) => {
+      const parser = new Parser();
+      parser.feed(str);
+      assertThat(parser.param()).equalsTo(expected);
+    }
+
+    param('e1: wff p', ["e1", "wff", "p"]);
+    param('wff p', ["0", "wff", "p"]);
+    param('|- p', ["0", "|-", "p"]);
+    param("'|-' p", ["0", "|-", "p"]);
+  });
+
+  it("head()", async () => {
+    const {Parser} = require("../src/compiler.js");
+
+    const head = (str, expected) => {
+      const parser = new Parser();
+      parser.feed(str);
+      assertThat(parser.head()).equalsTo(expected);
+    }
+
+    head('()', []);
+    head('(wff p)', [["0", "wff", "p"]]);
+    head('(wff p, wff q)', [["0", "wff", "p"], ["1", "wff", "q"]]);
+    head('(wff p, wff q, wff r)', [["0", "wff", "p"], ["1", "wff", "q"], ["2", "wff", "r"]]);
+    head('(e1: wff p)', [["e1", "wff", "p"]]);
+    head('(e1: wff p, e2: wff q)', [["e1", "wff", "p"], ["e2", "wff", "q"]]);
+    head("('|-' p)", [["0", "|-", "p"]]);
+    
+  });
+
+  it("body()", async () => {
+    const {Parser} = require("../src/compiler.js");
+
+    const body = (str, expected) => {
+      const parser = new Parser();
+      parser.feed(str);
+      assertThat(parser.body()).equalsTo(expected);
+    }
+
+    body('return |- p;', [[], [], [], ["|-", ["p"]], []]);
+    body('let e1: wff x; return |- p;', [[], [], [["e1", "wff", "x"]], ["|-", ["p"]], []]);
+    body('assume e1: |- "~ x"; return |- p;', [[["e1", "|-", ["~", "x"]]], [], [], ["|-", ["p"]], []]);
+    body('disjoint x y; return |- p;', [[], [["x", "y"]], [], ["|-", ["p"]], []]);
+  });
+
+  it("func()", async () => {
+    const {Parser} = require("../src/compiler.js");
+
+    const axiom = (str, expected) => {
+      const parser = new Parser();
+      parser.feed(str);
+      assertThat(parser.func("axiom")).equalsTo(expected);
+    }
+
+    axiom("axiom foo() { return |- p; }", [
+      "axiom", "foo", [
+        [], [], [], [], [
+          "assert", ["|-", ["p"]]
+        ]
+      ],
+      []
+    ]);
+  });
+
+  
   it("regex: symbols", async () => {
     const r = /\$[!-#%-~]+\$/;
     assertThat("$foobar$".match(r)[0]).equalsTo("$foobar$");
@@ -679,7 +846,7 @@ describe("Compiler", () => {
       .equalsTo('"hello world"');
   });
   
-  it(`lexer: strings`, async () => {
+  it.skip(`lexer: strings`, async () => {
     new Lexer()
       .parse(`$/\\$  something else"`)
       .eat("quote", '$/\\$');
@@ -747,7 +914,7 @@ describe("Compiler", () => {
 
   });
 
-  it("lexer: args", async () => {
+  it.skip("lexer: args", async () => {
     new Lexer()
       .parse("(|- a)")
       .eat("(")
@@ -757,7 +924,7 @@ describe("Compiler", () => {
       .eat(")");
   });
   
-  it("lexer: let", async () => {
+  it.skip("lexer: let", async () => {
     let lexer = new Lexer();
     lexer.parse(`
       let $let$: wff p;
@@ -865,7 +1032,7 @@ describe("Transpiler", () => {
       ww $f " t $.
       $d p r $.
       $\{
-        foo $e ( p -> q ) $.
+        foo $e |- ( p -> q ) $.
         w0 $a wff ( p var q ) $.
       $\}
       w2 $a wff ( p -> q ) $.
@@ -874,23 +1041,23 @@ describe("Transpiler", () => {
     `;
     
     assertThat(new Transpiler().read(metamath).dump()).equalsTo(`
-axiom w0(wp: $wff$ p, wq: $wff$ q) {
-  assume foo: $( p -> q )$;
+axiom w0(wp: 'wff' p, wq: 'wff' q) {
+  assume foo: |- "( p -> q )";
 
-  return $wff$ $( p var q )$;
+  return 'wff' "( p var q )";
 }
 
-axiom w2(wp: $wff$ p, wq: $wff$ q) {
+axiom w2(wp: 'wff' p, wq: 'wff' q) {
 
-  return $wff$ $( p -> q )$;
+  return 'wff' "( p -> q )";
 }
 
-axiom wesc(ww: $"$ t) {
+axiom wesc(ww: '\\"' t) {
 
-  return $wff$ $" t$;
+  return 'wff' "\\" t";
 }
 
-theorem wnew(wp: $wff$ p, wr: $wff$ r, ws: $wff$ s) {
+theorem wnew(wp: 'wff' p, wr: 'wff' r, ws: 'wff' s) {
 
   disjoint p r;
 
@@ -904,12 +1071,57 @@ theorem wnew(wp: $wff$ p, wr: $wff$ r, ws: $wff$ s) {
     w2;
   };
 
-  return $wff$ $( s -> ( r -> p ) )$;
+  return 'wff' "( s -> ( r -> p ) )";
 }
 `);
 
   });
   
+  it("escapes quotes and \\", async () => {
+    const source = `
+$c " - ) \\ $.
+$v x y $.
+wx $f " x $.
+wy $f ) y $.
+
+$( 1 is a " $)
+w0 $a " - $.
+
+$( n is a " $)
+w1 $a " x - \\ $.
+
+$( 2 is a " $)
+t0 $p " - - $= w0 w1 $.
+`;
+
+    assertThat(new Transpiler().read(source).dump()).equalsTo(`
+axiom w0() {
+
+  return '\\"' "-";
+}
+
+axiom w1(wx: '\\"' x) {
+
+  return '\\"' "x - \\\\";
+}
+
+theorem t0() {
+
+
+
+
+
+  do {
+    w0;
+    w1;
+  };
+
+  return '\\"' "- -";
+}
+`);
+    
+  });
+
   it("compile", async () => {
     const metamath = `
       $c ( ) -> wff : var $.
@@ -921,7 +1133,7 @@ theorem wnew(wp: $wff$ p, wr: $wff$ r, ws: $wff$ s) {
       $d p r $.
       $\{
         bar $f var p $.
-        foo $e p : q $.
+        foo $e |- p : q $.
         w0 $a wff ( p -> q ) $.
       $\}
       w2 $a wff ( p -> q ) $.
@@ -931,17 +1143,17 @@ theorem wnew(wp: $wff$ p, wr: $wff$ r, ws: $wff$ s) {
 
     const source = transpiler.dump();
 
-    // console.log(source);
+    //console.log(source);
     
     const result = await new Compiler().compile(source);
     assertThat(result).equalsTo(
-`$c wff var : ( -> ) $.
+`$c wff var |- : ( -> ) $.
 
 $\{
   $v q p $.
   wq $f wff q $.
   bar $f var p $.
-  foo $e p : q $.
+  foo $e |- p : q $.
 
   w0 $a wff ( p -> q ) $.
 $\}
@@ -1036,11 +1248,13 @@ describe("Transpile and Parse", () => {
     it(`Transpile and parse: ${src}`, async () => {
       const fs = require("fs/promises");
       const program = await fs.readFile(`tests/${src}`);
-      // console.log(program.toString());
+      //console.log(program.toString());
       const files = await new Transpiler().read(program.toString()).split();
+      // console.log(files);
       for (let [name, [deps, content]] of Object.entries(files)) {
         let parser = new Parser();
         try {
+          //console.log(content);
           parser.parse(content);
         } catch (e) {
           console.log(`Error parsing ${name} of ${src}.`);
@@ -1124,6 +1338,8 @@ describe("Transpile and Parse", () => {
           .read(program.toString())
           .theorem(label);
 
+    // console.log(content);
+    
     assertThat(await new Compiler().compile(content)).
       equalsTo(`$c type var term |- : [ = ] |= T. ( \\ . ) $.
 
@@ -1163,12 +1379,25 @@ $\}`);;
           .values(files)
           .map(([deps, content]) => content)
           .join("");
-    
+
     const metamath = await new Compiler().compile(dump);
 
     const {process} = require("../src/descent.js");
     const mm = process(metamath);
     const [, [d, f, e, rule], verifier, proof] = mm.labels[label];
+  });
+
+  it("Parse hol.mm / cl", async function () {
+    const program = await require("fs/promises").readFile(`tests/hol.mm.dir/cl.mm`);
+    const metamath = await new Compiler().compile(program.toString());
+  });
+
+  it("Transpile and compile: hol.mm / hbl1", async function() {
+    const program = await require("fs/promises").readFile(`node_modules/set.mm/hol.mm`);
+    const [deps, source] = new Transpiler()
+          .read(program.toString())
+          .theorem("hbl1");
+    const metamath = await new Compiler().compile(source);
   });
   
   it("Verify the correspondence: hol.mm / cl", async function() {
@@ -1177,12 +1406,22 @@ $\}`);;
     const program = await require("fs/promises").readFile(`node_modules/set.mm/${src}`);
     const files = new Transpiler()
           .read(program.toString())
-          .closure(label, true);
+          .closure(label);
 
     const dump = Object
           .values(files)
           .map(([deps, content]) => content)
           .join("");
+
+    for (const [file, [deps, source]] of Object.entries(files)) {
+      try {
+        const metamath = await new Compiler().compile(source);
+      } catch (e) {
+        console.log(source);
+        console.log(`Failed to compile ${file}.`);
+        throw e;
+      }
+    }
     
     const metamath = await new Compiler().compile(dump);
 

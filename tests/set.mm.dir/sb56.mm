@@ -8,7 +8,7 @@ include "com12.mm";
 include "impbid.mm";
 include "equsexv.mm";
 
-theorem sb56(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
+theorem sb56(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
 
   disjoint x y;
 
@@ -49,5 +49,5 @@ theorem sb56(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
     equsexv;
   };
 
-  return $|-$ $( E. x ( x = y /\ ph ) <-> A. x ( x = y -> ph ) )$;
+  return '|-' "( E. x ( x = y /\\ ph ) <-> A. x ( x = y -> ph ) )";
 }

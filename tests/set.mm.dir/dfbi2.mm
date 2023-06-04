@@ -6,7 +6,7 @@ include "dfbi1.mm";
 include "df-an.mm";
 include "bitr4i.mm";
 
-theorem dfbi2(wph: $wff$ ph, wps: $wff$ ps) {
+theorem dfbi2(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -39,5 +39,5 @@ theorem dfbi2(wph: $wff$ ph, wps: $wff$ ps) {
     bitr4i;
   };
 
-  return $|-$ $( ( ph <-> ps ) <-> ( ( ph -> ps ) /\ ( ps -> ph ) ) )$;
+  return '|-' "( ( ph <-> ps ) <-> ( ( ph -> ps ) /\\ ( ps -> ph ) ) )";
 }

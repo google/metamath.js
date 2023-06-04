@@ -3,7 +3,7 @@ include "ax-1.mm";
 include "pm2.27.mm";
 include "impbid2.mm";
 
-theorem biimt(wph: $wff$ ph, wps: $wff$ ps) {
+theorem biimt(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -24,5 +24,5 @@ theorem biimt(wph: $wff$ ph, wps: $wff$ ps) {
     impbid2;
   };
 
-  return $|-$ $( ph -> ( ps <-> ( ph -> ps ) ) )$;
+  return '|-' "( ph -> ( ps <-> ( ph -> ps ) ) )";
 }

@@ -3,8 +3,8 @@ include "eqid.mm";
 include "eqeq1d.mm";
 include "mpbii.mm";
 
-theorem eqcomd(wph: $wff$ ph, cA: $class$ A, cB: $class$ B) {
-  assume eqcomd.1: $|- ( ph -> A = B )$;
+theorem eqcomd(wph: 'wff' ph, cA: 'class' A, cB: 'class' B) {
+  assume eqcomd.1: |- "( ph -> A = B )";
 
 
 
@@ -29,5 +29,5 @@ theorem eqcomd(wph: $wff$ ph, cA: $class$ A, cB: $class$ B) {
     mpbii;
   };
 
-  return $|-$ $( ph -> B = A )$;
+  return '|-' "( ph -> B = A )";
 }

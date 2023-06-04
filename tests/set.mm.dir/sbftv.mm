@@ -10,7 +10,7 @@ include "stdpc4v.mm";
 include "syl6.mm";
 include "impbid.mm";
 
-theorem sbftv(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
+theorem sbftv(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
 
   disjoint x y;
 
@@ -58,5 +58,5 @@ theorem sbftv(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
     impbid;
   };
 
-  return $|-$ $( F/ x ph -> ( [ y / x ] ph <-> ph ) )$;
+  return '|-' "( F/ x ph -> ( [ y / x ] ph <-> ph ) )";
 }

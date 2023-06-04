@@ -2,7 +2,7 @@ include "wn.mm";
 include "id.mm";
 include "con2i.mm";
 
-theorem notnot(wph: $wff$ ph) {
+theorem notnot(wph: 'wff' ph) {
 
 
 
@@ -18,5 +18,5 @@ theorem notnot(wph: $wff$ ph) {
     con2i;
   };
 
-  return $|-$ $( ph -> -. -. ph )$;
+  return '|-' "( ph -> -. -. ph )";
 }

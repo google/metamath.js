@@ -4,7 +4,7 @@ include "preq1.mm";
 include "prcom.mm";
 include "3eqtr4g.mm";
 
-theorem preq2(cA: $class$ A, cB: $class$ B, cC: $class$ C) {
+theorem preq2(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
 
 
 
@@ -39,5 +39,5 @@ theorem preq2(cA: $class$ A, cB: $class$ B, cC: $class$ C) {
     3eqtr4g;
   };
 
-  return $|-$ $( A = B -> { C , A } = { C , B } )$;
+  return '|-' "( A = B -> { C , A } = { C , B } )";
 }

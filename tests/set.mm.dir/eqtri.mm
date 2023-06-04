@@ -2,9 +2,9 @@ include "wceq.mm";
 include "eqeq2i.mm";
 include "mpbi.mm";
 
-theorem eqtri(cA: $class$ A, cB: $class$ B, cC: $class$ C) {
-  assume eqtri.1: $|- A = B$;
-  assume eqtri.2: $|- B = C$;
+theorem eqtri(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+  assume eqtri.1: |- "A = B";
+  assume eqtri.2: |- "B = C";
 
 
 
@@ -26,5 +26,5 @@ theorem eqtri(cA: $class$ A, cB: $class$ B, cC: $class$ C) {
     mpbi;
   };
 
-  return $|-$ $A = C$;
+  return '|-' "A = C";
 }

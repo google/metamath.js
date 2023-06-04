@@ -3,9 +3,9 @@ include "cun.mm";
 include "uneq12.mm";
 include "mp2an.mm";
 
-theorem uneq12i(cA: $class$ A, cB: $class$ B, cC: $class$ C, cD: $class$ D) {
-  assume uneq1i.1: $|- A = B$;
-  assume uneq12i.2: $|- C = D$;
+theorem uneq12i(cA: 'class' A, cB: 'class' B, cC: 'class' C, cD: 'class' D) {
+  assume uneq1i.1: |- "A = B";
+  assume uneq12i.2: |- "C = D";
 
 
 
@@ -35,5 +35,5 @@ theorem uneq12i(cA: $class$ A, cB: $class$ B, cC: $class$ C, cD: $class$ D) {
     mp2an;
   };
 
-  return $|-$ $( A u. C ) = ( B u. D )$;
+  return '|-' "( A u. C ) = ( B u. D )";
 }

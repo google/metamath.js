@@ -1,5 +1,5 @@
 
 axiom w0() {
 
-  return $"$ $-$;
+  return '\"' "-";
 }

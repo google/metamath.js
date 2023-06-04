@@ -1,9 +1,9 @@
 include "bitri.mm";
 include "bicomi.mm";
 
-theorem bitr2i(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume bitr2i.1: $|- ( ph <-> ps )$;
-  assume bitr2i.2: $|- ( ps <-> ch )$;
+theorem bitr2i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume bitr2i.1: |- "( ph <-> ps )";
+  assume bitr2i.2: |- "( ps <-> ch )";
 
 
 
@@ -21,5 +21,5 @@ theorem bitr2i(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     bicomi;
   };
 
-  return $|-$ $( ch <-> ph )$;
+  return '|-' "( ch <-> ph )";
 }

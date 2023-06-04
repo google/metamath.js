@@ -2,9 +2,9 @@ include "wb.mm";
 include "a1i.mm";
 include "bitrd.mm";
 
-theorem syl6bb(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
-  assume syl6bb.1: $|- ( ph -> ( ps <-> ch ) )$;
-  assume syl6bb.2: $|- ( ch <-> th )$;
+theorem syl6bb(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+  assume syl6bb.1: |- "( ph -> ( ps <-> ch ) )";
+  assume syl6bb.2: |- "( ch <-> th )";
 
 
 
@@ -25,5 +25,5 @@ theorem syl6bb(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
     bitrd;
   };
 
-  return $|-$ $( ph -> ( ps <-> th ) )$;
+  return '|-' "( ph -> ( ps <-> th ) )";
 }

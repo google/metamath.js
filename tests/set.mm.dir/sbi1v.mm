@@ -9,7 +9,7 @@ include "sb2v.mm";
 include "syl56.mm";
 include "syl.mm";
 
-theorem sbi1v(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x, vy: $setvar$ y) {
+theorem sbi1v(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
 
   disjoint x y;
 
@@ -84,5 +84,5 @@ theorem sbi1v(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x, vy: $setvar$ y) {
     syl;
   };
 
-  return $|-$ $( [ y / x ] ( ph -> ps ) -> ( [ y / x ] ph -> [ y / x ] ps ) )$;
+  return '|-' "( [ y / x ] ( ph -> ps ) -> ( [ y / x ] ph -> [ y / x ] ps ) )";
 }

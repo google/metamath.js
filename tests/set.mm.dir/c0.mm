@@ -2,5 +2,5 @@
 
 axiom c0() {
 
-  return $class$ $(/)$;
+  return 'class' "(/)";
 }

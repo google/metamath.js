@@ -2,9 +2,9 @@ include "wi.mm";
 include "a1i.mm";
 include "sylcom.mm";
 
-theorem syl6(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
-  assume syl6.1: $|- ( ph -> ( ps -> ch ) )$;
-  assume syl6.2: $|- ( ch -> th )$;
+theorem syl6(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+  assume syl6.1: |- "( ph -> ( ps -> ch ) )";
+  assume syl6.2: |- "( ch -> th )";
 
 
 
@@ -25,5 +25,5 @@ theorem syl6(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
     sylcom;
   };
 
-  return $|-$ $( ph -> ( ps -> th ) )$;
+  return '|-' "( ph -> ( ps -> th ) )";
 }

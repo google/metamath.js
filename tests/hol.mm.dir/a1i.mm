@@ -2,9 +2,9 @@ include "kt.mm";
 include "ax-trud.mm";
 include "syl.mm";
 
-theorem a1i(ta: $term$ A, tr: $term$ R) {
-  assume ax-trud.1: $|- R : bool$;
-  assume ax-a1i.2: $|- T. |= A$;
+theorem a1i(ta: 'term' A, tr: 'term' R) {
+  assume ax-trud.1: |- "R : bool";
+  assume ax-a1i.2: |- "T. |= A";
 
 
 
@@ -21,5 +21,5 @@ theorem a1i(ta: $term$ A, tr: $term$ R) {
     syl;
   };
 
-  return $|-$ $R |= A$;
+  return '|-' "R |= A";
 }

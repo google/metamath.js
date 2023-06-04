@@ -8,7 +8,7 @@ include "sbiev.mm";
 include "sbbii.mm";
 include "3bitr3i.mm";
 
-theorem clelsb3v(vx: $setvar$ x, vy: $setvar$ y, cA: $class$ A) {
+theorem clelsb3v(vx: 'setvar' x, vy: 'setvar' y, cA: 'class' A) {
 
   disjoint A y;
   disjoint x y;
@@ -17,7 +17,7 @@ theorem clelsb3v(vx: $setvar$ x, vy: $setvar$ y, cA: $class$ A) {
   disjoint A w;
   disjoint w x;
 
-  let vw: $setvar$ w;
+  let vw: setvar w;
 
   do {
     vw;
@@ -86,5 +86,5 @@ theorem clelsb3v(vx: $setvar$ x, vy: $setvar$ y, cA: $class$ A) {
     3bitr3i;
   };
 
-  return $|-$ $( [ x / y ] y e. A <-> x e. A )$;
+  return '|-' "( [ x / y ] y e. A <-> x e. A )";
 }

@@ -2,8 +2,8 @@ include "wceq.mm";
 include "eqcom.mm";
 include "mpbi.mm";
 
-theorem eqcomi(cA: $class$ A, cB: $class$ B) {
-  assume eqcomi.1: $|- A = B$;
+theorem eqcomi(cA: 'class' A, cB: 'class' B) {
+  assume eqcomi.1: |- "A = B";
 
 
 
@@ -23,5 +23,5 @@ theorem eqcomi(cA: $class$ A, cB: $class$ B) {
     mpbi;
   };
 
-  return $|-$ $B = A$;
+  return '|-' "B = A";
 }

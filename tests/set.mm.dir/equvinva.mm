@@ -7,7 +7,7 @@ include "ancrd.mm";
 include "eximdv.mm";
 include "mpi.mm";
 
-theorem equvinva(vx: $setvar$ x, vy: $setvar$ y, vz: $setvar$ z) {
+theorem equvinva(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
 
   disjoint x z;
   disjoint y z;
@@ -53,5 +53,5 @@ theorem equvinva(vx: $setvar$ x, vy: $setvar$ y, vz: $setvar$ z) {
     mpi;
   };
 
-  return $|-$ $( x = y -> E. z ( x = z /\ y = z ) )$;
+  return '|-' "( x = y -> E. z ( x = z /\\ y = z ) )";
 }

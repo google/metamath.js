@@ -1,5 +1,5 @@
 
 axiom ax8() {
 
-  return $|-$ $P - -$;
+  return '|-' "P - -";
 }

@@ -4,8 +4,8 @@ include "wb.mm";
 include "eleq1.mm";
 include "ax-mp.mm";
 
-theorem eleq1i(cA: $class$ A, cB: $class$ B, cC: $class$ C) {
-  assume eleq1i.1: $|- A = B$;
+theorem eleq1i(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+  assume eleq1i.1: |- "A = B";
 
 
 
@@ -30,5 +30,5 @@ theorem eleq1i(cA: $class$ A, cB: $class$ B, cC: $class$ C) {
     ax-mp;
   };
 
-  return $|-$ $( A e. C <-> B e. C )$;
+  return '|-' "( A e. C <-> B e. C )";
 }

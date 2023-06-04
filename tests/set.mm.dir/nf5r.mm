@@ -7,7 +7,7 @@ include "df-nf.mm";
 include "biimpi.mm";
 include "syl5.mm";
 
-theorem nf5r(wph: $wff$ ph, vx: $setvar$ x) {
+theorem nf5r(wph: 'wff' ph, vx: 'setvar' x) {
 
 
 
@@ -41,5 +41,5 @@ theorem nf5r(wph: $wff$ ph, vx: $setvar$ x) {
     syl5;
   };
 
-  return $|-$ $( F/ x ph -> ( ph -> A. x ph ) )$;
+  return '|-' "( F/ x ph -> ( ph -> A. x ph ) )";
 }

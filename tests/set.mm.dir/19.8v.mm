@@ -1,7 +1,7 @@
 include "ax-5.mm";
 include "19.8w.mm";
 
-theorem 19.8v(wph: $wff$ ph, vx: $setvar$ x) {
+theorem 19.8v(wph: 'wff' ph, vx: 'setvar' x) {
 
   disjoint ph x;
 
@@ -16,5 +16,5 @@ theorem 19.8v(wph: $wff$ ph, vx: $setvar$ x) {
     19.8w;
   };
 
-  return $|-$ $( ph -> E. x ph )$;
+  return '|-' "( ph -> E. x ph )";
 }

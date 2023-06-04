@@ -6,7 +6,7 @@ include "ax-5.mm";
 include "eximal.mm";
 include "mpbir.mm";
 
-theorem ax5e(wph: $wff$ ph, vx: $setvar$ x) {
+theorem ax5e(wph: 'wff' ph, vx: 'setvar' x) {
 
   disjoint ph x;
 
@@ -35,5 +35,5 @@ theorem ax5e(wph: $wff$ ph, vx: $setvar$ x) {
     mpbir;
   };
 
-  return $|-$ $( E. x ph -> ph )$;
+  return '|-' "( E. x ph -> ph )";
 }

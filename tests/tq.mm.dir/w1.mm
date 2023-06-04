@@ -1,5 +1,5 @@
 
-axiom w1(wx: $wff$ x) {
+axiom w1(wx: 'wff' x) {
 
-  return $wff$ $x -$;
+  return 'wff' "x -";
 }

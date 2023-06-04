@@ -13,13 +13,13 @@ include "dfov2.mm";
 include "eqtypi.mm";
 include "3eqtr4i.mm";
 
-theorem oveq123(hal: $type$ al, hbe: $type$ be, hga: $type$ ga, ta: $term$ A, tb: $term$ B, tc: $term$ C, tf: $term$ F, tr: $term$ R, ts: $term$ S, tt: $term$ T) {
-  assume oveq.1: $|- F : ( al -> ( be -> ga ) )$;
-  assume oveq.2: $|- A : al$;
-  assume oveq.3: $|- B : be$;
-  assume oveq123.4: $|- R |= [ F = S ]$;
-  assume oveq123.5: $|- R |= [ A = C ]$;
-  assume oveq123.6: $|- R |= [ B = T ]$;
+theorem oveq123(hal: 'type' al, hbe: 'type' be, hga: 'type' ga, ta: 'term' A, tb: 'term' B, tc: 'term' C, tf: 'term' F, tr: 'term' R, ts: 'term' S, tt: 'term' T) {
+  assume oveq.1: |- "F : ( al -> ( be -> ga ) )";
+  assume oveq.2: |- "A : al";
+  assume oveq.3: |- "B : be";
+  assume oveq123.4: |- "R |= [ F = S ]";
+  assume oveq123.5: |- "R |= [ A = C ]";
+  assume oveq123.6: |- "R |= [ B = T ]";
 
 
 
@@ -214,5 +214,5 @@ theorem oveq123(hal: $type$ al, hbe: $type$ be, hga: $type$ ga, ta: $term$ A, tb
     3eqtr4i;
   };
 
-  return $|-$ $R |= [ [ A F B ] = [ C S T ] ]$;
+  return '|-' "R |= [ [ A F B ] = [ C S T ] ]";
 }

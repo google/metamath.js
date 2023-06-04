@@ -10,8 +10,8 @@ include "anim12i.mm";
 include "df-sb.mm";
 include "3imtr4i.mm";
 
-theorem sbimi(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x, vy: $setvar$ y) {
-  assume sbimi.1: $|- ( ph -> ps )$;
+theorem sbimi(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
+  assume sbimi.1: |- "( ph -> ps )";
 
 
 
@@ -83,5 +83,5 @@ theorem sbimi(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x, vy: $setvar$ y) {
     3imtr4i;
   };
 
-  return $|-$ $( [ y / x ] ph -> [ y / x ] ps )$;
+  return '|-' "( [ y / x ] ph -> [ y / x ] ps )";
 }

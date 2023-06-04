@@ -3,8 +3,8 @@ include "wn.mm";
 include "nfnt.mm";
 include "syl.mm";
 
-theorem nfnd(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
-  assume nfnd.1: $|- ( ph -> F/ x ps )$;
+theorem nfnd(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+  assume nfnd.1: |- "( ph -> F/ x ps )";
 
 
 
@@ -26,5 +26,5 @@ theorem nfnd(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     syl;
   };
 
-  return $|-$ $( ph -> F/ x -. ps )$;
+  return '|-' "( ph -> F/ x -. ps )";
 }

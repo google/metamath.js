@@ -1,9 +1,9 @@
 include "nf5ri.mm";
 include "alimdh.mm";
 
-theorem alimd(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
-  assume alimd.1: $|- F/ x ph$;
-  assume alimd.2: $|- ( ph -> ( ps -> ch ) )$;
+theorem alimd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
+  assume alimd.1: |- "F/ x ph";
+  assume alimd.2: |- "( ph -> ( ps -> ch ) )";
 
 
 
@@ -22,5 +22,5 @@ theorem alimd(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
     alimdh;
   };
 
-  return $|-$ $( ph -> ( A. x ps -> A. x ch ) )$;
+  return '|-' "( ph -> ( A. x ps -> A. x ch ) )";
 }

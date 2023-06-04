@@ -6,8 +6,8 @@ include "pm5.74.mm";
 include "3bitr4i.mm";
 include "pm5.74ri.mm";
 
-theorem bibi2d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
-  assume imbid.1: $|- ( ph -> ( ps <-> ch ) )$;
+theorem bibi2d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+  assume imbid.1: |- "( ph -> ( ps <-> ch ) )";
 
 
 
@@ -65,5 +65,5 @@ theorem bibi2d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
     pm5.74ri;
   };
 
-  return $|-$ $( ph -> ( ( th <-> ps ) <-> ( th <-> ch ) ) )$;
+  return '|-' "( ph -> ( ( th <-> ps ) <-> ( th <-> ch ) ) )";
 }

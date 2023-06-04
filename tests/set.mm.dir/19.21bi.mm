@@ -2,8 +2,8 @@ include "wal.mm";
 include "sp.mm";
 include "syl.mm";
 
-theorem 19.21bi(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
-  assume 19.21bi.1: $|- ( ph -> A. x ps )$;
+theorem 19.21bi(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+  assume 19.21bi.1: |- "( ph -> A. x ps )";
 
 
 
@@ -22,5 +22,5 @@ theorem 19.21bi(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     syl;
   };
 
-  return $|-$ $( ph -> ps )$;
+  return '|-' "( ph -> ps )";
 }

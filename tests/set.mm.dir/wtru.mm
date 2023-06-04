@@ -2,5 +2,5 @@
 
 axiom wtru() {
 
-  return $wff$ $T.$;
+  return 'wff' "T.";
 }

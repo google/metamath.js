@@ -10,13 +10,13 @@ include "nfbid.mm";
 include "nfald.mm";
 include "nfxfrd.mm";
 
-theorem nfeqd(wph: $wff$ ph, vx: $setvar$ x, cA: $class$ A, cB: $class$ B) {
-  assume nfeqd.1: $|- ( ph -> F/_ x A )$;
-  assume nfeqd.2: $|- ( ph -> F/_ x B )$;
+theorem nfeqd(wph: 'wff' ph, vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
+  assume nfeqd.1: |- "( ph -> F/_ x A )";
+  assume nfeqd.2: |- "( ph -> F/_ x B )";
 
 
 
-  let vy: $setvar$ y;
+  let vy: setvar y;
 
   do {
     cA;
@@ -70,5 +70,5 @@ theorem nfeqd(wph: $wff$ ph, vx: $setvar$ x, cA: $class$ A, cB: $class$ B) {
     nfxfrd;
   };
 
-  return $|-$ $( ph -> F/ x A = B )$;
+  return '|-' "( ph -> F/ x A = B )";
 }

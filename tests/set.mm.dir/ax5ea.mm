@@ -4,7 +4,7 @@ include "ax5e.mm";
 include "ax-5.mm";
 include "syl.mm";
 
-theorem ax5ea(wph: $wff$ ph, vx: $setvar$ x) {
+theorem ax5ea(wph: 'wff' ph, vx: 'setvar' x) {
 
   disjoint ph x;
 
@@ -27,5 +27,5 @@ theorem ax5ea(wph: $wff$ ph, vx: $setvar$ x) {
     syl;
   };
 
-  return $|-$ $( E. x ph -> A. x ph )$;
+  return '|-' "( E. x ph -> A. x ph )";
 }

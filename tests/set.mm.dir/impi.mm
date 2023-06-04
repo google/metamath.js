@@ -3,8 +3,8 @@ include "wi.mm";
 include "con3rr3.mm";
 include "con1i.mm";
 
-theorem impi(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume impi.1: $|- ( ph -> ( ps -> ch ) )$;
+theorem impi(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume impi.1: |- "( ph -> ( ps -> ch ) )";
 
 
 
@@ -24,5 +24,5 @@ theorem impi(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     con1i;
   };
 
-  return $|-$ $( -. ( ph -> -. ps ) -> ch )$;
+  return '|-' "( -. ( ph -> -. ps ) -> ch )";
 }

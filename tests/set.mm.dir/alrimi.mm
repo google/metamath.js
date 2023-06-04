@@ -1,9 +1,9 @@
 include "nf5ri.mm";
 include "alrimih.mm";
 
-theorem alrimi(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
-  assume alrimi.1: $|- F/ x ph$;
-  assume alrimi.2: $|- ( ph -> ps )$;
+theorem alrimi(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+  assume alrimi.1: |- "F/ x ph";
+  assume alrimi.2: |- "( ph -> ps )";
 
 
 
@@ -21,5 +21,5 @@ theorem alrimi(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     alrimih;
   };
 
-  return $|-$ $( ph -> A. x ps )$;
+  return '|-' "( ph -> A. x ps )";
 }

@@ -3,8 +3,8 @@ include "ex.mm";
 include "al2imi.mm";
 include "imp.mm";
 
-theorem alanimi(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
-  assume alanimi.1: $|- ( ( ph /\ ps ) -> ch )$;
+theorem alanimi(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
+  assume alanimi.1: |- "( ( ph /\\ ps ) -> ch )";
 
 
 
@@ -33,5 +33,5 @@ theorem alanimi(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
     imp;
   };
 
-  return $|-$ $( ( A. x ph /\ A. x ps ) -> A. x ch )$;
+  return '|-' "( ( A. x ph /\\ A. x ps ) -> A. x ch )";
 }

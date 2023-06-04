@@ -1,6 +1,6 @@
 
 
-axiom ht(hal: $type$ al, hbe: $type$ be) {
+axiom ht(hal: 'type' al, hbe: 'type' be) {
 
-  return $type$ $( al -> be )$;
+  return 'type' "( al -> be )";
 }

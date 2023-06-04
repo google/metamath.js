@@ -5,8 +5,8 @@ include "aleximi.mm";
 include "biimprd.mm";
 include "impbid.mm";
 
-theorem alexbii(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
-  assume alexbii.1: $|- ( ph -> ( ps <-> ch ) )$;
+theorem alexbii(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
+  assume alexbii.1: |- "( ph -> ( ps <-> ch ) )";
 
 
 
@@ -45,5 +45,5 @@ theorem alexbii(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
     impbid;
   };
 
-  return $|-$ $( A. x ph -> ( E. x ps <-> E. x ch ) )$;
+  return '|-' "( A. x ph -> ( E. x ps <-> E. x ch ) )";
 }

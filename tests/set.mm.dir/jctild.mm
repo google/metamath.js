@@ -1,9 +1,9 @@
 include "a1d.mm";
 include "jcad.mm";
 
-theorem jctild(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
-  assume jctild.1: $|- ( ph -> ( ps -> ch ) )$;
-  assume jctild.2: $|- ( ph -> th )$;
+theorem jctild(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+  assume jctild.1: |- "( ph -> ( ps -> ch ) )";
+  assume jctild.2: |- "( ph -> th )";
 
 
 
@@ -23,5 +23,5 @@ theorem jctild(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
     jcad;
   };
 
-  return $|-$ $( ph -> ( ps -> ( th /\ ch ) ) )$;
+  return '|-' "( ph -> ( ps -> ( th /\\ ch ) ) )";
 }

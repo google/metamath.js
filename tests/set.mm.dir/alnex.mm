@@ -4,7 +4,7 @@ include "wal.mm";
 include "df-ex.mm";
 include "con2bii.mm";
 
-theorem alnex(wph: $wff$ ph, vx: $setvar$ x) {
+theorem alnex(wph: 'wff' ph, vx: 'setvar' x) {
 
 
 
@@ -24,5 +24,5 @@ theorem alnex(wph: $wff$ ph, vx: $setvar$ x) {
     con2bii;
   };
 
-  return $|-$ $( A. x -. ph <-> -. E. x ph )$;
+  return '|-' "( A. x -. ph <-> -. E. x ph )";
 }

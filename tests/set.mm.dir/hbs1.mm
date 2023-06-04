@@ -2,7 +2,7 @@ include "wsb.mm";
 include "nfs1v.mm";
 include "nf5ri.mm";
 
-theorem hbs1(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
+theorem hbs1(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
 
   disjoint x y;
 
@@ -21,5 +21,5 @@ theorem hbs1(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
     nf5ri;
   };
 
-  return $|-$ $( [ y / x ] ph -> A. x [ y / x ] ph )$;
+  return '|-' "( [ y / x ] ph -> A. x [ y / x ] ph )";
 }

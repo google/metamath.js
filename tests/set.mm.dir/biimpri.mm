@@ -1,8 +1,8 @@
 include "bicomi.mm";
 include "biimpi.mm";
 
-theorem biimpri(wph: $wff$ ph, wps: $wff$ ps) {
-  assume biimpri.1: $|- ( ph <-> ps )$;
+theorem biimpri(wph: 'wff' ph, wps: 'wff' ps) {
+  assume biimpri.1: |- "( ph <-> ps )";
 
 
 
@@ -18,5 +18,5 @@ theorem biimpri(wph: $wff$ ph, wps: $wff$ ps) {
     biimpi;
   };
 
-  return $|-$ $( ps -> ph )$;
+  return '|-' "( ps -> ph )";
 }

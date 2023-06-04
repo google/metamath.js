@@ -4,7 +4,7 @@ include "wcel.mm";
 include "hbab1.mm";
 include "nf5i.mm";
 
-theorem nfsab1(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
+theorem nfsab1(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
 
   disjoint x y;
 
@@ -25,5 +25,5 @@ theorem nfsab1(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
     nf5i;
   };
 
-  return $|-$ $F/ x y e. { x | ph }$;
+  return '|-' "F/ x y e. { x | ph }";
 }

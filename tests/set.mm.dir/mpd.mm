@@ -2,9 +2,9 @@ include "wi.mm";
 include "a2i.mm";
 include "ax-mp.mm";
 
-theorem mpd(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume mpd.1: $|- ( ph -> ps )$;
-  assume mpd.2: $|- ( ph -> ( ps -> ch ) )$;
+theorem mpd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume mpd.1: |- "( ph -> ps )";
+  assume mpd.2: |- "( ph -> ( ps -> ch ) )";
 
 
 
@@ -26,5 +26,5 @@ theorem mpd(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     ax-mp;
   };
 
-  return $|-$ $( ph -> ch )$;
+  return '|-' "( ph -> ch )";
 }

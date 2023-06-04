@@ -7,7 +7,7 @@ include "fveq2d.mm";
 include "df-ov.mm";
 include "3eqtr4g.mm";
 
-theorem oveq1(cA: $class$ A, cB: $class$ B, cC: $class$ C, cF: $class$ F) {
+theorem oveq1(cA: 'class' A, cB: 'class' B, cC: 'class' C, cF: 'class' F) {
 
 
 
@@ -58,5 +58,5 @@ theorem oveq1(cA: $class$ A, cB: $class$ B, cC: $class$ C, cF: $class$ F) {
     3eqtr4g;
   };
 
-  return $|-$ $( A = B -> ( A F C ) = ( B F C ) )$;
+  return '|-' "( A = B -> ( A F C ) = ( B F C ) )";
 }

@@ -3,7 +3,7 @@ include "wal.mm";
 include "alim.mm";
 include "syl6.mm";
 
-theorem al2im(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
+theorem al2im(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
 
 
 
@@ -42,5 +42,5 @@ theorem al2im(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
     syl6;
   };
 
-  return $|-$ $( A. x ( ph -> ( ps -> ch ) ) -> ( A. x ph -> ( A. x ps -> A. x ch ) ) )$;
+  return '|-' "( A. x ( ph -> ( ps -> ch ) ) -> ( A. x ph -> ( A. x ps -> A. x ch ) ) )";
 }

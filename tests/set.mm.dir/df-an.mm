@@ -1,6 +1,6 @@
 
 
-axiom df-an(wph: $wff$ ph, wps: $wff$ ps) {
+axiom df-an(wph: 'wff' ph, wps: 'wff' ps) {
 
-  return $|-$ $( ( ph /\ ps ) <-> -. ( ph -> -. ps ) )$;
+  return '|-' "( ( ph /\\ ps ) <-> -. ( ph -> -. ps ) )";
 }

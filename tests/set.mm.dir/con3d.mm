@@ -3,8 +3,8 @@ include "notnotr.mm";
 include "syl5.mm";
 include "con1d.mm";
 
-theorem con3d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume con3d.1: $|- ( ph -> ( ps -> ch ) )$;
+theorem con3d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume con3d.1: |- "( ph -> ( ps -> ch ) )";
 
 
 
@@ -28,5 +28,5 @@ theorem con3d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     con1d;
   };
 
-  return $|-$ $( ph -> ( -. ch -> -. ps ) )$;
+  return '|-' "( ph -> ( -. ch -> -. ps ) )";
 }

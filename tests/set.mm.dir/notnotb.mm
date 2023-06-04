@@ -3,7 +3,7 @@ include "notnot.mm";
 include "notnotr.mm";
 include "impbii.mm";
 
-theorem notnotb(wph: $wff$ ph) {
+theorem notnotb(wph: 'wff' ph) {
 
 
 
@@ -21,5 +21,5 @@ theorem notnotb(wph: $wff$ ph) {
     impbii;
   };
 
-  return $|-$ $( ph <-> -. -. ph )$;
+  return '|-' "( ph <-> -. -. ph )";
 }

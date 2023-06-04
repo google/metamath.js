@@ -3,8 +3,8 @@ include "wi.mm";
 include "pm5.74.mm";
 include "mpbir.mm";
 
-theorem pm5.74ri(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume pm5.74ri.1: $|- ( ( ph -> ps ) <-> ( ph -> ch ) )$;
+theorem pm5.74ri(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume pm5.74ri.1: |- "( ( ph -> ps ) <-> ( ph -> ch ) )";
 
 
 
@@ -31,5 +31,5 @@ theorem pm5.74ri(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     mpbir;
   };
 
-  return $|-$ $( ph -> ( ps <-> ch ) )$;
+  return '|-' "( ph -> ( ps <-> ch ) )";
 }

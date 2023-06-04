@@ -6,8 +6,8 @@ include "df-clab.mm";
 include "3bitr4g.mm";
 include "eqrdv.mm";
 
-theorem abbilem(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x, vy: $setvar$ y) {
-  assume abbilem.1: $|- ( ph -> ( [ y / x ] ps <-> [ y / x ] ch ) )$;
+theorem abbilem(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x, vy: 'setvar' y) {
+  assume abbilem.1: |- "( ph -> ( [ y / x ] ps <-> [ y / x ] ch ) )";
 
   disjoint x y;
   disjoint ph y;
@@ -57,5 +57,5 @@ theorem abbilem(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x, vy:
     eqrdv;
   };
 
-  return $|-$ $( ph -> { x | ps } = { x | ch } )$;
+  return '|-' "( ph -> { x | ps } = { x | ch } )";
 }

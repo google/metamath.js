@@ -5,7 +5,7 @@ include "equid.mm";
 include "sbequ12r.mm";
 include "ax-mp.mm";
 
-theorem sbid(wph: $wff$ ph, vx: $setvar$ x) {
+theorem sbid(wph: 'wff' ph, vx: 'setvar' x) {
 
 
 
@@ -30,5 +30,5 @@ theorem sbid(wph: $wff$ ph, vx: $setvar$ x) {
     ax-mp;
   };
 
-  return $|-$ $( [ x / x ] ph <-> ph )$;
+  return '|-' "( [ x / x ] ph <-> ph )";
 }

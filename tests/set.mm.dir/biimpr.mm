@@ -5,7 +5,7 @@ include "dfbi1.mm";
 include "simprim.mm";
 include "sylbi.mm";
 
-theorem biimpr(wph: $wff$ ph, wps: $wff$ ps) {
+theorem biimpr(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -36,5 +36,5 @@ theorem biimpr(wph: $wff$ ph, wps: $wff$ ps) {
     sylbi;
   };
 
-  return $|-$ $( ( ph <-> ps ) -> ( ps -> ph ) )$;
+  return '|-' "( ( ph <-> ps ) -> ( ps -> ph ) )";
 }

@@ -13,11 +13,11 @@ include "wctl.mm";
 include "adantl.mm";
 include "3eqtr4i.mm";
 
-theorem hbxfrf(hal: $type$ al, hbe: $type$ be, vx: $var$ x, ta: $term$ A, tb: $term$ B, tr: $term$ R, ts: $term$ S, tt: $term$ T) {
-  assume hbxfr.1: $|- T : be$;
-  assume hbxfr.2: $|- B : al$;
-  assume hbxfrf.3: $|- R |= [ T = A ]$;
-  assume hbxfrf.4: $|- ( S , R ) |= [ ( \ x : al . A B ) = A ]$;
+theorem hbxfrf(hal: 'type' al, hbe: 'type' be, vx: 'var' x, ta: 'term' A, tb: 'term' B, tr: 'term' R, ts: 'term' S, tt: 'term' T) {
+  assume hbxfr.1: |- "T : be";
+  assume hbxfr.2: |- "B : al";
+  assume hbxfrf.3: |- "R |= [ T = A ]";
+  assume hbxfrf.4: |- "( S , R ) |= [ ( \\ x : al . A B ) = A ]";
 
   disjoint R x;
 
@@ -119,5 +119,5 @@ theorem hbxfrf(hal: $type$ al, hbe: $type$ be, vx: $var$ x, ta: $term$ A, tb: $t
     3eqtr4i;
   };
 
-  return $|-$ $( S , R ) |= [ ( \ x : al . T B ) = T ]$;
+  return '|-' "( S , R ) |= [ ( \\ x : al . T B ) = T ]";
 }

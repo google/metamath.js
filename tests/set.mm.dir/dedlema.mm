@@ -11,7 +11,7 @@ include "adantld.mm";
 include "jaod.mm";
 include "impbid.mm";
 
-theorem dedlema(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
+theorem dedlema(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
 
 
 
@@ -63,5 +63,5 @@ theorem dedlema(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     impbid;
   };
 
-  return $|-$ $( ph -> ( ps <-> ( ( ps /\ ph ) \/ ( ch /\ -. ph ) ) ) )$;
+  return '|-' "( ph -> ( ps <-> ( ( ps /\\ ph ) \\/ ( ch /\\ -. ph ) ) ) )";
 }

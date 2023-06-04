@@ -12,12 +12,12 @@ include "eqtypri.mm";
 include "ceq12.mm";
 include "eqtri.mm";
 
-theorem hbc(hal: $type$ al, hbe: $type$ be, hga: $type$ ga, vx: $var$ x, ta: $term$ A, tb: $term$ B, tf: $term$ F, tr: $term$ R) {
-  assume hbc.1: $|- F : ( be -> ga )$;
-  assume hbc.2: $|- A : be$;
-  assume hbc.3: $|- B : al$;
-  assume hbc.4: $|- R |= [ ( \ x : al . F B ) = F ]$;
-  assume hbc.5: $|- R |= [ ( \ x : al . A B ) = A ]$;
+theorem hbc(hal: 'type' al, hbe: 'type' be, hga: 'type' ga, vx: 'var' x, ta: 'term' A, tb: 'term' B, tf: 'term' F, tr: 'term' R) {
+  assume hbc.1: |- "F : ( be -> ga )";
+  assume hbc.2: |- "A : be";
+  assume hbc.3: |- "B : al";
+  assume hbc.4: |- "R |= [ ( \\ x : al . F B ) = F ]";
+  assume hbc.5: |- "R |= [ ( \\ x : al . A B ) = A ]";
 
 
 
@@ -132,5 +132,5 @@ theorem hbc(hal: $type$ al, hbe: $type$ be, hga: $type$ ga, vx: $var$ x, ta: $te
     eqtri;
   };
 
-  return $|-$ $R |= [ ( \ x : al . ( F A ) B ) = ( F A ) ]$;
+  return '|-' "R |= [ ( \\ x : al . ( F A ) B ) = ( F A ) ]";
 }

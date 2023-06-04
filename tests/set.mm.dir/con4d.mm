@@ -3,8 +3,8 @@ include "wi.mm";
 include "con4.mm";
 include "syl.mm";
 
-theorem con4d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume con4d.1: $|- ( ph -> ( -. ps -> -. ch ) )$;
+theorem con4d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume con4d.1: |- "( ph -> ( -. ps -> -. ch ) )";
 
 
 
@@ -27,5 +27,5 @@ theorem con4d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     syl;
   };
 
-  return $|-$ $( ph -> ( ch -> ps ) )$;
+  return '|-' "( ph -> ( ch -> ps ) )";
 }

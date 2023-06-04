@@ -3,8 +3,8 @@ include "bibi2d.mm";
 include "bicom.mm";
 include "3bitr4g.mm";
 
-theorem bibi1d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
-  assume imbid.1: $|- ( ph -> ( ps <-> ch ) )$;
+theorem bibi1d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+  assume imbid.1: |- "( ph -> ( ps <-> ch ) )";
 
 
 
@@ -39,5 +39,5 @@ theorem bibi1d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
     3bitr4g;
   };
 
-  return $|-$ $( ph -> ( ( ps <-> th ) <-> ( ch <-> th ) ) )$;
+  return '|-' "( ph -> ( ( ps <-> th ) <-> ( ch <-> th ) ) )";
 }

@@ -3,9 +3,9 @@ include "wex.mm";
 include "19.23.mm";
 include "mpgbi.mm";
 
-theorem exlimi(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
-  assume exlimi.1: $|- F/ x ps$;
-  assume exlimi.2: $|- ( ph -> ps )$;
+theorem exlimi(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+  assume exlimi.1: |- "F/ x ps";
+  assume exlimi.2: |- "( ph -> ps )";
 
 
 
@@ -30,5 +30,5 @@ theorem exlimi(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     mpgbi;
   };
 
-  return $|-$ $( E. x ph -> ps )$;
+  return '|-' "( E. x ph -> ps )";
 }

@@ -1,6 +1,6 @@
 
 
-axiom wal(wph: $wff$ ph, vx.wal: $setvar$ x) {
+axiom wal(wph: 'wff' ph, vx.wal: 'setvar' x) {
 
-  return $wff$ $A. x ph$;
+  return 'wff' "A. x ph";
 }

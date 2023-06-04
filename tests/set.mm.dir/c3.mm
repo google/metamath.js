@@ -2,5 +2,5 @@
 
 axiom c3() {
 
-  return $class$ $3$;
+  return 'class' "3";
 }

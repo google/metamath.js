@@ -3,11 +3,11 @@ include "wcel.mm";
 include "biid.mm";
 include "eqriv.mm";
 
-theorem eqid(cA: $class$ A) {
+theorem eqid(cA: 'class' A) {
 
 
 
-  let vx: $setvar$ x;
+  let vx: setvar x;
 
   do {
     vx;
@@ -21,5 +21,5 @@ theorem eqid(cA: $class$ A) {
     eqriv;
   };
 
-  return $|-$ $A = A$;
+  return '|-' "A = A";
 }

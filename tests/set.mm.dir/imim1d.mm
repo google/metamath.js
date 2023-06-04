@@ -1,8 +1,8 @@
 include "idd.mm";
 include "imim12d.mm";
 
-theorem imim1d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
-  assume imim1d.1: $|- ( ph -> ( ps -> ch ) )$;
+theorem imim1d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+  assume imim1d.1: |- "( ph -> ( ps -> ch ) )";
 
 
 
@@ -21,5 +21,5 @@ theorem imim1d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
     imim12d;
   };
 
-  return $|-$ $( ph -> ( ( ch -> th ) -> ( ps -> th ) ) )$;
+  return '|-' "( ph -> ( ( ch -> th ) -> ( ps -> th ) ) )";
 }

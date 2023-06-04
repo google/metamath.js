@@ -12,11 +12,11 @@ include "dfss2.mm";
 include "anbi12i.mm";
 include "3bitr4i.mm";
 
-theorem eqss(cA: $class$ A, cB: $class$ B) {
+theorem eqss(cA: 'class' A, cB: 'class' B) {
 
 
 
-  let vx: $setvar$ x;
+  let vx: setvar x;
 
   do {
     vx;
@@ -81,5 +81,5 @@ theorem eqss(cA: $class$ A, cB: $class$ B) {
     3bitr4i;
   };
 
-  return $|-$ $( A = B <-> ( A C_ B /\ B C_ A ) )$;
+  return '|-' "( A = B <-> ( A C_ B /\\ B C_ A ) )";
 }

@@ -17,14 +17,14 @@ include "adantr.mm";
 include "hbxfrf.mm";
 include "mpdan.mm";
 
-theorem hbov(hal: $type$ al, hbe: $type$ be, hga: $type$ ga, hde: $type$ de, vx: $var$ x, ta: $term$ A, tb: $term$ B, tc: $term$ C, tf: $term$ F, tr: $term$ R) {
-  assume hbov.1: $|- F : ( be -> ( ga -> de ) )$;
-  assume hbov.2: $|- A : be$;
-  assume hbov.3: $|- B : al$;
-  assume hbov.4: $|- C : ga$;
-  assume hbov.5: $|- R |= [ ( \ x : al . F B ) = F ]$;
-  assume hbov.6: $|- R |= [ ( \ x : al . A B ) = A ]$;
-  assume hbov.7: $|- R |= [ ( \ x : al . C B ) = C ]$;
+theorem hbov(hal: 'type' al, hbe: 'type' be, hga: 'type' ga, hde: 'type' de, vx: 'var' x, ta: 'term' A, tb: 'term' B, tc: 'term' C, tf: 'term' F, tr: 'term' R) {
+  assume hbov.1: |- "F : ( be -> ( ga -> de ) )";
+  assume hbov.2: |- "A : be";
+  assume hbov.3: |- "B : al";
+  assume hbov.4: |- "C : ga";
+  assume hbov.5: |- "R |= [ ( \\ x : al . F B ) = F ]";
+  assume hbov.6: |- "R |= [ ( \\ x : al . A B ) = A ]";
+  assume hbov.7: |- "R |= [ ( \\ x : al . C B ) = C ]";
 
 
 
@@ -167,5 +167,5 @@ theorem hbov(hal: $type$ al, hbe: $type$ be, hga: $type$ ga, hde: $type$ de, vx:
     mpdan;
   };
 
-  return $|-$ $R |= [ ( \ x : al . [ A F C ] B ) = [ A F C ] ]$;
+  return '|-' "R |= [ ( \\ x : al . [ A F C ] B ) = [ A F C ] ]";
 }

@@ -2,8 +2,8 @@ include "wi.mm";
 include "a1d.mm";
 include "a2d.mm";
 
-theorem imim2d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
-  assume imim2d.1: $|- ( ph -> ( ps -> ch ) )$;
+theorem imim2d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+  assume imim2d.1: |- "( ph -> ( ps -> ch ) )";
 
 
 
@@ -24,5 +24,5 @@ theorem imim2d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
     a2d;
   };
 
-  return $|-$ $( ph -> ( ( th -> ps ) -> ( th -> ch ) ) )$;
+  return '|-' "( ph -> ( ( th -> ps ) -> ( th -> ch ) ) )";
 }

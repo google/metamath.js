@@ -2,9 +2,9 @@ include "wceq.mm";
 include "eqtr.mm";
 include "syl2an.mm";
 
-theorem sylan9eq(wph: $wff$ ph, wps: $wff$ ps, cA: $class$ A, cB: $class$ B, cC: $class$ C) {
-  assume sylan9eq.1: $|- ( ph -> A = B )$;
-  assume sylan9eq.2: $|- ( ps -> B = C )$;
+theorem sylan9eq(wph: 'wff' ph, wps: 'wff' ps, cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+  assume sylan9eq.1: |- "( ph -> A = B )";
+  assume sylan9eq.2: |- "( ps -> B = C )";
 
 
 
@@ -31,5 +31,5 @@ theorem sylan9eq(wph: $wff$ ph, wps: $wff$ ps, cA: $class$ A, cB: $class$ B, cC:
     syl2an;
   };
 
-  return $|-$ $( ( ph /\ ps ) -> A = C )$;
+  return '|-' "( ( ph /\\ ps ) -> A = C )";
 }

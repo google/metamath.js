@@ -4,7 +4,7 @@ include "wceq.mm";
 include "ss0b.mm";
 include "biimpi.mm";
 
-theorem ss0(cA: $class$ A) {
+theorem ss0(cA: 'class' A) {
 
 
 
@@ -22,5 +22,5 @@ theorem ss0(cA: $class$ A) {
     biimpi;
   };
 
-  return $|-$ $( A C_ (/) -> A = (/) )$;
+  return '|-' "( A C_ (/) -> A = (/) )";
 }

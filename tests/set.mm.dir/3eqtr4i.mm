@@ -1,9 +1,9 @@
 include "eqtr4i.mm";
 
-theorem 3eqtr4i(cA: $class$ A, cB: $class$ B, cC: $class$ C, cD: $class$ D) {
-  assume 3eqtr4i.1: $|- A = B$;
-  assume 3eqtr4i.2: $|- C = A$;
-  assume 3eqtr4i.3: $|- D = B$;
+theorem 3eqtr4i(cA: 'class' A, cB: 'class' B, cC: 'class' C, cD: 'class' D) {
+  assume 3eqtr4i.1: |- "A = B";
+  assume 3eqtr4i.2: |- "C = A";
+  assume 3eqtr4i.3: |- "D = B";
 
 
 
@@ -23,5 +23,5 @@ theorem 3eqtr4i(cA: $class$ A, cB: $class$ B, cC: $class$ C, cD: $class$ D) {
     eqtr4i;
   };
 
-  return $|-$ $C = D$;
+  return '|-' "C = D";
 }

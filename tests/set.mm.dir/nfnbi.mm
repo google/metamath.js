@@ -10,7 +10,7 @@ include "orbi2i.mm";
 include "bitr4i.mm";
 include "3bitr4i.mm";
 
-theorem nfnbi(wph: $wff$ ph, vx: $setvar$ x) {
+theorem nfnbi(wph: 'wff' ph, vx: 'setvar' x) {
 
 
 
@@ -72,5 +72,5 @@ theorem nfnbi(wph: $wff$ ph, vx: $setvar$ x) {
     3bitr4i;
   };
 
-  return $|-$ $( F/ x ph <-> F/ x -. ph )$;
+  return '|-' "( F/ x ph <-> F/ x -. ph )";
 }

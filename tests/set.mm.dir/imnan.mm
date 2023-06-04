@@ -4,7 +4,7 @@ include "wi.mm";
 include "df-an.mm";
 include "con2bii.mm";
 
-theorem imnan(wph: $wff$ ph, wps: $wff$ ps) {
+theorem imnan(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -24,5 +24,5 @@ theorem imnan(wph: $wff$ ph, wps: $wff$ ps) {
     con2bii;
   };
 
-  return $|-$ $( ( ph -> -. ps ) <-> -. ( ph /\ ps ) )$;
+  return '|-' "( ( ph -> -. ps ) <-> -. ( ph /\\ ps ) )";
 }

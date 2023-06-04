@@ -3,7 +3,7 @@ include "equtrr.mm";
 include "equeuclr.mm";
 include "impbid.mm";
 
-theorem equequ2(vx: $setvar$ x, vy: $setvar$ y, vz: $setvar$ z) {
+theorem equequ2(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
 
 
 
@@ -30,5 +30,5 @@ theorem equequ2(vx: $setvar$ x, vy: $setvar$ y, vz: $setvar$ z) {
     impbid;
   };
 
-  return $|-$ $( x = y -> ( z = x <-> z = y ) )$;
+  return '|-' "( x = y -> ( z = x <-> z = y ) )";
 }

@@ -14,14 +14,14 @@ include "equequ2.mm";
 include "equsalvw.mm";
 include "syl6ib.mm";
 
-theorem ax13lem2(vx: $setvar$ x, vy: $setvar$ y, vz: $setvar$ z) {
+theorem ax13lem2(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
 
   disjoint x z;
   disjoint w x;
   disjoint w z;
   disjoint w y;
 
-  let vw: $setvar$ w;
+  let vw: setvar w;
 
   do {
     vx;
@@ -99,5 +99,5 @@ theorem ax13lem2(vx: $setvar$ x, vy: $setvar$ y, vz: $setvar$ z) {
     syl6ib;
   };
 
-  return $|-$ $( -. x = y -> ( E. x z = y -> z = y ) )$;
+  return '|-' "( -. x = y -> ( E. x z = y -> z = y ) )";
 }

@@ -8,12 +8,12 @@ include "iotabidv.mm";
 include "df-fv.mm";
 include "3eqtr4g.mm";
 
-theorem fveq2(cA: $class$ A, cB: $class$ B, cF: $class$ F) {
+theorem fveq2(cA: 'class' A, cB: 'class' B, cF: 'class' F) {
 
 
 
-  let vx: $setvar$ x;
-  let cG: $class$ G;
+  let vx: setvar x;
+  let cG: class G;
 
   do {
     cA;
@@ -63,5 +63,5 @@ theorem fveq2(cA: $class$ A, cB: $class$ B, cF: $class$ F) {
     3eqtr4g;
   };
 
-  return $|-$ $( A = B -> ( F ` A ) = ( F ` B ) )$;
+  return '|-' "( A = B -> ( F ` A ) = ( F ` B ) )";
 }

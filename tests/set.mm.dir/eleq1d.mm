@@ -9,12 +9,12 @@ include "exbidv.mm";
 include "df-clel.mm";
 include "3bitr4g.mm";
 
-theorem eleq1d(wph: $wff$ ph, cA: $class$ A, cB: $class$ B, cC: $class$ C) {
-  assume eleq1d.1: $|- ( ph -> A = B )$;
+theorem eleq1d(wph: 'wff' ph, cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+  assume eleq1d.1: |- "( ph -> A = B )";
 
 
 
-  let vx: $setvar$ x;
+  let vx: setvar x;
 
   do {
     wph;
@@ -74,5 +74,5 @@ theorem eleq1d(wph: $wff$ ph, cA: $class$ A, cB: $class$ B, cC: $class$ C) {
     3bitr4g;
   };
 
-  return $|-$ $( ph -> ( A e. C <-> B e. C ) )$;
+  return '|-' "( ph -> ( A e. C <-> B e. C ) )";
 }

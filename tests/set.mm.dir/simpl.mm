@@ -1,7 +1,7 @@
 include "id.mm";
 include "adantr.mm";
 
-theorem simpl(wph: $wff$ ph, wps: $wff$ ps) {
+theorem simpl(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -16,5 +16,5 @@ theorem simpl(wph: $wff$ ph, wps: $wff$ ps) {
     adantr;
   };
 
-  return $|-$ $( ( ph /\ ps ) -> ph )$;
+  return '|-' "( ( ph /\\ ps ) -> ph )";
 }

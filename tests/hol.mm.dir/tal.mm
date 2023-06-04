@@ -2,5 +2,5 @@
 
 axiom tal() {
 
-  return $term$ $!$;
+  return 'term' "!";
 }

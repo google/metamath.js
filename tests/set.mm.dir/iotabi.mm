@@ -14,12 +14,12 @@ include "unieqd.mm";
 include "df-iota.mm";
 include "3eqtr4g.mm";
 
-theorem iotabi(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
+theorem iotabi(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
 
 
 
-  let vz: $setvar$ z;
-  let vy: $setvar$ y;
+  let vz: setvar z;
+  let vy: setvar y;
 
   do {
     wph;
@@ -93,5 +93,5 @@ theorem iotabi(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     3eqtr4g;
   };
 
-  return $|-$ $( A. x ( ph <-> ps ) -> ( iota x ph ) = ( iota x ps ) )$;
+  return '|-' "( A. x ( ph <-> ps ) -> ( iota x ph ) = ( iota x ps ) )";
 }

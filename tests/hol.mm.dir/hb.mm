@@ -2,5 +2,5 @@
 
 axiom hb() {
 
-  return $type$ $bool$;
+  return 'type' "bool";
 }

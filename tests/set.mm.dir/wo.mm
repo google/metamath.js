@@ -1,6 +1,6 @@
 
 
-axiom wo(wph: $wff$ ph, wps: $wff$ ps) {
+axiom wo(wph: 'wff' ph, wps: 'wff' ps) {
 
-  return $wff$ $( ph \/ ps )$;
+  return 'wff' "( ph \\/ ps )";
 }

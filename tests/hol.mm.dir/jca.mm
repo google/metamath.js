@@ -1,8 +1,8 @@
 include "ax-jca.mm";
 
-theorem jca(tr: $term$ R, ts: $term$ S, tt: $term$ T) {
-  assume ax-jca.1: $|- R |= S$;
-  assume ax-jca.2: $|- R |= T$;
+theorem jca(tr: 'term' R, ts: 'term' S, tt: 'term' T) {
+  assume ax-jca.1: |- "R |= S";
+  assume ax-jca.2: |- "R |= T";
 
 
 
@@ -17,5 +17,5 @@ theorem jca(tr: $term$ R, ts: $term$ S, tt: $term$ T) {
     ax-jca;
   };
 
-  return $|-$ $R |= ( S , T )$;
+  return '|-' "R |= ( S , T )";
 }

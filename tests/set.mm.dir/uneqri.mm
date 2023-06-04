@@ -6,8 +6,8 @@ include "elun.mm";
 include "bitri.mm";
 include "eqriv.mm";
 
-theorem uneqri(vx: $setvar$ x, cA: $class$ A, cB: $class$ B, cC: $class$ C) {
-  assume uneqri.1: $|- ( ( x e. A \/ x e. B ) <-> x e. C )$;
+theorem uneqri(vx: 'setvar' x, cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+  assume uneqri.1: |- "( ( x e. A \\/ x e. B ) <-> x e. C )";
 
   disjoint A x;
   disjoint B x;
@@ -46,5 +46,5 @@ theorem uneqri(vx: $setvar$ x, cA: $class$ A, cB: $class$ B, cC: $class$ C) {
     eqriv;
   };
 
-  return $|-$ $( A u. B ) = C$;
+  return '|-' "( A u. B ) = C";
 }

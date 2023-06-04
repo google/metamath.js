@@ -2,7 +2,7 @@ include "wi.mm";
 include "ax-1.mm";
 include "alimi.mm";
 
-theorem ala1(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
+theorem ala1(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
 
 
 
@@ -20,5 +20,5 @@ theorem ala1(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     alimi;
   };
 
-  return $|-$ $( A. x ph -> A. x ( ps -> ph ) )$;
+  return '|-' "( A. x ph -> A. x ( ps -> ph ) )";
 }

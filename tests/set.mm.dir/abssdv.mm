@@ -8,8 +8,8 @@ include "alrimiv.mm";
 include "abss.mm";
 include "sylibr.mm";
 
-theorem abssdv(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x, cA: $class$ A) {
-  assume abssdv.1: $|- ( ph -> ( ps -> x e. A ) )$;
+theorem abssdv(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, cA: 'class' A) {
+  assume abssdv.1: |- "( ph -> ( ps -> x e. A ) )";
 
   disjoint ph x;
   disjoint A x;
@@ -44,5 +44,5 @@ theorem abssdv(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x, cA: $class$ A) {
     sylibr;
   };
 
-  return $|-$ $( ph -> { x | ps } C_ A )$;
+  return '|-' "( ph -> { x | ps } C_ A )";
 }

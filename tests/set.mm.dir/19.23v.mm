@@ -10,7 +10,7 @@ include "19.38.mm";
 include "syl.mm";
 include "impbii.mm";
 
-theorem 19.23v(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
+theorem 19.23v(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
 
   disjoint ps x;
 
@@ -67,5 +67,5 @@ theorem 19.23v(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     impbii;
   };
 
-  return $|-$ $( A. x ( ph -> ps ) <-> ( E. x ph -> ps ) )$;
+  return '|-' "( A. x ( ph -> ps ) <-> ( E. x ph -> ps ) )";
 }

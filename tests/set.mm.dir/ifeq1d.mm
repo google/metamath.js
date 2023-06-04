@@ -3,8 +3,8 @@ include "cif.mm";
 include "ifeq1.mm";
 include "syl.mm";
 
-theorem ifeq1d(wph: $wff$ ph, wps: $wff$ ps, cA: $class$ A, cB: $class$ B, cC: $class$ C) {
-  assume ifeq1d.1: $|- ( ph -> A = B )$;
+theorem ifeq1d(wph: 'wff' ph, wps: 'wff' ps, cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+  assume ifeq1d.1: |- "( ph -> A = B )";
 
 
 
@@ -33,5 +33,5 @@ theorem ifeq1d(wph: $wff$ ph, wps: $wff$ ps, cA: $class$ A, cB: $class$ B, cC: $
     syl;
   };
 
-  return $|-$ $( ph -> if ( ps , A , C ) = if ( ps , B , C ) )$;
+  return '|-' "( ph -> if ( ps , A , C ) = if ( ps , B , C ) )";
 }

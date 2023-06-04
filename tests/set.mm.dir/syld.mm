@@ -2,9 +2,9 @@ include "wi.mm";
 include "a1d.mm";
 include "mpdd.mm";
 
-theorem syld(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
-  assume syld.1: $|- ( ph -> ( ps -> ch ) )$;
-  assume syld.2: $|- ( ph -> ( ch -> th ) )$;
+theorem syld(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+  assume syld.1: |- "( ph -> ( ps -> ch ) )";
+  assume syld.2: |- "( ph -> ( ch -> th ) )";
 
 
 
@@ -26,5 +26,5 @@ theorem syld(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
     mpdd;
   };
 
-  return $|-$ $( ph -> ( ps -> th ) )$;
+  return '|-' "( ph -> ( ps -> th ) )";
 }

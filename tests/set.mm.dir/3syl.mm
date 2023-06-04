@@ -1,9 +1,9 @@
 include "syl.mm";
 
-theorem 3syl(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
-  assume 3syl.1: $|- ( ph -> ps )$;
-  assume 3syl.2: $|- ( ps -> ch )$;
-  assume 3syl.3: $|- ( ch -> th )$;
+theorem 3syl(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+  assume 3syl.1: |- "( ph -> ps )";
+  assume 3syl.2: |- "( ps -> ch )";
+  assume 3syl.3: |- "( ch -> th )";
 
 
 
@@ -23,5 +23,5 @@ theorem 3syl(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
     syl;
   };
 
-  return $|-$ $( ph -> th )$;
+  return '|-' "( ph -> th )";
 }

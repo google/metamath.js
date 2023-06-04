@@ -1,66 +1,66 @@
 axiom term-k() {
-  return term K;
+  return term "K";
 }
 
 axiom term-s() {
-  return term S;
+  return term "S";
 }
 
 axiom term-c(term p, term q) {
-  return term p [ q ];
+  return term "p [ q ]";
 }
 
 axiom word-c(word w, word c) {
-  return word w c;
+  return word "w c";
 }
 
 axiom word-null() {
-  return word $$;
+  return word "";
 }
 
 axiom word-t(term x) {
-  return word $x$;
+  return word "x";
 }
 
 axiom word-l() {
-  return word [;
+  return word "[";
 }
 
 axiom word-r() {
-  return word ];
+  return word "]";
 }
 
 // If Δ is a derivation ending in an expression of the form α((Kβ)γ)ι,
 // then Δ followed by the term αβι is a derivation.
 axiom ax-k(word head, term x, term y, word tail) {
-  assume |- head K [ x ] [ y ] tail;
-  return |- head x tail;
+  assume |- "head K [ x ] [ y ] tail";
+  return |- "head x tail";
 }
 
 // If Δ is a derivation ending in an expression of the form α(((Sβ)γ)δ)ι,
 // then Δ followed by the term α((βδ)(γδ))ι is a derivation.
 axiom ax-s(word head, term x, term y, term z, word tail) {
-  assume |- head S [ x ] [ y ] [ z ] tail;
-  return |- head x [ z ] [ y [ z ] ] tail;
+  assume |- "head S [ x ] [ y ] [ z ] tail";
+  return |- "head x [ z ] [ y [ z ] ] tail";
 }
 
 axiom df-eq(word head, term x, term y, word tail) {
-  assume |- x = y;
-  assume |- head x tail;
-  return |- head y tail;
+  assume |- "x = y";
+  assume |- "head x tail";
+  return |- "head y tail";
 }
 
 axiom df-sym(word head, term x, term y, word tail) {
-  assume |- head x = y tail;
-  return |- head y = x tail;
+  assume |- "head x = y tail";
+  return |- "head y = x tail";
 }
 
 axiom df-eqid(term x) {
-  return |- x = x;
+  return |- "x = x";
 }
 
 axiom df-id() {
-  return |- I = S [ K ] [ K ];
+  return |- "I = S [ K ] [ K ]";
 }
 
 axiom term-i() {
@@ -72,7 +72,7 @@ theorem id(
   id.f0: term x,
   id.ft: word tail) {
 
-  assume id.e0: |- head I [ x ] tail;
+  assume id.e0: |- "head I [ x ] tail";
 
   do {
     id.fh;
@@ -121,19 +121,19 @@ theorem id(
     ax-k;
   };
 
-  return |- head x tail;
+  return |- "head x tail";
 }
 
 axiom term-f() {
-  return term F;
+  return term "F";
 }
 
 axiom term-t() {
-  return term T;
+  return term "T";
 }
 
 axiom df-true() {
-  return |- T = K;
+  return |- "T = K";
 }
 
 theorem true(
@@ -142,7 +142,7 @@ theorem true(
   termy: term y,
   true.t: word tail) {
 
-  assume true-e: |- head T [ x ] [ y ] tail;
+  assume true-e: |- "head T [ x ] [ y ] tail";
 
   do {
     true.h;
@@ -189,11 +189,11 @@ theorem true(
     
    ax-k;
   };
-  return |- head x tail;
+  return |- "head x tail";
 }
 
 axiom df-false() {
-  return |- F = S [ K ];
+  return |- "F = S [ K ]";
 }
 
 theorem false(
@@ -202,7 +202,7 @@ theorem false(
   termy: term y,
   false.t: word tail) {
 
-  assume false-e: |- head F [ x ] [ y ] tail;
+  assume false-e: |- "head F [ x ] [ y ] tail";
 
   do {
 
@@ -260,15 +260,15 @@ theorem false(
     ax-k;
   };
 
-  return |- head y tail;
+  return |- "head y tail";
 }
 
 axiom term-not() {
-  return term NOT;
+  return term "NOT";
 }
 
 axiom df-not() {
-  return |- NOT = S [ S [ I ] [ K [ F ] ] ] [ K [ T ] ];
+  return |- "NOT = S [ S [ I ] [ K [ F ] ] ] [ K [ T ] ]";
 }
 
 theorem not(
@@ -276,7 +276,7 @@ theorem not(
   termx: term x,
   not.t: word tail) {
 
-  assume not-e: |- head NOT [ x ] tail;
+  assume not-e: |- "head NOT [ x ] tail";
 
   do {
 
@@ -557,15 +557,15 @@ theorem not(
   ax-k;
   };
 
-  return |- head x [ F ] [ T ] tail;
+  return |- "head x [ F ] [ T ] tail";
 }
 
 axiom term-or() {
-  return term OR;
+  return term "OR";
 }
 
 axiom df-or() {
-  return |- OR = S [ I ] [ K [ T ] ];
+  return |- "OR = S [ I ] [ K [ T ] ]";
 }
 
 theorem or(
@@ -574,7 +574,7 @@ theorem or(
   term-y: term y,
   or.t: word tail) {
 
-  assume or-e: |- head OR [ x ] [ y ] tail;
+  assume or-e: |- "head OR [ x ] [ y ] tail";
 
   do {
 
@@ -726,16 +726,16 @@ theorem or(
     ax-k; // head x [ T ] [ y ] tail
   };
 
-  return |- head x [ T ] [ y ] tail;
+  return |- "head x [ T ] [ y ] tail";
 }
 
 axiom term-and() {
-  return term AND;
+  return term "AND";
 }
 
 
 axiom df-and() {
-  return |- AND = S [ S ] [ K [ K [ F ] ] ];
+  return |- "AND = S [ S ] [ K [ K [ F ] ] ]";
 }
 
 theorem and(
@@ -744,7 +744,7 @@ theorem and(
   term-y: term y,
   and.t: word tail) {
 
-  assume and-e: |- head AND [ x ] [ y ] tail;
+  assume and-e: |- "head AND [ x ] [ y ] tail";
 
   do {
 
@@ -917,16 +917,16 @@ theorem and(
   ax-k; // head x [ y ] [ F ] tail
   };
 
-  return |- head x [ y ] [ F ] tail;
+  return |- "head x [ y ] [ F ] tail";
 }
 
 axiom term-nand() {
-  return term NAND;
+  return term "NAND";
 }
 
 
 axiom df-nand(term x, term y) {
-  return |- NAND [ x ] [ y ] = NOT [ AND [ x ] [ y ] ];
+  return |- "NAND [ x ] [ y ] = NOT [ AND [ x ] [ y ] ]";
 }
 
 theorem nand(
@@ -935,7 +935,7 @@ theorem nand(
   term-y: term y,
   nand.t: word tail) {
 
-  assume nand-e: |- head NAND [ x ] [ y ] tail;
+  assume nand-e: |- "head NAND [ x ] [ y ] tail";
 
   do {
 
@@ -1015,15 +1015,15 @@ theorem nand(
   and; // head x [ y ] [ F ] [ F ] [ T ] tail    
   };
 
-  return |- head x [ y ] [ F ] [ F ] [ T ] tail;
+  return |- "head x [ y ] [ F ] [ F ] [ T ] tail";
 }
 
 axiom term-h() {
-  return term H;
+  return term "H";
 }
 
 axiom df-h(term x, term y) {
-  return |- H [ x ] [ y ] = F [ x ] [ y ];
+  return |- "H [ x ] [ y ] = F [ x ] [ y ]";
 }
 
 theorem h(
@@ -1032,7 +1032,7 @@ theorem h(
   term-y: term y,
   h.t: word tail) {
 
-  assume h-e: |- head H [ x ] [ y ] tail;
+  assume h-e: |- "head H [ x ] [ y ] tail";
 
   do {
 
@@ -1072,7 +1072,7 @@ theorem h(
   false; // head y tail
   };
 
-  return |- head y tail;
+  return |- "head y tail";
 }
 
 axiom term-b() {
@@ -1080,7 +1080,7 @@ axiom term-b() {
 }
 
 axiom df-b(term f, term g, term x) {
-  return |- B [ f ] [ g ] [ x ] = S [ K [ S ] ] [ K ] [ f ] [ g ] [ x ];
+  return |- "B [ f ] [ g ] [ x ] = S [ K [ S ] ] [ K ] [ f ] [ g ] [ x ]";
 }
 
 theorem b(
@@ -1090,7 +1090,7 @@ theorem b(
   x: term x,
   b.t: word tail) {
 
-  assume b-e: |- head B [ f ] [ g ] [ x ] tail;
+  assume b-e: |- "head B [ f ] [ g ] [ x ] tail";
 
   do {
 
@@ -1262,15 +1262,15 @@ theorem b(
   ax-k; // head f [ g [ x ] ] tail
   };
 
-  return |- head f [ g [ x ] ] tail;
+  return |- "head f [ g [ x ] ] tail";
 }
 
 axiom term-C() {
-  return term C;
+  return term "C";
 }
 
 axiom df-c(term f, term g, term x) {
-  return |- C [ f ] [ g ] [ x ] = S [ B [ B ] [ S ] ] [ K [ K ] ] [ f ] [ g ] [ x ];
+  return |- "C [ f ] [ g ] [ x ] = S [ B [ B ] [ S ] ] [ K [ K ] ] [ f ] [ g ] [ x ]";
 }
 
 theorem c(
@@ -1280,7 +1280,7 @@ theorem c(
   x: term x,
   tail: word tail) {
 
-  assume c-e: |- head C [ f ] [ g ] [ x ] tail;
+  assume c-e: |- "head C [ f ] [ g ] [ x ] tail";
 
   do {
 
@@ -1545,7 +1545,7 @@ theorem c(
   ax-k; 
   };
 
-  return |- head f [ x ] [ g ] tail;
+  return |- "head f [ x ] [ g ] tail";
 }
 
 axiom term-W() {
@@ -1553,7 +1553,7 @@ axiom term-W() {
 }
 
 axiom df-w(term x, term f) {
-  return |- W [ x ] [ f ] = C [ I ] [ x ] [ f ];
+  return |- "W [ x ] [ f ] = C [ I ] [ x ] [ f ]";
 }
 
 theorem w(
@@ -1562,7 +1562,7 @@ theorem w(
   f: term f,
   tail: word tail) {
 
-  assume w-e: |- head W [ x ] [ f ] tail;
+  assume w-e: |- "head W [ x ] [ f ] tail";
 
   do {
 
@@ -1625,7 +1625,7 @@ theorem w(
     id;
 
   };
-  return |- head f [ x ] tail;
+  return |- "head f [ x ] tail";
 }
 
 
@@ -1634,7 +1634,7 @@ axiom term-v() {
 }
 
 axiom df-v(term x, term y, term z) {
-  return |- V [ x ] [ y ] [ z ] = B [ C ] [ W ] [ x ] [ y ] [ z ];
+  return |- "V [ x ] [ y ] [ z ] = B [ C ] [ W ] [ x ] [ y ] [ z ]";
 }
 
 theorem v(
@@ -1644,7 +1644,7 @@ theorem v(
   z: term z,
   tail: word tail) {
 
-  assume v-e: |- head V [ x ] [ y ] [ z ] tail;
+  assume v-e: |- "head V [ x ] [ y ] [ z ] tail";
 
   do {
 
@@ -1742,7 +1742,7 @@ theorem v(
 
   };
 
-  return |- head z [ x ] [ y ] tail;
+  return |- "head z [ x ] [ y ] tail";
 }
 
 axiom term-pair() {
@@ -1750,7 +1750,7 @@ axiom term-pair() {
 }
 
 axiom ax-pair() {
-  return |- Pair = V;
+  return |- "Pair = V";
 }
 
 theorem pair2(term x, term y) {
@@ -1799,7 +1799,7 @@ theorem pair2(term x, term y) {
 
   };
 
-  return |- Pair [ x ] [ y ] = V [ x ] [ y ];
+  return |- "Pair [ x ] [ y ] = V [ x ] [ y ]";
 }
 
 theorem df-pair(term x, term y, term z) {
@@ -1859,7 +1859,7 @@ theorem df-pair(term x, term y, term z) {
 
   };
 
-  return |- Pair [ x ] [ y ] [ z ] = V [ x ] [ y ] [ z ];
+  return |- "Pair [ x ] [ y ] [ z ] = V [ x ] [ y ] [ z ]";
 }
 
 theorem pair(
@@ -1869,7 +1869,7 @@ theorem pair(
   z: term z,
   tail: word tail) {
 
-  assume pair-e: |- head Pair [ x ] [ y ] [ z ] tail;
+  assume pair-e: |- "head Pair [ x ] [ y ] [ z ] tail";
 
   do {
 
@@ -1913,7 +1913,7 @@ theorem pair(
 
   };
 
-  return |- head z [ x ] [ y ] tail;
+  return |- "head z [ x ] [ y ] tail";
 }
 
 axiom term-first() {
@@ -1921,7 +1921,7 @@ axiom term-first() {
 }
 
 axiom df-first() {
-  return |- First = W [ T ];
+  return |- "First = W [ T ]";
 }
 
 theorem first(
@@ -1930,7 +1930,7 @@ theorem first(
   y: term y,
   tail: word tail) {
 
-  assume first-e: |- head First [ Pair [ x ] [ y ] ] tail;
+  assume first-e: |- "head First [ Pair [ x ] [ y ] ] tail";
 
   do {
 
@@ -2011,7 +2011,7 @@ theorem first(
   true;
   };
 
-  return |- head x tail;
+  return |- "head x tail";
 }
 
 axiom term-second() {
@@ -2019,7 +2019,7 @@ axiom term-second() {
 }
 
 axiom df-second() {
-  return |- Second = W [ F ];
+  return |- "Second = W [ F ]";
 }
 
 theorem second(
@@ -2028,7 +2028,7 @@ theorem second(
   y: term y,
   tail: word tail) {
 
-  assume second-e: |- head Second [ Pair [ x ] [ y ] ] tail;
+  assume second-e: |- "head Second [ Pair [ x ] [ y ] ] tail";
 
   do {
 
@@ -2109,7 +2109,7 @@ theorem second(
   false;
   };
 
-  return |- head y tail;
+  return |- "head y tail";
 }
 
 axiom term-0() {
@@ -2117,7 +2117,7 @@ axiom term-0() {
 }
 
 axiom df-0() {
-  return |- 0 = I;
+  return |- "0 = I";
 }
 
 axiom term-Zero() {
@@ -2125,7 +2125,7 @@ axiom term-Zero() {
 }
 
 axiom df-Zero(term x) {
-  return |- Zero [ x ]  = First [ x ];
+  return |- "Zero [ x ]  = First [ x ]";
 }
 
 //theorem z0eT() {
@@ -2143,7 +2143,7 @@ theorem Zero0(
   head: word head,
   tail: word tail) {
 
-  assume zero-e: |- head Zero [ 0 ] tail;
+  assume zero-e: |- "head Zero [ 0 ] tail";
 
   do {
 
@@ -2233,7 +2233,7 @@ theorem Zero0(
 
   };
 
-  return |- head T tail;
+  return |- "head T tail";
 }
 
 axiom term-1() {
@@ -2241,7 +2241,7 @@ axiom term-1() {
 }
 
 axiom df-1() {
-  return |- 1 = Pair [ F ] [ 0 ];
+  return |- "1 = Pair [ F ] [ 0 ]";
 }
 
 axiom term-Next() {
@@ -2249,11 +2249,11 @@ axiom term-Next() {
 }
 
 axiom df-Next(term x) {
-  return |- Next [ x ] = Pair [ F ] [ x ];
+  return |- "Next [ x ] = Pair [ F ] [ x ]";
 }
 
 axiom word-eq() {
-  return word =;
+  return word "=";
 }
 
 theorem n0eq1() {
@@ -2307,7 +2307,7 @@ theorem n0eq1() {
 
   };
 
-  return |- Next [ 0 ] = 1;
+  return |- "Next [ 0 ] = 1";
 }
 
 axiom term-2() {
@@ -2315,7 +2315,7 @@ axiom term-2() {
 }
 
 axiom df-2() {
-  return |- 2 = Pair [ F ] [ 1 ];
+  return |- "2 = Pair [ F ] [ 1 ]";
 }
 
 theorem n1e2() {
@@ -2369,7 +2369,7 @@ theorem n1e2() {
 
   };
 
-  return |- Next [ 1 ] = 2;
+  return |- "Next [ 1 ] = 2";
 }
 
 axiom term-Previous() {
@@ -2377,7 +2377,7 @@ axiom term-Previous() {
 }
 
 axiom df-Previous(term x) {
-  return |- Previous [ x ] = Second [ x ];
+  return |- "Previous [ x ] = Second [ x ]";
 }
 
 theorem p2e1() {
@@ -2444,7 +2444,7 @@ theorem p2e1() {
 
   };
 
-  return |- Previous [ 2 ] = 1;
+  return |- "Previous [ 2 ] = 1";
 }
 
 theorem p1e0() {
@@ -2510,7 +2510,7 @@ theorem p1e0() {
 
   };
 
-  return |- Previous [ 1 ] = 0;
+  return |- "Previous [ 1 ] = 0";
 }
 
 axiom term-Apply() {
@@ -2526,7 +2526,7 @@ axiom df-Apply(term n, term f, term x) {
   //    return f(Apply(n - 1, f, x))
   // }
   //                                  if n == 0 is T we get the first parameter, if F, the second
-  return |- Apply [ n ] [ f ] [ x ] = Zero [ n ] [ x ] [ f [ Apply [ Previous [ n ] ] [ f ] [ x ] ] ];
+  return |- "Apply [ n ] [ f ] [ x ] = Zero [ n ] [ x ] [ f [ Apply [ Previous [ n ] ] [ f ] [ x ] ] ]";
 }
 
 theorem Apply0(
@@ -2535,7 +2535,7 @@ theorem Apply0(
   x: term x,  
   tail: word tail) {
 
-  assume apply0-e: |- head Apply [ 0 ] [ f ] [ x ] tail;
+  assume apply0-e: |- "head Apply [ 0 ] [ f ] [ x ] tail";
 
   do {
 
@@ -2661,7 +2661,7 @@ theorem Apply0(
 
   };
 
-  return |- head x tail;
+  return |- "head x tail";
 }
 
 theorem Apply1(
@@ -2670,7 +2670,7 @@ theorem Apply1(
   x: term x,  
   tail: word tail) {
 
-  assume apply1-e: |- head Apply [ 1 ] [ f ] [ x ] tail;
+  assume apply1-e: |- "head Apply [ 1 ] [ f ] [ x ] tail";
 
   do {
 
@@ -2837,7 +2837,7 @@ theorem Apply1(
 
   };
 
-  return |- head f [ x ] tail;
+  return |- "head f [ x ] tail";
 }
 
 axiom term-Add() {
@@ -2846,7 +2846,7 @@ axiom term-Add() {
 
 // Add(m, n) = Apply(m, Next, n) = Next(... Next(Next(n)) ...) m times
 axiom df-Add(term m, term n) {
-  return |- Add [ m ] [ n ] = Apply [ m ] [ Next ] [ n ];
+  return |- "Add [ m ] [ n ] = Apply [ m ] [ Next ] [ n ]";
 }
 
 theorem z1ef() {
@@ -2910,7 +2910,7 @@ theorem z1ef() {
   first;
   };
 
-  return |- Zero [ 1 ] = F;
+  return |- "Zero [ 1 ] = F";
 }
 
 theorem 0pNeN(n: term n) {
@@ -2941,7 +2941,7 @@ theorem 0pNeN(n: term n) {
 
   };
 
-  return |- Add [ 0 ] [ n ] = n;
+  return |- "Add [ 0 ] [ n ] = n";
 }
 
 theorem 0p1e1() {
@@ -2951,7 +2951,7 @@ theorem 0p1e1() {
     0pNeN;
 
   };
-  return |- Add [ 0 ] [ 1 ] = 1;
+  return |- "Add [ 0 ] [ 1 ] = 1";
 }
 
 theorem 1p1e2() {
@@ -2999,7 +2999,7 @@ theorem 1p1e2() {
   df-eq;
   };
 
-  return |- Add [ 1 ] [ 1 ] = 2;
+  return |- "Add [ 1 ] [ 1 ] = 2";
 }
 
 axiom term-Sub() {
@@ -3008,7 +3008,7 @@ axiom term-Sub() {
 
 // Sub(m, n) = Apply(m, Previous, n) = Previous(... Previous(Previous(n)) ...) m times
 axiom df-Sub(term m, term n) {
-  return |- Sub [ m ] [ n ] = Apply [ m ] [ Previous ] [ n ];
+  return |- "Sub [ m ] [ n ] = Apply [ m ] [ Previous ] [ n ]";
 }
 
 theorem 1m1e0() {
@@ -3056,7 +3056,7 @@ theorem 1m1e0() {
   df-eq;
   };
 
-  return |- Sub [ 1 ] [ 1 ] = 0;
+  return |- "Sub [ 1 ] [ 1 ] = 0";
 }
 
 axiom term-NextPair() {
@@ -3064,7 +3064,7 @@ axiom term-NextPair() {
 }
 
 axiom df-NextPair(term p) {
-  return |- NextPair [ p ] = Pair [ Second [ p ] ] [ Add [ First [ p ] ] [ Second [ p ] ] ];
+  return |- "NextPair [ p ] = Pair [ Second [ p ] ] [ Add [ First [ p ] ] [ Second [ p ] ] ]";
 }
 
 theorem NextPairXY(term x, term y) {
@@ -3200,7 +3200,7 @@ theorem NextPairXY(term x, term y) {
     second;
 
   };
-  return |- NextPair [ Pair [ x ] [ y ] ] = Pair [ y ] [ Add [ x ] [ y ] ];
+  return |- "NextPair [ Pair [ x ] [ y ] ] = Pair [ y ] [ Add [ x ] [ y ] ]";
 }
 
 theorem np01e11() {
@@ -3258,5 +3258,5 @@ theorem np01e11() {
     
   };
 
-  return |- NextPair [ Pair [ 0 ] [ 1 ] ] = Pair [ 1 ] [ 1 ];
+  return |- "NextPair [ Pair [ 0 ] [ 1 ] ] = Pair [ 1 ] [ 1 ]";
 }

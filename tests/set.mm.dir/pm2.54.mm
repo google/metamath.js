@@ -4,7 +4,7 @@ include "wi.mm";
 include "df-or.mm";
 include "biimpri.mm";
 
-theorem pm2.54(wph: $wff$ ph, wps: $wff$ ps) {
+theorem pm2.54(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -24,5 +24,5 @@ theorem pm2.54(wph: $wff$ ph, wps: $wff$ ps) {
     biimpri;
   };
 
-  return $|-$ $( ( -. ph -> ps ) -> ( ph \/ ps ) )$;
+  return '|-' "( ( -. ph -> ps ) -> ( ph \\/ ps ) )";
 }

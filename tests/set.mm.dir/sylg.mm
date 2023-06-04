@@ -2,9 +2,9 @@ include "wal.mm";
 include "alimi.mm";
 include "syl.mm";
 
-theorem sylg(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
-  assume sylg.1: $|- ( ph -> A. x ps )$;
-  assume sylg.2: $|- ( ps -> ch )$;
+theorem sylg(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
+  assume sylg.1: |- "( ph -> A. x ps )";
+  assume sylg.2: |- "( ps -> ch )";
 
 
 
@@ -27,5 +27,5 @@ theorem sylg(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, vx: $setvar$ x) {
     syl;
   };
 
-  return $|-$ $( ph -> A. x ch )$;
+  return '|-' "( ph -> A. x ch )";
 }

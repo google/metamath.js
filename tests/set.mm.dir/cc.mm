@@ -2,5 +2,5 @@
 
 axiom cc() {
 
-  return $class$ $CC$;
+  return 'class' "CC";
 }

@@ -5,7 +5,7 @@ include "a2i.mm";
 include "con4d.mm";
 include "pm2.43i.mm";
 
-theorem pm2.18(wph: $wff$ ph) {
+theorem pm2.18(wph: 'wff' ph) {
 
 
 
@@ -35,5 +35,5 @@ theorem pm2.18(wph: $wff$ ph) {
     pm2.43i;
   };
 
-  return $|-$ $( ( -. ph -> ph ) -> ph )$;
+  return '|-' "( ( -. ph -> ph ) -> ph )";
 }

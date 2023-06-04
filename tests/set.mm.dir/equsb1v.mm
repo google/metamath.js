@@ -10,7 +10,7 @@ include "eximii.mm";
 include "df-sb.mm";
 include "mpbir2an.mm";
 
-theorem equsb1v(vx: $setvar$ x, vy: $setvar$ y) {
+theorem equsb1v(vx: 'setvar' x, vy: 'setvar' y) {
 
   disjoint x y;
 
@@ -54,5 +54,5 @@ theorem equsb1v(vx: $setvar$ x, vy: $setvar$ y) {
     mpbir2an;
   };
 
-  return $|-$ $[ y / x ] x = y$;
+  return '|-' "[ y / x ] x = y";
 }

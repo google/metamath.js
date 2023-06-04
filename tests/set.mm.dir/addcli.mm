@@ -5,9 +5,9 @@ include "co.mm";
 include "addcl.mm";
 include "mp2an.mm";
 
-theorem addcli(cA: $class$ A, cB: $class$ B) {
-  assume axi.1: $|- A e. CC$;
-  assume axi.2: $|- B e. CC$;
+theorem addcli(cA: 'class' A, cB: 'class' B) {
+  assume axi.1: |- "A e. CC";
+  assume axi.2: |- "B e. CC";
 
 
 
@@ -34,5 +34,5 @@ theorem addcli(cA: $class$ A, cB: $class$ B) {
     mp2an;
   };
 
-  return $|-$ $( A + B ) e. CC$;
+  return '|-' "( A + B ) e. CC";
 }

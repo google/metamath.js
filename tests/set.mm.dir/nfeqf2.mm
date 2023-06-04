@@ -14,7 +14,7 @@ include "syl6com.mm";
 include "nfd.mm";
 include "sylbir.mm";
 
-theorem nfeqf2(vx: $setvar$ x, vy: $setvar$ y, vz: $setvar$ z) {
+theorem nfeqf2(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
 
   disjoint x z;
 
@@ -87,5 +87,5 @@ theorem nfeqf2(vx: $setvar$ x, vy: $setvar$ y, vz: $setvar$ z) {
     sylbir;
   };
 
-  return $|-$ $( -. A. x x = y -> F/ x z = y )$;
+  return '|-' "( -. A. x x = y -> F/ x z = y )";
 }

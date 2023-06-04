@@ -3,9 +3,9 @@ include "expcom.mm";
 include "adantrd.mm";
 include "mpcom.mm";
 
-theorem syldan(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
-  assume syldan.1: $|- ( ( ph /\ ps ) -> ch )$;
-  assume syldan.2: $|- ( ( ph /\ ch ) -> th )$;
+theorem syldan(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+  assume syldan.1: |- "( ( ph /\\ ps ) -> ch )";
+  assume syldan.2: |- "( ( ph /\\ ch ) -> th )";
 
 
 
@@ -31,5 +31,5 @@ theorem syldan(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th) {
     mpcom;
   };
 
-  return $|-$ $( ( ph /\ ps ) -> th )$;
+  return '|-' "( ( ph /\\ ps ) -> th )";
 }

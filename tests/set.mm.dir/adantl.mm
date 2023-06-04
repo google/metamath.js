@@ -1,8 +1,8 @@
 include "adantr.mm";
 include "ancoms.mm";
 
-theorem adantl(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume adantl.1: $|- ( ph -> ps )$;
+theorem adantl(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume adantl.1: |- "( ph -> ps )";
 
 
 
@@ -20,5 +20,5 @@ theorem adantl(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     ancoms;
   };
 
-  return $|-$ $( ( ch /\ ph ) -> ps )$;
+  return '|-' "( ( ch /\\ ph ) -> ps )";
 }

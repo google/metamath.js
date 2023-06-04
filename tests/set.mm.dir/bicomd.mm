@@ -2,8 +2,8 @@ include "wb.mm";
 include "bicom.mm";
 include "sylib.mm";
 
-theorem bicomd(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume bicomd.1: $|- ( ph -> ( ps <-> ch ) )$;
+theorem bicomd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume bicomd.1: |- "( ph -> ( ps <-> ch ) )";
 
 
 
@@ -24,5 +24,5 @@ theorem bicomd(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     sylib;
   };
 
-  return $|-$ $( ph -> ( ch <-> ps ) )$;
+  return '|-' "( ph -> ( ch <-> ps ) )";
 }

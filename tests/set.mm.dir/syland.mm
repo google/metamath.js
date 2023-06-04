@@ -3,9 +3,9 @@ include "expd.mm";
 include "syld.mm";
 include "impd.mm";
 
-theorem syland(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th, wta: $wff$ ta) {
-  assume syland.1: $|- ( ph -> ( ps -> ch ) )$;
-  assume syland.2: $|- ( ph -> ( ( ch /\ th ) -> ta ) )$;
+theorem syland(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta: 'wff' ta) {
+  assume syland.1: |- "( ph -> ( ps -> ch ) )";
+  assume syland.2: |- "( ph -> ( ( ch /\\ th ) -> ta ) )";
 
 
 
@@ -33,5 +33,5 @@ theorem syland(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th, wta: 
     impd;
   };
 
-  return $|-$ $( ph -> ( ( ps /\ th ) -> ta ) )$;
+  return '|-' "( ph -> ( ( ps /\\ th ) -> ta ) )";
 }

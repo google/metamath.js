@@ -6,9 +6,9 @@ include "eqtypi.mm";
 include "dfov1.mm";
 include "ax-eqmp.mm";
 
-theorem mpbi(ta: $term$ A, tb: $term$ B, tr: $term$ R) {
-  assume mpbi.1: $|- R |= A$;
-  assume mpbi.2: $|- R |= [ A = B ]$;
+theorem mpbi(ta: 'term' A, tb: 'term' B, tr: 'term' R) {
+  assume mpbi.1: |- "R |= A";
+  assume mpbi.2: |- "R |= [ A = B ]";
 
 
 
@@ -44,5 +44,5 @@ theorem mpbi(ta: $term$ A, tb: $term$ B, tr: $term$ R) {
     ax-eqmp;
   };
 
-  return $|-$ $R |= B$;
+  return '|-' "R |= B";
 }

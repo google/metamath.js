@@ -1,8 +1,8 @@
 include "ax-simpl.mm";
 
-theorem simpl(tr: $term$ R, ts: $term$ S) {
-  assume ax-simpl.1: $|- R : bool$;
-  assume ax-simpl.2: $|- S : bool$;
+theorem simpl(tr: 'term' R, ts: 'term' S) {
+  assume ax-simpl.1: |- "R : bool";
+  assume ax-simpl.2: |- "S : bool";
 
 
 
@@ -16,5 +16,5 @@ theorem simpl(tr: $term$ R, ts: $term$ S) {
     ax-simpl;
   };
 
-  return $|-$ $( R , S ) |= R$;
+  return '|-' "( R , S ) |= R";
 }

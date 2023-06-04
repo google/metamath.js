@@ -3,8 +3,8 @@ include "wex.mm";
 include "19.2.mm";
 include "syl.mm";
 
-theorem 19.2d(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
-  assume 19.2d.1: $|- ( ph -> A. x ps )$;
+theorem 19.2d(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+  assume 19.2d.1: |- "( ph -> A. x ps )";
 
 
 
@@ -25,5 +25,5 @@ theorem 19.2d(wph: $wff$ ph, wps: $wff$ ps, vx: $setvar$ x) {
     syl;
   };
 
-  return $|-$ $( ph -> E. x ps )$;
+  return '|-' "( ph -> E. x ps )";
 }

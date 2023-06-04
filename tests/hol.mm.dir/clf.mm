@@ -24,12 +24,12 @@ include "ceq2.mm";
 include "oveq12.mm";
 include "insti.mm";
 
-theorem clf(hal: $type$ al, hbe: $type$ be, vx: $var$ x, vy: $var$ y, ta: $term$ A, tb: $term$ B, tc: $term$ C) {
-  assume clf.1: $|- A : be$;
-  assume clf.2: $|- C : al$;
-  assume clf.3: $|- [ x : al = C ] |= [ A = B ]$;
-  assume clf.4: $|- T. |= [ ( \ x : al . B y : al ) = B ]$;
-  assume clf.5: $|- T. |= [ ( \ x : al . C y : al ) = C ]$;
+theorem clf(hal: 'type' al, hbe: 'type' be, vx: 'var' x, vy: 'var' y, ta: 'term' A, tb: 'term' B, tc: 'term' C) {
+  assume clf.1: |- "A : be";
+  assume clf.2: |- "C : al";
+  assume clf.3: |- "[ x : al = C ] |= [ A = B ]";
+  assume clf.4: |- "T. |= [ ( \\ x : al . B y : al ) = B ]";
+  assume clf.5: |- "T. |= [ ( \\ x : al . C y : al ) = C ]";
 
   disjoint A y;
   disjoint B y;
@@ -226,5 +226,5 @@ theorem clf(hal: $type$ al, hbe: $type$ be, vx: $var$ x, vy: $var$ y, ta: $term$
     insti;
   };
 
-  return $|-$ $T. |= [ ( \ x : al . A C ) = B ]$;
+  return '|-' "T. |= [ ( \\ x : al . A C ) = B ]";
 }

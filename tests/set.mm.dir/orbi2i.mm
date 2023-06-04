@@ -4,8 +4,8 @@ include "orim2i.mm";
 include "biimpri.mm";
 include "impbii.mm";
 
-theorem orbi2i(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume orbi2i.1: $|- ( ph <-> ps )$;
+theorem orbi2i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume orbi2i.1: |- "( ph <-> ps )";
 
 
 
@@ -37,5 +37,5 @@ theorem orbi2i(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     impbii;
   };
 
-  return $|-$ $( ( ch \/ ph ) <-> ( ch \/ ps ) )$;
+  return '|-' "( ( ch \\/ ph ) <-> ( ch \\/ ps ) )";
 }

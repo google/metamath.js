@@ -11,12 +11,12 @@ include "albi.mm";
 include "4syl.mm";
 include "3bitr4g.mm";
 
-theorem eqeq1d(wph: $wff$ ph, cA: $class$ A, cB: $class$ B, cC: $class$ C) {
-  assume eqeq1d.1: $|- ( ph -> A = B )$;
+theorem eqeq1d(wph: 'wff' ph, cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+  assume eqeq1d.1: |- "( ph -> A = B )";
 
 
 
-  let vx: $setvar$ x;
+  let vx: setvar x;
 
   do {
     wph;
@@ -104,5 +104,5 @@ theorem eqeq1d(wph: $wff$ ph, cA: $class$ A, cB: $class$ B, cC: $class$ C) {
     3bitr4g;
   };
 
-  return $|-$ $( ph -> ( A = C <-> B = C ) )$;
+  return '|-' "( ph -> ( A = C <-> B = C ) )";
 }

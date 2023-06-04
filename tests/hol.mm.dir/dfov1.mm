@@ -7,11 +7,11 @@ include "df-ov.mm";
 include "a1i.mm";
 include "ax-eqmp.mm";
 
-theorem dfov1(hal: $type$ al, hbe: $type$ be, ta: $term$ A, tb: $term$ B, tf: $term$ F, tr: $term$ R) {
-  assume dfov1.1: $|- F : ( al -> ( be -> bool ) )$;
-  assume dfov1.2: $|- A : al$;
-  assume dfov1.3: $|- B : be$;
-  assume dfov1.4: $|- R |= [ A F B ]$;
+theorem dfov1(hal: 'type' al, hbe: 'type' be, ta: 'term' A, tb: 'term' B, tf: 'term' F, tr: 'term' R) {
+  assume dfov1.1: |- "F : ( al -> ( be -> bool ) )";
+  assume dfov1.2: |- "A : al";
+  assume dfov1.3: |- "B : be";
+  assume dfov1.4: |- "R |= [ A F B ]";
 
 
 
@@ -55,5 +55,5 @@ theorem dfov1(hal: $type$ al, hbe: $type$ be, ta: $term$ A, tb: $term$ B, tf: $t
     ax-eqmp;
   };
 
-  return $|-$ $R |= ( ( F A ) B )$;
+  return '|-' "R |= ( ( F A ) B )";
 }

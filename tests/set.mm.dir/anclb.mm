@@ -2,7 +2,7 @@ include "wa.mm";
 include "ibar.mm";
 include "pm5.74i.mm";
 
-theorem anclb(wph: $wff$ ph, wps: $wff$ ps) {
+theorem anclb(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -20,5 +20,5 @@ theorem anclb(wph: $wff$ ph, wps: $wff$ ps) {
     pm5.74i;
   };
 
-  return $|-$ $( ( ph -> ps ) <-> ( ph -> ( ph /\ ps ) ) )$;
+  return '|-' "( ( ph -> ps ) <-> ( ph -> ( ph /\\ ps ) ) )";
 }

@@ -7,7 +7,7 @@ include "anclb.mm";
 include "dfbi2.mm";
 include "3bitr4i.mm";
 
-theorem pm4.71(wph: $wff$ ph, wps: $wff$ ps) {
+theorem pm4.71(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -48,5 +48,5 @@ theorem pm4.71(wph: $wff$ ph, wps: $wff$ ps) {
     3bitr4i;
   };
 
-  return $|-$ $( ( ph -> ps ) <-> ( ph <-> ( ph /\ ps ) ) )$;
+  return '|-' "( ( ph -> ps ) <-> ( ph <-> ( ph /\\ ps ) ) )";
 }

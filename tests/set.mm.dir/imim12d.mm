@@ -2,9 +2,9 @@ include "wi.mm";
 include "imim2d.mm";
 include "syl5d.mm";
 
-theorem imim12d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th, wta: $wff$ ta) {
-  assume imim12d.1: $|- ( ph -> ( ps -> ch ) )$;
-  assume imim12d.2: $|- ( ph -> ( th -> ta ) )$;
+theorem imim12d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta: 'wff' ta) {
+  assume imim12d.1: |- "( ph -> ( ps -> ch ) )";
+  assume imim12d.2: |- "( ph -> ( th -> ta ) )";
 
 
 
@@ -28,5 +28,5 @@ theorem imim12d(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch, wth: $wff$ th, wta:
     syl5d;
   };
 
-  return $|-$ $( ph -> ( ( ch -> th ) -> ( ps -> ta ) ) )$;
+  return '|-' "( ph -> ( ( ch -> th ) -> ( ps -> ta ) ) )";
 }

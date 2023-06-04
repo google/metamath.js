@@ -9,7 +9,7 @@ include "sb1.mm";
 include "equs5.mm";
 include "syl5ib.mm";
 
-theorem sb4(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
+theorem sb4(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
 
 
 
@@ -48,5 +48,5 @@ theorem sb4(wph: $wff$ ph, vx: $setvar$ x, vy: $setvar$ y) {
     syl5ib;
   };
 
-  return $|-$ $( -. A. x x = y -> ( [ y / x ] ph -> A. x ( x = y -> ph ) ) )$;
+  return '|-' "( -. A. x x = y -> ( [ y / x ] ph -> A. x ( x = y -> ph ) ) )";
 }

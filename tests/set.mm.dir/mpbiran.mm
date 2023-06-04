@@ -2,9 +2,9 @@ include "wa.mm";
 include "biantrur.mm";
 include "bitr4i.mm";
 
-theorem mpbiran(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
-  assume mpbiran.1: $|- ps$;
-  assume mpbiran.2: $|- ( ph <-> ( ps /\ ch ) )$;
+theorem mpbiran(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+  assume mpbiran.1: |- "ps";
+  assume mpbiran.2: |- "( ph <-> ( ps /\\ ch ) )";
 
 
 
@@ -24,5 +24,5 @@ theorem mpbiran(wph: $wff$ ph, wps: $wff$ ps, wch: $wff$ ch) {
     bitr4i;
   };
 
-  return $|-$ $( ph <-> ch )$;
+  return '|-' "( ph <-> ch )";
 }

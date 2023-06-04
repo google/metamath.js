@@ -10,7 +10,7 @@ include "biantru.mm";
 include "exbii.mm";
 include "bitr4i.mm";
 
-theorem isset(vx: $setvar$ x, cA: $class$ A) {
+theorem isset(vx: 'setvar' x, cA: 'class' A) {
 
   disjoint A x;
 
@@ -53,5 +53,5 @@ theorem isset(vx: $setvar$ x, cA: $class$ A) {
     bitr4i;
   };
 
-  return $|-$ $( A e. _V <-> E. x x = A )$;
+  return '|-' "( A e. _V <-> E. x x = A )";
 }

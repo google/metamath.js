@@ -2,7 +2,7 @@ include "wo.mm";
 include "pm1.4.mm";
 include "impbii.mm";
 
-theorem orcom(wph: $wff$ ph, wps: $wff$ ps) {
+theorem orcom(wph: 'wff' ph, wps: 'wff' ps) {
 
 
 
@@ -24,5 +24,5 @@ theorem orcom(wph: $wff$ ph, wps: $wff$ ps) {
     impbii;
   };
 
-  return $|-$ $( ( ph \/ ps ) <-> ( ps \/ ph ) )$;
+  return '|-' "( ( ph \\/ ps ) <-> ( ps \\/ ph ) )";
 }
