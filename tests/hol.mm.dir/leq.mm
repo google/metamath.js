@@ -8,7 +8,7 @@ include "dfov1.mm";
 include "ax-leq.mm";
 include "dfov2.mm";
 
-theorem leq(hal: 'type' al, hbe: 'type' be, vx: 'var' x, ta: 'term' A, tb: 'term' B, tr: 'term' R) {
+theorem leq(hal: type al, hbe: type be, vx: var x, ta: term A, tb: term B, tr: term R) {
   assume leq.1: |- "A : be";
   assume leq.2: |- "R |= [ A = B ]";
 

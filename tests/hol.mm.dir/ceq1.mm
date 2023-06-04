@@ -4,7 +4,7 @@ include "ax-cb1.mm";
 include "eqid.mm";
 include "ceq12.mm";
 
-theorem ceq1(hal: 'type' al, hbe: 'type' be, ta: 'term' A, tf: 'term' F, tr: 'term' R, tt: 'term' T) {
+theorem ceq1(hal: type al, hbe: type be, ta: term A, tf: term F, tr: term R, tt: term T) {
   assume ceq12.1: |- "F : ( al -> be )";
   assume ceq12.2: |- "A : al";
   assume ceq12.3: |- "R |= [ F = T ]";

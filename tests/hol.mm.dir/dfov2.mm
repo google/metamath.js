@@ -8,7 +8,7 @@ include "df-ov.mm";
 include "a1i.mm";
 include "mpbirx.mm";
 
-theorem dfov2(hal: 'type' al, hbe: 'type' be, ta: 'term' A, tb: 'term' B, tf: 'term' F, tr: 'term' R) {
+theorem dfov2(hal: type al, hbe: type be, ta: term A, tb: term B, tf: term F, tr: term R) {
   assume dfov1.1: |- "F : ( al -> ( be -> bool ) )";
   assume dfov1.2: |- "A : al";
   assume dfov1.3: |- "B : be";

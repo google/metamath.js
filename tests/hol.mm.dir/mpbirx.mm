@@ -3,7 +3,7 @@ include "ax-cb2.mm";
 include "eqcomx.mm";
 include "ax-eqmp.mm";
 
-theorem mpbirx(ta: 'term' A, tb: 'term' B, tr: 'term' R) {
+theorem mpbirx(ta: term A, tb: term B, tr: term R) {
   assume mpbirx.1: |- "B : bool";
   assume mpbirx.2: |- "R |= A";
   assume mpbirx.3: |- "R |= ( ( = B ) A )";

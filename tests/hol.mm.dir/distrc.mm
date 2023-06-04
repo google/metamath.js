@@ -9,7 +9,7 @@ include "ht.mm";
 include "ax-distrc.mm";
 include "dfov2.mm";
 
-theorem distrc(hal: 'type' al, hbe: 'type' be, hga: 'type' ga, vx: 'var' x, ta: 'term' A, tb: 'term' B, tf: 'term' F) {
+theorem distrc(hal: type al, hbe: type be, hga: type ga, vx: var x, ta: term A, tb: term B, tf: term F) {
   assume distrc.1: |- "F : ( be -> ga )";
   assume distrc.2: |- "A : be";
   assume distrc.3: |- "B : al";

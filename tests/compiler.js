@@ -1041,13 +1041,13 @@ describe("Transpiler", () => {
     `;
     
     assertThat(new Transpiler().read(metamath).dump()).equalsTo(`
-axiom w0(wp: 'wff' p, wq: 'wff' q) {
+axiom w0(wp: wff p, wq: wff q) {
   assume foo: |- "( p -> q )";
 
   return 'wff' "( p var q )";
 }
 
-axiom w2(wp: 'wff' p, wq: 'wff' q) {
+axiom w2(wp: wff p, wq: wff q) {
 
   return 'wff' "( p -> q )";
 }
@@ -1057,7 +1057,7 @@ axiom wesc(ww: '\\"' t) {
   return 'wff' "\\" t";
 }
 
-theorem wnew(wp: 'wff' p, wr: 'wff' r, ws: 'wff' s) {
+theorem wnew(wp: wff p, wr: wff r, ws: wff s) {
 
   disjoint p r;
 

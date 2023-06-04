@@ -6,7 +6,7 @@ include "eqtypi.mm";
 include "dfov1.mm";
 include "ax-eqmp.mm";
 
-theorem mpbi(ta: 'term' A, tb: 'term' B, tr: 'term' R) {
+theorem mpbi(ta: term A, tb: term B, tr: term R) {
   assume mpbi.1: |- "R |= A";
   assume mpbi.2: |- "R |= [ A = B ]";
 

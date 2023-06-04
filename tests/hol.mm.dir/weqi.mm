@@ -3,7 +3,7 @@ include "ke.mm";
 include "weq.mm";
 include "wov.mm";
 
-theorem weqi(hal: 'type' al, ta: 'term' A, tb: 'term' B) {
+theorem weqi(hal: type al, ta: term A, tb: term B) {
   assume weqi.1: |- "A : al";
   assume weqi.2: |- "B : al";
 

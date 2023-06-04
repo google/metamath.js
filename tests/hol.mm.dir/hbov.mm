@@ -17,7 +17,7 @@ include "adantr.mm";
 include "hbxfrf.mm";
 include "mpdan.mm";
 
-theorem hbov(hal: 'type' al, hbe: 'type' be, hga: 'type' ga, hde: 'type' de, vx: 'var' x, ta: 'term' A, tb: 'term' B, tc: 'term' C, tf: 'term' F, tr: 'term' R) {
+theorem hbov(hal: type al, hbe: type be, hga: type ga, hde: type de, vx: var x, ta: term A, tb: term B, tc: term C, tf: term F, tr: term R) {
   assume hbov.1: |- "F : ( be -> ( ga -> de ) )";
   assume hbov.2: |- "A : be";
   assume hbov.3: |- "B : al";

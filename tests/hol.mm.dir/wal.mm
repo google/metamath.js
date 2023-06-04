@@ -13,7 +13,7 @@ include "weqi.mm";
 include "df-al.mm";
 include "eqtypri.mm";
 
-theorem wal(hal: 'type' al) {
+theorem wal(hal: type al) {
 
 
 

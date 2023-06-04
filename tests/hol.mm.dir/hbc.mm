@@ -12,7 +12,7 @@ include "eqtypri.mm";
 include "ceq12.mm";
 include "eqtri.mm";
 
-theorem hbc(hal: 'type' al, hbe: 'type' be, hga: 'type' ga, vx: 'var' x, ta: 'term' A, tb: 'term' B, tf: 'term' F, tr: 'term' R) {
+theorem hbc(hal: type al, hbe: type be, hga: type ga, vx: var x, ta: term A, tb: term B, tf: term F, tr: term R) {
   assume hbc.1: |- "F : ( be -> ga )";
   assume hbc.2: |- "A : be";
   assume hbc.3: |- "B : al";

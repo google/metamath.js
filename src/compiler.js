@@ -794,7 +794,15 @@ class Transpiler {
   
   axiom(label) {
     const [, [d, f, e, [type, axiom]]] = this.mm.labels[label];
-    let args = f.map(([type, name, label]) => `${label}: '${this.escape(type)}' ${name}`).join(", ");
+
+    let args = f.map(([type, name, label]) => {
+      if (!type.match(/[A-Za-z]+/)) {
+        // throw new Error(`Invalid type name [${type}]: just letter allowed.`);
+        return `${label}: '${this.escape(type)}' ${name}`;
+      }
+    
+      return `${label}: ${this.escape(type)} ${name}`;
+    }).join(", ");
     
     let assumptions = e.map(([seq, type, name]) => `  assume ${name}: ${this.escape(type)} "${this.escape(seq.join(' '))}";`).join("\n");
 
@@ -839,8 +847,15 @@ ${assumptions}
     //for (const [type, name, label] of dummies) {
     //  varz.push(`  let ${label}: ${type} ${name}`);
     //}
-
-    const args = f.map(([type, name, label]) => `${label}: '${this.escape(type)}' ${name}`).join(", ");
+    
+    const args = f.map(([type, name, label]) => {
+      if (!type.match(/[A-Za-z]+/)) {
+        // throw new Error(`Invalid type name: just letter allowed.`);
+        return `${label}: '${this.escape(type)}' ${name}`;
+      }
+      return `${label}: ${this.escape(type)} ${name}`;
+    }
+    ).join(", ");
     
     const dlabels = dummies.map(([type, name, label]) => label);
 

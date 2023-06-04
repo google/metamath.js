@@ -8,7 +8,7 @@ include "kbr.mm";
 include "eqid.mm";
 include "ax-inst.mm";
 
-theorem insti(hal: 'type' al, vx: 'var' x, vy: 'var' y, ta: 'term' A, tb: 'term' B, tc: 'term' C, tr: 'term' R) {
+theorem insti(hal: type al, vx: var x, vy: var y, ta: term A, tb: term B, tc: term C, tr: term R) {
   assume insti.1: |- "C : al";
   assume insti.2: |- "B : bool";
   assume insti.3: |- "R |= A";

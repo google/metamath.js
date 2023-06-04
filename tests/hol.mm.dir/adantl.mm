@@ -1,7 +1,7 @@
 include "adantr.mm";
 include "ancoms.mm";
 
-theorem adantl(tr: 'term' R, ts: 'term' S, tt: 'term' T) {
+theorem adantl(tr: term R, ts: term S, tt: term T) {
   assume adantr.1: |- "R |= T";
   assume adantr.2: |- "S : bool";
 

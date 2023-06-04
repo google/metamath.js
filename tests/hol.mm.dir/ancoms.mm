@@ -6,7 +6,7 @@ include "simpr.mm";
 include "simpl.mm";
 include "syl2anc.mm";
 
-theorem ancoms(tr: 'term' R, ts: 'term' S, tt: 'term' T) {
+theorem ancoms(tr: term R, ts: term S, tt: term T) {
   assume ancoms.1: |- "( R , S ) |= T";
 
 

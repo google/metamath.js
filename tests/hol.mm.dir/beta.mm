@@ -10,7 +10,7 @@ include "wc.mm";
 include "ax-beta.mm";
 include "dfov2.mm";
 
-theorem beta(hal: 'type' al, hbe: 'type' be, vx: 'var' x, ta: 'term' A) {
+theorem beta(hal: type al, hbe: type be, vx: var x, ta: term A) {
   assume beta.1: |- "A : be";
 
 

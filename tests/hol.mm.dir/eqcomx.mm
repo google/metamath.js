@@ -11,7 +11,7 @@ include "syl2anc.mm";
 include "wc.mm";
 include "ax-eqmp.mm";
 
-theorem eqcomx(hal: 'type' al, ta: 'term' A, tb: 'term' B, tr: 'term' R) {
+theorem eqcomx(hal: type al, ta: term A, tb: term B, tr: term R) {
   assume eqcomx.1: |- "A : al";
   assume eqcomx.2: |- "B : al";
   assume eqcomx.3: |- "R |= ( ( = A ) B )";

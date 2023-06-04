@@ -1,6 +1,6 @@
 include "ax-trud.mm";
 
-theorem trud(tr: 'term' R) {
+theorem trud(tr: term R) {
   assume ax-trud.1: |- "R : bool";
 
 

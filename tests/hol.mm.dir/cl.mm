@@ -6,7 +6,7 @@ include "wv.mm";
 include "ax-17.mm";
 include "clf.mm";
 
-theorem cl(hal: 'type' al, hbe: 'type' be, vx: 'var' x, ta: 'term' A, tb: 'term' B, tc: 'term' C) {
+theorem cl(hal: type al, hbe: type be, vx: var x, ta: term A, tb: term B, tc: term C) {
   assume cl.1: |- "A : be";
   assume cl.2: |- "C : al";
   assume cl.3: |- "[ x : al = C ] |= [ A = B ]";

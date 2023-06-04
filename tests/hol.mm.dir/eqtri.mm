@@ -10,7 +10,7 @@ include "ceq2.mm";
 include "mpbi.mm";
 include "dfov2.mm";
 
-theorem eqtri(hal: 'type' al, ta: 'term' A, tb: 'term' B, tc: 'term' C, tr: 'term' R) {
+theorem eqtri(hal: type al, ta: term A, tb: term B, tc: term C, tr: term R) {
   assume eqtri.1: |- "A : al";
   assume eqtri.2: |- "R |= [ A = B ]";
   assume eqtri.3: |- "R |= [ B = C ]";

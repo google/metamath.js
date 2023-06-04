@@ -1,6 +1,6 @@
 include "ax-id.mm";
 
-theorem id(tr: 'term' R) {
+theorem id(tr: term R) {
   assume ax-id.1: |- "R : bool";
 
 

@@ -9,7 +9,7 @@ include "ax-ceq.mm";
 include "syl2anc.mm";
 include "dfov2.mm";
 
-theorem ceq12(hal: 'type' al, hbe: 'type' be, ta: 'term' A, tb: 'term' B, tf: 'term' F, tr: 'term' R, tt: 'term' T) {
+theorem ceq12(hal: type al, hbe: type be, ta: term A, tb: term B, tf: term F, tr: term R, tt: term T) {
   assume ceq12.1: |- "F : ( al -> be )";
   assume ceq12.2: |- "A : al";
   assume ceq12.3: |- "R |= [ F = T ]";
