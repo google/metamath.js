@@ -1,8 +1,8 @@
 > This is not an officially supported Google product
 
-Typogram (short for typographic programs) is a programming language that only operates with typographic derivations. It is intended to be used to represent and verify derivations in axiomatic systems (e.g. mathematical derivations). 
+Typogram (short for typographic programs) is an experimental programming language that can represent verifiable derivations in axiomatic systems (e.g. mathematical proofs). 
 
-Typogram borrows from [metamath](https://metamath.org) its verification system, and can be transpiled to (i.e. they can be verified with) and from (to a smaller extent) metamath. It extends metamath in providing program modularization, so that large source files can be broken into smaller ones. It borrows from [Isabelle's](https://en.wikipedia.org/wiki/Isabelle_(proof_assistant)) its familiar syntax.
+Typogram borrows from [metamath](https://metamath.org) its verification system and simplicity, and can be transpiled to (i.e. they can be verified with) and from (to a smaller extent) metamath. It extends metamath to provide modularization, so that large source files can be broken into smaller ones. It constraints metamath's syntax so that it can borrow some of the familiar syntax from [Isabelle](https://en.wikipedia.org/wiki/Isabelle_(proof_assistant)).
 
 Here is an example of a a typogram that verifies the first theorem of Hofstader's PQ system:
 
