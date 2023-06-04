@@ -9,12 +9,12 @@ Here is an example of a a typogram that verifies the first theorem of Hofstader'
 ```js
 // "-" is a wff (well-formed formula)
 axiom w0() {
-  return wff -;
+  return wff "-";
 }
 
 // if x is a wff, then "w -" is a wff
 axiom w1(wff x) {
-  return wff x -;
+  return wff "x -";
 }
 
 // "- -" is a wff
@@ -22,7 +22,7 @@ theorem t0() {
   do {
     w0;	w1;
   };
-  return wff - -;
+  return wff "- -";
 }
 ```
 
