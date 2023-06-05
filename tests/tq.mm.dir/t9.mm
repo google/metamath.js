@@ -21,5 +21,5 @@ theorem t9() {
     ax4;
   };
 
-  return '|-' "- - - - - DND - - - - - - -";
+  return |- "- - - - - DND - - - - - - -";
 }

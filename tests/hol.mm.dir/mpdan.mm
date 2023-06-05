@@ -26,5 +26,5 @@ theorem mpdan(tr: term R, ts: term S, tt: term T) {
     syl2anc;
   };
 
-  return '|-' "R |= T";
+  return |- "R |= T";
 }

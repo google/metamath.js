@@ -16,5 +16,5 @@ theorem simpl(tr: term R, ts: term S) {
     ax-simpl;
   };
 
-  return '|-' "( R , S ) |= R";
+  return |- "( R , S ) |= R";
 }

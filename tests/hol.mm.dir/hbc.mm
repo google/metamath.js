@@ -132,5 +132,5 @@ theorem hbc(hal: type al, hbe: type be, hga: type ga, vx: var x, ta: term A, tb:
     eqtri;
   };
 
-  return '|-' "R |= [ ( \\ x : al . ( F A ) B ) = ( F A ) ]";
+  return |- "R |= [ ( \\ x : al . ( F A ) B ) = ( F A ) ]";
 }

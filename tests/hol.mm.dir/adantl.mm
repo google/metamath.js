@@ -22,5 +22,5 @@ theorem adantl(tr: term R, ts: term S, tt: term T) {
     ancoms;
   };
 
-  return '|-' "( S , R ) |= T";
+  return |- "( S , R ) |= T";
 }

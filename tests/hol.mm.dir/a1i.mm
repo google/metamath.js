@@ -21,5 +21,5 @@ theorem a1i(ta: term A, tr: term R) {
     syl;
   };
 
-  return '|-' "R |= A";
+  return |- "R |= A";
 }

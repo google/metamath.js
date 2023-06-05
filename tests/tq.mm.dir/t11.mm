@@ -28,5 +28,5 @@ theorem t11() {
     ax7;
   };
 
-  return '|-' "P - - -";
+  return |- "P - - -";
 }

@@ -77,5 +77,5 @@ theorem leq(hal: type al, hbe: type be, vx: var x, ta: term A, tb: term B, tr: t
     dfov2;
   };
 
-  return '|-' "R |= [ \\ x : al . A = \\ x : al . B ]";
+  return |- "R |= [ \\ x : al . A = \\ x : al . B ]";
 }

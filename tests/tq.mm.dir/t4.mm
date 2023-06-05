@@ -17,5 +17,5 @@ theorem t4() {
     ax1;
   };
 
-  return '|-' "- t - - q - -";
+  return |- "- t - - q - -";
 }

@@ -17,5 +17,5 @@ theorem syl(tr: term R, ts: term S, tt: term T) {
     ax-syl;
   };
 
-  return '|-' "R |= T";
+  return |- "R |= T";
 }

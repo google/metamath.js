@@ -17,5 +17,5 @@ theorem t8() {
     ax3;
   };
 
-  return '|-' "- - - - - DND - -";
+  return |- "- - - - - DND - -";
 }

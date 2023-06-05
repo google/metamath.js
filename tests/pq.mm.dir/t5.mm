@@ -19,5 +19,5 @@ theorem t5() {
     ax1;
   };
 
-  return '|-' "- p - - q - - -";
+  return |- "- p - - q - - -";
 }

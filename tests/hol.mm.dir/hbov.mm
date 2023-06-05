@@ -167,5 +167,5 @@ theorem hbov(hal: type al, hbe: type be, hga: type ga, hde: type de, vx: var x, 
     mpdan;
   };
 
-  return '|-' "R |= [ ( \\ x : al . [ A F C ] B ) = [ A F C ] ]";
+  return |- "R |= [ ( \\ x : al . [ A F C ] B ) = [ A F C ] ]";
 }

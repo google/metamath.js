@@ -51,5 +51,5 @@ theorem oveq12(hal: type al, hbe: type be, hga: type ga, ta: term A, tb: term B,
     oveq123;
   };
 
-  return '|-' "R |= [ [ A F B ] = [ C F T ] ]";
+  return |- "R |= [ [ A F B ] = [ C F T ] ]";
 }

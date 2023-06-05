@@ -59,5 +59,5 @@ theorem beta(hal: type al, hbe: type be, vx: var x, ta: term A) {
     dfov2;
   };
 
-  return '|-' "T. |= [ ( \\ x : al . A x : al ) = A ]";
+  return |- "T. |= [ ( \\ x : al . A x : al ) = A ]";
 }

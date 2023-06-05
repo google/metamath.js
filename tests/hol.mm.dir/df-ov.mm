@@ -5,5 +5,5 @@ axiom df-ov(hal: type al, hbe: type be, hga: type ga, ta: term A, tb: term B, tf
   assume wov.2: |- "A : al";
   assume wov.3: |- "B : be";
 
-  return '|-' "T. |= ( ( = [ A F B ] ) ( ( F A ) B ) )";
+  return |- "T. |= ( ( = [ A F B ] ) ( ( F A ) B ) )";
 }

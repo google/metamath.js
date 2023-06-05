@@ -13,5 +13,5 @@ theorem trud(tr: term R) {
     ax-trud;
   };
 
-  return '|-' "R |= T.";
+  return |- "R |= T.";
 }

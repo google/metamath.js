@@ -12,5 +12,5 @@ theorem t0() {
     w1;
   };
 
-  return 'wff' "- -";
+  return wff "- -";
 }

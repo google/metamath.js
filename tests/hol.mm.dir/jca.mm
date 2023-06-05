@@ -17,5 +17,5 @@ theorem jca(tr: term R, ts: term S, tt: term T) {
     ax-jca;
   };
 
-  return '|-' "R |= ( S , T )";
+  return |- "R |= ( S , T )";
 }

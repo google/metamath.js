@@ -53,5 +53,5 @@ theorem eqcomi(hal: type al, ta: term A, tb: term B, tr: term R) {
     dfov2;
   };
 
-  return '|-' "R |= [ B = A ]";
+  return |- "R |= [ B = A ]";
 }

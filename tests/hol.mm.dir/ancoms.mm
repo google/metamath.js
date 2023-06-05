@@ -48,5 +48,5 @@ theorem ancoms(tr: term R, ts: term S, tt: term T) {
     syl2anc;
   };
 
-  return '|-' "( S , R ) |= T";
+  return |- "( S , R ) |= T";
 }

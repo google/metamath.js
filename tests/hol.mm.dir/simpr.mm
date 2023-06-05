@@ -16,5 +16,5 @@ theorem simpr(tr: term R, ts: term S) {
     ax-simpr;
   };
 
-  return '|-' "( R , S ) |= S";
+  return |- "( R , S ) |= S";
 }

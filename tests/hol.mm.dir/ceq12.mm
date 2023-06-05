@@ -120,5 +120,5 @@ theorem ceq12(hal: type al, hbe: type be, ta: term A, tb: term B, tf: term F, tr
     dfov2;
   };
 
-  return '|-' "R |= [ ( F A ) = ( T B ) ]";
+  return |- "R |= [ ( F A ) = ( T B ) ]";
 }
