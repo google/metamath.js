@@ -156,25 +156,7 @@ describe("Parser", () => {
       ]]
     ]);
   });
-  
-  it(`axiom foo(let x) { return |- bar; }`, () => {
-    let result = new Parser().parse(`
-    axiom foo(let x) {
-      return |- bar;
-    }
-    `);
-    assertThat(result).equalsTo([
-      ["axiom", "foo", [
-        [["param", ["0", "let", "x"]]],
-        [],
-        [],
-        [],
-        ["assert", ["|-", ["bar"]]],
-      ], [
-      ]]
-    ]);
-  });
-  
+    
   it(`axiom foo(|- x, foo y, '\\"' z) { return |- bar; }`, () => {
     let result = new Parser().parse(`
     axiom foo('|-' x, foo y, '\\"' z) {
@@ -631,6 +613,43 @@ describe("Parser", () => {
     string(`"0 = ( a v a ' ) '"`, ["0", "=", "(", "a", "v", "a", "'", ")", "'"]);
   });
   
+  it("type()", async () => {
+    const {Parser} = require("../src/compiler.js");
+
+    const type = (str, expected) => {
+      const parser = new Parser();
+      parser.feed(str);
+      if (expected != undefined) {
+        assertThat(parser.type()).equalsTo(expected);
+      } else {
+        try {
+          parser.type();
+          throw new Error("Expected to fail");
+        } catch (e) {
+          // console.log(e);
+          assertThat(e.message != "Expected to fail").equalsTo(true);
+        }
+      }
+    }
+
+    type("a", "a");
+    type("foo", "foo");
+
+    type("wff", "wff");
+    type("|-", "|-");
+    type("Class", "Class");
+
+    // Escaped symbol
+    type("'whatever'", "whatever");
+    
+    // Expected to fail
+    type(';');
+    type('(');
+    type(')');
+    type('"');
+    type('`');    
+  });
+
   it("symbol()", async () => {
     const {Parser} = require("../src/compiler.js");
 
@@ -724,13 +743,27 @@ describe("Parser", () => {
     const param = (str, expected) => {
       const parser = new Parser();
       parser.feed(str);
-      assertThat(parser.param()).equalsTo(expected);
+      if (expected != undefined) {
+        assertThat(parser.param()).equalsTo(expected);
+      } else {
+        try {
+          parser.param();
+          throw new Error("expected to fail");
+        } catch (e) {
+          assertThat(e.message != "expected to fail").equalsTo(true);
+        }
+      }
     }
 
     param('e1: wff p', ["e1", "wff", "p"]);
     param('wff p', ["0", "wff", "p"]);
     param('|- p', ["0", "|-", "p"]);
     param("'|-' p", ["0", "|-", "p"]);
+
+    // disallowed types
+    param(', p');
+    param(') p');
+    param('; p');
   });
 
   it("head()", async () => {

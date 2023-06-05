@@ -29,6 +29,7 @@ class Lexer {
       ["#"]: "#",
       ["\\"]: "\\",
       ["label"]: /[A-Za-z0-9-_.]+/,
+      ["type"]: /[!#-&\*-:<-\[\]-_a-~]+/, // no ", ', ( ), ;, \, `, 
       ["char"]: /[!#-&\(-\[\]-~]+/, // no \ and " and '
       //["symbol"]: /[!-#%-\:<-~]+/, // no " ", "$", ";"
       //["quote"]: /\$[!-#%-~]+\$/,
@@ -113,6 +114,7 @@ const chars = [
   "#",
   "'",
   //...labels,
+  "type",
   "char",
 ];
 
@@ -211,7 +213,7 @@ class Parser {
   }
 
   param() {
-    let first = this.symbol();
+    let first = this.type();
     this.ws(true);
 
     let label;
@@ -221,7 +223,7 @@ class Parser {
       this.eat(":");
       this.ws();
       label = first;
-      type = this.symbol();
+      type = this.type();
       this.ws();
     } else {
       label = `${this.id()}`;
@@ -382,8 +384,8 @@ class Parser {
     //console.log(this.lexer.head);
     //throw new Error("hi");
     do {
-      if (this.accepts(...labels, "char")) {
-        result.push(this.eat(...labels, "char"));
+      if (this.accepts(...labels, "char", "type")) {
+        result.push(this.eat(...labels, "char", "type"));
         continue;
       } else if (this.accepts("\\")) {
         result.push(this.escape2());
@@ -395,9 +397,21 @@ class Parser {
     return result.join("");
   }
   
+  type() {
+    if (this.accepts("label", "type")) {
+      return this.eat("label", "type");
+    }
+    
+    if (this.accepts("'")) {
+      return this.quote();
+    }
+    
+    this.error("Invalid type");
+  }
+  
   symbol() {
-    if (this.accepts(...labels, "char")) {
-      return this.eat(...labels, "char");
+    if (this.accepts(...labels, "char", "type")) {
+      return this.eat(...labels, "char", "type");
     }
 
     if (this.accepts("'")) {
