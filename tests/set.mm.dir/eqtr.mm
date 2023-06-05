@@ -2,7 +2,7 @@ include "wceq.mm";
 include "eqeq1.mm";
 include "biimpar.mm";
 
-theorem eqtr(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+theorem eqtr(cA: class A, cB: class B, cC: class C) {
 
 
 
@@ -25,5 +25,5 @@ theorem eqtr(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
     biimpar;
   };
 
-  return '|-' "( ( A = B /\\ B = C ) -> A = C )";
+  return |- "( ( A = B /\\ B = C ) -> A = C )";
 }

@@ -2,7 +2,7 @@ include "wb.mm";
 include "a1i.mm";
 include "pm5.32ri.mm";
 
-theorem anbi1i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem anbi1i(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume anbi.1: |- "( ph <-> ps )";
 
 
@@ -22,5 +22,5 @@ theorem anbi1i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     pm5.32ri;
   };
 
-  return '|-' "( ( ph /\\ ch ) <-> ( ps /\\ ch ) )";
+  return |- "( ( ph /\\ ch ) <-> ( ps /\\ ch ) )";
 }

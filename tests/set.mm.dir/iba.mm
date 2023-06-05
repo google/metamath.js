@@ -3,7 +3,7 @@ include "pm3.21.mm";
 include "simpl.mm";
 include "impbid1.mm";
 
-theorem iba(wph: 'wff' ph, wps: 'wff' ps) {
+theorem iba(wph: wff ph, wps: wff ps) {
 
 
 
@@ -24,5 +24,5 @@ theorem iba(wph: 'wff' ph, wps: 'wff' ps) {
     impbid1;
   };
 
-  return '|-' "( ph -> ( ps <-> ( ps /\\ ph ) ) )";
+  return |- "( ph -> ( ps <-> ( ps /\\ ph ) ) )";
 }

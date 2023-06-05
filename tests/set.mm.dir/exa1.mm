@@ -2,7 +2,7 @@ include "wi.mm";
 include "ax-1.mm";
 include "eximi.mm";
 
-theorem exa1(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+theorem exa1(wph: wff ph, wps: wff ps, vx: setvar x) {
 
 
 
@@ -20,5 +20,5 @@ theorem exa1(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
     eximi;
   };
 
-  return '|-' "( E. x ph -> E. x ( ps -> ph ) )";
+  return |- "( E. x ph -> E. x ( ps -> ph ) )";
 }

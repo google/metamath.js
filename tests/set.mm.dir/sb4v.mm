@@ -8,7 +8,7 @@ include "sb1.mm";
 include "sb56.mm";
 include "sylib.mm";
 
-theorem sb4v(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
+theorem sb4v(wph: wff ph, vx: setvar x, vy: setvar y) {
 
   disjoint x y;
 
@@ -43,5 +43,5 @@ theorem sb4v(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
     sylib;
   };
 
-  return '|-' "( [ y / x ] ph -> A. x ( x = y -> ph ) )";
+  return |- "( [ y / x ] ph -> A. x ( x = y -> ph ) )";
 }

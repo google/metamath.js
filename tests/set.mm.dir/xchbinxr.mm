@@ -1,7 +1,7 @@
 include "bicomi.mm";
 include "xchbinx.mm";
 
-theorem xchbinxr(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem xchbinxr(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume xchbinxr.1: |- "( ph <-> -. ps )";
   assume xchbinxr.2: |- "( ch <-> ps )";
 
@@ -21,5 +21,5 @@ theorem xchbinxr(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     xchbinx;
   };
 
-  return '|-' "( ph <-> -. ch )";
+  return |- "( ph <-> -. ch )";
 }

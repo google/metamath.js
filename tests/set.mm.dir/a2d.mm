@@ -2,7 +2,7 @@ include "wi.mm";
 include "ax-2.mm";
 include "syl.mm";
 
-theorem a2d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem a2d(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume a2d.1: |- "( ph -> ( ps -> ( ch -> th ) ) )";
 
 
@@ -31,5 +31,5 @@ theorem a2d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     syl;
   };
 
-  return '|-' "( ph -> ( ( ps -> ch ) -> ( ps -> th ) ) )";
+  return |- "( ph -> ( ( ps -> ch ) -> ( ps -> th ) ) )";
 }

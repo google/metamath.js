@@ -2,7 +2,7 @@ include "wa.mm";
 include "simpr.mm";
 include "mto.mm";
 
-theorem intnan(wph: 'wff' ph, wps: 'wff' ps) {
+theorem intnan(wph: wff ph, wps: wff ps) {
   assume intnan.1: |- "-. ph";
 
 
@@ -21,5 +21,5 @@ theorem intnan(wph: 'wff' ph, wps: 'wff' ps) {
     mto;
   };
 
-  return '|-' "-. ( ps /\\ ph )";
+  return |- "-. ( ps /\\ ph )";
 }

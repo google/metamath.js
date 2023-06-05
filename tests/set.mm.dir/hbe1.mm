@@ -5,7 +5,7 @@ include "df-ex.mm";
 include "hbn1.mm";
 include "hbxfrbi.mm";
 
-theorem hbe1(wph: 'wff' ph, vx: 'setvar' x) {
+theorem hbe1(wph: wff ph, vx: setvar x) {
 
 
 
@@ -31,5 +31,5 @@ theorem hbe1(wph: 'wff' ph, vx: 'setvar' x) {
     hbxfrbi;
   };
 
-  return '|-' "( E. x ph -> A. x E. x ph )";
+  return |- "( E. x ph -> A. x E. x ph )";
 }

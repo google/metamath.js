@@ -8,7 +8,7 @@ include "alnex.mm";
 include "orbi2i.mm";
 include "bitr4i.mm";
 
-theorem nf3(wph: 'wff' ph, vx: 'setvar' x) {
+theorem nf3(wph: wff ph, vx: setvar x) {
 
 
 
@@ -48,5 +48,5 @@ theorem nf3(wph: 'wff' ph, vx: 'setvar' x) {
     bitr4i;
   };
 
-  return '|-' "( F/ x ph <-> ( A. x ph \\/ A. x -. ph ) )";
+  return |- "( F/ x ph <-> ( A. x ph \\/ A. x -. ph ) )";
 }

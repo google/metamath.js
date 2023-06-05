@@ -10,7 +10,7 @@ include "abbi2dv.mm";
 include "df-if.mm";
 include "syl6reqr.mm";
 
-theorem iffalse(wph: 'wff' ph, cA: 'class' A, cB: 'class' B) {
+theorem iffalse(wph: wff ph, cA: class A, cB: class B) {
 
 
 
@@ -60,5 +60,5 @@ theorem iffalse(wph: 'wff' ph, cA: 'class' A, cB: 'class' B) {
     syl6reqr;
   };
 
-  return '|-' "( -. ph -> if ( ph , A , B ) = B )";
+  return |- "( -. ph -> if ( ph , A , B ) = B )";
 }

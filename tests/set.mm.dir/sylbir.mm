@@ -1,7 +1,7 @@
 include "biimpri.mm";
 include "syl.mm";
 
-theorem sylbir(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem sylbir(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume sylbir.1: |- "( ps <-> ph )";
   assume sylbir.2: |- "( ps -> ch )";
 
@@ -21,5 +21,5 @@ theorem sylbir(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     syl;
   };
 
-  return '|-' "( ph -> ch )";
+  return |- "( ph -> ch )";
 }

@@ -2,7 +2,7 @@ include "wtru.mm";
 include "tru.mm";
 include "ax-mp.mm";
 
-theorem mptru(wph: 'wff' ph) {
+theorem mptru(wph: wff ph) {
   assume mptru.1: |- "( T. -> ph )";
 
 
@@ -17,5 +17,5 @@ theorem mptru(wph: 'wff' ph) {
     ax-mp;
   };
 
-  return '|-' "ph";
+  return |- "ph";
 }

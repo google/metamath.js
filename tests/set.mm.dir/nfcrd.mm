@@ -5,7 +5,7 @@ include "wnf.mm";
 include "nfcr.mm";
 include "syl.mm";
 
-theorem nfcrd(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y, cA: 'class' A) {
+theorem nfcrd(wph: wff ph, vx: setvar x, vy: setvar y, cA: class A) {
   assume nfcrd.1: |- "( ph -> F/_ x A )";
 
   disjoint x y;
@@ -32,5 +32,5 @@ theorem nfcrd(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y, cA: 'class' A) {
     syl;
   };
 
-  return '|-' "( ph -> F/ x y e. A )";
+  return |- "( ph -> F/ x y e. A )";
 }

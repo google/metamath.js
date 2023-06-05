@@ -2,7 +2,7 @@ include "wi.mm";
 include "id.mm";
 include "jaao.mm";
 
-theorem pm3.44(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem pm3.44(wph: wff ph, wps: wff ps, wch: wff ch) {
 
 
 
@@ -27,5 +27,5 @@ theorem pm3.44(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     jaao;
   };
 
-  return '|-' "( ( ( ps -> ph ) /\\ ( ch -> ph ) ) -> ( ( ps \\/ ch ) -> ph ) )";
+  return |- "( ( ( ps -> ph ) /\\ ( ch -> ph ) ) -> ( ( ps \\/ ch ) -> ph ) )";
 }

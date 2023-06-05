@@ -23,7 +23,7 @@ include "mtbir.mm";
 include "intnan.mm";
 include "df-clel.mm";
 
-theorem noel(cA: 'class' A) {
+theorem noel(cA: class A) {
 
 
 
@@ -119,5 +119,5 @@ theorem noel(cA: 'class' A) {
     mtbir;
   };
 
-  return '|-' "-. A e. (/)";
+  return |- "-. A e. (/)";
 }

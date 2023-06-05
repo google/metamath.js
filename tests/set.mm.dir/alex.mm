@@ -6,7 +6,7 @@ include "albii.mm";
 include "alnex.mm";
 include "bitri.mm";
 
-theorem alex(wph: 'wff' ph, vx: 'setvar' x) {
+theorem alex(wph: wff ph, vx: setvar x) {
 
 
 
@@ -39,5 +39,5 @@ theorem alex(wph: 'wff' ph, vx: 'setvar' x) {
     bitri;
   };
 
-  return '|-' "( A. x ph <-> -. E. x -. ph )";
+  return |- "( A. x ph <-> -. E. x -. ph )";
 }

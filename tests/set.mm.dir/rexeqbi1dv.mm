@@ -2,7 +2,7 @@ include "wceq.mm";
 include "id.mm";
 include "rexeqbidv.mm";
 
-theorem rexeqbi1dv(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
+theorem rexeqbi1dv(wph: wff ph, wps: wff ps, vx: setvar x, cA: class A, cB: class B) {
   assume raleqbi1dv.1: |- "( A = B -> ( ph <-> ps ) )";
 
   disjoint A x;
@@ -26,5 +26,5 @@ theorem rexeqbi1dv(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, cA: 'class' A, 
     rexeqbidv;
   };
 
-  return '|-' "( A = B -> ( E. x e. A ph <-> E. x e. B ps ) )";
+  return |- "( A = B -> ( E. x e. A ph <-> E. x e. B ps ) )";
 }

@@ -1,7 +1,7 @@
 include "bicomi.mm";
 include "mtbi.mm";
 
-theorem mtbir(wph: 'wff' ph, wps: 'wff' ps) {
+theorem mtbir(wph: wff ph, wps: wff ps) {
   assume mtbir.1: |- "-. ps";
   assume mtbir.2: |- "( ph <-> ps )";
 
@@ -20,5 +20,5 @@ theorem mtbir(wph: 'wff' ph, wps: 'wff' ps) {
     mtbi;
   };
 
-  return '|-' "-. ph";
+  return |- "-. ph";
 }

@@ -11,7 +11,7 @@ include "imnan.mm";
 include "imbi1i.mm";
 include "3bitr4i.mm";
 
-theorem dfsb3(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
+theorem dfsb3(wph: wff ph, vx: setvar x, vy: setvar y) {
 
 
 
@@ -65,5 +65,5 @@ theorem dfsb3(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
     3bitr4i;
   };
 
-  return '|-' "( [ y / x ] ph <-> ( ( x = y -> -. ph ) -> A. x ( x = y -> ph ) ) )";
+  return |- "( [ y / x ] ph <-> ( ( x = y -> -. ph ) -> A. x ( x = y -> ph ) ) )";
 }

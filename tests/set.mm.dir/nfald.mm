@@ -7,7 +7,7 @@ include "ax-11.mm";
 include "syl56.mm";
 include "nfd.mm";
 
-theorem nfald(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
+theorem nfald(wph: wff ph, wps: wff ps, vx: setvar x, vy: setvar y) {
   assume nfald.1: |- "F/ y ph";
   assume nfald.2: |- "( ph -> F/ x ps )";
 
@@ -64,5 +64,5 @@ theorem nfald(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
     nfd;
   };
 
-  return '|-' "( ph -> F/ x A. y ps )";
+  return |- "( ph -> F/ x A. y ps )";
 }

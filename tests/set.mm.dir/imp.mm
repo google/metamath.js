@@ -5,7 +5,7 @@ include "df-an.mm";
 include "impi.mm";
 include "sylbi.mm";
 
-theorem imp(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem imp(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume imp.1: |- "( ph -> ( ps -> ch ) )";
 
 
@@ -33,5 +33,5 @@ theorem imp(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     sylbi;
   };
 
-  return '|-' "( ( ph /\\ ps ) -> ch )";
+  return |- "( ( ph /\\ ps ) -> ch )";
 }

@@ -5,7 +5,7 @@ include "wnf.mm";
 include "df-nfc.mm";
 include "mpgbir.mm";
 
-theorem nfci(vx: 'setvar' x, vy: 'setvar' y, cA: 'class' A) {
+theorem nfci(vx: setvar x, vy: setvar y, cA: class A) {
   assume nfci.1: |- "F/ x y e. A";
 
   disjoint x y;
@@ -32,5 +32,5 @@ theorem nfci(vx: 'setvar' x, vy: 'setvar' y, cA: 'class' A) {
     mpgbir;
   };
 
-  return '|-' "F/_ x A";
+  return |- "F/_ x A";
 }

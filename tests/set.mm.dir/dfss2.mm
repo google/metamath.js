@@ -17,7 +17,7 @@ include "pm4.71.mm";
 include "albii.mm";
 include "bitr4i.mm";
 
-theorem dfss2(vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
+theorem dfss2(vx: setvar x, cA: class A, cB: class B) {
 
   disjoint A x;
   disjoint B x;
@@ -93,5 +93,5 @@ theorem dfss2(vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
     bitr4i;
   };
 
-  return '|-' "( A C_ B <-> A. x ( x e. A -> x e. B ) )";
+  return |- "( A C_ B <-> A. x ( x e. A -> x e. B ) )";
 }

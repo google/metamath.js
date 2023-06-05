@@ -2,7 +2,7 @@ include "wal.mm";
 include "nfri.mm";
 include "19.23bi.mm";
 
-theorem nf5ri(wph: 'wff' ph, vx: 'setvar' x) {
+theorem nf5ri(wph: wff ph, vx: setvar x) {
   assume nf5ri.1: |- "F/ x ph";
 
 
@@ -22,5 +22,5 @@ theorem nf5ri(wph: 'wff' ph, vx: 'setvar' x) {
     19.23bi;
   };
 
-  return '|-' "( ph -> A. x ph )";
+  return |- "( ph -> A. x ph )";
 }

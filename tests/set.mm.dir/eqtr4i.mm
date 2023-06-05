@@ -1,7 +1,7 @@
 include "eqcomi.mm";
 include "eqtri.mm";
 
-theorem eqtr4i(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+theorem eqtr4i(cA: class A, cB: class B, cC: class C) {
   assume eqtr4i.1: |- "A = B";
   assume eqtr4i.2: |- "C = B";
 
@@ -21,5 +21,5 @@ theorem eqtr4i(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
     eqtri;
   };
 
-  return '|-' "A = C";
+  return |- "A = C";
 }

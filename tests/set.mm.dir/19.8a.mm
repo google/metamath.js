@@ -9,7 +9,7 @@ include "syl6mpi.mm";
 include "ax6evr.mm";
 include "exlimiiv.mm";
 
-theorem 19.8a(wph: 'wff' ph, vx: 'setvar' x) {
+theorem 19.8a(wph: wff ph, vx: setvar x) {
 
 
 
@@ -56,5 +56,5 @@ theorem 19.8a(wph: 'wff' ph, vx: 'setvar' x) {
     exlimiiv;
   };
 
-  return '|-' "( ph -> E. x ph )";
+  return |- "( ph -> E. x ph )";
 }

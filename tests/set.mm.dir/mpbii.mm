@@ -1,7 +1,7 @@
 include "a1i.mm";
 include "mpbid.mm";
 
-theorem mpbii(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem mpbii(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume mpbii.min: |- "ps";
   assume mpbii.maj: |- "( ph -> ( ps <-> ch ) )";
 
@@ -21,5 +21,5 @@ theorem mpbii(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     mpbid;
   };
 
-  return '|-' "( ph -> ch )";
+  return |- "( ph -> ch )";
 }

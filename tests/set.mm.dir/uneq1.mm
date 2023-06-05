@@ -9,7 +9,7 @@ include "elun.mm";
 include "3bitr4g.mm";
 include "eqrdv.mm";
 
-theorem uneq1(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+theorem uneq1(cA: class A, cB: class B, cC: class C) {
 
 
 
@@ -74,5 +74,5 @@ theorem uneq1(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
     eqrdv;
   };
 
-  return '|-' "( A = B -> ( A u. C ) = ( B u. C ) )";
+  return |- "( A = B -> ( A u. C ) = ( B u. C ) )";
 }

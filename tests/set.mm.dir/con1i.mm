@@ -2,7 +2,7 @@ include "wn.mm";
 include "id.mm";
 include "nsyl2.mm";
 
-theorem con1i(wph: 'wff' ph, wps: 'wff' ps) {
+theorem con1i(wph: wff ph, wps: wff ps) {
   assume con1i.1: |- "( -. ph -> ps )";
 
 
@@ -21,5 +21,5 @@ theorem con1i(wph: 'wff' ph, wps: 'wff' ps) {
     nsyl2;
   };
 
-  return '|-' "( -. ps -> ph )";
+  return |- "( -. ps -> ph )";
 }

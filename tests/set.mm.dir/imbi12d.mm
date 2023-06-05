@@ -3,7 +3,7 @@ include "imbi1d.mm";
 include "imbi2d.mm";
 include "bitrd.mm";
 
-theorem imbi12d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta: 'wff' ta) {
+theorem imbi12d(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th, wta: wff ta) {
   assume imbi12d.1: |- "( ph -> ( ps <-> ch ) )";
   assume imbi12d.2: |- "( ph -> ( th <-> ta ) )";
 
@@ -37,5 +37,5 @@ theorem imbi12d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta:
     bitrd;
   };
 
-  return '|-' "( ph -> ( ( ps -> th ) <-> ( ch -> ta ) ) )";
+  return |- "( ph -> ( ( ps -> th ) <-> ( ch -> ta ) ) )";
 }

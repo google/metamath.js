@@ -8,7 +8,7 @@ include "sbfv.mm";
 include "sblbisv.mm";
 include "mpbi.mm";
 
-theorem sbiev(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
+theorem sbiev(wph: wff ph, wps: wff ps, vx: setvar x, vy: setvar y) {
   assume sbiev.1: |- "F/ x ps";
   assume sbiev.2: |- "( x = y -> ( ph <-> ps ) )";
 
@@ -63,5 +63,5 @@ theorem sbiev(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
     mpbi;
   };
 
-  return '|-' "( [ y / x ] ph <-> ps )";
+  return |- "( [ y / x ] ph <-> ps )";
 }

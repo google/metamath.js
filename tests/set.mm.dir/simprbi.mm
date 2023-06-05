@@ -2,7 +2,7 @@ include "wa.mm";
 include "biimpi.mm";
 include "simprd.mm";
 
-theorem simprbi(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem simprbi(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume simprbi.1: |- "( ph <-> ( ps /\\ ch ) )";
 
 
@@ -22,5 +22,5 @@ theorem simprbi(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     simprd;
   };
 
-  return '|-' "( ph -> ch )";
+  return |- "( ph -> ch )";
 }

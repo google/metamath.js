@@ -6,7 +6,7 @@ include "nfnd.mm";
 include "nfimd.mm";
 include "nfxfrd.mm";
 
-theorem nfand(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
+theorem nfand(wph: wff ph, wps: wff ps, wch: wff ch, vx: setvar x) {
   assume nfand.1: |- "( ph -> F/ x ps )";
   assume nfand.2: |- "( ph -> F/ x ch )";
 
@@ -48,5 +48,5 @@ theorem nfand(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
     nfxfrd;
   };
 
-  return '|-' "( ph -> F/ x ( ps /\\ ch ) )";
+  return |- "( ph -> F/ x ( ps /\\ ch ) )";
 }

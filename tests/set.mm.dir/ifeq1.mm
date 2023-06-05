@@ -8,7 +8,7 @@ include "uneq1d.mm";
 include "dfif6.mm";
 include "3eqtr4g.mm";
 
-theorem ifeq1(wph: 'wff' ph, cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+theorem ifeq1(wph: wff ph, cA: class A, cB: class B, cC: class C) {
 
 
 
@@ -69,5 +69,5 @@ theorem ifeq1(wph: 'wff' ph, cA: 'class' A, cB: 'class' B, cC: 'class' C) {
     3eqtr4g;
   };
 
-  return '|-' "( A = B -> if ( ph , A , C ) = if ( ph , B , C ) )";
+  return |- "( A = B -> if ( ph , A , C ) = if ( ph , B , C ) )";
 }

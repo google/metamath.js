@@ -9,7 +9,7 @@ include "df-sb.mm";
 include "sylanbrc.mm";
 include "ex.mm";
 
-theorem sbequ1(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
+theorem sbequ1(wph: wff ph, vx: setvar x, vy: setvar y) {
 
 
 
@@ -51,5 +51,5 @@ theorem sbequ1(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
     ex;
   };
 
-  return '|-' "( x = y -> ( ph -> [ y / x ] ph ) )";
+  return |- "( x = y -> ( ph -> [ y / x ] ph ) )";
 }

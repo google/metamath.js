@@ -3,7 +3,7 @@ include "eximd.mm";
 include "19.9.mm";
 include "syl6ib.mm";
 
-theorem exlimd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
+theorem exlimd(wph: wff ph, wps: wff ps, wch: wff ch, vx: setvar x) {
   assume exlimd.1: |- "F/ x ph";
   assume exlimd.2: |- "F/ x ch";
   assume exlimd.3: |- "( ph -> ( ps -> ch ) )";
@@ -35,5 +35,5 @@ theorem exlimd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
     syl6ib;
   };
 
-  return '|-' "( ph -> ( E. x ps -> ch ) )";
+  return |- "( ph -> ( E. x ps -> ch ) )";
 }

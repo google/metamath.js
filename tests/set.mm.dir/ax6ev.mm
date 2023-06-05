@@ -6,7 +6,7 @@ include "ax6v.mm";
 include "df-ex.mm";
 include "mpbir.mm";
 
-theorem ax6ev(vx: 'setvar' x, vy: 'setvar' y) {
+theorem ax6ev(vx: setvar x, vy: setvar y) {
 
   disjoint x y;
 
@@ -33,5 +33,5 @@ theorem ax6ev(vx: 'setvar' x, vy: 'setvar' y) {
     mpbir;
   };
 
-  return '|-' "E. x x = y";
+  return |- "E. x x = y";
 }

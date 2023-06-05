@@ -1,6 +1,6 @@
 
 
-axiom cio(wph: 'wff' ph, vx: 'setvar' x) {
+axiom cio(wph: wff ph, vx: setvar x) {
 
-  return 'class' "( iota x ph )";
+  return class "( iota x ph )";
 }

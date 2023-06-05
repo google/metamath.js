@@ -2,7 +2,7 @@ include "wa.mm";
 include "simpl.mm";
 include "syl5.mm";
 
-theorem adantrd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem adantrd(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume adantrd.1: |- "( ph -> ( ps -> ch ) )";
 
 
@@ -23,5 +23,5 @@ theorem adantrd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     syl5;
   };
 
-  return '|-' "( ph -> ( ( ps /\\ th ) -> ch ) )";
+  return |- "( ph -> ( ( ps /\\ th ) -> ch ) )";
 }

@@ -2,7 +2,7 @@ include "wb.mm";
 include "bicom1.mm";
 include "ax-mp.mm";
 
-theorem bicomi(wph: 'wff' ph, wps: 'wff' ps) {
+theorem bicomi(wph: wff ph, wps: wff ps) {
   assume bicomi.1: |- "( ph <-> ps )";
 
 
@@ -23,5 +23,5 @@ theorem bicomi(wph: 'wff' ph, wps: 'wff' ps) {
     ax-mp;
   };
 
-  return '|-' "( ps <-> ph )";
+  return |- "( ps <-> ph )";
 }

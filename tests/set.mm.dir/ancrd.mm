@@ -1,7 +1,7 @@
 include "idd.mm";
 include "jcad.mm";
 
-theorem ancrd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem ancrd(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume ancrd.1: |- "( ph -> ( ps -> ch ) )";
 
 
@@ -20,5 +20,5 @@ theorem ancrd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     jcad;
   };
 
-  return '|-' "( ph -> ( ps -> ( ch /\\ ps ) ) )";
+  return |- "( ph -> ( ps -> ( ch /\\ ps ) ) )";
 }

@@ -1,7 +1,7 @@
 include "3syl.mm";
 include "syl.mm";
 
-theorem 4syl(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta: 'wff' ta) {
+theorem 4syl(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th, wta: wff ta) {
   assume 4syl.1: |- "( ph -> ps )";
   assume 4syl.2: |- "( ps -> ch )";
   assume 4syl.3: |- "( ch -> th )";
@@ -27,5 +27,5 @@ theorem 4syl(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta: 'w
     syl;
   };
 
-  return '|-' "( ph -> ta )";
+  return |- "( ph -> ta )";
 }

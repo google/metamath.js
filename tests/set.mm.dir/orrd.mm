@@ -4,7 +4,7 @@ include "wo.mm";
 include "pm2.54.mm";
 include "syl.mm";
 
-theorem orrd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem orrd(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume orrd.1: |- "( ph -> ( -. ps -> ch ) )";
 
 
@@ -27,5 +27,5 @@ theorem orrd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     syl;
   };
 
-  return '|-' "( ph -> ( ps \\/ ch ) )";
+  return |- "( ph -> ( ps \\/ ch ) )";
 }

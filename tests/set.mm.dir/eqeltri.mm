@@ -2,7 +2,7 @@ include "wcel.mm";
 include "eleq1i.mm";
 include "mpbir.mm";
 
-theorem eqeltri(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+theorem eqeltri(cA: class A, cB: class B, cC: class C) {
   assume eqeltri.1: |- "A = B";
   assume eqeltri.2: |- "B e. C";
 
@@ -26,5 +26,5 @@ theorem eqeltri(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
     mpbir;
   };
 
-  return '|-' "A e. C";
+  return |- "A e. C";
 }

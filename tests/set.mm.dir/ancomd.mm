@@ -2,7 +2,7 @@ include "wa.mm";
 include "ancom.mm";
 include "sylib.mm";
 
-theorem ancomd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem ancomd(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume ancomd.1: |- "( ph -> ( ps /\\ ch ) )";
 
 
@@ -24,5 +24,5 @@ theorem ancomd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     sylib;
   };
 
-  return '|-' "( ph -> ( ch /\\ ps ) )";
+  return |- "( ph -> ( ch /\\ ps ) )";
 }

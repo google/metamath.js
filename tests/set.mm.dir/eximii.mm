@@ -2,7 +2,7 @@ include "wex.mm";
 include "eximi.mm";
 include "ax-mp.mm";
 
-theorem eximii(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+theorem eximii(wph: wff ph, wps: wff ps, vx: setvar x) {
   assume eximii.1: |- "E. x ph";
   assume eximii.2: |- "( ph -> ps )";
 
@@ -26,5 +26,5 @@ theorem eximii(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
     ax-mp;
   };
 
-  return '|-' "E. x ps";
+  return |- "E. x ps";
 }

@@ -5,7 +5,7 @@ include "wi.mm";
 include "dfss2.mm";
 include "mpgbir.mm";
 
-theorem ssriv(vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
+theorem ssriv(vx: setvar x, cA: class A, cB: class B) {
   assume ssriv.1: |- "( x e. A -> x e. B )";
 
   disjoint A x;
@@ -35,5 +35,5 @@ theorem ssriv(vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
     mpgbir;
   };
 
-  return '|-' "A C_ B";
+  return |- "A C_ B";
 }

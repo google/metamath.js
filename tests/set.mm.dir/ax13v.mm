@@ -1,6 +1,6 @@
 include "ax-13.mm";
 
-theorem ax13v(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
+theorem ax13v(vx: setvar x, vy: setvar y, vz: setvar z) {
 
   disjoint x z;
   disjoint y z;
@@ -14,5 +14,5 @@ theorem ax13v(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
     ax-13;
   };
 
-  return '|-' "( -. x = y -> ( y = z -> A. x y = z ) )";
+  return |- "( -. x = y -> ( y = z -> A. x y = z ) )";
 }

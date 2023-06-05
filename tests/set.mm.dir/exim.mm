@@ -2,7 +2,7 @@ include "wi.mm";
 include "id.mm";
 include "aleximi.mm";
 
-theorem exim(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+theorem exim(wph: wff ph, wps: wff ps, vx: setvar x) {
 
 
 
@@ -21,5 +21,5 @@ theorem exim(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
     aleximi;
   };
 
-  return '|-' "( A. x ( ph -> ps ) -> ( E. x ph -> E. x ps ) )";
+  return |- "( A. x ( ph -> ps ) -> ( E. x ph -> E. x ps ) )";
 }

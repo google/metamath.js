@@ -9,7 +9,7 @@ include "19.38.mm";
 include "syl56.mm";
 include "nfd.mm";
 
-theorem nfimd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
+theorem nfimd(wph: wff ph, wps: wff ps, wch: wff ch, vx: setvar x) {
   assume nfimd.1: |- "( ph -> F/ x ps )";
   assume nfimd.2: |- "( ph -> F/ x ch )";
 
@@ -82,5 +82,5 @@ theorem nfimd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
     nfd;
   };
 
-  return '|-' "( ph -> F/ x ( ps -> ch ) )";
+  return |- "( ph -> F/ x ( ps -> ch ) )";
 }

@@ -3,7 +3,7 @@ include "alimi.mm";
 include "ax-11.mm";
 include "syl.mm";
 
-theorem hbal(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
+theorem hbal(wph: wff ph, vx: setvar x, vy: setvar y) {
   assume hbal.1: |- "( ph -> A. x ph )";
 
 
@@ -36,5 +36,5 @@ theorem hbal(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
     syl;
   };
 
-  return '|-' "( A. y ph -> A. x A. y ph )";
+  return |- "( A. y ph -> A. x A. y ph )";
 }

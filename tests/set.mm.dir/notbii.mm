@@ -3,7 +3,7 @@ include "wn.mm";
 include "notbi.mm";
 include "mpbi.mm";
 
-theorem notbii(wph: 'wff' ph, wps: 'wff' ps) {
+theorem notbii(wph: wff ph, wps: wff ps) {
   assume notbii.1: |- "( ph <-> ps )";
 
 
@@ -26,5 +26,5 @@ theorem notbii(wph: 'wff' ph, wps: 'wff' ps) {
     mpbi;
   };
 
-  return '|-' "( -. ph <-> -. ps )";
+  return |- "( -. ph <-> -. ps )";
 }

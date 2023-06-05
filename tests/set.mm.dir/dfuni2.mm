@@ -12,7 +12,7 @@ include "bitr4i.mm";
 include "abbii.mm";
 include "eqtri.mm";
 
-theorem dfuni2(vx: 'setvar' x, vy: 'setvar' y, cA: 'class' A) {
+theorem dfuni2(vx: setvar x, vy: setvar y, cA: class A) {
 
   disjoint x y;
   disjoint A x;
@@ -74,5 +74,5 @@ theorem dfuni2(vx: 'setvar' x, vy: 'setvar' y, cA: 'class' A) {
     eqtri;
   };
 
-  return '|-' "U. A = { x | E. y e. A x e. y }";
+  return |- "U. A = { x | E. y e. A x e. y }";
 }

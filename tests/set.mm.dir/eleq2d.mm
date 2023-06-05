@@ -13,7 +13,7 @@ include "syl.mm";
 include "df-clel.mm";
 include "3bitr4g.mm";
 
-theorem eleq2d(wph: 'wff' ph, cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+theorem eleq2d(wph: wff ph, cA: class A, cB: class B, cC: class C) {
   assume eleq1d.1: |- "( ph -> A = B )";
 
 
@@ -96,5 +96,5 @@ theorem eleq2d(wph: 'wff' ph, cA: 'class' A, cB: 'class' B, cC: 'class' C) {
     3bitr4g;
   };
 
-  return '|-' "( ph -> ( C e. A <-> C e. B ) )";
+  return |- "( ph -> ( C e. A <-> C e. B ) )";
 }

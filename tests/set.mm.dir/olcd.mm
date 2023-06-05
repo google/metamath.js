@@ -1,7 +1,7 @@
 include "orcd.mm";
 include "orcomd.mm";
 
-theorem olcd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem olcd(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume orcd.1: |- "( ph -> ps )";
 
 
@@ -20,5 +20,5 @@ theorem olcd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     orcomd;
   };
 
-  return '|-' "( ph -> ( ch \\/ ps ) )";
+  return |- "( ph -> ( ch \\/ ps ) )";
 }

@@ -12,7 +12,7 @@ include "exlimd.mm";
 include "equs4.mm";
 include "impbid1.mm";
 
-theorem equs5(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
+theorem equs5(wph: wff ph, vx: setvar x, vy: setvar y) {
 
 
 
@@ -67,5 +67,5 @@ theorem equs5(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
     impbid1;
   };
 
-  return '|-' "( -. A. x x = y -> ( E. x ( x = y /\\ ph ) <-> A. x ( x = y -> ph ) ) )";
+  return |- "( -. A. x x = y -> ( E. x ( x = y /\\ ph ) <-> A. x ( x = y -> ph ) ) )";
 }

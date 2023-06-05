@@ -7,7 +7,7 @@ include "alrimiv.mm";
 include "dfcleq.mm";
 include "sylibr.mm";
 
-theorem eqrdv(wph: 'wff' ph, vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
+theorem eqrdv(wph: wff ph, vx: setvar x, cA: class A, cB: class B) {
   assume eqrdv.1: |- "( ph -> ( x e. A <-> x e. B ) )";
 
   disjoint A x;
@@ -45,5 +45,5 @@ theorem eqrdv(wph: 'wff' ph, vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
     sylibr;
   };
 
-  return '|-' "( ph -> A = B )";
+  return |- "( ph -> A = B )";
 }

@@ -2,7 +2,7 @@ include "wceq.mm";
 include "id.mm";
 include "eqeq2d.mm";
 
-theorem eqeq2(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+theorem eqeq2(cA: class A, cB: class B, cC: class C) {
 
 
 
@@ -21,5 +21,5 @@ theorem eqeq2(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
     eqeq2d;
   };
 
-  return '|-' "( A = B -> ( C = A <-> C = B ) )";
+  return |- "( A = B -> ( C = A <-> C = B ) )";
 }

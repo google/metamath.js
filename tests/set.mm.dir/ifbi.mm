@@ -12,7 +12,7 @@ include "iffalse.mm";
 include "jaoi.mm";
 include "sylbi.mm";
 
-theorem ifbi(wph: 'wff' ph, wps: 'wff' ps, cA: 'class' A, cB: 'class' B) {
+theorem ifbi(wph: wff ph, wps: wff ps, cA: class A, cB: class B) {
 
 
 
@@ -93,5 +93,5 @@ theorem ifbi(wph: 'wff' ph, wps: 'wff' ps, cA: 'class' A, cB: 'class' B) {
     sylbi;
   };
 
-  return '|-' "( ( ph <-> ps ) -> if ( ph , A , B ) = if ( ps , A , B ) )";
+  return |- "( ( ph <-> ps ) -> if ( ph , A , B ) = if ( ps , A , B ) )";
 }

@@ -13,7 +13,7 @@ include "bibi12d.mm";
 include "cbvalv1.mm";
 include "bitr4i.mm";
 
-theorem cleqh(vx: 'setvar' x, vy: 'setvar' y, cA: 'class' A, cB: 'class' B) {
+theorem cleqh(vx: setvar x, vy: setvar y, cA: class A, cB: class B) {
   assume cleqh.1: |- "( y e. A -> A. x y e. A )";
   assume cleqh.2: |- "( y e. B -> A. x y e. B )";
 
@@ -98,5 +98,5 @@ theorem cleqh(vx: 'setvar' x, vy: 'setvar' y, cA: 'class' A, cB: 'class' B) {
     bitr4i;
   };
 
-  return '|-' "( A = B <-> A. x ( x e. A <-> x e. B ) )";
+  return |- "( A = B <-> A. x ( x e. A <-> x e. B ) )";
 }

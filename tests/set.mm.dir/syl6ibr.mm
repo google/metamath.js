@@ -1,7 +1,7 @@
 include "biimpri.mm";
 include "syl6.mm";
 
-theorem syl6ibr(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem syl6ibr(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume syl6ibr.1: |- "( ph -> ( ps -> ch ) )";
   assume syl6ibr.2: |- "( th <-> ch )";
 
@@ -22,5 +22,5 @@ theorem syl6ibr(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     syl6;
   };
 
-  return '|-' "( ph -> ( ps -> th ) )";
+  return |- "( ph -> ( ps -> th ) )";
 }

@@ -1,7 +1,7 @@
 include "impbid1.mm";
 include "bicomd.mm";
 
-theorem impbid2(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem impbid2(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume impbid2.1: |- "( ps -> ch )";
   assume impbid2.2: |- "( ph -> ( ch -> ps ) )";
 
@@ -22,5 +22,5 @@ theorem impbid2(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     bicomd;
   };
 
-  return '|-' "( ph -> ( ps <-> ch ) )";
+  return |- "( ph -> ( ps <-> ch ) )";
 }

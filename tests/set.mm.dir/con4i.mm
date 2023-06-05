@@ -3,7 +3,7 @@ include "wi.mm";
 include "con4.mm";
 include "ax-mp.mm";
 
-theorem con4i(wph: 'wff' ph, wps: 'wff' ps) {
+theorem con4i(wph: wff ph, wps: wff ps) {
   assume con4i.1: |- "( -. ph -> -. ps )";
 
 
@@ -26,5 +26,5 @@ theorem con4i(wph: 'wff' ph, wps: 'wff' ps) {
     ax-mp;
   };
 
-  return '|-' "( ps -> ph )";
+  return |- "( ps -> ph )";
 }

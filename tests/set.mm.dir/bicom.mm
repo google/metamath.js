@@ -2,7 +2,7 @@ include "wb.mm";
 include "bicom1.mm";
 include "impbii.mm";
 
-theorem bicom(wph: 'wff' ph, wps: 'wff' ps) {
+theorem bicom(wph: wff ph, wps: wff ps) {
 
 
 
@@ -24,5 +24,5 @@ theorem bicom(wph: 'wff' ph, wps: 'wff' ps) {
     impbii;
   };
 
-  return '|-' "( ( ph <-> ps ) <-> ( ps <-> ph ) )";
+  return |- "( ( ph <-> ps ) <-> ( ps <-> ph ) )";
 }

@@ -4,7 +4,7 @@ include "uneq1.mm";
 include "uncom.mm";
 include "3eqtr4g.mm";
 
-theorem uneq2(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+theorem uneq2(cA: class A, cB: class B, cC: class C) {
 
 
 
@@ -39,5 +39,5 @@ theorem uneq2(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
     3eqtr4g;
   };
 
-  return '|-' "( A = B -> ( C u. A ) = ( C u. B ) )";
+  return |- "( A = B -> ( C u. A ) = ( C u. B ) )";
 }

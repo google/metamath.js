@@ -1,7 +1,7 @@
 include "expcom.mm";
 include "imp.mm";
 
-theorem ancoms(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem ancoms(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume ancoms.1: |- "( ( ph /\\ ps ) -> ch )";
 
 
@@ -20,5 +20,5 @@ theorem ancoms(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     imp;
   };
 
-  return '|-' "( ( ps /\\ ph ) -> ch )";
+  return |- "( ( ps /\\ ph ) -> ch )";
 }

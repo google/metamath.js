@@ -4,7 +4,7 @@ include "wnf.mm";
 include "nf5-1.mm";
 include "mpg.mm";
 
-theorem nf5i(wph: 'wff' ph, vx: 'setvar' x) {
+theorem nf5i(wph: wff ph, vx: setvar x) {
   assume nf5i.1: |- "( ph -> A. x ph )";
 
 
@@ -28,5 +28,5 @@ theorem nf5i(wph: 'wff' ph, vx: 'setvar' x) {
     mpg;
   };
 
-  return '|-' "F/ x ph";
+  return |- "F/ x ph";
 }

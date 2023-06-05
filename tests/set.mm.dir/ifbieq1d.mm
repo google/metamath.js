@@ -3,7 +3,7 @@ include "ifbid.mm";
 include "ifeq1d.mm";
 include "eqtrd.mm";
 
-theorem ifbieq1d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+theorem ifbieq1d(wph: wff ph, wps: wff ps, wch: wff ch, cA: class A, cB: class B, cC: class C) {
   assume ifbieq1d.1: |- "( ph -> ( ps <-> ch ) )";
   assume ifbieq1d.2: |- "( ph -> A = B )";
 
@@ -42,5 +42,5 @@ theorem ifbieq1d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, cA: 'class' A, cB:
     eqtrd;
   };
 
-  return '|-' "( ph -> if ( ps , A , C ) = if ( ch , B , C ) )";
+  return |- "( ph -> if ( ps , A , C ) = if ( ch , B , C ) )";
 }

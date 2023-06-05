@@ -9,7 +9,7 @@ include "ax6ev.mm";
 include "a1bi.mm";
 include "3bitr4i.mm";
 
-theorem equsalvw(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
+theorem equsalvw(wph: wff ph, wps: wff ps, vx: setvar x, vy: setvar y) {
   assume equsalvw.1: |- "( x = y -> ( ph <-> ps ) )";
 
   disjoint x y;
@@ -62,5 +62,5 @@ theorem equsalvw(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
     3bitr4i;
   };
 
-  return '|-' "( A. x ( x = y -> ph ) <-> ps )";
+  return |- "( A. x ( x = y -> ph ) <-> ps )";
 }

@@ -1,6 +1,6 @@
 
 
-axiom cv(vx.cv: 'setvar' x) {
+axiom cv(vx.cv: setvar x) {
 
-  return 'class' "x";
+  return class "x";
 }

@@ -2,7 +2,7 @@ include "wi.mm";
 include "com23.mm";
 include "com12.mm";
 
-theorem com3r(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem com3r(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume com3.1: |- "( ph -> ( ps -> ( ch -> th ) ) )";
 
 
@@ -24,5 +24,5 @@ theorem com3r(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     com12;
   };
 
-  return '|-' "( ch -> ( ph -> ( ps -> th ) ) )";
+  return |- "( ch -> ( ph -> ( ps -> th ) ) )";
 }

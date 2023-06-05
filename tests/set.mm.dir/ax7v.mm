@@ -1,6 +1,6 @@
 include "ax-7.mm";
 
-theorem ax7v(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
+theorem ax7v(vx: setvar x, vy: setvar y, vz: setvar z) {
 
   disjoint x y;
 
@@ -13,5 +13,5 @@ theorem ax7v(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
     ax-7;
   };
 
-  return '|-' "( x = y -> ( x = z -> y = z ) )";
+  return |- "( x = y -> ( x = z -> y = z ) )";
 }

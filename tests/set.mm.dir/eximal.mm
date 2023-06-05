@@ -7,7 +7,7 @@ include "imbi1i.mm";
 include "con1b.mm";
 include "bitri.mm";
 
-theorem eximal(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+theorem eximal(wph: wff ph, wps: wff ps, vx: setvar x) {
 
 
 
@@ -46,5 +46,5 @@ theorem eximal(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
     bitri;
   };
 
-  return '|-' "( ( E. x ph -> ps ) <-> ( -. ps -> A. x -. ph ) )";
+  return |- "( ( E. x ph -> ps ) <-> ( -. ps -> A. x -. ph ) )";
 }

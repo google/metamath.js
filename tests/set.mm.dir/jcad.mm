@@ -2,7 +2,7 @@ include "wa.mm";
 include "pm3.2.mm";
 include "syl6c.mm";
 
-theorem jcad(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem jcad(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume jcad.1: |- "( ph -> ( ps -> ch ) )";
   assume jcad.2: |- "( ph -> ( ps -> th ) )";
 
@@ -26,5 +26,5 @@ theorem jcad(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     syl6c;
   };
 
-  return '|-' "( ph -> ( ps -> ( ch /\\ th ) ) )";
+  return |- "( ph -> ( ps -> ( ch /\\ th ) ) )";
 }

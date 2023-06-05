@@ -1,6 +1,6 @@
 include "ax-3.mm";
 
-theorem con4(wph: 'wff' ph, wps: 'wff' ps) {
+theorem con4(wph: wff ph, wps: wff ps) {
 
 
 
@@ -12,5 +12,5 @@ theorem con4(wph: 'wff' ph, wps: 'wff' ps) {
     ax-3;
   };
 
-  return '|-' "( ( -. ph -> -. ps ) -> ( ps -> ph ) )";
+  return |- "( ( -. ph -> -. ps ) -> ( ps -> ph ) )";
 }

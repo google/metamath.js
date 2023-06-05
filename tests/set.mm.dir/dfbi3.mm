@@ -9,7 +9,7 @@ include "dfbi2.mm";
 include "cases2.mm";
 include "3bitr4i.mm";
 
-theorem dfbi3(wph: 'wff' ph, wps: 'wff' ps) {
+theorem dfbi3(wph: wff ph, wps: wff ps) {
 
 
 
@@ -62,5 +62,5 @@ theorem dfbi3(wph: 'wff' ph, wps: 'wff' ps) {
     3bitr4i;
   };
 
-  return '|-' "( ( ph <-> ps ) <-> ( ( ph /\\ ps ) \\/ ( -. ph /\\ -. ps ) ) )";
+  return |- "( ( ph <-> ps ) <-> ( ( ph /\\ ps ) \\/ ( -. ph /\\ -. ps ) ) )";
 }

@@ -885,7 +885,7 @@ ${assumptions}
 
     let conds = "";
     
-    let assumptions = e.map(([seq, type, name]) => `  assume ${name}: ${type} "${this.escape(seq.join(' '))}";`).join("\n");
+    let assumptions = e.map(([seq, type, name]) => `  assume ${name}: ${this.type(type)} "${this.escape(seq.join(' '))}";`).join("\n");
 
     if (Object.entries(e).length > 0) {
       assumptions += "\n";

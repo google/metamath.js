@@ -5,7 +5,7 @@ include "19.9d.mm";
 include "19.8a.mm";
 include "impbid1.mm";
 
-theorem 19.9t(wph: 'wff' ph, vx: 'setvar' x) {
+theorem 19.9t(wph: wff ph, vx: setvar x) {
 
 
 
@@ -32,5 +32,5 @@ theorem 19.9t(wph: 'wff' ph, vx: 'setvar' x) {
     impbid1;
   };
 
-  return '|-' "( F/ x ph -> ( E. x ph <-> ph ) )";
+  return |- "( F/ x ph -> ( E. x ph <-> ph ) )";
 }

@@ -3,7 +3,7 @@ include "cuni.mm";
 include "unieq.mm";
 include "syl.mm";
 
-theorem unieqd(wph: 'wff' ph, cA: 'class' A, cB: 'class' B) {
+theorem unieqd(wph: wff ph, cA: class A, cB: class B) {
   assume unieqd.1: |- "( ph -> A = B )";
 
 
@@ -27,5 +27,5 @@ theorem unieqd(wph: 'wff' ph, cA: 'class' A, cB: 'class' B) {
     syl;
   };
 
-  return '|-' "( ph -> U. A = U. B )";
+  return |- "( ph -> U. A = U. B )";
 }

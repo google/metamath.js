@@ -9,7 +9,7 @@ include "eximdv.mm";
 include "impcom.mm";
 include "impbii.mm";
 
-theorem 19.41v(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+theorem 19.41v(wph: wff ph, wps: wff ps, vx: setvar x) {
 
   disjoint ps x;
 
@@ -65,5 +65,5 @@ theorem 19.41v(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
     impbii;
   };
 
-  return '|-' "( E. x ( ph /\\ ps ) <-> ( E. x ph /\\ ps ) )";
+  return |- "( E. x ( ph /\\ ps ) <-> ( E. x ph /\\ ps ) )";
 }

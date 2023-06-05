@@ -2,7 +2,7 @@ include "wa.mm";
 include "pm3.22.mm";
 include "impbii.mm";
 
-theorem ancom(wph: 'wff' ph, wps: 'wff' ps) {
+theorem ancom(wph: wff ph, wps: wff ps) {
 
 
 
@@ -24,5 +24,5 @@ theorem ancom(wph: 'wff' ph, wps: 'wff' ps) {
     impbii;
   };
 
-  return '|-' "( ( ph /\\ ps ) <-> ( ps /\\ ph ) )";
+  return |- "( ( ph /\\ ps ) <-> ( ps /\\ ph ) )";
 }

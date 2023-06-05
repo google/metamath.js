@@ -6,7 +6,7 @@ include "df-clab.mm";
 include "hbs1.mm";
 include "hbxfrbi.mm";
 
-theorem hbab1(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
+theorem hbab1(wph: wff ph, vx: setvar x, vy: setvar y) {
 
   disjoint x y;
 
@@ -35,5 +35,5 @@ theorem hbab1(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
     hbxfrbi;
   };
 
-  return '|-' "( y e. { x | ph } -> A. x y e. { x | ph } )";
+  return |- "( y e. { x | ph } -> A. x y e. { x | ph } )";
 }

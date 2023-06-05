@@ -1,7 +1,7 @@
 include "biimpi.mm";
 include "syl.mm";
 
-theorem sylib(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem sylib(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume sylib.1: |- "( ph -> ps )";
   assume sylib.2: |- "( ps <-> ch )";
 
@@ -21,5 +21,5 @@ theorem sylib(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     syl;
   };
 
-  return '|-' "( ph -> ch )";
+  return |- "( ph -> ch )";
 }

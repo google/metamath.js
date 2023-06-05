@@ -3,7 +3,7 @@ include "biimpr.mm";
 include "biimp.mm";
 include "impbid.mm";
 
-theorem bicom1(wph: 'wff' ph, wps: 'wff' ps) {
+theorem bicom1(wph: wff ph, wps: wff ps) {
 
 
 
@@ -24,5 +24,5 @@ theorem bicom1(wph: 'wff' ph, wps: 'wff' ps) {
     impbid;
   };
 
-  return '|-' "( ( ph <-> ps ) -> ( ps <-> ph ) )";
+  return |- "( ( ph <-> ps ) -> ( ps <-> ph ) )";
 }

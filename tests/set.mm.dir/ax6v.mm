@@ -1,6 +1,6 @@
 include "ax-6.mm";
 
-theorem ax6v(vx: 'setvar' x, vy: 'setvar' y) {
+theorem ax6v(vx: setvar x, vy: setvar y) {
 
   disjoint x y;
 
@@ -12,5 +12,5 @@ theorem ax6v(vx: 'setvar' x, vy: 'setvar' y) {
     ax-6;
   };
 
-  return '|-' "-. A. x -. x = y";
+  return |- "-. A. x -. x = y";
 }

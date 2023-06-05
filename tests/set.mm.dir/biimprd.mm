@@ -1,7 +1,7 @@
 include "id.mm";
 include "syl5ibr.mm";
 
-theorem biimprd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem biimprd(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume biimprd.1: |- "( ph -> ( ps <-> ch ) )";
 
 
@@ -19,5 +19,5 @@ theorem biimprd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     syl5ibr;
   };
 
-  return '|-' "( ph -> ( ch -> ps ) )";
+  return |- "( ph -> ( ch -> ps ) )";
 }

@@ -8,7 +8,7 @@ include "exbii.mm";
 include "exnal.mm";
 include "bitri.mm";
 
-theorem exanali(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+theorem exanali(wph: wff ph, wps: wff ps, vx: setvar x) {
 
 
 
@@ -47,5 +47,5 @@ theorem exanali(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
     bitri;
   };
 
-  return '|-' "( E. x ( ph /\\ -. ps ) <-> -. A. x ( ph -> ps ) )";
+  return |- "( E. x ( ph /\\ -. ps ) <-> -. A. x ( ph -> ps ) )";
 }

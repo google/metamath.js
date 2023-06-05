@@ -3,7 +3,7 @@ include "ax6ev.mm";
 include "a1i.mm";
 include "eximii.mm";
 
-theorem exgen(wph: 'wff' ph, vx: 'setvar' x) {
+theorem exgen(wph: wff ph, vx: setvar x) {
   assume exgen.1: |- "ph";
 
 
@@ -27,5 +27,5 @@ theorem exgen(wph: 'wff' ph, vx: 'setvar' x) {
     eximii;
   };
 
-  return '|-' "E. x ph";
+  return |- "E. x ph";
 }

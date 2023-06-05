@@ -2,7 +2,7 @@ include "sylbb.mm";
 include "sylbbr.mm";
 include "impbii.mm";
 
-theorem bitri(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem bitri(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume bitri.1: |- "( ph <-> ps )";
   assume bitri.2: |- "( ps <-> ch )";
 
@@ -28,5 +28,5 @@ theorem bitri(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     impbii;
   };
 
-  return '|-' "( ph <-> ch )";
+  return |- "( ph <-> ch )";
 }

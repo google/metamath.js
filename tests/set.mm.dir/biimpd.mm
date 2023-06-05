@@ -3,7 +3,7 @@ include "wi.mm";
 include "biimp.mm";
 include "syl.mm";
 
-theorem biimpd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem biimpd(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume biimpd.1: |- "( ph -> ( ps <-> ch ) )";
 
 
@@ -25,5 +25,5 @@ theorem biimpd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     syl;
   };
 
-  return '|-' "( ph -> ( ps -> ch ) )";
+  return |- "( ph -> ( ps -> ch ) )";
 }

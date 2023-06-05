@@ -6,7 +6,7 @@ include "a1i.mm";
 include "nfeqd.mm";
 include "mptru.mm";
 
-theorem nfeq(vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
+theorem nfeq(vx: setvar x, cA: class A, cB: class B) {
   assume nfnfc.1: |- "F/_ x A";
   assume nfeq.2: |- "F/_ x B";
 
@@ -41,5 +41,5 @@ theorem nfeq(vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
     mptru;
   };
 
-  return '|-' "F/ x A = B";
+  return |- "F/ x A = B";
 }

@@ -2,7 +2,7 @@ include "wo.mm";
 include "orcom.mm";
 include "sylib.mm";
 
-theorem orcomd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem orcomd(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume orcomd.1: |- "( ph -> ( ps \\/ ch ) )";
 
 
@@ -24,5 +24,5 @@ theorem orcomd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     sylib;
   };
 
-  return '|-' "( ph -> ( ch \\/ ps ) )";
+  return |- "( ph -> ( ch \\/ ps ) )";
 }

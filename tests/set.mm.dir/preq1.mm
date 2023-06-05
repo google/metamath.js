@@ -7,7 +7,7 @@ include "uneq1d.mm";
 include "df-pr.mm";
 include "3eqtr4g.mm";
 
-theorem preq1(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+theorem preq1(cA: class A, cB: class B, cC: class C) {
 
 
 
@@ -53,5 +53,5 @@ theorem preq1(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
     3eqtr4g;
   };
 
-  return '|-' "( A = B -> { A , C } = { B , C } )";
+  return |- "( A = B -> { A , C } = { B , C } )";
 }

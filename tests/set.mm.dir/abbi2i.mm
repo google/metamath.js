@@ -8,7 +8,7 @@ include "a1i.mm";
 include "abbi2dv.mm";
 include "mptru.mm";
 
-theorem abbi2i(wph: 'wff' ph, vx: 'setvar' x, cA: 'class' A) {
+theorem abbi2i(wph: wff ph, vx: setvar x, cA: class A) {
   assume abbi2i.1: |- "( x e. A <-> ph )";
 
   disjoint A x;
@@ -41,5 +41,5 @@ theorem abbi2i(wph: 'wff' ph, vx: 'setvar' x, cA: 'class' A) {
     mptru;
   };
 
-  return '|-' "A = { x | ph }";
+  return |- "A = { x | ph }";
 }

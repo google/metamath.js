@@ -10,7 +10,7 @@ include "ax6evr.mm";
 include "exlimiiv.mm";
 include "ex.mm";
 
-theorem ax7(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
+theorem ax7(vx: setvar x, vy: setvar y, vz: setvar z) {
 
 
 
@@ -82,5 +82,5 @@ theorem ax7(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
     ex;
   };
 
-  return '|-' "( x = y -> ( x = z -> y = z ) )";
+  return |- "( x = y -> ( x = z -> y = z ) )";
 }

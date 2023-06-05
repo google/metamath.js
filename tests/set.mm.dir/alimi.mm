@@ -3,7 +3,7 @@ include "wal.mm";
 include "alim.mm";
 include "mpg.mm";
 
-theorem alimi(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+theorem alimi(wph: wff ph, wps: wff ps, vx: setvar x) {
   assume alimi.1: |- "( ph -> ps )";
 
 
@@ -30,5 +30,5 @@ theorem alimi(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
     mpg;
   };
 
-  return '|-' "( A. x ph -> A. x ps )";
+  return |- "( A. x ph -> A. x ps )";
 }

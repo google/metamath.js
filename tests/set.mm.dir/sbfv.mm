@@ -4,7 +4,7 @@ include "wb.mm";
 include "sbftv.mm";
 include "ax-mp.mm";
 
-theorem sbfv(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
+theorem sbfv(wph: wff ph, vx: setvar x, vy: setvar y) {
   assume sbfv.1: |- "F/ x ph";
 
   disjoint x y;
@@ -29,5 +29,5 @@ theorem sbfv(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
     ax-mp;
   };
 
-  return '|-' "( [ y / x ] ph <-> ph )";
+  return |- "( [ y / x ] ph <-> ph )";
 }

@@ -6,7 +6,7 @@ include "simplim.mm";
 include "ax-mp.mm";
 include "syl.mm";
 
-theorem biimp(wph: 'wff' ph, wps: 'wff' ps) {
+theorem biimp(wph: wff ph, wps: wff ps) {
 
 
 
@@ -55,5 +55,5 @@ theorem biimp(wph: 'wff' ph, wps: 'wff' ps) {
     syl;
   };
 
-  return '|-' "( ( ph <-> ps ) -> ( ph -> ps ) )";
+  return |- "( ( ph <-> ps ) -> ( ph -> ps ) )";
 }

@@ -7,7 +7,7 @@ include "exbidv.mm";
 include "df-rex.mm";
 include "3bitr4g.mm";
 
-theorem rexbidv2(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
+theorem rexbidv2(wph: wff ph, wps: wff ps, wch: wff ch, vx: setvar x, cA: class A, cB: class B) {
   assume rexbidv2.1: |- "( ph -> ( ( x e. A /\\ ps ) <-> ( x e. B /\\ ch ) ) )";
 
   disjoint ph x;
@@ -59,5 +59,5 @@ theorem rexbidv2(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x, cA
     3bitr4g;
   };
 
-  return '|-' "( ph -> ( E. x e. A ps <-> E. x e. B ch ) )";
+  return |- "( ph -> ( E. x e. A ps <-> E. x e. B ch ) )";
 }

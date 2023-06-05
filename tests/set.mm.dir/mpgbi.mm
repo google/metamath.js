@@ -2,7 +2,7 @@ include "wal.mm";
 include "ax-gen.mm";
 include "mpbi.mm";
 
-theorem mpgbi(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+theorem mpgbi(wph: wff ph, wps: wff ps, vx: setvar x) {
   assume mpgbi.1: |- "( A. x ph <-> ps )";
   assume mpgbi.2: |- "ph";
 
@@ -23,5 +23,5 @@ theorem mpgbi(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
     mpbi;
   };
 
-  return '|-' "ps";
+  return |- "ps";
 }

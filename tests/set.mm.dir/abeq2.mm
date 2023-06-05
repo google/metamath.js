@@ -12,7 +12,7 @@ include "bibi2i.mm";
 include "albii.mm";
 include "bitri.mm";
 
-theorem abeq2(wph: 'wff' ph, vx: 'setvar' x, cA: 'class' A) {
+theorem abeq2(wph: wff ph, vx: setvar x, cA: class A) {
 
   disjoint A x;
   disjoint x y;
@@ -77,5 +77,5 @@ theorem abeq2(wph: 'wff' ph, vx: 'setvar' x, cA: 'class' A) {
     bitri;
   };
 
-  return '|-' "( A = { x | ph } <-> A. x ( x e. A <-> ph ) )";
+  return |- "( A = { x | ph } <-> A. x ( x e. A <-> ph ) )";
 }

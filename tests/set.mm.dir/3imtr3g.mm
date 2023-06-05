@@ -1,7 +1,7 @@
 include "syl5bir.mm";
 include "syl6ib.mm";
 
-theorem 3imtr3g(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta: 'wff' ta) {
+theorem 3imtr3g(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th, wta: wff ta) {
   assume 3imtr3g.1: |- "( ph -> ( ps -> ch ) )";
   assume 3imtr3g.2: |- "( ps <-> th )";
   assume 3imtr3g.3: |- "( ch <-> ta )";
@@ -26,5 +26,5 @@ theorem 3imtr3g(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta:
     syl6ib;
   };
 
-  return '|-' "( ph -> ( th -> ta ) )";
+  return |- "( ph -> ( th -> ta ) )";
 }

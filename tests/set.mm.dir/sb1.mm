@@ -6,7 +6,7 @@ include "wex.mm";
 include "df-sb.mm";
 include "simprbi.mm";
 
-theorem sb1(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
+theorem sb1(wph: wff ph, vx: setvar x, vy: setvar y) {
 
 
 
@@ -35,5 +35,5 @@ theorem sb1(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
     simprbi;
   };
 
-  return '|-' "( [ y / x ] ph -> E. x ( x = y /\\ ph ) )";
+  return |- "( [ y / x ] ph -> E. x ( x = y /\\ ph ) )";
 }

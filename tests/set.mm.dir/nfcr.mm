@@ -7,7 +7,7 @@ include "df-nfc.mm";
 include "sp.mm";
 include "sylbi.mm";
 
-theorem nfcr(vx: 'setvar' x, vy: 'setvar' y, cA: 'class' A) {
+theorem nfcr(vx: setvar x, vy: setvar y, cA: class A) {
 
   disjoint x y;
   disjoint A y;
@@ -38,5 +38,5 @@ theorem nfcr(vx: 'setvar' x, vy: 'setvar' y, cA: 'class' A) {
     sylbi;
   };
 
-  return '|-' "( F/_ x A -> F/ x y e. A )";
+  return |- "( F/_ x A -> F/ x y e. A )";
 }

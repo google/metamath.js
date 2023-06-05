@@ -12,7 +12,7 @@ include "impd.mm";
 include "exlimdv.mm";
 include "syl5.mm";
 
-theorem ax13lem1(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
+theorem ax13lem1(vx: setvar x, vy: setvar y, vz: setvar z) {
 
   disjoint x z;
   disjoint w x;
@@ -85,5 +85,5 @@ theorem ax13lem1(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
     syl5;
   };
 
-  return '|-' "( -. x = y -> ( z = y -> A. x z = y ) )";
+  return |- "( -. x = y -> ( z = y -> A. x z = y ) )";
 }

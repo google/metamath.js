@@ -3,7 +3,7 @@ include "notnotb.mm";
 include "3bitr3g.mm";
 include "con4bid.mm";
 
-theorem notbid(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem notbid(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume notbid.1: |- "( ph -> ( ps <-> ch ) )";
 
 
@@ -34,5 +34,5 @@ theorem notbid(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     con4bid;
   };
 
-  return '|-' "( ph -> ( -. ps <-> -. ch ) )";
+  return |- "( ph -> ( -. ps <-> -. ch ) )";
 }

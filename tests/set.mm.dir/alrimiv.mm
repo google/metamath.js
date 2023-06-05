@@ -1,7 +1,7 @@
 include "ax-5.mm";
 include "alrimih.mm";
 
-theorem alrimiv(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+theorem alrimiv(wph: wff ph, wps: wff ps, vx: setvar x) {
   assume alrimiv.1: |- "( ph -> ps )";
 
   disjoint ph x;
@@ -19,5 +19,5 @@ theorem alrimiv(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
     alrimih;
   };
 
-  return '|-' "( ph -> A. x ps )";
+  return |- "( ph -> A. x ps )";
 }

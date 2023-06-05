@@ -9,7 +9,7 @@ include "orbi12i.mm";
 include "3bitr4ri.mm";
 include "uneqri.mm";
 
-theorem unab(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+theorem unab(wph: wff ph, wps: wff ps, vx: setvar x) {
 
 
 
@@ -87,5 +87,5 @@ theorem unab(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
     uneqri;
   };
 
-  return '|-' "( { x | ph } u. { x | ps } ) = { x | ( ph \\/ ps ) }";
+  return |- "( { x | ph } u. { x | ps } ) = { x | ( ph \\/ ps ) }";
 }

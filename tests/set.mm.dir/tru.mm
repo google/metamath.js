@@ -32,5 +32,5 @@ theorem tru() {
     mpbir;
   };
 
-  return '|-' "T.";
+  return |- "T.";
 }

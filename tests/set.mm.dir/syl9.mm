@@ -2,7 +2,7 @@ include "wi.mm";
 include "a1i.mm";
 include "syl5d.mm";
 
-theorem syl9(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta: 'wff' ta) {
+theorem syl9(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th, wta: wff ta) {
   assume syl9.1: |- "( ph -> ( ps -> ch ) )";
   assume syl9.2: |- "( th -> ( ch -> ta ) )";
 
@@ -28,5 +28,5 @@ theorem syl9(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta: 'w
     syl5d;
   };
 
-  return '|-' "( ph -> ( th -> ( ps -> ta ) ) )";
+  return |- "( ph -> ( th -> ( ps -> ta ) ) )";
 }

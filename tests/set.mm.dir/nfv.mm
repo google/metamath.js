@@ -1,7 +1,7 @@
 include "ax5ea.mm";
 include "nfi.mm";
 
-theorem nfv(wph: 'wff' ph, vx: 'setvar' x) {
+theorem nfv(wph: wff ph, vx: setvar x) {
 
   disjoint ph x;
 
@@ -16,5 +16,5 @@ theorem nfv(wph: 'wff' ph, vx: 'setvar' x) {
     nfi;
   };
 
-  return '|-' "F/ x ph";
+  return |- "F/ x ph";
 }

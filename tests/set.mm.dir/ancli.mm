@@ -1,7 +1,7 @@
 include "id.mm";
 include "jca.mm";
 
-theorem ancli(wph: 'wff' ph, wps: 'wff' ps) {
+theorem ancli(wph: wff ph, wps: wff ps) {
   assume ancli.1: |- "( ph -> ps )";
 
 
@@ -18,5 +18,5 @@ theorem ancli(wph: 'wff' ph, wps: 'wff' ps) {
     jca;
   };
 
-  return '|-' "( ph -> ( ph /\\ ps ) )";
+  return |- "( ph -> ( ph /\\ ps ) )";
 }

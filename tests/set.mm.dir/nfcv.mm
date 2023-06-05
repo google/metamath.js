@@ -3,7 +3,7 @@ include "wcel.mm";
 include "nfv.mm";
 include "nfci.mm";
 
-theorem nfcv(vx: 'setvar' x, cA: 'class' A) {
+theorem nfcv(vx: setvar x, cA: class A) {
 
   disjoint A x;
   disjoint x y;
@@ -24,5 +24,5 @@ theorem nfcv(vx: 'setvar' x, cA: 'class' A) {
     nfci;
   };
 
-  return '|-' "F/_ x A";
+  return |- "F/_ x A";
 }

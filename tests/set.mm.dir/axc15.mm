@@ -16,7 +16,7 @@ include "syl6mpi.mm";
 include "exlimdv.mm";
 include "mpi.mm";
 
-theorem axc15(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
+theorem axc15(wph: wff ph, vx: setvar x, vy: setvar y) {
 
 
 
@@ -125,5 +125,5 @@ theorem axc15(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
     mpi;
   };
 
-  return '|-' "( -. A. x x = y -> ( x = y -> ( ph -> A. x ( x = y -> ph ) ) ) )";
+  return |- "( -. A. x x = y -> ( x = y -> ( ph -> A. x ( x = y -> ph ) ) ) )";
 }

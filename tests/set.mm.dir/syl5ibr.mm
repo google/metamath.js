@@ -1,7 +1,7 @@
 include "bicomd.mm";
 include "syl5ib.mm";
 
-theorem syl5ibr(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem syl5ibr(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume syl5ibr.1: |- "( ph -> th )";
   assume syl5ibr.2: |- "( ch -> ( ps <-> th ) )";
 
@@ -23,5 +23,5 @@ theorem syl5ibr(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     syl5ib;
   };
 
-  return '|-' "( ch -> ( ph -> ps ) )";
+  return |- "( ch -> ( ph -> ps ) )";
 }

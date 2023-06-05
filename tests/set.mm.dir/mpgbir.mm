@@ -2,7 +2,7 @@ include "wal.mm";
 include "ax-gen.mm";
 include "mpbir.mm";
 
-theorem mpgbir(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+theorem mpgbir(wph: wff ph, wps: wff ps, vx: setvar x) {
   assume mpgbir.1: |- "( ph <-> A. x ps )";
   assume mpgbir.2: |- "ps";
 
@@ -23,5 +23,5 @@ theorem mpgbir(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
     mpbir;
   };
 
-  return '|-' "ph";
+  return |- "ph";
 }

@@ -11,7 +11,7 @@ include "bibi12i.mm";
 include "albii.mm";
 include "bitr2i.mm";
 
-theorem abbi(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+theorem abbi(wph: wff ph, wps: wff ps, vx: setvar x) {
 
 
 
@@ -78,5 +78,5 @@ theorem abbi(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
     bitr2i;
   };
 
-  return '|-' "( A. x ( ph <-> ps ) <-> { x | ph } = { x | ps } )";
+  return |- "( A. x ( ph <-> ps ) <-> { x | ph } = { x | ps } )";
 }

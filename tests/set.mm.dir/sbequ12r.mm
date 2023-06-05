@@ -5,7 +5,7 @@ include "sbequ12.mm";
 include "bicomd.mm";
 include "equcoms.mm";
 
-theorem sbequ12r(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
+theorem sbequ12r(wph: wff ph, vx: setvar x, vy: setvar y) {
 
 
 
@@ -34,5 +34,5 @@ theorem sbequ12r(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
     equcoms;
   };
 
-  return '|-' "( x = y -> ( [ x / y ] ph <-> ph ) )";
+  return |- "( x = y -> ( [ x / y ] ph <-> ph ) )";
 }

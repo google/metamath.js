@@ -4,7 +4,7 @@ include "con4d.mm";
 include "biimpd.mm";
 include "impcon4bid.mm";
 
-theorem con4bid(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem con4bid(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume con4bid.1: |- "( ph -> ( -. ps <-> -. ch ) )";
 
 
@@ -36,5 +36,5 @@ theorem con4bid(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     impcon4bid;
   };
 
-  return '|-' "( ph -> ( ps <-> ch ) )";
+  return |- "( ph -> ( ps <-> ch ) )";
 }

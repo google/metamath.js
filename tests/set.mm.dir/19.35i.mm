@@ -4,7 +4,7 @@ include "wal.mm";
 include "19.35.mm";
 include "mpbi.mm";
 
-theorem 19.35i(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+theorem 19.35i(wph: wff ph, wps: wff ps, vx: setvar x) {
   assume 19.35i.1: |- "E. x ( ph -> ps )";
 
 
@@ -32,5 +32,5 @@ theorem 19.35i(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
     mpbi;
   };
 
-  return '|-' "( A. x ph -> E. x ps )";
+  return |- "( A. x ph -> E. x ps )";
 }

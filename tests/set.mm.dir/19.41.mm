@@ -9,7 +9,7 @@ include "eximd.mm";
 include "impcom.mm";
 include "impbii.mm";
 
-theorem 19.41(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+theorem 19.41(wph: wff ph, wps: wff ps, vx: setvar x) {
   assume 19.41.1: |- "F/ x ps";
 
 
@@ -68,5 +68,5 @@ theorem 19.41(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
     impbii;
   };
 
-  return '|-' "( E. x ( ph /\\ ps ) <-> ( E. x ph /\\ ps ) )";
+  return |- "( E. x ( ph /\\ ps ) <-> ( E. x ph /\\ ps ) )";
 }

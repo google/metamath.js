@@ -2,7 +2,7 @@ include "wa.mm";
 include "ancom.mm";
 include "exbii.mm";
 
-theorem exancom(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+theorem exancom(wph: wff ph, wps: wff ps, vx: setvar x) {
 
 
 
@@ -22,5 +22,5 @@ theorem exancom(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
     exbii;
   };
 
-  return '|-' "( E. x ( ph /\\ ps ) <-> E. x ( ps /\\ ph ) )";
+  return |- "( E. x ( ph /\\ ps ) <-> E. x ( ps /\\ ph ) )";
 }

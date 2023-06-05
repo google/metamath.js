@@ -2,7 +2,7 @@ include "wn.mm";
 include "con2d.mm";
 include "mpd.mm";
 
-theorem mt2d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem mt2d(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume mt2d.1: |- "( ph -> ch )";
   assume mt2d.2: |- "( ph -> ( ps -> -. ch ) )";
 
@@ -24,5 +24,5 @@ theorem mt2d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     mpd;
   };
 
-  return '|-' "( ph -> -. ps )";
+  return |- "( ph -> -. ps )";
 }

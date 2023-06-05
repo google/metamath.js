@@ -1,7 +1,7 @@
 include "axext3.mm";
 include "df-cleq.mm";
 
-theorem dfcleq(vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
+theorem dfcleq(vx: setvar x, cA: class A, cB: class B) {
 
   disjoint A x;
   disjoint B x;
@@ -25,5 +25,5 @@ theorem dfcleq(vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
     df-cleq;
   };
 
-  return '|-' "( A = B <-> A. x ( x e. A <-> x e. B ) )";
+  return |- "( A = B <-> A. x ( x e. A <-> x e. B ) )";
 }

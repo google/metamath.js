@@ -1,7 +1,7 @@
 include "eqcomi.mm";
 include "syl6req.mm";
 
-theorem syl6reqr(wph: 'wff' ph, cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+theorem syl6reqr(wph: wff ph, cA: class A, cB: class B, cC: class C) {
   assume syl6reqr.1: |- "( ph -> A = B )";
   assume syl6reqr.2: |- "C = B";
 
@@ -22,5 +22,5 @@ theorem syl6reqr(wph: 'wff' ph, cA: 'class' A, cB: 'class' B, cC: 'class' C) {
     syl6req;
   };
 
-  return '|-' "( ph -> C = A )";
+  return |- "( ph -> C = A )";
 }

@@ -4,7 +4,7 @@ include "wn.mm";
 include "nfeqf2.mm";
 include "nf5rd.mm";
 
-theorem dveeq2(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
+theorem dveeq2(vx: setvar x, vy: setvar y, vz: setvar z) {
 
   disjoint x z;
 
@@ -28,5 +28,5 @@ theorem dveeq2(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
     nf5rd;
   };
 
-  return '|-' "( -. A. x x = y -> ( z = y -> A. x z = y ) )";
+  return |- "( -. A. x x = y -> ( z = y -> A. x z = y ) )";
 }

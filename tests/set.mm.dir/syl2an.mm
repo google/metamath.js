@@ -1,7 +1,7 @@
 include "sylan.mm";
 include "sylan2.mm";
 
-theorem syl2an(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta: 'wff' ta) {
+theorem syl2an(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th, wta: wff ta) {
   assume syl2an.1: |- "( ph -> ps )";
   assume syl2an.2: |- "( ta -> ch )";
   assume syl2an.3: |- "( ( ps /\\ ch ) -> th )";
@@ -26,5 +26,5 @@ theorem syl2an(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta: 
     sylan2;
   };
 
-  return '|-' "( ( ph /\\ ta ) -> th )";
+  return |- "( ( ph /\\ ta ) -> th )";
 }

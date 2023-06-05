@@ -30,5 +30,5 @@ theorem 2cn() {
     eqeltri;
   };
 
-  return '|-' "2 e. CC";
+  return |- "2 e. CC";
 }

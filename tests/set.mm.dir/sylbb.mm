@@ -1,7 +1,7 @@
 include "biimpi.mm";
 include "sylbi.mm";
 
-theorem sylbb(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem sylbb(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume sylbb.1: |- "( ph <-> ps )";
   assume sylbb.2: |- "( ps <-> ch )";
 
@@ -21,5 +21,5 @@ theorem sylbb(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     sylbi;
   };
 
-  return '|-' "( ph -> ch )";
+  return |- "( ph -> ch )";
 }

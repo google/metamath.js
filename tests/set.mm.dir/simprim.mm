@@ -1,7 +1,7 @@
 include "idd.mm";
 include "impi.mm";
 
-theorem simprim(wph: 'wff' ph, wps: 'wff' ps) {
+theorem simprim(wph: wff ph, wps: wff ps) {
 
 
 
@@ -17,5 +17,5 @@ theorem simprim(wph: 'wff' ph, wps: 'wff' ps) {
     impi;
   };
 
-  return '|-' "( -. ( ph -> -. ps ) -> ps )";
+  return |- "( -. ( ph -> -. ps ) -> ps )";
 }

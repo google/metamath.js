@@ -3,7 +3,7 @@ include "ax5e.mm";
 include "19.8v.mm";
 include "impbii.mm";
 
-theorem 19.9v(wph: 'wff' ph, vx: 'setvar' x) {
+theorem 19.9v(wph: wff ph, vx: setvar x) {
 
   disjoint ph x;
 
@@ -23,5 +23,5 @@ theorem 19.9v(wph: 'wff' ph, vx: 'setvar' x) {
     impbii;
   };
 
-  return '|-' "( E. x ph <-> ph )";
+  return |- "( E. x ph <-> ph )";
 }

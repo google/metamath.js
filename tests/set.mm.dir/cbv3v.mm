@@ -3,7 +3,7 @@ include "nfal.mm";
 include "spimv1.mm";
 include "alrimi.mm";
 
-theorem cbv3v(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
+theorem cbv3v(wph: wff ph, wps: wff ps, vx: setvar x, vy: setvar y) {
   assume cbv3v.nf1: |- "F/ y ph";
   assume cbv3v.nf2: |- "F/ x ps";
   assume cbv3v.1: |- "( x = y -> ( ph -> ps ) )";
@@ -33,5 +33,5 @@ theorem cbv3v(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
     alrimi;
   };
 
-  return '|-' "( A. x ph -> A. y ps )";
+  return |- "( A. x ph -> A. y ps )";
 }

@@ -3,7 +3,7 @@ include "wi.mm";
 include "com12.mm";
 include "jaoi.mm";
 
-theorem jaod(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem jaod(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume jaod.1: |- "( ph -> ( ps -> ch ) )";
   assume jaod.2: |- "( ph -> ( th -> ch ) )";
 
@@ -36,5 +36,5 @@ theorem jaod(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     com12;
   };
 
-  return '|-' "( ph -> ( ( ps \\/ th ) -> ch ) )";
+  return |- "( ph -> ( ( ps \\/ th ) -> ch ) )";
 }

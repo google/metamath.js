@@ -6,7 +6,7 @@ include "19.8a.mm";
 include "con1i.mm";
 include "sylbi.mm";
 
-theorem sp(wph: 'wff' ph, vx: 'setvar' x) {
+theorem sp(wph: wff ph, vx: setvar x) {
 
 
 
@@ -36,5 +36,5 @@ theorem sp(wph: 'wff' ph, vx: 'setvar' x) {
     sylbi;
   };
 
-  return '|-' "( A. x ph -> ph )";
+  return |- "( A. x ph -> ph )";
 }

@@ -3,7 +3,7 @@ include "wi.mm";
 include "a1i.mm";
 include "mt3d.mm";
 
-theorem nsyl2(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem nsyl2(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume nsyl2.1: |- "( ph -> -. ps )";
   assume nsyl2.2: |- "( -. ch -> ps )";
 
@@ -26,5 +26,5 @@ theorem nsyl2(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     mt3d;
   };
 
-  return '|-' "( ph -> ch )";
+  return |- "( ph -> ch )";
 }

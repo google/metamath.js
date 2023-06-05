@@ -5,7 +5,7 @@ include "df-ss.mm";
 include "eqcom.mm";
 include "bitri.mm";
 
-theorem dfss(cA: 'class' A, cB: 'class' B) {
+theorem dfss(cA: class A, cB: class B) {
 
 
 
@@ -33,5 +33,5 @@ theorem dfss(cA: 'class' A, cB: 'class' B) {
     bitri;
   };
 
-  return '|-' "( A C_ B <-> A = ( A i^i B ) )";
+  return |- "( A C_ B <-> A = ( A i^i B ) )";
 }

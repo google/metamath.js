@@ -2,7 +2,7 @@ include "wa.mm";
 include "id.mm";
 include "syl2an.mm";
 
-theorem anim12i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem anim12i(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume anim12i.1: |- "( ph -> ps )";
   assume anim12i.2: |- "( ch -> th )";
 
@@ -26,5 +26,5 @@ theorem anim12i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     syl2an;
   };
 
-  return '|-' "( ( ph /\\ ch ) -> ( ps /\\ th ) )";
+  return |- "( ( ph /\\ ch ) -> ( ps /\\ th ) )";
 }

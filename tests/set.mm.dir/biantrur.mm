@@ -3,7 +3,7 @@ include "wb.mm";
 include "ibar.mm";
 include "ax-mp.mm";
 
-theorem biantrur(wph: 'wff' ph, wps: 'wff' ps) {
+theorem biantrur(wph: wff ph, wps: wff ps) {
   assume biantrur.1: |- "ph";
 
 
@@ -24,5 +24,5 @@ theorem biantrur(wph: 'wff' ph, wps: 'wff' ps) {
     ax-mp;
   };
 
-  return '|-' "( ps <-> ( ph /\\ ps ) )";
+  return |- "( ps <-> ( ph /\\ ps ) )";
 }

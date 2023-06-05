@@ -1,7 +1,7 @@
 include "cv.mm";
 include "wcel.mm";
 
-theorem wel(vx: 'setvar' x, vy: 'setvar' y) {
+theorem wel(vx: setvar x, vy: setvar y) {
 
 
 
@@ -15,5 +15,5 @@ theorem wel(vx: 'setvar' x, vy: 'setvar' y) {
     wcel;
   };
 
-  return 'wff' "x e. y";
+  return wff "x e. y";
 }

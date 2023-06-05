@@ -2,7 +2,7 @@ include "wa.mm";
 include "jctild.mm";
 include "syl6.mm";
 
-theorem syl6an(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta: 'wff' ta) {
+theorem syl6an(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th, wta: wff ta) {
   assume syl6an.1: |- "( ph -> ps )";
   assume syl6an.2: |- "( ph -> ( ch -> th ) )";
   assume syl6an.3: |- "( ( ps /\\ th ) -> ta )";
@@ -29,5 +29,5 @@ theorem syl6an(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta: 
     syl6;
   };
 
-  return '|-' "( ph -> ( ch -> ta ) )";
+  return |- "( ph -> ( ch -> ta ) )";
 }

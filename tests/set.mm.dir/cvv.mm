@@ -2,5 +2,5 @@
 
 axiom cvv() {
 
-  return 'class' "_V";
+  return class "_V";
 }

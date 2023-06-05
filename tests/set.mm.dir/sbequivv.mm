@@ -8,7 +8,7 @@ include "alimdv.mm";
 include "sb6.mm";
 include "3imtr4g.mm";
 
-theorem sbequivv(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
+theorem sbequivv(wph: wff ph, vx: setvar x, vy: setvar y, vz: setvar z) {
 
   disjoint x z;
   disjoint y z;
@@ -71,5 +71,5 @@ theorem sbequivv(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) 
     3imtr4g;
   };
 
-  return '|-' "( x = y -> ( [ x / z ] ph -> [ y / z ] ph ) )";
+  return |- "( x = y -> ( [ x / z ] ph -> [ y / z ] ph ) )";
 }

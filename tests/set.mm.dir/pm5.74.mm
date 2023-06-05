@@ -8,7 +8,7 @@ include "pm2.86d.mm";
 include "impbidd.mm";
 include "impbii.mm";
 
-theorem pm5.74(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem pm5.74(wph: wff ph, wps: wff ps, wch: wff ch) {
 
 
 
@@ -76,5 +76,5 @@ theorem pm5.74(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     impbii;
   };
 
-  return '|-' "( ( ph -> ( ps <-> ch ) ) <-> ( ( ph -> ps ) <-> ( ph -> ch ) ) )";
+  return |- "( ( ph -> ( ps <-> ch ) ) <-> ( ( ph -> ps ) <-> ( ph -> ch ) ) )";
 }

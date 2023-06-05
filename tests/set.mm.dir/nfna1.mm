@@ -2,7 +2,7 @@ include "wal.mm";
 include "nfa1.mm";
 include "nfn.mm";
 
-theorem nfna1(wph: 'wff' ph, vx: 'setvar' x) {
+theorem nfna1(wph: wff ph, vx: setvar x) {
 
 
 
@@ -19,5 +19,5 @@ theorem nfna1(wph: 'wff' ph, vx: 'setvar' x) {
     nfn;
   };
 
-  return '|-' "F/ x -. A. x ph";
+  return |- "F/ x -. A. x ph";
 }

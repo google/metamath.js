@@ -2,7 +2,7 @@ include "weq.mm";
 include "equeuclr.mm";
 include "com12.mm";
 
-theorem equeucl(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
+theorem equeucl(vx: setvar x, vy: setvar y, vz: setvar z) {
 
 
 
@@ -25,5 +25,5 @@ theorem equeucl(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
     com12;
   };
 
-  return '|-' "( x = z -> ( y = z -> x = y ) )";
+  return |- "( x = z -> ( y = z -> x = y ) )";
 }

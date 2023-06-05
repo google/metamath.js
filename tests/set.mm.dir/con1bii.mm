@@ -3,7 +3,7 @@ include "notnotb.mm";
 include "xchbinx.mm";
 include "bicomi.mm";
 
-theorem con1bii(wph: 'wff' ph, wps: 'wff' ps) {
+theorem con1bii(wph: wff ph, wps: wff ps) {
   assume con1bii.1: |- "( -. ph <-> ps )";
 
 
@@ -25,5 +25,5 @@ theorem con1bii(wph: 'wff' ph, wps: 'wff' ps) {
     bicomi;
   };
 
-  return '|-' "( -. ps <-> ph )";
+  return |- "( -. ps <-> ph )";
 }

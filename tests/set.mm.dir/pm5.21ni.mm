@@ -2,7 +2,7 @@ include "wn.mm";
 include "con3i.mm";
 include "2falsed.mm";
 
-theorem pm5.21ni(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem pm5.21ni(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume pm5.21ni.1: |- "( ph -> ps )";
   assume pm5.21ni.2: |- "( ch -> ps )";
 
@@ -26,5 +26,5 @@ theorem pm5.21ni(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     2falsed;
   };
 
-  return '|-' "( -. ps -> ( ph <-> ch ) )";
+  return |- "( -. ps -> ( ph <-> ch ) )";
 }

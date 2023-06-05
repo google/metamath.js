@@ -13,7 +13,7 @@ include "exa1.mm";
 include "ja.mm";
 include "impbii.mm";
 
-theorem 19.35(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+theorem 19.35(wph: wff ph, wps: wff ps, vx: setvar x) {
 
 
 
@@ -78,5 +78,5 @@ theorem 19.35(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
     impbii;
   };
 
-  return '|-' "( E. x ( ph -> ps ) <-> ( A. x ph -> E. x ps ) )";
+  return |- "( E. x ( ph -> ps ) <-> ( A. x ph -> E. x ps ) )";
 }

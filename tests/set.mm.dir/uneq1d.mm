@@ -3,7 +3,7 @@ include "cun.mm";
 include "uneq1.mm";
 include "syl.mm";
 
-theorem uneq1d(wph: 'wff' ph, cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+theorem uneq1d(wph: wff ph, cA: class A, cB: class B, cC: class C) {
   assume uneq1d.1: |- "( ph -> A = B )";
 
 
@@ -30,5 +30,5 @@ theorem uneq1d(wph: 'wff' ph, cA: 'class' A, cB: 'class' B, cC: 'class' C) {
     syl;
   };
 
-  return '|-' "( ph -> ( A u. C ) = ( B u. C ) )";
+  return |- "( ph -> ( A u. C ) = ( B u. C ) )";
 }

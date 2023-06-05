@@ -5,7 +5,7 @@ include "wi.mm";
 include "df-nf.mm";
 include "mpbi.mm";
 
-theorem nfri(wph: 'wff' ph, vx: 'setvar' x) {
+theorem nfri(wph: wff ph, vx: setvar x) {
   assume nfri.1: |- "F/ x ph";
 
 
@@ -30,5 +30,5 @@ theorem nfri(wph: 'wff' ph, vx: 'setvar' x) {
     mpbi;
   };
 
-  return '|-' "( E. x ph -> A. x ph )";
+  return |- "( E. x ph -> A. x ph )";
 }

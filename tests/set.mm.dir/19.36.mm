@@ -6,7 +6,7 @@ include "19.9.mm";
 include "imbi2i.mm";
 include "bitri.mm";
 
-theorem 19.36(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+theorem 19.36(wph: wff ph, wps: wff ps, vx: setvar x) {
   assume 19.36.1: |- "F/ x ps";
 
 
@@ -46,5 +46,5 @@ theorem 19.36(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
     bitri;
   };
 
-  return '|-' "( E. x ( ph -> ps ) <-> ( A. x ph -> ps ) )";
+  return |- "( E. x ( ph -> ps ) <-> ( A. x ph -> ps ) )";
 }

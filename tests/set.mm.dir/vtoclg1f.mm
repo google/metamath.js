@@ -10,7 +10,7 @@ include "exlimi.mm";
 include "sylbi.mm";
 include "syl.mm";
 
-theorem vtoclg1f(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, cA: 'class' A, cV: 'class' V) {
+theorem vtoclg1f(wph: wff ph, wps: wff ps, vx: setvar x, cA: class A, cV: class V) {
   assume vtoclg1f.nf: |- "F/ x ps";
   assume vtoclg1f.maj: |- "( x = A -> ( ph <-> ps ) )";
   assume vtoclg1f.min: |- "ph";
@@ -58,5 +58,5 @@ theorem vtoclg1f(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, cA: 'class' A, cV
     syl;
   };
 
-  return '|-' "( A e. V -> ps )";
+  return |- "( A e. V -> ps )";
 }

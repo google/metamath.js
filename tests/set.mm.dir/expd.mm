@@ -1,7 +1,7 @@
 include "expdcom.mm";
 include "com3r.mm";
 
-theorem expd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem expd(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume expd.1: |- "( ph -> ( ( ps /\\ ch ) -> th ) )";
 
 
@@ -22,5 +22,5 @@ theorem expd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     com3r;
   };
 
-  return '|-' "( ph -> ( ps -> ( ch -> th ) ) )";
+  return |- "( ph -> ( ps -> ( ch -> th ) ) )";
 }

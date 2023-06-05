@@ -8,7 +8,7 @@ include "19.41.mm";
 include "mpbiran.mm";
 include "bitri.mm";
 
-theorem equsexv(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
+theorem equsexv(wph: wff ph, wps: wff ps, vx: setvar x, vy: setvar y) {
   assume equsalv.nf: |- "F/ x ps";
   assume equsalv.1: |- "( x = y -> ( ph <-> ps ) )";
 
@@ -60,5 +60,5 @@ theorem equsexv(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
     bitri;
   };
 
-  return '|-' "( E. x ( x = y /\\ ph ) <-> ps )";
+  return |- "( E. x ( x = y /\\ ph ) <-> ps )";
 }

@@ -1,6 +1,6 @@
 
 
-axiom df-pr(cA: 'class' A, cB: 'class' B) {
+axiom df-pr(cA: class A, cB: class B) {
 
-  return '|-' "{ A , B } = ( { A } u. { B } )";
+  return |- "{ A , B } = ( { A } u. { B } )";
 }

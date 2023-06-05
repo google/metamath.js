@@ -1,6 +1,6 @@
 include "ax-10.mm";
 
-theorem hbn1(wph: 'wff' ph, vx: 'setvar' x) {
+theorem hbn1(wph: wff ph, vx: setvar x) {
 
 
 
@@ -12,5 +12,5 @@ theorem hbn1(wph: 'wff' ph, vx: 'setvar' x) {
     ax-10;
   };
 
-  return '|-' "( -. A. x ph -> A. x -. A. x ph )";
+  return |- "( -. A. x ph -> A. x -. A. x ph )";
 }

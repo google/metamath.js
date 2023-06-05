@@ -1,7 +1,7 @@
 include "nfcv.mm";
 include "rabeqf.mm";
 
-theorem rabeq(wph: 'wff' ph, vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
+theorem rabeq(wph: wff ph, vx: setvar x, cA: class A, cB: class B) {
 
   disjoint A x;
   disjoint B x;
@@ -22,5 +22,5 @@ theorem rabeq(wph: 'wff' ph, vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
     rabeqf;
   };
 
-  return '|-' "( A = B -> { x e. A | ph } = { x e. B | ph } )";
+  return |- "( A = B -> { x e. A | ph } = { x e. B | ph } )";
 }

@@ -2,7 +2,7 @@ include "wa.mm";
 include "3expb.mm";
 include "mpan.mm";
 
-theorem mp3an1(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem mp3an1(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume mp3an1.1: |- "ph";
   assume mp3an1.2: |- "( ( ph /\\ ps /\\ ch ) -> th )";
 
@@ -26,5 +26,5 @@ theorem mp3an1(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     mpan;
   };
 
-  return '|-' "( ( ps /\\ ch ) -> th )";
+  return |- "( ( ps /\\ ch ) -> th )";
 }

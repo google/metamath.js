@@ -1,7 +1,7 @@
 include "bicomd.mm";
 include "bitrd.mm";
 
-theorem bitr3d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem bitr3d(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume bitr3d.1: |- "( ph -> ( ps <-> ch ) )";
   assume bitr3d.2: |- "( ph -> ( ps <-> th ) )";
 
@@ -23,5 +23,5 @@ theorem bitr3d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     bitrd;
   };
 
-  return '|-' "( ph -> ( ch <-> th ) )";
+  return |- "( ph -> ( ch <-> th ) )";
 }

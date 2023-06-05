@@ -1,7 +1,7 @@
 include "biimpri.mm";
 include "mto.mm";
 
-theorem mtbi(wph: 'wff' ph, wps: 'wff' ps) {
+theorem mtbi(wph: wff ph, wps: wff ps) {
   assume mtbi.1: |- "-. ph";
   assume mtbi.2: |- "( ph <-> ps )";
 
@@ -20,5 +20,5 @@ theorem mtbi(wph: 'wff' ph, wps: 'wff' ps) {
     mto;
   };
 
-  return '|-' "-. ps";
+  return |- "-. ps";
 }

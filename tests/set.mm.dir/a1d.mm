@@ -2,7 +2,7 @@ include "wi.mm";
 include "ax-1.mm";
 include "syl.mm";
 
-theorem a1d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem a1d(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume a1d.1: |- "( ph -> ps )";
 
 
@@ -22,5 +22,5 @@ theorem a1d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     syl;
   };
 
-  return '|-' "( ph -> ( ch -> ps ) )";
+  return |- "( ph -> ( ch -> ps ) )";
 }

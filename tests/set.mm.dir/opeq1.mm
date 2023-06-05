@@ -16,7 +16,7 @@ include "ifbieq1d.mm";
 include "dfopif.mm";
 include "3eqtr4g.mm";
 
-theorem opeq1(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+theorem opeq1(cA: class A, cB: class B, cC: class C) {
 
 
 
@@ -110,5 +110,5 @@ theorem opeq1(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
     3eqtr4g;
   };
 
-  return '|-' "( A = B -> <. A , C >. = <. B , C >. )";
+  return |- "( A = B -> <. A , C >. = <. B , C >. )";
 }

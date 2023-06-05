@@ -5,7 +5,7 @@ include "eleq2d.mm";
 include "abid.mm";
 include "syl6bb.mm";
 
-theorem abeq2d(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, cA: 'class' A) {
+theorem abeq2d(wph: wff ph, wps: wff ps, vx: setvar x, cA: class A) {
   assume abeq2d.1: |- "( ph -> A = { x | ps } )";
 
 
@@ -38,5 +38,5 @@ theorem abeq2d(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, cA: 'class' A) {
     syl6bb;
   };
 
-  return '|-' "( ph -> ( x e. A <-> ps ) )";
+  return |- "( ph -> ( x e. A <-> ps ) )";
 }

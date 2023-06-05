@@ -2,7 +2,7 @@ include "wi.mm";
 include "id.mm";
 include "a1i.mm";
 
-theorem idd(wph: 'wff' ph, wps: 'wff' ps) {
+theorem idd(wph: wff ph, wps: wff ps) {
 
 
 
@@ -18,5 +18,5 @@ theorem idd(wph: 'wff' ph, wps: 'wff' ps) {
     a1i;
   };
 
-  return '|-' "( ph -> ( ps -> ps ) )";
+  return |- "( ph -> ( ps -> ps ) )";
 }

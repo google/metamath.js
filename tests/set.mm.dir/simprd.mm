@@ -1,7 +1,7 @@
 include "ancomd.mm";
 include "simpld.mm";
 
-theorem simprd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem simprd(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume simprd.1: |- "( ph -> ( ps /\\ ch ) )";
 
 
@@ -20,5 +20,5 @@ theorem simprd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     simpld;
   };
 
-  return '|-' "( ph -> ch )";
+  return |- "( ph -> ch )";
 }

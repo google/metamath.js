@@ -3,7 +3,7 @@ include "wi.mm";
 include "equtrr.mm";
 include "equcoms.mm";
 
-theorem equeuclr(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
+theorem equeuclr(vx: setvar x, vy: setvar y, vz: setvar z) {
 
 
 
@@ -26,5 +26,5 @@ theorem equeuclr(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
     equcoms;
   };
 
-  return '|-' "( x = z -> ( y = z -> y = x ) )";
+  return |- "( x = z -> ( y = z -> y = x ) )";
 }

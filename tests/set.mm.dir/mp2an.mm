@@ -1,7 +1,7 @@
 include "mpan.mm";
 include "ax-mp.mm";
 
-theorem mp2an(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem mp2an(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume mp2an.1: |- "ph";
   assume mp2an.2: |- "ps";
   assume mp2an.3: |- "( ( ph /\\ ps ) -> ch )";
@@ -23,5 +23,5 @@ theorem mp2an(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     ax-mp;
   };
 
-  return '|-' "ch";
+  return |- "ch";
 }

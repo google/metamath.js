@@ -6,7 +6,7 @@ include "ala1.mm";
 include "sb2v.mm";
 include "syl.mm";
 
-theorem stdpc4v(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
+theorem stdpc4v(wph: wff ph, vx: setvar x, vy: setvar y) {
 
   disjoint x y;
 
@@ -39,5 +39,5 @@ theorem stdpc4v(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
     syl;
   };
 
-  return '|-' "( A. x ph -> [ y / x ] ph )";
+  return |- "( A. x ph -> [ y / x ] ph )";
 }

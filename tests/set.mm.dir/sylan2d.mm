@@ -1,7 +1,7 @@
 include "ancomsd.mm";
 include "syland.mm";
 
-theorem sylan2d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta: 'wff' ta) {
+theorem sylan2d(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th, wta: wff ta) {
   assume sylan2d.1: |- "( ph -> ( ps -> ch ) )";
   assume sylan2d.2: |- "( ph -> ( ( th /\\ ch ) -> ta ) )";
 
@@ -30,5 +30,5 @@ theorem sylan2d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta:
     ancomsd;
   };
 
-  return '|-' "( ph -> ( ( th /\\ ps ) -> ta ) )";
+  return |- "( ph -> ( ( th /\\ ps ) -> ta ) )";
 }

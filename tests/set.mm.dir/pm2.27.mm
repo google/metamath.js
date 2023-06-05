@@ -2,7 +2,7 @@ include "wi.mm";
 include "id.mm";
 include "com12.mm";
 
-theorem pm2.27(wph: 'wff' ph, wps: 'wff' ps) {
+theorem pm2.27(wph: wff ph, wps: wff ps) {
 
 
 
@@ -20,5 +20,5 @@ theorem pm2.27(wph: 'wff' ph, wps: 'wff' ps) {
     com12;
   };
 
-  return '|-' "( ph -> ( ( ph -> ps ) -> ps ) )";
+  return |- "( ph -> ( ( ph -> ps ) -> ps ) )";
 }

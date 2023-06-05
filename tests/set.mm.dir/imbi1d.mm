@@ -4,7 +4,7 @@ include "imim1d.mm";
 include "biimpd.mm";
 include "impbid.mm";
 
-theorem imbi1d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem imbi1d(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume imbid.1: |- "( ph -> ( ps <-> ch ) )";
 
 
@@ -42,5 +42,5 @@ theorem imbi1d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     impbid;
   };
 
-  return '|-' "( ph -> ( ( ps -> th ) <-> ( ch -> th ) ) )";
+  return |- "( ph -> ( ( ps -> th ) <-> ( ch -> th ) ) )";
 }

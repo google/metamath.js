@@ -74,5 +74,5 @@ theorem 2p2e4() {
     eqtr4i;
   };
 
-  return '|-' "( 2 + 2 ) = 4";
+  return |- "( 2 + 2 ) = 4";
 }

@@ -1,7 +1,7 @@
 include "sbbid.mm";
 include "abbilem.mm";
 
-theorem abbid(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
+theorem abbid(wph: wff ph, wps: wff ps, wch: wff ch, vx: setvar x) {
   assume abbid.1: |- "F/ x ph";
   assume abbid.2: |- "( ph -> ( ps <-> ch ) )";
 
@@ -26,5 +26,5 @@ theorem abbid(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
     abbilem;
   };
 
-  return '|-' "( ph -> { x | ps } = { x | ch } )";
+  return |- "( ph -> { x | ps } = { x | ch } )";
 }

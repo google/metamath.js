@@ -5,7 +5,7 @@ include "ax-5.mm";
 include "ax-12.mm";
 include "syl5.mm";
 
-theorem ax12v(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
+theorem ax12v(wph: wff ph, vx: setvar x, vy: setvar y) {
 
   disjoint x y;
   disjoint ph y;
@@ -36,5 +36,5 @@ theorem ax12v(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
     syl5;
   };
 
-  return '|-' "( x = y -> ( ph -> A. x ( x = y -> ph ) ) )";
+  return |- "( x = y -> ( ph -> A. x ( x = y -> ph ) ) )";
 }

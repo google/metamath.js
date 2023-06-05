@@ -13,7 +13,7 @@ include "imbi12d.mm";
 include "cbvalv1.mm";
 include "bitri.mm";
 
-theorem dfss2f(vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
+theorem dfss2f(vx: setvar x, cA: class A, cB: class B) {
   assume dfss2f.1: |- "F/_ x A";
   assume dfss2f.2: |- "F/_ x B";
 
@@ -98,5 +98,5 @@ theorem dfss2f(vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
     bitri;
   };
 
-  return '|-' "( A C_ B <-> A. x ( x e. A -> x e. B ) )";
+  return |- "( A C_ B <-> A. x ( x e. A -> x e. B ) )";
 }

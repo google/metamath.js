@@ -2,7 +2,7 @@ include "wn.mm";
 include "pm2.18.mm";
 include "jarli.mm";
 
-theorem notnotr(wph: 'wff' ph) {
+theorem notnotr(wph: wff ph) {
 
 
 
@@ -18,5 +18,5 @@ theorem notnotr(wph: 'wff' ph) {
     jarli;
   };
 
-  return '|-' "( -. -. ph -> ph )";
+  return |- "( -. -. ph -> ph )";
 }

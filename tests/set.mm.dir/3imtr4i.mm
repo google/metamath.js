@@ -1,7 +1,7 @@
 include "sylbi.mm";
 include "sylibr.mm";
 
-theorem 3imtr4i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem 3imtr4i(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume 3imtr4.1: |- "( ph -> ps )";
   assume 3imtr4.2: |- "( ch <-> ph )";
   assume 3imtr4.3: |- "( th <-> ps )";
@@ -24,5 +24,5 @@ theorem 3imtr4i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     sylibr;
   };
 
-  return '|-' "( ch -> th )";
+  return |- "( ch -> th )";
 }

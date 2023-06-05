@@ -8,7 +8,7 @@ include "a1i.mm";
 include "abeq2d.mm";
 include "mptru.mm";
 
-theorem abeq2i(wph: 'wff' ph, vx: 'setvar' x, cA: 'class' A) {
+theorem abeq2i(wph: wff ph, vx: setvar x, cA: class A) {
   assume abeq2i.1: |- "A = { x | ph }";
 
 
@@ -38,5 +38,5 @@ theorem abeq2i(wph: 'wff' ph, vx: 'setvar' x, cA: 'class' A) {
     mptru;
   };
 
-  return '|-' "( x e. A <-> ph )";
+  return |- "( x e. A <-> ph )";
 }

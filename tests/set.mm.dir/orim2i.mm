@@ -1,7 +1,7 @@
 include "id.mm";
 include "orim12i.mm";
 
-theorem orim2i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem orim2i(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume orim1i.1: |- "( ph -> ps )";
 
 
@@ -19,5 +19,5 @@ theorem orim2i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     orim12i;
   };
 
-  return '|-' "( ( ch \\/ ph ) -> ( ch \\/ ps ) )";
+  return |- "( ( ch \\/ ph ) -> ( ch \\/ ps ) )";
 }

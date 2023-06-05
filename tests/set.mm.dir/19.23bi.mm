@@ -2,7 +2,7 @@ include "wex.mm";
 include "19.8a.mm";
 include "syl.mm";
 
-theorem 19.23bi(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+theorem 19.23bi(wph: wff ph, wps: wff ps, vx: setvar x) {
   assume 19.23bi.1: |- "( E. x ph -> ps )";
 
 
@@ -22,5 +22,5 @@ theorem 19.23bi(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
     syl;
   };
 
-  return '|-' "( ph -> ps )";
+  return |- "( ph -> ps )";
 }

@@ -4,7 +4,7 @@ include "com3l.mm";
 include "imp.mm";
 include "com12.mm";
 
-theorem impd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem impd(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume impd.1: |- "( ph -> ( ps -> ( ch -> th ) ) )";
 
 
@@ -32,5 +32,5 @@ theorem impd(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     com12;
   };
 
-  return '|-' "( ph -> ( ( ps /\\ ch ) -> th ) )";
+  return |- "( ph -> ( ( ps /\\ ch ) -> th ) )";
 }

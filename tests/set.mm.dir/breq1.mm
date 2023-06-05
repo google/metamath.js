@@ -7,7 +7,7 @@ include "eleq1d.mm";
 include "df-br.mm";
 include "3bitr4g.mm";
 
-theorem breq1(cA: 'class' A, cB: 'class' B, cC: 'class' C, cR: 'class' R) {
+theorem breq1(cA: class A, cB: class B, cC: class C, cR: class R) {
 
 
 
@@ -58,5 +58,5 @@ theorem breq1(cA: 'class' A, cB: 'class' B, cC: 'class' C, cR: 'class' R) {
     3bitr4g;
   };
 
-  return '|-' "( A = B -> ( A R C <-> B R C ) )";
+  return |- "( A = B -> ( A R C <-> B R C ) )";
 }

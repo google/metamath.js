@@ -4,7 +4,7 @@ include "wceq.mm";
 include "ifbi.mm";
 include "syl.mm";
 
-theorem ifbid(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, cA: 'class' A, cB: 'class' B) {
+theorem ifbid(wph: wff ph, wps: wff ps, wch: wff ch, cA: class A, cB: class B) {
   assume ifbid.1: |- "( ph -> ( ps <-> ch ) )";
 
 
@@ -34,5 +34,5 @@ theorem ifbid(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, cA: 'class' A, cB: 'c
     syl;
   };
 
-  return '|-' "( ph -> if ( ps , A , B ) = if ( ch , A , B ) )";
+  return |- "( ph -> if ( ps , A , B ) = if ( ch , A , B ) )";
 }

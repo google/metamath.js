@@ -1,7 +1,7 @@
 include "3expa.mm";
 include "exp31.mm";
 
-theorem 3exp(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem 3exp(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume 3exp.1: |- "( ( ph /\\ ps /\\ ch ) -> th )";
 
 
@@ -22,5 +22,5 @@ theorem 3exp(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     exp31;
   };
 
-  return '|-' "( ph -> ( ps -> ( ch -> th ) ) )";
+  return |- "( ph -> ( ps -> ( ch -> th ) ) )";
 }

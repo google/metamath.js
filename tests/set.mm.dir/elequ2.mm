@@ -5,7 +5,7 @@ include "wi.mm";
 include "equcoms.mm";
 include "impbid.mm";
 
-theorem elequ2(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
+theorem elequ2(vx: setvar x, vy: setvar y, vz: setvar z) {
 
 
 
@@ -40,5 +40,5 @@ theorem elequ2(vx: 'setvar' x, vy: 'setvar' y, vz: 'setvar' z) {
     impbid;
   };
 
-  return '|-' "( x = y -> ( z e. x <-> z e. y ) )";
+  return |- "( x = y -> ( z e. x <-> z e. y ) )";
 }

@@ -7,7 +7,7 @@ include "df-v.mm";
 include "abeq2i.mm";
 include "mpbir.mm";
 
-theorem vex(vx: 'setvar' x) {
+theorem vex(vx: setvar x) {
 
 
 
@@ -33,5 +33,5 @@ theorem vex(vx: 'setvar' x) {
     mpbir;
   };
 
-  return '|-' "x e. _V";
+  return |- "x e. _V";
 }

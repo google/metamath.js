@@ -1,7 +1,7 @@
 include "id.mm";
 include "mpd.mm";
 
-theorem pm2.43i(wph: 'wff' ph, wps: 'wff' ps) {
+theorem pm2.43i(wph: wff ph, wps: wff ps) {
   assume pm2.43i.1: |- "( ph -> ( ph -> ps ) )";
 
 
@@ -18,5 +18,5 @@ theorem pm2.43i(wph: 'wff' ph, wps: 'wff' ps) {
     mpd;
   };
 
-  return '|-' "( ph -> ps )";
+  return |- "( ph -> ps )";
 }

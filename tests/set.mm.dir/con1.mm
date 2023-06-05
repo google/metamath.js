@@ -3,7 +3,7 @@ include "wi.mm";
 include "id.mm";
 include "con1d.mm";
 
-theorem con1(wph: 'wff' ph, wps: 'wff' ps) {
+theorem con1(wph: wff ph, wps: wff ps) {
 
 
 
@@ -22,5 +22,5 @@ theorem con1(wph: 'wff' ph, wps: 'wff' ps) {
     con1d;
   };
 
-  return '|-' "( ( -. ph -> ps ) -> ( -. ps -> ph ) )";
+  return |- "( ( -. ph -> ps ) -> ( -. ps -> ph ) )";
 }

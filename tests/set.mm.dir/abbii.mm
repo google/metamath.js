@@ -6,7 +6,7 @@ include "a1i.mm";
 include "abbidv.mm";
 include "mptru.mm";
 
-theorem abbii(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+theorem abbii(wph: wff ph, wps: wff ps, vx: setvar x) {
   assume abbii.1: |- "( ph <-> ps )";
 
 
@@ -35,5 +35,5 @@ theorem abbii(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
     mptru;
   };
 
-  return '|-' "{ x | ph } = { x | ps }";
+  return |- "{ x | ph } = { x | ps }";
 }

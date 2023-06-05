@@ -2,7 +2,7 @@ include "wi.mm";
 include "imim2i.mm";
 include "a2d.mm";
 
-theorem imim3i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem imim3i(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume imim3i.1: |- "( ph -> ( ps -> ch ) )";
 
 
@@ -26,5 +26,5 @@ theorem imim3i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     a2d;
   };
 
-  return '|-' "( ( th -> ph ) -> ( ( th -> ps ) -> ( th -> ch ) ) )";
+  return |- "( ( th -> ph ) -> ( ( th -> ps ) -> ( th -> ch ) ) )";
 }

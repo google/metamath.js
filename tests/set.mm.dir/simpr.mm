@@ -1,7 +1,7 @@
 include "id.mm";
 include "adantl.mm";
 
-theorem simpr(wph: 'wff' ph, wps: 'wff' ps) {
+theorem simpr(wph: wff ph, wps: wff ps) {
 
 
 
@@ -16,5 +16,5 @@ theorem simpr(wph: 'wff' ph, wps: 'wff' ps) {
     adantl;
   };
 
-  return '|-' "( ( ph /\\ ps ) -> ps )";
+  return |- "( ( ph /\\ ps ) -> ps )";
 }

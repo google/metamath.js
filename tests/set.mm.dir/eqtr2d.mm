@@ -1,7 +1,7 @@
 include "eqtrd.mm";
 include "eqcomd.mm";
 
-theorem eqtr2d(wph: 'wff' ph, cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+theorem eqtr2d(wph: wff ph, cA: class A, cB: class B, cC: class C) {
   assume eqtr2d.1: |- "( ph -> A = B )";
   assume eqtr2d.2: |- "( ph -> B = C )";
 
@@ -23,5 +23,5 @@ theorem eqtr2d(wph: 'wff' ph, cA: 'class' A, cB: 'class' B, cC: 'class' C) {
     eqcomd;
   };
 
-  return '|-' "( ph -> C = A )";
+  return |- "( ph -> C = A )";
 }

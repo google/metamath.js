@@ -3,7 +3,7 @@ include "id.mm";
 include "eqcomd.mm";
 include "impbii.mm";
 
-theorem eqcom(cA: 'class' A, cB: 'class' B) {
+theorem eqcom(cA: class A, cB: class B) {
 
 
 
@@ -33,5 +33,5 @@ theorem eqcom(cA: 'class' A, cB: 'class' B) {
     impbii;
   };
 
-  return '|-' "( A = B <-> B = A )";
+  return |- "( A = B <-> B = A )";
 }

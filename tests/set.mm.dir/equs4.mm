@@ -7,7 +7,7 @@ include "ax6e.mm";
 include "exintr.mm";
 include "mpi.mm";
 
-theorem equs4(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
+theorem equs4(wph: wff ph, vx: setvar x, vy: setvar y) {
 
 
 
@@ -40,5 +40,5 @@ theorem equs4(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
     mpi;
   };
 
-  return '|-' "( A. x ( x = y -> ph ) -> E. x ( x = y /\\ ph ) )";
+  return |- "( A. x ( x = y -> ph ) -> E. x ( x = y /\\ ph ) )";
 }

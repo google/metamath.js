@@ -3,7 +3,7 @@ include "wi.mm";
 include "imbi1.mm";
 include "ax-mp.mm";
 
-theorem imbi1i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem imbi1i(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume imbi1i.1: |- "( ph <-> ps )";
 
 
@@ -29,5 +29,5 @@ theorem imbi1i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     ax-mp;
   };
 
-  return '|-' "( ( ph -> ch ) <-> ( ps -> ch ) )";
+  return |- "( ( ph -> ch ) <-> ( ps -> ch ) )";
 }

@@ -1,7 +1,7 @@
 include "expcom.mm";
 include "mpan9.mm";
 
-theorem sylan(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem sylan(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume sylan.1: |- "( ph -> ps )";
   assume sylan.2: |- "( ( ps /\\ ch ) -> th )";
 
@@ -23,5 +23,5 @@ theorem sylan(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     mpan9;
   };
 
-  return '|-' "( ( ph /\\ ch ) -> th )";
+  return |- "( ( ph /\\ ch ) -> th )";
 }

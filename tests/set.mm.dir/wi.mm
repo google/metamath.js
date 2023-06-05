@@ -1,6 +1,6 @@
 
 
-axiom wi(wph: 'wff' ph, wps: 'wff' ps) {
+axiom wi(wph: wff ph, wps: wff ps) {
 
-  return 'wff' "( ph -> ps )";
+  return wff "( ph -> ps )";
 }

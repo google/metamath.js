@@ -3,7 +3,7 @@ include "wn.mm";
 include "nfnbi.mm";
 include "biimpi.mm";
 
-theorem nfnt(wph: 'wff' ph, vx: 'setvar' x) {
+theorem nfnt(wph: wff ph, vx: setvar x) {
 
 
 
@@ -23,5 +23,5 @@ theorem nfnt(wph: 'wff' ph, vx: 'setvar' x) {
     biimpi;
   };
 
-  return '|-' "( F/ x ph -> F/ x -. ph )";
+  return |- "( F/ x ph -> F/ x -. ph )";
 }

@@ -8,7 +8,7 @@ include "sylbir.mm";
 include "ax-1.mm";
 include "ja.mm";
 
-theorem sbi2v(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
+theorem sbi2v(wph: wff ph, wps: wff ps, vx: setvar x, vy: setvar y) {
 
   disjoint x y;
 
@@ -65,5 +65,5 @@ theorem sbi2v(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
     ja;
   };
 
-  return '|-' "( ( [ y / x ] ph -> [ y / x ] ps ) -> [ y / x ] ( ph -> ps ) )";
+  return |- "( ( [ y / x ] ph -> [ y / x ] ps ) -> [ y / x ] ( ph -> ps ) )";
 }

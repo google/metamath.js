@@ -5,7 +5,7 @@ include "noel.mm";
 include "pm2.21i.mm";
 include "ssriv.mm";
 
-theorem 0ss(cA: 'class' A) {
+theorem 0ss(cA: class A) {
 
 
 
@@ -29,5 +29,5 @@ theorem 0ss(cA: 'class' A) {
     ssriv;
   };
 
-  return '|-' "(/) C_ A";
+  return |- "(/) C_ A";
 }

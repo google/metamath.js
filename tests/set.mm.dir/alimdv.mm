@@ -1,7 +1,7 @@
 include "ax-5.mm";
 include "alimdh.mm";
 
-theorem alimdv(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
+theorem alimdv(wph: wff ph, wps: wff ps, wch: wff ch, vx: setvar x) {
   assume alimdv.1: |- "( ph -> ( ps -> ch ) )";
 
   disjoint ph x;
@@ -20,5 +20,5 @@ theorem alimdv(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
     alimdh;
   };
 
-  return '|-' "( ph -> ( A. x ps -> A. x ch ) )";
+  return |- "( ph -> ( A. x ps -> A. x ch ) )";
 }

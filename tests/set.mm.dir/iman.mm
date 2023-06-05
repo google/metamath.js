@@ -6,7 +6,7 @@ include "imbi2i.mm";
 include "imnan.mm";
 include "bitri.mm";
 
-theorem iman(wph: 'wff' ph, wps: 'wff' ps) {
+theorem iman(wph: wff ph, wps: wff ps) {
 
 
 
@@ -39,5 +39,5 @@ theorem iman(wph: 'wff' ph, wps: 'wff' ps) {
     bitri;
   };
 
-  return '|-' "( ( ph -> ps ) <-> -. ( ph /\\ -. ps ) )";
+  return |- "( ( ph -> ps ) <-> -. ( ph /\\ -. ps ) )";
 }

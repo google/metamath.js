@@ -1,7 +1,7 @@
 include "cv.mm";
 include "wceq.mm";
 
-theorem weq(vx: 'setvar' x, vy: 'setvar' y) {
+theorem weq(vx: setvar x, vy: setvar y) {
 
 
 
@@ -15,5 +15,5 @@ theorem weq(vx: 'setvar' x, vy: 'setvar' y) {
     wceq;
   };
 
-  return 'wff' "x = y";
+  return wff "x = y";
 }

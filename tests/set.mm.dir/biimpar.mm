@@ -1,7 +1,7 @@
 include "biimprd.mm";
 include "imp.mm";
 
-theorem biimpar(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem biimpar(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume biimpa.1: |- "( ph -> ( ps <-> ch ) )";
 
 
@@ -20,5 +20,5 @@ theorem biimpar(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     imp;
   };
 
-  return '|-' "( ( ph /\\ ch ) -> ps )";
+  return |- "( ( ph /\\ ch ) -> ps )";
 }

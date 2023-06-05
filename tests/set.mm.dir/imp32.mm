@@ -2,7 +2,7 @@ include "wa.mm";
 include "impd.mm";
 include "imp.mm";
 
-theorem imp32(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem imp32(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume imp31.1: |- "( ph -> ( ps -> ( ch -> th ) ) )";
 
 
@@ -24,5 +24,5 @@ theorem imp32(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     imp;
   };
 
-  return '|-' "( ( ph /\\ ( ps /\\ ch ) ) -> th )";
+  return |- "( ( ph /\\ ( ps /\\ ch ) ) -> th )";
 }

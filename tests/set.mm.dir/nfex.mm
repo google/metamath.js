@@ -6,7 +6,7 @@ include "nfn.mm";
 include "nfal.mm";
 include "nfxfr.mm";
 
-theorem nfex(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
+theorem nfex(wph: wff ph, vx: setvar x, vy: setvar y) {
   assume nfex.1: |- "F/ x ph";
 
 
@@ -42,5 +42,5 @@ theorem nfex(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
     nfxfr;
   };
 
-  return '|-' "F/ x E. y ph";
+  return |- "F/ x E. y ph";
 }

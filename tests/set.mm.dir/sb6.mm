@@ -6,7 +6,7 @@ include "sb4v.mm";
 include "sb2v.mm";
 include "impbii.mm";
 
-theorem sb6(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
+theorem sb6(wph: wff ph, vx: setvar x, vy: setvar y) {
 
   disjoint x y;
 
@@ -35,5 +35,5 @@ theorem sb6(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
     impbii;
   };
 
-  return '|-' "( [ y / x ] ph <-> A. x ( x = y -> ph ) )";
+  return |- "( [ y / x ] ph <-> A. x ( x = y -> ph ) )";
 }

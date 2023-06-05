@@ -6,7 +6,7 @@ include "hbn1.mm";
 include "con1i.mm";
 include "sylbi.mm";
 
-theorem hbe1a(wph: 'wff' ph, vx: 'setvar' x) {
+theorem hbe1a(wph: wff ph, vx: setvar x) {
 
 
 
@@ -38,5 +38,5 @@ theorem hbe1a(wph: 'wff' ph, vx: 'setvar' x) {
     sylbi;
   };
 
-  return '|-' "( E. x A. x ph -> A. x ph )";
+  return |- "( E. x A. x ph -> A. x ph )";
 }

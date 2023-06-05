@@ -7,7 +7,7 @@ include "biimprd.mm";
 include "equcoms.mm";
 include "impbii.mm";
 
-theorem cbvalv1(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
+theorem cbvalv1(wph: wff ph, wps: wff ps, vx: setvar x, vy: setvar y) {
   assume cbvalv1.nf1: |- "F/ y ph";
   assume cbvalv1.nf2: |- "F/ x ps";
   assume cbvalv1.1: |- "( x = y -> ( ph <-> ps ) )";
@@ -59,5 +59,5 @@ theorem cbvalv1(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
     impbii;
   };
 
-  return '|-' "( A. x ph <-> A. y ps )";
+  return |- "( A. x ph <-> A. y ps )";
 }

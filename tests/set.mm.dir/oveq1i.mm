@@ -3,7 +3,7 @@ include "co.mm";
 include "oveq1.mm";
 include "ax-mp.mm";
 
-theorem oveq1i(cA: 'class' A, cB: 'class' B, cC: 'class' C, cF: 'class' F) {
+theorem oveq1i(cA: class A, cB: class B, cC: class C, cF: class F) {
   assume oveq1i.1: |- "A = B";
 
 
@@ -32,5 +32,5 @@ theorem oveq1i(cA: 'class' A, cB: 'class' B, cC: 'class' C, cF: 'class' F) {
     ax-mp;
   };
 
-  return '|-' "( A F C ) = ( B F C )";
+  return |- "( A F C ) = ( B F C )";
 }

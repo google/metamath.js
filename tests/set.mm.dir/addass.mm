@@ -1,6 +1,6 @@
 include "ax-addass.mm";
 
-theorem addass(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+theorem addass(cA: class A, cB: class B, cC: class C) {
 
 
 
@@ -13,5 +13,5 @@ theorem addass(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
     ax-addass;
   };
 
-  return '|-' "( ( A e. CC /\\ B e. CC /\\ C e. CC ) -> ( ( A + B ) + C ) = ( A + ( B + C ) ) )";
+  return |- "( ( A e. CC /\\ B e. CC /\\ C e. CC ) -> ( ( A + B ) + C ) = ( A + ( B + C ) ) )";
 }

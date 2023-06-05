@@ -5,7 +5,7 @@ include "df-an.mm";
 include "sylbir.mm";
 include "expi.mm";
 
-theorem ex(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem ex(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume ex.1: |- "( ( ph /\\ ps ) -> ch )";
 
 
@@ -33,5 +33,5 @@ theorem ex(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     expi;
   };
 
-  return '|-' "( ph -> ( ps -> ch ) )";
+  return |- "( ph -> ( ps -> ch ) )";
 }

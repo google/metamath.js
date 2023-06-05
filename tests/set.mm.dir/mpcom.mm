@@ -1,7 +1,7 @@
 include "com12.mm";
 include "mpd.mm";
 
-theorem mpcom(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem mpcom(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume mpcom.1: |- "( ps -> ph )";
   assume mpcom.2: |- "( ph -> ( ps -> ch ) )";
 
@@ -22,5 +22,5 @@ theorem mpcom(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     mpd;
   };
 
-  return '|-' "( ps -> ch )";
+  return |- "( ps -> ch )";
 }

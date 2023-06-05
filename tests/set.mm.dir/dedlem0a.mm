@@ -6,7 +6,7 @@ include "biimt.mm";
 include "jarri.mm";
 include "bitrd.mm";
 
-theorem dedlem0a(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem dedlem0a(wph: wff ph, wps: wff ps, wch: wff ch) {
 
 
 
@@ -41,5 +41,5 @@ theorem dedlem0a(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     bitrd;
   };
 
-  return '|-' "( ph -> ( ps <-> ( ( ch -> ph ) -> ( ps /\\ ph ) ) ) )";
+  return |- "( ph -> ( ps <-> ( ( ch -> ph ) -> ( ps /\\ ph ) ) ) )";
 }

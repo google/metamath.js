@@ -3,7 +3,7 @@ include "equid.mm";
 include "ax7v2.mm";
 include "mpi.mm";
 
-theorem equcomiv(vx: 'setvar' x, vy: 'setvar' y) {
+theorem equcomiv(vx: setvar x, vy: setvar y) {
 
   disjoint x y;
 
@@ -28,5 +28,5 @@ theorem equcomiv(vx: 'setvar' x, vy: 'setvar' y) {
     mpi;
   };
 
-  return '|-' "( x = y -> y = x )";
+  return |- "( x = y -> y = x )";
 }

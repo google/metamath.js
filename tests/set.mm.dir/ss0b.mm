@@ -6,7 +6,7 @@ include "eqss.mm";
 include "mpbiran2.mm";
 include "bicomi.mm";
 
-theorem ss0b(cA: 'class' A) {
+theorem ss0b(cA: class A) {
 
 
 
@@ -35,5 +35,5 @@ theorem ss0b(cA: 'class' A) {
     bicomi;
   };
 
-  return '|-' "( A C_ (/) <-> A = (/) )";
+  return |- "( A C_ (/) <-> A = (/) )";
 }

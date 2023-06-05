@@ -6,7 +6,7 @@ include "nfe1.mm";
 include "nfn.mm";
 include "nfxfr.mm";
 
-theorem nfa1(wph: 'wff' ph, vx: 'setvar' x) {
+theorem nfa1(wph: wff ph, vx: setvar x) {
 
 
 
@@ -36,5 +36,5 @@ theorem nfa1(wph: 'wff' ph, vx: 'setvar' x) {
     nfxfr;
   };
 
-  return '|-' "F/ x A. x ph";
+  return |- "F/ x A. x ph";
 }

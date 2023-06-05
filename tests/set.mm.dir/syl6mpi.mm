@@ -1,7 +1,7 @@
 include "mpi.mm";
 include "syl6.mm";
 
-theorem syl6mpi(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta: 'wff' ta) {
+theorem syl6mpi(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th, wta: wff ta) {
   assume syl6mpi.1: |- "( ph -> ( ps -> ch ) )";
   assume syl6mpi.2: |- "th";
   assume syl6mpi.3: |- "( ch -> ( th -> ta ) )";
@@ -25,5 +25,5 @@ theorem syl6mpi(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta:
     syl6;
   };
 
-  return '|-' "( ph -> ( ps -> ta ) )";
+  return |- "( ph -> ( ps -> ta ) )";
 }

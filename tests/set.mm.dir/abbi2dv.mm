@@ -9,7 +9,7 @@ include "df-clab.mm";
 include "3bitr4g.mm";
 include "eqrdv.mm";
 
-theorem abbi2dv(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, cA: 'class' A) {
+theorem abbi2dv(wph: wff ph, wps: wff ps, vx: setvar x, cA: class A) {
   assume abbi2dv.1: |- "( ph -> ( x e. A <-> ps ) )";
 
   disjoint A x;
@@ -74,5 +74,5 @@ theorem abbi2dv(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, cA: 'class' A) {
     eqrdv;
   };
 
-  return '|-' "( ph -> A = { x | ps } )";
+  return |- "( ph -> A = { x | ps } )";
 }

@@ -4,7 +4,7 @@ include "eleq2i.mm";
 include "elabg.mm";
 include "syl5bb.mm";
 
-theorem elab2g(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, cA: 'class' A, cB: 'class' B, cV: 'class' V) {
+theorem elab2g(wph: wff ph, wps: wff ps, vx: setvar x, cA: class A, cB: class B, cV: class V) {
   assume elab2g.1: |- "( x = A -> ( ph <-> ps ) )";
   assume elab2g.2: |- "B = { x | ph }";
 
@@ -42,5 +42,5 @@ theorem elab2g(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, cA: 'class' A, cB: 
     syl5bb;
   };
 
-  return '|-' "( A e. V -> ( A e. B <-> ps ) )";
+  return |- "( A e. V -> ( A e. B <-> ps ) )";
 }

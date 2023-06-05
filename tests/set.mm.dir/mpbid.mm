@@ -1,7 +1,7 @@
 include "biimpd.mm";
 include "mpd.mm";
 
-theorem mpbid(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem mpbid(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume mpbid.min: |- "( ph -> ps )";
   assume mpbid.maj: |- "( ph -> ( ps <-> ch ) )";
 
@@ -22,5 +22,5 @@ theorem mpbid(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     mpd;
   };
 
-  return '|-' "( ph -> ch )";
+  return |- "( ph -> ch )";
 }

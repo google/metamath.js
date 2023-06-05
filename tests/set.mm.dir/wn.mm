@@ -1,6 +1,6 @@
 
 
-axiom wn(wph: 'wff' ph) {
+axiom wn(wph: wff ph) {
 
-  return 'wff' "-. ph";
+  return wff "-. ph";
 }

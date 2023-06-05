@@ -1,6 +1,6 @@
 
 
-axiom csn(cA: 'class' A) {
+axiom csn(cA: class A) {
 
-  return 'class' "{ A }";
+  return class "{ A }";
 }

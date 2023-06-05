@@ -5,7 +5,7 @@ include "imbi2d.mm";
 include "df-or.mm";
 include "3bitr4g.mm";
 
-theorem orbi2d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem orbi2d(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume bid.1: |- "( ph -> ( ps <-> ch ) )";
 
 
@@ -43,5 +43,5 @@ theorem orbi2d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     3bitr4g;
   };
 
-  return '|-' "( ph -> ( ( th \\/ ps ) <-> ( th \\/ ch ) ) )";
+  return |- "( ph -> ( ( th \\/ ps ) <-> ( th \\/ ch ) ) )";
 }

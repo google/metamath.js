@@ -9,7 +9,7 @@ include "imor.mm";
 include "orcom.mm";
 include "3bitri.mm";
 
-theorem nf2(wph: 'wff' ph, vx: 'setvar' x) {
+theorem nf2(wph: wff ph, vx: setvar x) {
 
 
 
@@ -48,5 +48,5 @@ theorem nf2(wph: 'wff' ph, vx: 'setvar' x) {
     3bitri;
   };
 
-  return '|-' "( F/ x ph <-> ( A. x ph \\/ -. E. x ph ) )";
+  return |- "( F/ x ph <-> ( A. x ph \\/ -. E. x ph ) )";
 }

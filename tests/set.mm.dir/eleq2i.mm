@@ -4,7 +4,7 @@ include "wb.mm";
 include "eleq2.mm";
 include "ax-mp.mm";
 
-theorem eleq2i(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+theorem eleq2i(cA: class A, cB: class B, cC: class C) {
   assume eleq1i.1: |- "A = B";
 
 
@@ -30,5 +30,5 @@ theorem eleq2i(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
     ax-mp;
   };
 
-  return '|-' "( C e. A <-> C e. B )";
+  return |- "( C e. A <-> C e. B )";
 }

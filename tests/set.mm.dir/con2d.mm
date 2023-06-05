@@ -3,7 +3,7 @@ include "notnotr.mm";
 include "syl5.mm";
 include "con4d.mm";
 
-theorem con2d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem con2d(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume con2d.1: |- "( ph -> ( ps -> -. ch ) )";
 
 
@@ -29,5 +29,5 @@ theorem con2d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     con4d;
   };
 
-  return '|-' "( ph -> ( ch -> -. ps ) )";
+  return |- "( ph -> ( ch -> -. ps ) )";
 }

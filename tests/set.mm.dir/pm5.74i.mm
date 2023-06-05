@@ -3,7 +3,7 @@ include "wi.mm";
 include "pm5.74.mm";
 include "mpbi.mm";
 
-theorem pm5.74i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem pm5.74i(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume pm5.74i.1: |- "( ph -> ( ps <-> ch ) )";
 
 
@@ -31,5 +31,5 @@ theorem pm5.74i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     mpbi;
   };
 
-  return '|-' "( ( ph -> ps ) <-> ( ph -> ch ) )";
+  return |- "( ( ph -> ps ) <-> ( ph -> ch ) )";
 }

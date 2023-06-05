@@ -3,7 +3,7 @@ include "wcel.mm";
 include "biid.mm";
 include "abbi2i.mm";
 
-theorem abid1(vx: 'setvar' x, cA: 'class' A) {
+theorem abid1(vx: setvar x, cA: class A) {
 
   disjoint A x;
 
@@ -22,5 +22,5 @@ theorem abid1(vx: 'setvar' x, cA: 'class' A) {
     abbi2i;
   };
 
-  return '|-' "A = { x | x e. A }";
+  return |- "A = { x | x e. A }";
 }

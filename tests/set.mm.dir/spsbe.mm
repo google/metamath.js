@@ -6,7 +6,7 @@ include "sb1.mm";
 include "exsimpr.mm";
 include "syl.mm";
 
-theorem spsbe(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
+theorem spsbe(wph: wff ph, vx: setvar x, vy: setvar y) {
 
 
 
@@ -39,5 +39,5 @@ theorem spsbe(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
     syl;
   };
 
-  return '|-' "( [ y / x ] ph -> E. x ph )";
+  return |- "( [ y / x ] ph -> E. x ph )";
 }

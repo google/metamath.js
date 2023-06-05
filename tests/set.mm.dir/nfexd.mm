@@ -6,7 +6,7 @@ include "nfnd.mm";
 include "nfald.mm";
 include "nfxfrd.mm";
 
-theorem nfexd(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
+theorem nfexd(wph: wff ph, wps: wff ps, vx: setvar x, vy: setvar y) {
   assume nfald.1: |- "F/ y ph";
   assume nfald.2: |- "( ph -> F/ x ps )";
 
@@ -48,5 +48,5 @@ theorem nfexd(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
     nfxfrd;
   };
 
-  return '|-' "( ph -> F/ x E. y ps )";
+  return |- "( ph -> F/ x E. y ps )";
 }

@@ -2,7 +2,7 @@ include "wn.mm";
 include "id.mm";
 include "orri.mm";
 
-theorem exmid(wph: 'wff' ph) {
+theorem exmid(wph: wff ph) {
 
 
 
@@ -18,5 +18,5 @@ theorem exmid(wph: 'wff' ph) {
     orri;
   };
 
-  return '|-' "( ph \\/ -. ph )";
+  return |- "( ph \\/ -. ph )";
 }

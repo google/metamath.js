@@ -2,7 +2,7 @@ include "wb.mm";
 include "id.mm";
 include "anbi2d.mm";
 
-theorem anbi2(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem anbi2(wph: wff ph, wps: wff ps, wch: wff ch) {
 
 
 
@@ -21,5 +21,5 @@ theorem anbi2(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     anbi2d;
   };
 
-  return '|-' "( ( ph <-> ps ) -> ( ( ch /\\ ph ) <-> ( ch /\\ ps ) ) )";
+  return |- "( ( ph <-> ps ) -> ( ( ch /\\ ph ) <-> ( ch /\\ ps ) ) )";
 }

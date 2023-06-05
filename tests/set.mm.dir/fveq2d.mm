@@ -3,7 +3,7 @@ include "cfv.mm";
 include "fveq2.mm";
 include "syl.mm";
 
-theorem fveq2d(wph: 'wff' ph, cA: 'class' A, cB: 'class' B, cF: 'class' F) {
+theorem fveq2d(wph: wff ph, cA: class A, cB: class B, cF: class F) {
   assume fveq2d.1: |- "( ph -> A = B )";
 
 
@@ -30,5 +30,5 @@ theorem fveq2d(wph: 'wff' ph, cA: 'class' A, cB: 'class' B, cF: 'class' F) {
     syl;
   };
 
-  return '|-' "( ph -> ( F ` A ) = ( F ` B ) )";
+  return |- "( ph -> ( F ` A ) = ( F ` B ) )";
 }

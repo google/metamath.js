@@ -1,7 +1,7 @@
 include "idd.mm";
 include "anim12d.mm";
 
-theorem anim2d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem anim2d(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume anim1d.1: |- "( ph -> ( ps -> ch ) )";
 
 
@@ -21,5 +21,5 @@ theorem anim2d(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     anim12d;
   };
 
-  return '|-' "( ph -> ( ( th /\\ ps ) -> ( th /\\ ch ) ) )";
+  return |- "( ph -> ( ( th /\\ ps ) -> ( th /\\ ch ) ) )";
 }

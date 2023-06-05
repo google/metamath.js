@@ -12,7 +12,7 @@ include "df-un.mm";
 include "elab2g.mm";
 include "pm5.21nii.mm";
 
-theorem elun(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+theorem elun(cA: class A, cB: class B, cC: class C) {
 
 
 
@@ -92,5 +92,5 @@ theorem elun(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
     pm5.21nii;
   };
 
-  return '|-' "( A e. ( B u. C ) <-> ( A e. B \\/ A e. C ) )";
+  return |- "( A e. ( B u. C ) <-> ( A e. B \\/ A e. C ) )";
 }

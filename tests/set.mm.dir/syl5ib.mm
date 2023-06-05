@@ -1,7 +1,7 @@
 include "biimpd.mm";
 include "syl5.mm";
 
-theorem syl5ib(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem syl5ib(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume syl5ib.1: |- "( ph -> ps )";
   assume syl5ib.2: |- "( ch -> ( ps <-> th ) )";
 
@@ -23,5 +23,5 @@ theorem syl5ib(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     syl5;
   };
 
-  return '|-' "( ch -> ( ph -> th ) )";
+  return |- "( ch -> ( ph -> th ) )";
 }

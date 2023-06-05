@@ -8,7 +8,7 @@ include "abbidv.mm";
 include "dfuni2.mm";
 include "3eqtr4g.mm";
 
-theorem unieq(cA: 'class' A, cB: 'class' B) {
+theorem unieq(cA: class A, cB: class B) {
 
 
 
@@ -62,5 +62,5 @@ theorem unieq(cA: 'class' A, cB: 'class' B) {
     3eqtr4g;
   };
 
-  return '|-' "( A = B -> U. A = U. B )";
+  return |- "( A = B -> U. A = U. B )";
 }

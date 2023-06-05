@@ -2,7 +2,7 @@ include "wal.mm";
 include "alimdh.mm";
 include "syl5.mm";
 
-theorem alrimdh(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
+theorem alrimdh(wph: wff ph, wps: wff ps, wch: wff ch, vx: setvar x) {
   assume alrimdh.1: |- "( ph -> A. x ph )";
   assume alrimdh.2: |- "( ps -> A. x ps )";
   assume alrimdh.3: |- "( ph -> ( ps -> ch ) )";
@@ -31,5 +31,5 @@ theorem alrimdh(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
     syl5;
   };
 
-  return '|-' "( ph -> ( ps -> A. x ch ) )";
+  return |- "( ph -> ( ps -> A. x ch ) )";
 }

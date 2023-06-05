@@ -2,7 +2,7 @@ include "wa.mm";
 include "id.mm";
 include "expcom.mm";
 
-theorem pm3.21(wph: 'wff' ph, wps: 'wff' ps) {
+theorem pm3.21(wph: wff ph, wps: wff ps) {
 
 
 
@@ -20,5 +20,5 @@ theorem pm3.21(wph: 'wff' ph, wps: 'wff' ps) {
     expcom;
   };
 
-  return '|-' "( ph -> ( ps -> ( ps /\\ ph ) ) )";
+  return |- "( ph -> ( ps -> ( ps /\\ ph ) ) )";
 }

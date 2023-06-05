@@ -3,7 +3,7 @@ include "eximdv.mm";
 include "ax5e.mm";
 include "syl6.mm";
 
-theorem exlimdv(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
+theorem exlimdv(wph: wff ph, wps: wff ps, wch: wff ch, vx: setvar x) {
   assume exlimdv.1: |- "( ph -> ( ps -> ch ) )";
 
   disjoint ch x;
@@ -32,5 +32,5 @@ theorem exlimdv(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
     syl6;
   };
 
-  return '|-' "( ph -> ( E. x ps -> ch ) )";
+  return |- "( ph -> ( E. x ps -> ch ) )";
 }

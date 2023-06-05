@@ -1,6 +1,6 @@
 
 
-axiom df-sn(vx: 'setvar' x, cA: 'class' A) {
+axiom df-sn(vx: setvar x, cA: class A) {
 
-  return '|-' "{ A } = { x | x = A }";
+  return |- "{ A } = { x | x = A }";
 }

@@ -2,7 +2,7 @@ include "wal.mm";
 include "sp.mm";
 include "syl.mm";
 
-theorem sps(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+theorem sps(wph: wff ph, wps: wff ps, vx: setvar x) {
   assume sps.1: |- "( ph -> ps )";
 
 
@@ -22,5 +22,5 @@ theorem sps(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
     syl;
   };
 
-  return '|-' "( A. x ph -> ps )";
+  return |- "( A. x ph -> ps )";
 }

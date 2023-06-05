@@ -5,7 +5,7 @@ include "wb.mm";
 include "dfcleq.mm";
 include "mpgbir.mm";
 
-theorem eqriv(vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
+theorem eqriv(vx: setvar x, cA: class A, cB: class B) {
   assume eqriv.1: |- "( x e. A <-> x e. B )";
 
   disjoint A x;
@@ -35,5 +35,5 @@ theorem eqriv(vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
     mpgbir;
   };
 
-  return '|-' "A = B";
+  return |- "A = B";
 }

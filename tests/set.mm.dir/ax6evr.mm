@@ -3,7 +3,7 @@ include "ax6ev.mm";
 include "equcomiv.mm";
 include "eximii.mm";
 
-theorem ax6evr(vx: 'setvar' x, vy: 'setvar' y) {
+theorem ax6evr(vx: setvar x, vy: setvar y) {
 
   disjoint x y;
 
@@ -26,5 +26,5 @@ theorem ax6evr(vx: 'setvar' x, vy: 'setvar' y) {
     eximii;
   };
 
-  return '|-' "E. x y = x";
+  return |- "E. x y = x";
 }

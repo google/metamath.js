@@ -2,7 +2,7 @@ include "wi.mm";
 include "ax-1.mm";
 include "syl.mm";
 
-theorem jarri(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem jarri(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume jarri.1: |- "( ( ph -> ps ) -> ch )";
 
 
@@ -22,5 +22,5 @@ theorem jarri(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     syl;
   };
 
-  return '|-' "( ps -> ch )";
+  return |- "( ps -> ch )";
 }

@@ -6,7 +6,7 @@ include "sp.mm";
 include "eximi.mm";
 include "alrimi.mm";
 
-theorem 19.12(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
+theorem 19.12(wph: wff ph, vx: setvar x, vy: setvar y) {
 
 
 
@@ -40,5 +40,5 @@ theorem 19.12(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
     alrimi;
   };
 
-  return '|-' "( E. x A. y ph -> A. y E. x ph )";
+  return |- "( E. x A. y ph -> A. y E. x ph )";
 }

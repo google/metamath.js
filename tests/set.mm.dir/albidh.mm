@@ -4,7 +4,7 @@ include "alrimih.mm";
 include "albi.mm";
 include "syl.mm";
 
-theorem albidh(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
+theorem albidh(wph: wff ph, wps: wff ps, wch: wff ch, vx: setvar x) {
   assume albidh.1: |- "( ph -> A. x ph )";
   assume albidh.2: |- "( ph -> ( ps <-> ch ) )";
 
@@ -40,5 +40,5 @@ theorem albidh(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
     syl;
   };
 
-  return '|-' "( ph -> ( A. x ps <-> A. x ch ) )";
+  return |- "( ph -> ( A. x ps <-> A. x ch ) )";
 }

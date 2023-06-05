@@ -1,7 +1,7 @@
 include "sbbidv.mm";
 include "abbilem.mm";
 
-theorem abbidv(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
+theorem abbidv(wph: wff ph, wps: wff ps, wch: wff ch, vx: setvar x) {
   assume abbidv.1: |- "( ph -> ( ps <-> ch ) )";
 
   disjoint ph x;
@@ -28,5 +28,5 @@ theorem abbidv(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
     abbilem;
   };
 
-  return '|-' "( ph -> { x | ps } = { x | ch } )";
+  return |- "( ph -> { x | ps } = { x | ch } )";
 }

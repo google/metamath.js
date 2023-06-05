@@ -1,7 +1,7 @@
 include "mp3an1.mm";
 include "mp2an.mm";
 
-theorem mp3an(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem mp3an(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume mp3an.1: |- "ph";
   assume mp3an.2: |- "ps";
   assume mp3an.3: |- "ch";
@@ -27,5 +27,5 @@ theorem mp3an(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     mp2an;
   };
 
-  return '|-' "th";
+  return |- "th";
 }

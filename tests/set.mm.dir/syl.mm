@@ -2,7 +2,7 @@ include "wi.mm";
 include "a1i.mm";
 include "mpd.mm";
 
-theorem syl(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem syl(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume syl.1: |- "( ph -> ps )";
   assume syl.2: |- "( ps -> ch )";
 
@@ -24,5 +24,5 @@ theorem syl(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     mpd;
   };
 
-  return '|-' "( ph -> ch )";
+  return |- "( ph -> ch )";
 }

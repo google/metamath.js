@@ -4,7 +4,7 @@ include "sp.mm";
 include "nf5r.mm";
 include "impbid2.mm";
 
-theorem 19.3t(wph: 'wff' ph, vx: 'setvar' x) {
+theorem 19.3t(wph: wff ph, vx: setvar x) {
 
 
 
@@ -27,5 +27,5 @@ theorem 19.3t(wph: 'wff' ph, vx: 'setvar' x) {
     impbid2;
   };
 
-  return '|-' "( F/ x ph -> ( A. x ph <-> ph ) )";
+  return |- "( F/ x ph -> ( A. x ph <-> ph ) )";
 }

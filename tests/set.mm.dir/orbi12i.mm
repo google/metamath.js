@@ -3,7 +3,7 @@ include "orbi2i.mm";
 include "orbi1i.mm";
 include "bitri.mm";
 
-theorem orbi12i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem orbi12i(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume orbi12i.1: |- "( ph <-> ps )";
   assume orbi12i.2: |- "( ch <-> th )";
 
@@ -34,5 +34,5 @@ theorem orbi12i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     bitri;
   };
 
-  return '|-' "( ( ph \\/ ch ) <-> ( ps \\/ th ) )";
+  return |- "( ( ph \\/ ch ) <-> ( ps \\/ th ) )";
 }

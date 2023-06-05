@@ -2,7 +2,7 @@ include "wn.mm";
 include "ax-1.mm";
 include "orrd.mm";
 
-theorem olc(wph: 'wff' ph, wps: 'wff' ps) {
+theorem olc(wph: wff ph, wps: wff ps) {
 
 
 
@@ -19,5 +19,5 @@ theorem olc(wph: 'wff' ph, wps: 'wff' ps) {
     orrd;
   };
 
-  return '|-' "( ph -> ( ps \\/ ph ) )";
+  return |- "( ph -> ( ps \\/ ph ) )";
 }

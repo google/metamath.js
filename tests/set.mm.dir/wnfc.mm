@@ -1,6 +1,6 @@
 
 
-axiom wnfc(vx: 'setvar' x, cA: 'class' A) {
+axiom wnfc(vx: setvar x, cA: class A) {
 
-  return 'wff' "F/_ x A";
+  return wff "F/_ x A";
 }

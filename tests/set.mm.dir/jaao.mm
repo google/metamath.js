@@ -4,7 +4,7 @@ include "adantr.mm";
 include "adantl.mm";
 include "jaod.mm";
 
-theorem jaao(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta: 'wff' ta) {
+theorem jaao(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th, wta: wff ta) {
   assume jaao.1: |- "( ph -> ( ps -> ch ) )";
   assume jaao.2: |- "( th -> ( ta -> ch ) )";
 
@@ -36,5 +36,5 @@ theorem jaao(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th, wta: 'w
     jaod;
   };
 
-  return '|-' "( ( ph /\\ th ) -> ( ( ps \\/ ta ) -> ch ) )";
+  return |- "( ( ph /\\ th ) -> ( ( ps \\/ ta ) -> ch ) )";
 }

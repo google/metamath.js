@@ -7,7 +7,7 @@ include "albii.mm";
 include "19.26.mm";
 include "bitri.mm";
 
-theorem albiim(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
+theorem albiim(wph: wff ph, wps: wff ps, vx: setvar x) {
 
 
 
@@ -53,5 +53,5 @@ theorem albiim(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x) {
     bitri;
   };
 
-  return '|-' "( A. x ( ph <-> ps ) <-> ( A. x ( ph -> ps ) /\\ A. x ( ps -> ph ) ) )";
+  return |- "( A. x ( ph <-> ps ) <-> ( A. x ( ph -> ps ) /\\ A. x ( ps -> ph ) ) )";
 }

@@ -3,7 +3,7 @@ include "wi.mm";
 include "pm2.27.mm";
 include "con2d.mm";
 
-theorem pm3.2im(wph: 'wff' ph, wps: 'wff' ps) {
+theorem pm3.2im(wph: wff ph, wps: wff ps) {
 
 
 
@@ -23,5 +23,5 @@ theorem pm3.2im(wph: 'wff' ph, wps: 'wff' ps) {
     con2d;
   };
 
-  return '|-' "( ph -> ( ps -> -. ( ph -> -. ps ) ) )";
+  return |- "( ph -> ( ps -> -. ( ph -> -. ps ) ) )";
 }

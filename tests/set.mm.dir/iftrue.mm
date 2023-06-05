@@ -9,7 +9,7 @@ include "abbi2dv.mm";
 include "dfif2.mm";
 include "syl6reqr.mm";
 
-theorem iftrue(wph: 'wff' ph, cA: 'class' A, cB: 'class' B) {
+theorem iftrue(wph: wff ph, cA: class A, cB: class B) {
 
 
 
@@ -58,5 +58,5 @@ theorem iftrue(wph: 'wff' ph, cA: 'class' A, cB: 'class' B) {
     syl6reqr;
   };
 
-  return '|-' "( ph -> if ( ph , A , B ) = A )";
+  return |- "( ph -> if ( ph , A , B ) = A )";
 }

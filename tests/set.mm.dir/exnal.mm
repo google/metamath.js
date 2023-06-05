@@ -4,7 +4,7 @@ include "wex.mm";
 include "alex.mm";
 include "con2bii.mm";
 
-theorem exnal(wph: 'wff' ph, vx: 'setvar' x) {
+theorem exnal(wph: wff ph, vx: setvar x) {
 
 
 
@@ -24,5 +24,5 @@ theorem exnal(wph: 'wff' ph, vx: 'setvar' x) {
     con2bii;
   };
 
-  return '|-' "( E. x -. ph <-> -. A. x ph )";
+  return |- "( E. x -. ph <-> -. A. x ph )";
 }

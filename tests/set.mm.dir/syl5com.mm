@@ -1,7 +1,7 @@
 include "a1d.mm";
 include "sylcom.mm";
 
-theorem syl5com(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
+theorem syl5com(wph: wff ph, wps: wff ps, wch: wff ch, wth: wff th) {
   assume syl5com.1: |- "( ph -> ps )";
   assume syl5com.2: |- "( ch -> ( ps -> th ) )";
 
@@ -23,5 +23,5 @@ theorem syl5com(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, wth: 'wff' th) {
     sylcom;
   };
 
-  return '|-' "( ph -> ( ch -> th ) )";
+  return |- "( ph -> ( ch -> th ) )";
 }

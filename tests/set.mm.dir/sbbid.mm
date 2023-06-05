@@ -4,7 +4,7 @@ include "sbimd.mm";
 include "biimprd.mm";
 include "impbid.mm";
 
-theorem sbbid(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x, vy: 'setvar' y) {
+theorem sbbid(wph: wff ph, wps: wff ps, wch: wff ch, vx: setvar x, vy: setvar y) {
   assume sbbid.1: |- "F/ x ph";
   assume sbbid.2: |- "( ph -> ( ps <-> ch ) )";
 
@@ -49,5 +49,5 @@ theorem sbbid(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x, vy: '
     impbid;
   };
 
-  return '|-' "( ph -> ( [ y / x ] ps <-> [ y / x ] ch ) )";
+  return |- "( ph -> ( [ y / x ] ps <-> [ y / x ] ch ) )";
 }

@@ -4,7 +4,7 @@ include "sbimi.mm";
 include "biimpri.mm";
 include "impbii.mm";
 
-theorem sbbii(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
+theorem sbbii(wph: wff ph, wps: wff ps, vx: setvar x, vy: setvar y) {
   assume sbbii.1: |- "( ph <-> ps )";
 
 
@@ -41,5 +41,5 @@ theorem sbbii(wph: 'wff' ph, wps: 'wff' ps, vx: 'setvar' x, vy: 'setvar' y) {
     impbii;
   };
 
-  return '|-' "( [ y / x ] ph <-> [ y / x ] ps )";
+  return |- "( [ y / x ] ph <-> [ y / x ] ps )";
 }

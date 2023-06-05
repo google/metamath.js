@@ -3,7 +3,7 @@ include "wi.mm";
 include "al2imi.mm";
 include "syl.mm";
 
-theorem alimdh(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
+theorem alimdh(wph: wff ph, wps: wff ps, wch: wff ch, vx: setvar x) {
   assume alimdh.1: |- "( ph -> A. x ph )";
   assume alimdh.2: |- "( ph -> ( ps -> ch ) )";
 
@@ -33,5 +33,5 @@ theorem alimdh(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch, vx: 'setvar' x) {
     syl;
   };
 
-  return '|-' "( ph -> ( A. x ps -> A. x ch ) )";
+  return |- "( ph -> ( A. x ps -> A. x ch ) )";
 }

@@ -1,7 +1,7 @@
 include "biimpi.mm";
 include "ax-mp.mm";
 
-theorem mpbi(wph: 'wff' ph, wps: 'wff' ps) {
+theorem mpbi(wph: wff ph, wps: wff ps) {
   assume mpbi.min: |- "ph";
   assume mpbi.maj: |- "( ph <-> ps )";
 
@@ -20,5 +20,5 @@ theorem mpbi(wph: 'wff' ph, wps: 'wff' ps) {
     ax-mp;
   };
 
-  return '|-' "ps";
+  return |- "ps";
 }

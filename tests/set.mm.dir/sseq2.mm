@@ -10,7 +10,7 @@ include "eqss.mm";
 include "dfbi2.mm";
 include "3imtr4i.mm";
 
-theorem sseq2(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+theorem sseq2(cA: class A, cB: class B, cC: class C) {
 
 
 
@@ -77,5 +77,5 @@ theorem sseq2(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
     3imtr4i;
   };
 
-  return '|-' "( A = B -> ( C C_ A <-> C C_ B ) )";
+  return |- "( A = B -> ( C C_ A <-> C C_ B ) )";
 }

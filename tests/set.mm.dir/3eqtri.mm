@@ -1,6 +1,6 @@
 include "eqtri.mm";
 
-theorem 3eqtri(cA: 'class' A, cB: 'class' B, cC: 'class' C, cD: 'class' D) {
+theorem 3eqtri(cA: class A, cB: class B, cC: class C, cD: class D) {
   assume 3eqtri.1: |- "A = B";
   assume 3eqtri.2: |- "B = C";
   assume 3eqtri.3: |- "C = D";
@@ -23,5 +23,5 @@ theorem 3eqtri(cA: 'class' A, cB: 'class' B, cC: 'class' C, cD: 'class' D) {
     eqtri;
   };
 
-  return '|-' "A = D";
+  return |- "A = D";
 }

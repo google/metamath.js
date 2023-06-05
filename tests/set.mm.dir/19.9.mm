@@ -4,7 +4,7 @@ include "wb.mm";
 include "19.9t.mm";
 include "ax-mp.mm";
 
-theorem 19.9(wph: 'wff' ph, vx: 'setvar' x) {
+theorem 19.9(wph: wff ph, vx: setvar x) {
   assume 19.9.1: |- "F/ x ph";
 
 
@@ -27,5 +27,5 @@ theorem 19.9(wph: 'wff' ph, vx: 'setvar' x) {
     ax-mp;
   };
 
-  return '|-' "( E. x ph <-> ph )";
+  return |- "( E. x ph <-> ph )";
 }

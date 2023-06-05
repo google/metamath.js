@@ -3,7 +3,7 @@ include "wb.mm";
 include "eqeq2.mm";
 include "ax-mp.mm";
 
-theorem eqeq2i(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
+theorem eqeq2i(cA: class A, cB: class B, cC: class C) {
   assume eqeq2i.1: |- "A = B";
 
 
@@ -29,5 +29,5 @@ theorem eqeq2i(cA: 'class' A, cB: 'class' B, cC: 'class' C) {
     ax-mp;
   };
 
-  return '|-' "( C = A <-> C = B )";
+  return |- "( C = A <-> C = B )";
 }

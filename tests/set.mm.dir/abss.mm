@@ -9,7 +9,7 @@ include "sseq2i.mm";
 include "ss2ab.mm";
 include "bitr3i.mm";
 
-theorem abss(wph: 'wff' ph, vx: 'setvar' x, cA: 'class' A) {
+theorem abss(wph: wff ph, vx: setvar x, cA: class A) {
 
   disjoint A x;
 
@@ -51,5 +51,5 @@ theorem abss(wph: 'wff' ph, vx: 'setvar' x, cA: 'class' A) {
     bitr3i;
   };
 
-  return '|-' "( { x | ph } C_ A <-> A. x ( ph -> x e. A ) )";
+  return |- "( { x | ph } C_ A <-> A. x ( ph -> x e. A ) )";
 }

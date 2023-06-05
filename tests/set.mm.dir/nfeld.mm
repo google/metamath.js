@@ -12,7 +12,7 @@ include "nfand.mm";
 include "nfexd.mm";
 include "nfxfrd.mm";
 
-theorem nfeld(wph: 'wff' ph, vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
+theorem nfeld(wph: wff ph, vx: setvar x, cA: class A, cB: class B) {
   assume nfeqd.1: |- "( ph -> F/_ x A )";
   assume nfeqd.2: |- "( ph -> F/_ x B )";
 
@@ -76,5 +76,5 @@ theorem nfeld(wph: 'wff' ph, vx: 'setvar' x, cA: 'class' A, cB: 'class' B) {
     nfxfrd;
   };
 
-  return '|-' "( ph -> F/ x A e. B )";
+  return |- "( ph -> F/ x A e. B )";
 }

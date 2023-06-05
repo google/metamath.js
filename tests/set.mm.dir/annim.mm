@@ -4,7 +4,7 @@ include "wa.mm";
 include "iman.mm";
 include "con2bii.mm";
 
-theorem annim(wph: 'wff' ph, wps: 'wff' ps) {
+theorem annim(wph: wff ph, wps: wff ps) {
 
 
 
@@ -24,5 +24,5 @@ theorem annim(wph: 'wff' ph, wps: 'wff' ps) {
     con2bii;
   };
 
-  return '|-' "( ( ph /\\ -. ps ) <-> -. ( ph -> ps ) )";
+  return |- "( ( ph /\\ -. ps ) <-> -. ( ph -> ps ) )";
 }

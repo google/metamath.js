@@ -8,7 +8,7 @@ include "sb6.mm";
 include "sb56.mm";
 include "bitr4i.mm";
 
-theorem sb5(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
+theorem sb5(wph: wff ph, vx: setvar x, vy: setvar y) {
 
   disjoint x y;
 
@@ -43,5 +43,5 @@ theorem sb5(wph: 'wff' ph, vx: 'setvar' x, vy: 'setvar' y) {
     bitr4i;
   };
 
-  return '|-' "( [ y / x ] ph <-> E. x ( x = y /\\ ph ) )";
+  return |- "( [ y / x ] ph <-> E. x ( x = y /\\ ph ) )";
 }

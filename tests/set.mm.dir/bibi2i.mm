@@ -4,7 +4,7 @@ include "syl6bb.mm";
 include "syl6bbr.mm";
 include "impbii.mm";
 
-theorem bibi2i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
+theorem bibi2i(wph: wff ph, wps: wff ps, wch: wff ch) {
   assume bibi2i.1: |- "( ph <-> ps )";
 
 
@@ -39,5 +39,5 @@ theorem bibi2i(wph: 'wff' ph, wps: 'wff' ps, wch: 'wff' ch) {
     impbii;
   };
 
-  return '|-' "( ( ch <-> ph ) <-> ( ch <-> ps ) )";
+  return |- "( ( ch <-> ph ) <-> ( ch <-> ps ) )";
 }

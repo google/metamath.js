@@ -3,7 +3,7 @@ include "wb.mm";
 include "biimt.mm";
 include "ax-mp.mm";
 
-theorem a1bi(wph: 'wff' ph, wps: 'wff' ps) {
+theorem a1bi(wph: wff ph, wps: wff ps) {
   assume a1bi.1: |- "ph";
 
 
@@ -24,5 +24,5 @@ theorem a1bi(wph: 'wff' ph, wps: 'wff' ps) {
     ax-mp;
   };
 
-  return '|-' "( ps <-> ( ph -> ps ) )";
+  return |- "( ps <-> ( ph -> ps ) )";
 }
