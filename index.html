@@ -1,22 +1,24 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="static/index.css">
-    <link rel="stylesheet" type="text/css" href="static/google-sans.css" media="screen">
-    <script src="static/module.js"></script>
-    <script data-type="module" type="text/babel" src="static/mm.js"></script>
-    <script src="static/babel.min.js"></script>
-    <script src="static/react.development.js"></script>
-    <script src="static/react-dom.development.js"></script>
-    <link rel="icon" type="image/png" href="static/favicon.ico">
-  </head>
-  <body>
-    <div class="header">
-      <div class="container">
-        <span class="title"><a href="">Typographic Systems</a></span>
-      </div>
-    </div>
-    <main>
-      <meta-math dir="tests/set.mm.dir", file="2p2e4.mm" label="2p2e4"></meta-math>
-    </main>
-  </body>
+<head>
+  <link rel="stylesheet" href="static/index.css">
+  <link rel="stylesheet" type="text/css" href="static/google-sans.css" media="screen">
+  <link rel="icon" type="image/png" href="static/favicon.ico">
+  <script src="static/module.js"></script>
+  <script src="static/babel.min.js"></script>
+  <script src="static/react.development.js"></script>
+  <script src="static/react-dom.development.js"></script>
+  <script data-type="module" src="static/mm.js"></script>
+  <script type="text/babel" src="static/mm.js"></script>
 </head>
+<body>
+  <div class="header">
+    <div class="container">
+      <span class="title"><a href="">Typographic Systems</a></span>
+    </div>
+  </div>
+  <main>
+    <div dir="tests/set.mm.dir" file="2p2e4.mm" label="2p2e4"></div>
+  </main>
+</body>
+</html>
