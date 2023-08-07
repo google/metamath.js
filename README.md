@@ -6,6 +6,34 @@ It comes with a parser, a verifier and a renderer.
 
 It also comes with a few extensions to the language to experiment with the modularization of metamath. 
 
+# HOWTO
+
+Parsing:
+
+```js
+> const {parse} = require("./src/descent.js");
+> parse("$c a $. $v b $.", {feed(statement) { console.log(statement); }})
+[ '$c', [ 'a' ] ]
+[ '$v', [ 'b' ] ]
+```
+
+Verifying:
+
+```js
+> const {Verifier} = require("./src/descent.js");
+> new Verifier().verify("$c a $. $v b $.");
+0
+```
+
+# Development
+
+```
+git clone https://github.com/google/metamath.js
+git cd metamath.js
+npm install
+npm test
+```
+
 Here are a few examples of the verifier running in browsers:
 
 - [Schönfinkel's SK](https://code.sgo.to/2023/03/23/sk.html)
