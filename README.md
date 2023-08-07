@@ -4,11 +4,19 @@ Metamath.js is an independent metamath verifier written in JS so that it can run
 
 It comes with a parser, a verifier and a renderer.
 
-It also comes with a few extensions to the language to experiment with the modularization of metamath. 
+It also comes with a few experimental extensions to the language around modularization.
 
-# HOWTO
+# Examples
 
-Parsing:
+- [Schönfinkel's SK](https://code.sgo.to/2023/03/23/sk.html)
+- [Hofstader's MIU](https://code.sgo.to/2022/04/12/hofstadter-miu.html)
+- [Hofstader's PQ](https://code.sgo.to/2022/04/13/hofstadter-pq.html)
+- [2 + 2 = 4?](https://code.sgo.to/2022/11/26/2p2e4.html)
+- [Verifying Set.mm](https://code.sgo.to/2022/11/26/set.mm.html)
+
+# API
+
+## Parser
 
 ```js
 > const {parse} = require("./src/descent.js");
@@ -17,7 +25,7 @@ Parsing:
 [ '$v', [ 'b' ] ]
 ```
 
-Verifying:
+## Verifer
 
 ```js
 > const {Verifier} = require("./src/descent.js");
@@ -33,13 +41,5 @@ git cd metamath.js
 npm install
 npm test
 ```
-
-Here are a few examples of the verifier running in browsers:
-
-- [Schönfinkel's SK](https://code.sgo.to/2023/03/23/sk.html)
-- [Hofstader's MIU](https://code.sgo.to/2022/04/12/hofstadter-miu.html)
-- [Hofstader's PQ](https://code.sgo.to/2022/04/13/hofstadter-pq.html)
-- [2 + 2 = 4?](https://code.sgo.to/2022/11/26/2p2e4.html)
-- [Verifying Set.mm](https://code.sgo.to/2022/11/26/set.mm.html)
 
 
