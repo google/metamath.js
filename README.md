@@ -1,32 +1,77 @@
 > This is not an officially supported Google product
 
-Typogram (short for typographic programs) is an experimental programming language that can represent verifiable derivations in axiomatic systems (e.g. mathematical proofs). 
+Metamath.js is an independent metamath verifier written in JS so that it can run in browsers.
 
-Typogram borrows from [metamath](https://metamath.org) its verification system and simplicity, and can be transpiled to (i.e. they can be verified with) and from (to a smaller extent) metamath. It extends metamath to provide modularization, so that large source files can be broken into smaller ones. It constraints metamath's syntax so that it can borrow some of the familiar syntax from [Isabelle](https://en.wikipedia.org/wiki/Isabelle_(proof_assistant)).
+It comes with a parser, a verifier and a renderer.
 
-Here is an example of a a typogram that verifies the first theorem of Hofstader's PQ system:
+https://google.github.io/metamath.js
+
+It also comes with a few experimental extensions to the language around modularization.
+
+# API
+
+## Parser
+
+The Parser API takes as input a metamath source and calls a handler as it produces the AST:
 
 ```js
-// "-" is a wff (well-formed formula)
-axiom w0() {
-  return wff "-";
-}
-
-// if x is a wff, then "w -" is a wff
-axiom w1(wff x) {
-  return wff "x -";
-}
-
-// "- -" is a wff
-theorem t0() {
-  do {
-    w0;	w1;
-  };
-  return wff "- -";
-}
+> const {parse} = require("./src/descent.js");
+> parse("$c a $. $v b $.", {feed(statement) { console.log(statement); }})
+[ '$c', [ 'a' ] ]
+[ '$v', [ 'b' ] ]
 ```
 
-Here are a few examples of Typograms running in browsers:
+## Verifer
+
+The Verifier API takes as input a metamath source and verifies the statements. It uses the Parser internally:
+
+```js
+> const {Verifier} = require("./src/descent.js");
+> new Verifier().verify("$c a $. $v b $.");
+0
+```
+
+## Compression
+
+The Compression API manages decompressing (and compressing) proofs using the metamath compressed proof format:
+
+```js
+> const {Decompressor} = require("./src/metamath.js")
+> const compressed = "AAABZBZFAACAFABBGFBAFCAFADEE";
+> const integers = new Decompressor().decode(compressed)
+[
+  1, 1, 1, 2, -1, 2, -1, 6,
+  1, 1, 3, 1,  6, 1,  2, 2,
+  7, 6, 2, 1,  6, 3,  1, 6,
+  1, 4, 5, 5
+]
+> const local = ["wph"];
+> const external = "wi ax-1 ax-2 ax-mp".split(" ");
+> const steps = new Decompressor().decompress(local, external, compressed)
+> steps
+[
+  'wph', 'wph',  'wph',   'wi',
+  -1,    'wi',   -1,      0,
+  'wph', 'wph',  'ax-1',  'wph',
+  0,     'wph',  'wi',    'wi',
+  1,     0,      'wi',    'wph',
+  0,     'ax-1', 'wph',   0,
+  'wph', 'ax-2', 'ax-mp', 'ax-mp'
+]
+> new Compressor(local, steps).compress();
+'AAABZBZFAACAFABBGFBAFCAFADEE'
+```
+
+# Development
+
+```
+git clone https://github.com/google/metamath.js
+git cd metamath.js
+npm install
+npm test
+```
+
+# Examples
 
 - [Schönfinkel's SK](https://code.sgo.to/2023/03/23/sk.html)
 - [Hofstader's MIU](https://code.sgo.to/2022/04/12/hofstadter-miu.html)
