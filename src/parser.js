@@ -22,8 +22,6 @@ function compileGrammar(handler = false, sourceCode) {
   return module.exports;
 }
 
-const grammar = (handler) =>
-  compileGrammar(handler, `
       @lexer lexer
 
       # Grammar rules...
